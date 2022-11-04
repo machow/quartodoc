@@ -22,7 +22,7 @@ print(
 
     # get_function
 
-    get_function(module: str, func_name: str, parser: str = 'numpy')
+    `get_function(module: str, func_name: str, parser: str = 'numpy')`
 
     Fetch a function.
 
@@ -37,3 +37,5 @@ print(
     <Function('get_function', ...
 
 \`\`\`
+
+Something else

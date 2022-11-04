@@ -114,7 +114,7 @@ class MdRenderer:
         # TODO: replace hard-coded header level                                     
                                                                                     
         _str_pars = self.to_md(el.parameters)                                            
-        str_sig = f"{el.name}({_str_pars})"                                      
+        str_sig = f"`{el.name}({_str_pars})`"  
                                                                                     
         str_title = f"{'#' * self.header_level} {el.name}"
         str_body = list(map(self.to_md, el.docstring.parsed))                            
@@ -183,11 +183,9 @@ class MdRenderer:
                                                                                     
     @dispatch                                                                 
     def to_md(self, el: ExampleCode):                                                         
-        return f"""
-```python
+        return f"""```python
 {el.value}
-```\
-"""                                                                             
+```"""                                                                             
                                                                                     
                                                                                     
     @dispatch                                                                

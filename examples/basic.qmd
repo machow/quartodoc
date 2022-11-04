@@ -13,25 +13,16 @@ jupyter:
     name: python3
 ---
 
-# quartodoc
-
-Generate python API documentation for quarto.
-
-## Install
-
-## Basic use
-
 ```{python}
+#| output: asis
+#| echo: false
+
 from quartodoc import get_function, MdRenderer
 
-# get function object ---
 f_obj = get_function("quartodoc", "get_function")
-
-# render ---
 renderer = MdRenderer(header_level = 1)
+
 print(
     renderer.to_md(f_obj)
 )
 ```
-
-Something else
