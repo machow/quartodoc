@@ -1,0 +1,47 @@
+---
+format: markdown
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .qmd
+      format_name: quarto
+      format_version: '1.0'
+      jupytext_version: 1.14.1
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Sphinx inventory files
+
+## Resources
+
+* [sphinx inventory v2 field descriptions](https://sphobjinv.readthedocs.io/en/latest/syntax.html)
+
+## Previewing an inventory file
+
+```bash
+python -m sphinx.ext.intersphinx <file_name>
+```
+ 
+* [sphinx.util.inventory.InventoryFile](https://github.com/sphinx-doc/sphinx/blob/5e9550c78e3421dd7dcab037021d996841178f67/sphinx/util/inventory.py#L74) for opening the files.
+
+```{python}
+from sphinx.util.inventory import InventoryFile
+from os import path
+
+SQLALCHEMY_DOCS_URL = "https://docs.sqlalchemy.org/"
+SQLALCHEMY_INV_URL = f"{SQLALCHEMY_DOCS_URL}/objects.inv"
+
+with open("objects_sqla.inv", "rb") as f:
+    inv = InventoryFile.load(f, SQLALCHEMY_DOCS_URL, path.join)
+```
+
+```{python}
+list(inv)
+```
+
+```{python}
+inv["py:function"]["sqlalchemy.create_engine"]
+```
