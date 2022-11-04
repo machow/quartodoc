@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  run-if:
+    name: "Run If"
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
+    steps:
+      - run: |
+          echo "Running CI"
+  test-python:
+    name: "Test Python Version"
+    needs: ["run-if"]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Checks based on python versions ---
+        python-version: ['3.8', '3.9', '3.10']
+        requirements: [""]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: Install dependencies from requirements file
+        run: |
+          python -m pip install --upgrade pip
+          # optionally install a requirements file
+          if [[ ! -z "${REQUIREMENTS}" ]]; then
+            python -m pip install -r "${REQUIREMENTS}"
+          fi
+          # install package with dev dependencies
+          python -m pip install .[dev]
+        env:
+          REQUIREMENTS: ${{ matrix.requirements }}
+      - name: Run tests
+        run: |
+          pytest
