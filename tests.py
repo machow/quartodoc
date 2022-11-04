@@ -6,7 +6,9 @@ def test_get_function():
     f_obj = get_function("quartodoc", "get_function")
 
     assert f_obj.name == "get_function"
-    assert any(isinstance(x, ds.DocstringSectionExamples) for x in f_obj.docstring.parsed)
+    assert any(
+        isinstance(x, ds.DocstringSectionExamples) for x in f_obj.docstring.parsed
+    )
 
 
 def test_render_to_md():
