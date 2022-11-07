@@ -4,10 +4,14 @@
 
 Unnest a column holding nested data (e.g. Series of lists or DataFrames).
 
+## Parameters
+
 | Name      | Type   | Description                            | Default   |
 |-----------|--------|----------------------------------------|-----------|
 | `___data` |        | A DataFrame.                           | required  |
 | `key`     |        | The name of the column to be unnested. | `'data'`  |
+
+## Examples
 
 ```python
 >>> import pandas as pd

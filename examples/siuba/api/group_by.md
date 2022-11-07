@@ -7,6 +7,8 @@ Return a grouped DataFrame, using columns or expressions to define groups.
 Any operations (e.g. summarize, mutate, filter) performed on grouped data
 will be performed "by group". Use `ungroup()` to remove the groupings.
 
+## Parameters
+
 | Name       | Type   | Description                                                                     | Default   |
 |------------|--------|---------------------------------------------------------------------------------|-----------|
 | `__data`   |        | The data being grouped.                                                         | required  |
@@ -14,6 +16,8 @@ will be performed "by group". Use `ungroup()` to remove the groupings.
 arg must refer to a single columns (e.g. _.cyl, _.mpg).                                                                                 | `()`      |
 | `add`      |        | If the data is already grouped, whether to add these groupings on top of those. | `False`   |
 | `**kwargs` |        | Keyword arguments define new columns used to group the data.                    | `{}`      |
+
+## Examples
 
 ```python
 >>> from siuba import _, group_by, summarize, filter, mutate, head

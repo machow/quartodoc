@@ -4,9 +4,13 @@
 
 Return an ungrouped DataFrame.
 
+## Parameters
+
 | Name     | Type   | Description               | Default   |
 |----------|--------|---------------------------|-----------|
 | `__data` |        | The data being ungrouped. | required  |
+
+## Examples
 
 ```python
 >>> from siuba import _, group_by, ungroup

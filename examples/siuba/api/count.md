@@ -4,6 +4,8 @@
 
 Summarize data with the number of rows for each grouping of data.
 
+## Parameters
+
 | Name       | Type   | Description                                                            | Default   |
 |------------|--------|------------------------------------------------------------------------|-----------|
 | `__data`   |        | A DataFrame.                                                           | required  |
@@ -11,6 +13,8 @@ Summarize data with the number of rows for each grouping of data.
 | `wt`       |        | The name of a column to use as a weighted for each row.                | `None`    |
 | `sort`     |        | Whether to sort the results in descending order.                       | `False`   |
 | `**kwargs` |        | Creates a new named column, and uses for grouping. Passed to group_by. | `{}`      |
+
+## Examples
 
 ```python
 >>> from siuba import _, count, group_by, summarize, arrange

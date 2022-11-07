@@ -4,6 +4,8 @@
 
 Assign new variables to a DataFrame, while keeping existing ones.
 
+## Parameters
+
 | Name       | Type   | Description   | Default   |
 |------------|--------|---------------|-----------|
 | `__data`   |        |               | required  |
@@ -13,6 +15,8 @@ argument for the data being operated on.               | `{}`      |
 See Also
 --------
 transmute : Returns a DataFrame with only the newly created columns.
+
+## Examples
 
 ```python
 >>> from siuba import _, mutate, head

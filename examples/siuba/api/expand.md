@@ -4,10 +4,14 @@
 
 Return table with unique crossings of specified columns.
 
+## Parameters
+
 | Name     | Type   | Description                             | Default   |
 |----------|--------|-----------------------------------------|-----------|
 | `__data` |        | The input data.                         | required  |
 | `*args`  |        | Column names to cross and de-duplicate. | `()`      |
+
+## Examples
 
 ```python
 >>> import pandas as pd

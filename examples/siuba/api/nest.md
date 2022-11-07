@@ -4,12 +4,16 @@
 
 Nest columns within a DataFrame.
 
+## Parameters
+
 | Name     | Type   | Description                                               | Default   |
 |----------|--------|-----------------------------------------------------------|-----------|
 | `__data` |        | A DataFrame.                                              | required  |
 | `*args`  |        | The names of columns to be nested. May use any syntax used by the
 `select` function.                                                           | `()`      |
 | `key`    |        | The name of the column that will hold the nested columns. | `'data'`  |
+
+## Examples
 
 ```python
 >>> from siuba import _, nest

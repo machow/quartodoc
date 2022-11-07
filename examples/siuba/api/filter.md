@@ -4,10 +4,14 @@
 
 Keep rows where conditions are true.
 
+## Parameters
+
 | Name     | Type   | Description                                   | Default   |
 |----------|--------|-----------------------------------------------|-----------|
 | `__data` |        | The data being filtered.                      | required  |
 | `*args`  |        | conditions that must be met to keep a column. | `()`      |
+
+## Examples
 
 ```python
 >>> from siuba import _, filter

@@ -4,6 +4,8 @@
 
 Combine multiple columns into a single column. Return DataFrame that column included.
 
+## Parameters
+
 | Name     | Type   | Description                                                         | Default   |
 |----------|--------|---------------------------------------------------------------------|-----------|
 | `__data` |        | a DataFrame                                                         | required  |

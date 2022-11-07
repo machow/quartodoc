@@ -4,12 +4,16 @@
 
 Return the left table with every row that would be kept in an inner join.
 
+## Parameters
+
 | Name    | Type   | Description           | Default   |
 |---------|--------|-----------------------|-----------|
 | `left`  |        | The left-hand table.  | required  |
 | `right` |        | The right-hand table. | `None`    |
 | `on`    |        | How to match them. By default it uses matches all columns with the same
 name across the two tables.                       | `None`    |
+
+## Examples
 
 ```python
 >>> import pandas as pd

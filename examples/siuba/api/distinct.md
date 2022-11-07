@@ -4,6 +4,8 @@
 
 Keep only distinct (unique) rows from a table.
 
+## Parameters
+
 | Name        | Type   | Description                                                       | Default   |
 |-------------|--------|-------------------------------------------------------------------|-----------|
 | `__data`    |        | The input data.                                                   | required  |
@@ -15,6 +17,8 @@ in distinct().                                                                  
 See Also
 --------
 count : keep distinct rows, and count their number of observations.
+
+## Examples
 
 ```python
 >>> from siuba import _, distinct, select

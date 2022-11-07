@@ -6,6 +6,8 @@ Add rows to fill in missing combinations in the data.
 
 This is a wrapper around expand(), right_join(), along with filling NAs.
 
+## Parameters
+
 | Name       | Type   | Description                  | Default   |
 |------------|--------|------------------------------|-----------|
 | `__data`   |        | The input data.              | required  |
@@ -15,6 +17,8 @@ If a column is not specified, missing values are left as is.                    
 | `explicit` |        | Should both NAs created by the complete and pre-existing NAs be filled
 by the fill argument? Defaults to True (filling both). When set to False,
 it will only fill newly created NAs.                              | `True`    |
+
+## Examples
 
 ```python
 >>> import pandas as pd

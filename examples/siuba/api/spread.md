@@ -4,12 +4,16 @@
 
 Reshape table by spreading it out to wide format.
 
+## Parameters
+
 | Name     | Type   | Description                                                                   | Default   |
 |----------|--------|-------------------------------------------------------------------------------|-----------|
 | `__data` |        | The input data.                                                               | required  |
 | `key`    |        | Column whose values will be used as new column names.                         | required  |
 | `value`  |        | Column whose values will fill the new column entries.                         | required  |
 | `fill`   |        | Value to set for any missing values. By default keeps them as missing values. | `None`    |
+
+## Examples
 
 ```python
 >>> import pandas as pd                                                

@@ -4,6 +4,8 @@
 
 Split col into len(into) piece. Return DataFrame with a column added for each piece.
 
+## Parameters
+
 | Name      | Type   | Description                                                              | Default          |
 |-----------|--------|--------------------------------------------------------------------------|------------------|
 | `__data`  |        | a DataFrame.                                                             | required         |
@@ -15,6 +17,8 @@ Split col into len(into) piece. Return DataFrame with a column added for each pi
 | `extra`   |        | what to do when more splits than into names.  One of ("warn", "drop" or "merge").
 "warn" produces a warning; "drop" and "merge" currently not implemented.                                                                          | `'warn'`         |
 | `fill`    |        | what to do when fewer splits than into names. Currently not implemented. | `'warn'`         |
+
+## Examples
 
 ```python
 >>> import pandas as pd

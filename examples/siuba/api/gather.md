@@ -4,6 +4,8 @@
 
 Reshape table by gathering it in to long format.
 
+## Parameters
+
 | Name      | Type   | Description                                              | Default   |
 |-----------|--------|----------------------------------------------------------|-----------|
 | `__data`  |        | The input data.                                          | required  |
@@ -14,6 +16,8 @@ were turned into rows.                                                          
 | `*args`   |        | A selection of columns. If unspecified, all columns are selected. Any
 arguments you could pass to the select() verb are allowed.                                                          | `()`      |
 | `drop_na` |        | Whether to remove any rows where the value column is NA. | `False`   |
+
+## Examples
 
 ```python
 >>> import pandas as pd

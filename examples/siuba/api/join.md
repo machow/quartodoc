@@ -7,6 +7,8 @@ Join two tables together, by matching on specified columns.
 The functions inner_join, left_join, right_join, and full_join are provided
 as wrappers around join, and are used in the examples.
 
+## Parameters
+
 | Name       | Type   | Description                                              | Default   |
 |------------|--------|----------------------------------------------------------|-----------|
 | `left`     |        | The left-hand table.                                     | required  |
@@ -17,9 +19,13 @@ parameter, in order to support compatibility with dplyr.                        
 | `*args`    |        | Additional postition arguments. Currently not supported. | `()`      |
 | `**kwargs` |        | Additional keyword arguments. Currently not supported.   | `{}`      |
 
+## Returns
+
 | Type         | Description   |
 |--------------|---------------|
 | pd.DataFrame |               |
+
+## Examples
 
 ```python
 >>> from siuba import _, inner_join, left_join, full_join, right_join

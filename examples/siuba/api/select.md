@@ -4,11 +4,15 @@
 
 Select columns of a table to keep or drop (and optionally rename).
 
+## Parameters
+
 | Name       | Type   | Description                                       | Default   |
 |------------|--------|---------------------------------------------------|-----------|
 | `__data`   |        | The input table.                                  | required  |
 | `*args`    |        | An expression specifying columns to keep or drop. | `()`      |
 | `**kwargs` |        | Not implemented.                                  | `{}`      |
+
+## Examples
 
 ```python
 >>> from siuba import _, select

@@ -4,6 +4,8 @@
 
 Print the details of a query.
 
+## Parameters
+
 | Name       | Type   | Description                                              | Default   |
 |------------|--------|----------------------------------------------------------|-----------|
 | `__data`   |        | A DataFrame of siuba.sql.LazyTbl.                        | required  |

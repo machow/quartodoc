@@ -7,11 +7,15 @@ Assign variables that are single number summaries of a DataFrame.
 Grouped DataFrames will produce one row for each group. Otherwise, summarize
 produces a DataFrame with a single row.
 
+## Parameters
+
 | Name       | Type   | Description                | Default   |
 |------------|--------|----------------------------|-----------|
 | `__data`   |        | The data being summarized. | required  |
 | `**kwargs` |        | new_col_name=value pairs, where value can be a function taking
 a single argument for the data being operated on.                            | `{}`      |
+
+## Examples
 
 ```python
 >>> from siuba import _, group_by, summarize

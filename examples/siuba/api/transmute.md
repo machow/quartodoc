@@ -4,6 +4,8 @@
 
 Assign new columns to a DataFrame, while dropping previous columns.
 
+## Parameters
+
 | Name       | Type   | Description                                                           | Default   |
 |------------|--------|-----------------------------------------------------------------------|-----------|
 | `__data`   |        | The input data.                                                       | required  |
@@ -12,6 +14,8 @@ Assign new columns to a DataFrame, while dropping previous columns.
 See Also
 --------
 mutate : Assign new columns, or modify existing ones.
+
+## Examples
 
 ```python
 >>> from siuba import _, transmute, mutate, head

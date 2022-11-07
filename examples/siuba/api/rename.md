@@ -4,10 +4,14 @@
 
 Rename columns of a table.
 
+## Parameters
+
 | Name       | Type   | Description                                                                    | Default   |
 |------------|--------|--------------------------------------------------------------------------------|-----------|
 | `__data`   |        | The input table.                                                               | required  |
 | `**kwargs` |        | Keyword arguments of the form new_name = _.old_name, or new_name = "old_name". | `{}`      |
+
+## Examples
 
 ```python
 >>> import pandas as pd

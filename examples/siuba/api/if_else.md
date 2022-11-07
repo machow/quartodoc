@@ -2,6 +2,8 @@
 
 `if_else(condition, true, false)`
 
+## Parameters
+
 | Name        | Type   | Description                                | Default   |
 |-------------|--------|--------------------------------------------|-----------|
 | `condition` |        | Logical vector (or lazy expression).       | required  |
@@ -12,6 +14,8 @@ See Also
 --------
 case_when : Generalized if_else, for handling many cases.
     
+
+## Examples
 
 ```python
 >>> ser1 = pd.Series([1,2,3])

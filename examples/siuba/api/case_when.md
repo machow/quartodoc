@@ -4,6 +4,8 @@
 
 Generalized, vectorized if statement.
 
+## Parameters
+
 | Name     | Type   | Description                     | Default   |
 |----------|--------|---------------------------------|-----------|
 | `__data` |        | The input data.                 | required  |
@@ -13,6 +15,8 @@ See Also
 --------
 if_else : Handles the special case of two conditions.
     
+
+## Examples
 
 ```python
 >>> import pandas as pd

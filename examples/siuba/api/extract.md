@@ -6,6 +6,8 @@ Pull out len(into) fields from character strings.
 
 Returns a DataFrame with a column added for each piece.
 
+## Parameters
+
 | Name      | Type   | Description                                                                 | Default    |
 |-----------|--------|-----------------------------------------------------------------------------|------------|
 | `__data`  |        | a DataFrame                                                                 | required   |

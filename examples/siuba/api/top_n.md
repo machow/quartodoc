@@ -4,11 +4,15 @@
 
 Filter to keep the top or bottom entries in each group.
 
+## Parameters
+
 | Name      | Type   | Description                                                                        | Default   |
 |-----------|--------|------------------------------------------------------------------------------------|-----------|
 | `___data` |        | A DataFrame.                                                                       | required  |
 | `n`       |        | The number of rows to keep in each group.                                          | required  |
 | `wt`      |        | A column or expression that determines ordering (defaults to last column in data). | `None`    |
+
+## Examples
 
 ```python
 >>> from siuba import _, top_n

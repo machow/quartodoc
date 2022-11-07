@@ -4,10 +4,14 @@
 
 Return the first n rows of the data.
 
+## Parameters
+
 | Name     | Type   | Description                         | Default   |
 |----------|--------|-------------------------------------|-----------|
 | `__data` |        | a DataFrame.                        | required  |
 | `n`      |        | The number of rows of data to keep. | `5`       |
+
+## Examples
 
 ```python
 >>> from siuba import head

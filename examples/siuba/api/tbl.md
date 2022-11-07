@@ -4,11 +4,15 @@
 
 Create a table from a data source.
 
+## Parameters
+
 | Name       | Type   | Description                                                        | Default   |
 |------------|--------|--------------------------------------------------------------------|-----------|
 | `src`      |        | A pandas DataFrame, SQLAlchemy Engine, or other registered object. | required  |
 | `*args`    |        | Additional arguments passed to the individual implementations.     | `()`      |
 | `**kwargs` |        | Additional arguments passed to the individual implementations.     | `()`      |
+
+## Examples
 
 ```python
 >>> from siuba.data import cars

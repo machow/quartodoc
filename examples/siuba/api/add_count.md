@@ -7,6 +7,8 @@ Add a column that is the number of observations for each grouping of data.
 Note that this function is similar to count(), but does not aggregate. It's
 useful combined with filter().
 
+## Parameters
+
 | Name       | Type   | Description                                                            | Default   |
 |------------|--------|------------------------------------------------------------------------|-----------|
 | `__data`   |        | A DataFrame.                                                           | required  |
@@ -14,6 +16,8 @@ useful combined with filter().
 | `wt`       |        | The name of a column to use as a weighted for each row.                | `None`    |
 | `sort`     |        | Whether to sort the results in descending order.                       | `False`   |
 | `**kwargs` |        | Creates a new named column, and uses for grouping. Passed to group_by. | `{}`      |
+
+## Examples
 
 ```python
 >>> import pandas as pd

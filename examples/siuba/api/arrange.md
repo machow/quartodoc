@@ -4,10 +4,14 @@
 
 Re-order the rows of a DataFrame using the values of specified columns.
 
+## Parameters
+
 | Name     | Type   | Description                                   | Default   |
 |----------|--------|-----------------------------------------------|-----------|
 | `__data` |        | The input table.                              | required  |
 | `*args`  |        | Columns or expressions used to sort the rows. | `()`      |
+
+## Examples
 
 ```python
 >>> import pandas as pd
