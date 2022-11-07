@@ -39,6 +39,7 @@ print(
     ```python
     >>> get_function("quartodoc", "get_function")
     <Function('get_function', ...
+    ```
 
 ## How it works
 
@@ -77,9 +78,9 @@ docstring = f_obj.docstring.parsed
 docstring
 ```
 
-    [<griffe.docstrings.dataclasses.DocstringSectionText at 0x127ed2700>,
-     <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x127ed2580>,
-     <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x127ed2af0>]
+    [<griffe.docstrings.dataclasses.DocstringSectionText at 0x127f01f10>,
+     <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x127f27700>,
+     <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x127f27a00>]
 
 Note that quartodoc’s MdRenderer can be called on any part of the parsed
 docstring.
