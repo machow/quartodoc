@@ -1,5 +1,5 @@
 ---
-format: markdown
+format: gfm
 jupyter:
   jupytext:
     text_representation:

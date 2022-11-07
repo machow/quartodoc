@@ -1,25 +1,10 @@
----
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .qmd
-      format_name: quarto
-      format_version: 1.0
-      jupytext_version: 1.14.1
-  kernelspec:
-    display_name: Python 3 (ipykernel)
-    language: python
-    name: python3
-pagetitle: sphinx-inventory
-toc-title: Table of contents
----
 
 # Sphinx inventory files
 
 ## Resources
 
--   [sphinx inventory v2 field
-    descriptions](https://sphobjinv.readthedocs.io/en/latest/syntax.html)
+- [sphinx inventory v2 field
+  descriptions](https://sphobjinv.readthedocs.io/en/latest/syntax.html)
 
 ## Previewing an inventory file
 
@@ -27,11 +12,10 @@ toc-title: Table of contents
 python -m sphinx.ext.intersphinx <file_name>
 ```
 
--   [sphinx.util.inventory.InventoryFile](https://github.com/sphinx-doc/sphinx/blob/5e9550c78e3421dd7dcab037021d996841178f67/sphinx/util/inventory.py#L74)
-    for opening the files.
+- [sphinx.util.inventory.InventoryFile](https://github.com/sphinx-doc/sphinx/blob/5e9550c78e3421dd7dcab037021d996841178f67/sphinx/util/inventory.py#L74)
+  for opening the files.
 
-::: {.cell execution_count="1"}
-``` {.python .cell-code}
+``` python
 from sphinx.util.inventory import InventoryFile
 from os import path
 
@@ -41,14 +25,11 @@ SQLALCHEMY_INV_URL = f"{SQLALCHEMY_DOCS_URL}/objects.inv"
 with open("objects_sqla.inv", "rb") as f:
     inv = InventoryFile.load(f, SQLALCHEMY_DOCS_URL, path.join)
 ```
-:::
 
-::: {.cell execution_count="2"}
-``` {.python .cell-code}
+``` python
 list(inv)
 ```
 
-::: {.cell-output .cell-output-display execution_count="4"}
     ['py:module',
      'py:function',
      'py:parameter',
@@ -60,18 +41,12 @@ list(inv)
      'std:label',
      'std:term',
      'std:doc']
-:::
-:::
 
-::: {.cell execution_count="3"}
-``` {.python .cell-code}
+``` python
 inv["py:function"]["sqlalchemy.create_engine"]
 ```
 
-::: {.cell-output .cell-output-display execution_count="5"}
     ('SQLAlchemy',
      '1.4',
      'https://docs.sqlalchemy.org/core/engines.html#sqlalchemy.create_engine',
      '-')
-:::
-:::
