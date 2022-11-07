@@ -5,6 +5,12 @@ Generate python API documentation for quarto.
 
 ## Install
 
+    pip install quartodoc
+
+Or for the latest changes:
+
+    python3 -m pip install -e git+https://github.com/machow/quartodoc.git#egg=quartodoc
+
 ## Basic use
 
 ``` python
@@ -45,12 +51,12 @@ print(
 
 quartodoc consists of two pieces:
 
-- collection: using the library
+- **collection**: using the library
   [griffe](https://github.com/mkdocstrings/griffe) to statically collect
   information about functions and classes in a program.
-- docstring parsing: also handled by griffe, which breaks it into a tree
-  structure.
-- docstring rendering: use plum-dispatch on methods like
+- **docstring parsing**: also handled by griffe, which breaks it into a
+  tree structure.
+- **docstring rendering**: use plum-dispatch on methods like
   MdRenderer.to_md to decide how to visit and render each piece of the
   tree (e.g. the examples section, a parameter, etc..).
 
@@ -78,9 +84,9 @@ docstring = f_obj.docstring.parsed
 docstring
 ```
 
-    [<griffe.docstrings.dataclasses.DocstringSectionText at 0x127f01f10>,
-     <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x127f27700>,
-     <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x127f27a00>]
+    [<griffe.docstrings.dataclasses.DocstringSectionText at 0x105a2c310>,
+     <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x10f7961f0>,
+     <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x10f7965b0>]
 
 Note that quartodoc’s MdRenderer can be called on any part of the parsed
 docstring.
