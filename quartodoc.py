@@ -120,10 +120,19 @@ class MdRenderer:
         str_sig = f"`{el.name}({_str_pars})`"
         str_title = f"{'#' * self.header_level} {el.name}"
 
+        str_body = []
         if el.docstring is None:
-            str_body = ""
+            pass
         else:
-            str_body = list(map(self.to_md, el.docstring.parsed))
+            for section in el.docstring.parsed:
+                title = section.kind.name
+                body = self.to_md(section)
+
+                if title != "text":
+                    header = f"{'#' * (self.header_level + 1)} {title.title()}"
+                    str_body.append("\n\n".join([header, body]))
+                else:
+                    str_body.append(body)
 
         if self.show_signature:
             parts = [str_title, str_sig, *str_body]
