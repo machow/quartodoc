@@ -118,9 +118,12 @@ class MdRenderer:
 
         _str_pars = self.to_md(el.parameters)
         str_sig = f"`{el.name}({_str_pars})`"
-
         str_title = f"{'#' * self.header_level} {el.name}"
-        str_body = list(map(self.to_md, el.docstring.parsed))
+
+        if el.docstring is None:
+            str_body = ""
+        else:
+            str_body = list(map(self.to_md, el.docstring.parsed))
 
         if self.show_signature:
             parts = [str_title, str_sig, *str_body]
@@ -185,6 +188,22 @@ class MdRenderer:
 {el.value}
 ```"""
 
+    # returns ----
+
+    @dispatch
+    def to_md(self, el: ds.DocstringSectionReturns):
+        rows = list(map(self.to_md, el.value))
+        header = ["Type", "Description"]
+        return tabulate(rows, header, tablefmt="github")
+
+    @dispatch
+    def to_md(self, el: ds.DocstringReturn):
+        # similar to DocstringParameter, but no name or default
+        annotation = el.annotation.full if el.annotation else None
+        return (annotation, el.description)
+
+    # unsupported parts ----
+
     @dispatch
     def to_md(self, el: ExampleText):
         return el.value
@@ -194,7 +213,6 @@ class MdRenderer:
         (ds.DocstringDeprecated,),
         (ds.DocstringRaise,),
         (ds.DocstringWarn,),
-        (ds.DocstringReturn,),
         (ds.DocstringYield,),
         (ds.DocstringReceive,),
         (ds.DocstringAttribute,),
