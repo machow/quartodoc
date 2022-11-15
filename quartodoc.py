@@ -180,7 +180,10 @@ class MdRenderer:
     def to_md(self, el: ds.DocstringParameter) -> Tuple[str]:
         # TODO: if default is not, should return the word "required" (unescaped)
         default = "required" if el.default is None else escape(el.default)
-        annotation = el.annotation.full if el.annotation else None
+        if isinstance(el.annotation, str):
+            annotation = el.annotation
+        else:
+            annotation = el.annotation.full if el.annotation else None 
         return (escape(el.name), annotation, el.description, default)
 
     # examples ----
