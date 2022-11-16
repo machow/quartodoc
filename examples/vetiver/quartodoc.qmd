@@ -1,0 +1,45 @@
+---
+jupyter: python3
+---
+
+```{python}
+from griffe.loader import GriffeLoader
+from griffe.docstrings.parsers import Parser
+
+griffe = GriffeLoader(docstring_parser = Parser("numpy"))
+mod = griffe.load_module("vetiver") # no editable install
+
+#f_obj = mod._modules_collection["vetiver.load_pkgs"]
+```
+
+```{python}
+mod._modules_collection["vetiver.attach_pkgs.load_pkgs"] # full path
+```
+
+```{python}
+from quartodoc import get_function, MdRenderer
+
+# get function object ---
+f_obj = get_function("vetiver.attach_pkgs", "load_pkgs") # not attach.laod
+
+
+# render ---
+renderer = MdRenderer(header_level = 1)
+print(
+    renderer.to_md(f_obj)
+)
+```
+
+```{python}
+c_obj = mod._modules_collection["vetiver.server.VetiverAPI"]
+
+print(
+    renderer.to_md(c_obj)
+)
+```
+
+```{python}
+renderer.to_md(c_obj.members["vetiver_post"]) # no -> none
+```
+
+
