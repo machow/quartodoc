@@ -15,8 +15,8 @@ jobs:
     steps:
       - run: |
           echo "Running CI"
-  test-python:
-    name: "Test Python Version"
+  test:
+    name: "Test"
     needs: ["run-if"]
     runs-on: ubuntu-latest
     strategy:
@@ -50,7 +50,7 @@ jobs:
     name: "Release to pypi"
     runs-on: ubuntu-latest
     if: github.event_name == 'release'
-    needs: [build-docs, tests, test-rsconnect]
+    needs: [test]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
