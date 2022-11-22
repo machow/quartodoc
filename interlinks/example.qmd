@@ -1,0 +1,23 @@
+---
+title: "Interlinks Example"
+filters:
+  - interlinks
+interlinks:
+  sources:
+    siuba:
+      url: https://siuba.org
+      inv: null 
+      fallback: objects_siuba.json
+---
+
+## Heading {#sec-hello}
+
+## Testing
+
+Tilde means don't display module:
+
+* `plotnine.positions.position.position`{.ref}
+* `~plotnine.positions.position.position`{.ref}
+* `some explanation <mutate>`{.ref}
+* `some explanation <siuba:siuba.dply.verbs.mutate>`{.ref}
+* [some explanation](siuba:siuba.dply.verbs.mutate)

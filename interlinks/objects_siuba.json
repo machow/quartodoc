@@ -1,0 +1,21 @@
+{
+  "project": "Siuba", "version": "0.4.2", "count": 2,
+  "items": [
+    {
+      "name": "siuba.dply.verbs.mutate",
+      "domain": "py",
+      "role": "function",
+      "priority": 0,
+      "uri": "api/verbs-mutate-transmute/",
+      "dispname": "-"
+    },
+    {
+      "name": "siuba.dply.verbs.summarize",
+      "domain": "py",
+      "role": "function",
+      "priority": 0,
+      "uri": "api/verb-summarize/",
+      "dispname": "-"
+    }
+  ]
+}

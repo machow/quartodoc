@@ -1,3 +1,5 @@
+import click
+
 from griffe.loader import GriffeLoader
 from griffe.docstrings.parsers import Parser, parse
 from griffe.docstrings import dataclasses as ds
@@ -9,6 +11,32 @@ from tabulate import tabulate
 from plum import dispatch
 
 from typing import Tuple, Union
+
+
+@click.command()
+@click.option("--in-name", help="Name of input inventory file")
+@click.option("--out-name", help="Name of result (defaults to <input_name>.json)")
+def convert_inventory(in_name, out_name=None):
+    """Convert a sphinx inventory file to json."""
+    import json
+    import sphobjinv as soi
+
+    from pathlib import Path
+
+    if out_name is None:
+        out_name = Path(in_name).with_suffix(".json")
+
+    inv = soi.Inventory(in_name)
+
+    obj = inv.json_dict()
+
+    long = list(obj.items())
+    meta, entries = long[:3], [v for k, v in long[3:]]
+
+    out = dict(meta)
+    out["entries"] = entries
+
+    json.dump(out, open(out_name, "w"))
 
 
 def parse_function(module: str, func_name: str):
@@ -183,7 +211,7 @@ class MdRenderer:
         if isinstance(el.annotation, str):
             annotation = el.annotation
         else:
-            annotation = el.annotation.full if el.annotation else None 
+            annotation = el.annotation.full if el.annotation else None
         return (escape(el.name), annotation, el.description, default)
 
     # examples ----
@@ -231,3 +259,7 @@ class MdRenderer:
     )
     def to_md(self, el):
         raise NotImplementedError(f"{type(el)}")
+
+
+if __name__ == "__main__":
+    convert_inventory()
