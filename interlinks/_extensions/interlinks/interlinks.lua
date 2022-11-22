@@ -1,12 +1,10 @@
-inventory = {
-  mutate = 'https://siuba.org/api/verbs-mutate-transmute/',
-  ['plotnine.positions.position.position'] = 'someurl'
-}
+inventory = {}
+traverse = 'topdown'
 
 -- from https://stackoverflow.com/a/7615129/1144523
 function str_split (inputstr, sep)
   if sep == nil then
-          sep = "%s"
+    sep = "%s"
   end
   local t={}
   for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
@@ -16,12 +14,24 @@ function str_split (inputstr, sep)
 end
 
 
+function Meta(meta)
+  for k, v in pairs(meta.interlinks.sources) do
+    local json = quarto.json.decode(read_file_contents(v.fallback))
+    for inv_k, inv_v in pairs(json.items) do
+        inventory[inv_v.name] = inv_v
+    end
+  end
+
+  -- print(quarto.utils.dump(inventory))
+
+end
+
+
 -- Reformat all heading text
 function Header(el)
   el.content = pandoc.Emph(el.content)
   return el
 end
-
 
 function Code(el)
   if el.attr.classes:find("ref") == nil then
@@ -40,8 +50,11 @@ function Code(el)
   end
 
   dst = inventory[ref_name]
+  -- print(type(ref_name))
+  -- print("DST ====")
+  -- print(quarto.utils.dump(inventory))
   if dst ~=  nil then
-    return pandoc.Link(out_name, dst)
+    return pandoc.Link(out_name, dst.uri)
   end
 
   return el
@@ -57,20 +70,6 @@ function map(tbl, fn)
         result[k] = fn(v)
     end
     return result
-end
-
-local inventory = {}
-function Meta(meta)
-  for k, v in pairs(meta.interlinks.sources) do
-    print(k)
-    print(pandoc.utils.stringify(v.fallback))
-    local json = quarto.json.decode(read_file_contents(v.fallback))
-    for inv_k, inv_v in pairs(json.items) do
-        inventory[inv_v.name] = inv_v
-    end
-  end
-  quarto.utils.dump(inventory)
-
 end
 
 function read_file_contents(file)

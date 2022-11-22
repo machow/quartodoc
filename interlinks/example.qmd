@@ -8,6 +8,10 @@ interlinks:
       url: https://siuba.org
       inv: null 
       fallback: objects_siuba.json
+    vetiver:
+      url: https://vetiver.rstudio.com
+      inv: null
+      fallback: objects_vetiver.json
 ---
 
 ## Heading {#sec-hello}
@@ -16,8 +20,10 @@ interlinks:
 
 Tilde means don't display module:
 
-* `plotnine.positions.position.position`{.ref}
-* `~plotnine.positions.position.position`{.ref}
+* `vetiver.SKLearnHandler`{.ref}
+* `~vetiver.SKLearnHandler`{.ref}
+* `siuba:siuba.dply.verbs.mutate`{.ref}
+  - TODO: should be able to use `domain:...` to use a specific inventory file.
 * `some explanation <mutate>`{.ref}
-* `some explanation <siuba:siuba.dply.verbs.mutate>`{.ref}
-* [some explanation](siuba:siuba.dply.verbs.mutate)
+  - TODO: this syntax let's you change the text of the link.
+* [some explanation](vetiver.SKLearnHandler)

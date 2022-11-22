@@ -34,7 +34,7 @@ def convert_inventory(in_name, out_name=None):
     meta, entries = long[:3], [v for k, v in long[3:]]
 
     out = dict(meta)
-    out["entries"] = entries
+    out["items"] = entries
 
     json.dump(out, open(out_name, "w"))
 
