@@ -12,7 +12,9 @@ website:
         text: Get Started
       - href: api/
         text: Reference
-      - about.qmd
+    right:
+      - icon: github
+        href: https://github.com/machow/quartodoc/
   sidebar:
     - id: get-started
       title: Get Started
