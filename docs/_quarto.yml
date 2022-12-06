@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: _build
+  resources:
+    - objects.json
+
+website:
+  title: "quartodoc"
+  navbar:
+    left:
+      - file: get-started/overview.qmd
+        text: Get Started
+      - href: api/
+        text: Reference
+      - about.qmd
+  sidebar:
+    - id: get-started
+      title: Get Started
+      style: floating
+      align: left
+      contents:
+        - get-started/overview.qmd
+        - get-started/docstrings.qmd
+        - get-started/renderers.qmd
+        - get-started/crossrefs.qmd
+    - id: dummy
+
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

@@ -1,3 +1,6 @@
+# Notebooks ===================================================================
+*.ipynb
+
 # Mac OSX =====================================================================
 .DS_Store
 
@@ -134,3 +137,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.Rproj.user
+
+# Local Netlify folder
+.netlify

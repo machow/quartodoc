@@ -1,4 +1,4 @@
-import click
+import sphobjinv as soi
 
 from griffe.loader import GriffeLoader
 from griffe.docstrings.parsers import Parser, parse
@@ -10,23 +10,129 @@ from tabulate import tabulate
 
 from plum import dispatch
 
-from typing import Tuple, Union
+from typing import Tuple, Union, Callable
 
 
-@click.command()
-@click.option("--in-name", help="Name of input inventory file")
-@click.option("--out-name", help="Name of result (defaults to <input_name>.json)")
-def convert_inventory(in_name, out_name=None):
-    """Convert a sphinx inventory file to json."""
+# Set version =================================================================
+
+from importlib_metadata import version as _v
+
+__version__ = _v("quartodoc")
+
+del _v
+
+
+# Inventory files =============================================================
+#
+# inventories have this form:
+# {
+#   "project": "Siuba", "version": "0.4.2", "count": 2,
+#   "items": [
+#     {
+#       "name": "siuba.dply.verbs.mutate",
+#       "domain": "py",
+#       "role": "function",
+#       "priority": 0,
+#       "uri": "api/verbs-mutate-transmute/",
+#       "dispname": "-"
+#     },
+#    ...
+#   ]
+# }
+
+
+# @click.command()
+# @click.option("--in-name", help="Name of input inventory file")
+# @click.option("--out-name", help="Name of result (defaults to <input_name>.json)")
+def convert_inventory(in_name: "Union[str, soi.Inventory]", out_name=None):
+    """Convert a sphinx inventory file to json.
+
+    Parameters
+    ----------
+    in_name: str or sphobjinv.Inventory file
+        Name of inventory file.
+    out_name: str, optional
+        Output file name.
+
+    """
+
     import json
-    import sphobjinv as soi
-
     from pathlib import Path
 
     if out_name is None:
-        out_name = Path(in_name).with_suffix(".json")
+        if isinstance(in_name, str):
+            out_name = Path(in_name).with_suffix(".json")
+        else:
+            raise TypeError()
 
-    inv = soi.Inventory(in_name)
+    if isinstance(in_name, soi.Inventory):
+        inv = in_name
+    else:
+        inv = soi.Inventory(in_name)
+
+    out = _to_clean_dict(inv)
+
+    json.dump(out, open(out_name, "w"))
+
+
+def create_inventory(
+    project: str,
+    version: str,
+    items: "list[dc.Object | dc.Alias]",
+    uri: "str | Callable[dc.Object, str]" = lambda s: f"{s.canonical_path}.html",
+    dispname: "str | Callable[dc.Object, str]" = "-",
+) -> soi.Inventory():
+    """Return a sphinx inventory file.
+
+    Parameters
+    ----------
+    project: str
+        Name of the project (often the package name).
+    version: str
+        Version of the project (often the package version).
+    items: str
+        A docstring parser to use.
+    uri:
+        Link relative to the docs where the items documentation lives.
+    dispname:
+        Name to be shown when a link to the item is made.
+
+    Examples
+    --------
+
+    >>> f_obj = get_object("quartodoc", "create_inventory")
+    >>> inv = create_inventory("example", "0.0", [f_obj])
+    >>> inv
+    Inventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)
+
+    To preview the inventory, we can convert it to a dictionary:
+
+    >>> _to_clean_dict(inv)
+    {'project': 'example',
+     'version': '0.0',
+     'count': 1,
+     'items': [{'name': 'quartodoc.create_inventory',
+       'domain': 'py',
+       'role': 'function',
+       'priority': '1',
+       'uri': 'quartodoc.create_inventory.html',
+       'dispname': '-'}]}
+
+    """
+
+    inv = soi.Inventory()
+    inv.project = project
+    inv.version = version
+
+    soi_items = [_create_inventory_item(x, uri, dispname) for x in items]
+
+    inv.objects.extend(soi_items)
+
+    return inv
+
+
+def _to_clean_dict(inv: soi.Inventory):
+    """Similar to Inventory.json_dict(), but with a list of items."""
 
     obj = inv.json_dict()
 
@@ -36,7 +142,40 @@ def convert_inventory(in_name, out_name=None):
     out = dict(meta)
     out["items"] = entries
 
-    json.dump(out, open(out_name, "w"))
+    return out
+
+
+def _create_inventory_item(
+    item: "dc.Object | dc.Alias",
+    uri: "str | Callable[dc.Object, str]",
+    dispname: "str | Callable[dc.Object, str]" = "-",
+    priority="1",
+) -> soi.DataObjStr:
+    if isinstance(item, dc.Alias):
+        target = item.target
+    else:
+        target = item
+
+    return soi.DataObjStr(
+        name=target.canonical_path,
+        domain="py",
+        role=target.kind.value,
+        priority=priority,
+        uri=_maybe_call(uri, target),
+        dispname=_maybe_call(dispname, target),
+    )
+
+
+def _maybe_call(s: "str | Callable", obj):
+    if callable(s):
+        return s(obj)
+    elif isinstance(s, str):
+        return s
+
+    raise TypeError(f"Expected string or callable, received: {type(s)}")
+
+
+# Docstring loading / parsing =================================================
 
 
 def parse_function(module: str, func_name: str):
@@ -75,7 +214,40 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
     return f_data
 
 
-# utils =======================================================================
+def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Object:
+    """Fetch a griffe object.
+
+    Parameters
+    ----------
+    module: str
+        A module name.
+    object_name: str
+        A function name.
+    parser: str
+        A docstring parser to use.
+
+    See Also
+    --------
+    get_function: a deprecated function.
+
+    Examples
+    --------
+
+    >>> get_function("quartodoc", "get_function")
+    <Function('get_function', ...
+
+    """
+    griffe = GriffeLoader(docstring_parser=Parser(parser))
+    mod = griffe.load_module(module)
+
+    f_data = mod._modules_collection[f"{module}.{object_name}"]
+
+    return f_data
+
+
+# Docstring rendering =========================================================
+
+# utils -----------------------------------------------------------------------
 # these largely re-format the output of griffe
 
 
@@ -106,7 +278,7 @@ def escape(val: str):
     return f"`{val}`"
 
 
-# to_md =======================================================================
+# to_md -----------------------------------------------------------------------
 # griffe function dataclass structure:
 #   Object:
 #     kind: Kind {"module", "class", "function", "attribute"}
@@ -129,8 +301,29 @@ def escape(val: str):
 
 
 class MdRenderer:
+    """Render docstrings to markdown.
+
+    Parameters
+    ----------
+    header_level: int
+        The level of the header (e.g. 1 is the biggest).
+    show_signature: bool
+        Whether to show the function signature.
+
+    Examples
+    --------
+
+    >>> from quartodoc import MdRenderer, get_object
+    >>> renderer = MdRenderer(header_level=2)
+    >>> f = get_object("quartodoc", "get_object")
+    >>> print(renderer.to_md(f)[:81])
+    ## get_object
+    `get_object(module: str, object_name: str, parser: str = 'numpy')`
+
+    """
+
     def __init__(
-        self, header_level: int = 2, show_signature: str = True, hook_pre=None
+        self, header_level: int = 2, show_signature: bool = True, hook_pre=None
     ):
         self.header_level = header_level
         self.show_signature = show_signature
@@ -146,7 +339,9 @@ class MdRenderer:
 
         _str_pars = self.to_md(el.parameters)
         str_sig = f"`{el.name}({_str_pars})`"
-        str_title = f"{'#' * self.header_level} {el.name}"
+
+        _anchor = f"{{#sec-{ el.name }}}"
+        str_title = f"{'#' * self.header_level} {el.name} {_anchor}"
 
         str_body = []
         if el.docstring is None:
@@ -259,7 +454,3 @@ class MdRenderer:
     )
     def to_md(self, el):
         raise NotImplementedError(f"{type(el)}")
-
-
-if __name__ == "__main__":
-    convert_inventory()
