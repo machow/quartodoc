@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "get-started/crossrefs.html",
+    "href": "get-started/crossrefs.html",
+    "title": "Cross references",
+    "section": "",
+    "text": "Coming soon!"
+  },
+  {
+    "objectID": "get-started/crossrefs.html#link-within-a-doc",
+    "href": "get-started/crossrefs.html#link-within-a-doc",
+    "title": "Cross references",
+    "section": "Link within a doc",
+    "text": "Link within a doc\n\n@sec-get_object doesn’t seem to work: ?@sec-get-_object.\nget_object"
+  },
+  {
+    "objectID": "get-started/crossrefs.html#link-to-external-docs",
+    "href": "get-started/crossrefs.html#link-to-external-docs",
+    "title": "Cross references",
+    "section": "Link to external docs",
+    "text": "Link to external docs\n\nInventory files"
+  },
+  {
+    "objectID": "get-started/crossrefs.html#the-see-also-section",
+    "href": "get-started/crossrefs.html#the-see-also-section",
+    "title": "Cross references",
+    "section": "The “See Also” section",
+    "text": "The “See Also” section"
+  },
+  {
+    "objectID": "get-started/renderers.html",
+    "href": "get-started/renderers.html",
+    "title": "Renderers",
+    "section": "",
+    "text": "Coming soon!"
+  },
+  {
+    "objectID": "get-started/overview.html",
+    "href": "get-started/overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "Coming soon!"
+  },
+  {
+    "objectID": "get-started/quickstart.html",
+    "href": "get-started/quickstart.html",
+    "title": "Quickstart",
+    "section": "",
+    "text": "Ahhh yeah."
+  },
+  {
+    "objectID": "get-started/docstrings.html",
+    "href": "get-started/docstrings.html",
+    "title": "Handling docstrings",
+    "section": "",
+    "text": "Coming soon!"
+  },
+  {
+    "objectID": "api/index.html",
+    "href": "api/index.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "get_object(module: str, object_name: str, parser: str = 'numpy')\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\n\n\n\n\nget_function: a deprecated function.\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
+  },
+  {
+    "objectID": "api/index.html#parameters-1",
+    "href": "api/index.html#parameters-1",
+    "title": "quartodoc",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nproject\nstr\nName of the project (often the package name).\nrequired\n\n\nversion\nstr\nVersion of the project (often the package version).\nrequired\n\n\nitems\nlist[dc.Object\ndc.Alias]\nA docstring parser to use.\n\n\nuri\nstr\nCallable[dc.Object, str]\nLink relative to the docs where the items documentation lives.\n\n\ndispname\nstr\nCallable[dc.Object, str]\nName to be shown when a link to the item is made."
+  },
+  {
+    "objectID": "api/index.html#examples-1",
+    "href": "api/index.html#examples-1",
+    "title": "quartodoc",
+    "section": "Examples",
+    "text": "Examples\n>>> f_obj = get_object(\"quartodoc\", \"create_inventory\")\n>>> inv = create_inventory(\"example\", \"0.0\", [f_obj])\n>>> inv\nInventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)\nTo preview the inventory, we can convert it to a dictionary:\n>>> _to_clean_dict(inv)\n{'project': 'example',\n 'version': '0.0',\n 'count': 1,\n 'items': [{'name': 'quartodoc.create_inventory',\n   'domain': 'py',\n   'role': 'function',\n   'priority': '1',\n   'uri': 'quartodoc.create_inventory.html',\n   'dispname': '-'}]}"
+  },
+  {
+    "objectID": "api/index.html#parameters-2",
+    "href": "api/index.html#parameters-2",
+    "title": "quartodoc",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nin_name\nUnion[str, soi.Inventory]\nName of inventory file.\nrequired\n\n\nout_name\n\nOutput file name.\nNone"
+  },
+  {
+    "objectID": "api/index.html#parameters-3",
+    "href": "api/index.html#parameters-3",
+    "title": "quartodoc",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nheader_level\nint\nThe level of the header (e.g. 1 is the biggest).\n2\n\n\nshow_signature\nbool\nWhether to show the function signature.\nTrue"
+  },
+  {
+    "objectID": "api/index.html#examples-2",
+    "href": "api/index.html#examples-2",
+    "title": "quartodoc",
+    "section": "Examples",
+    "text": "Examples\n>>> from quartodoc import MdRenderer, get_object\n>>> renderer = MdRenderer(header_level=2)\n>>> f = get_object(\"quartodoc\", \"get_object\")\n>>> print(renderer.to_md(f)[:81])\n## get_object\n`get_object(module: str, object_name: str, parser: str = 'numpy')`"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "For users:\n\nRead and interact with docstrings.\nRender them to markdown or html.\nCrosslink to generated documentation.\n\nFor developers:\n\nEasy to extend / create new renderers.\nSimple: each step of the process is explained in detail, so you can use a single part (e.g. render a docstring to markdown) if you want."
+  }
+]
