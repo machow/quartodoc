@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: _build
   resources:
     - objects.json
 
