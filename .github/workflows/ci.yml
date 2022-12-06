@@ -3,6 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   push:
+    branches: ["main", "dev-*"]
   pull_request:
   release:
     types: [published]
@@ -113,7 +114,7 @@ jobs:
           npm install -g netlify-cli
           # push main branch to production, others to preview --
           if [ "${ALIAS}" == "main" ]; then
-            netlify deploy --dir=docs/_build --prod
+            netlify deploy --dir=docs/_build --alias="main"
           else
             netlify deploy --dir=docs/_build --alias="${ALIAS}"
           fi
@@ -132,3 +133,7 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: 'https://${{ steps.deployment.outputs.env }}--quartodoc.netlify.app'
           logs: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build
