@@ -1,0 +1,15 @@
+---
+title: "quartodoc"
+---
+
+For users:
+
+* Read and interact with docstrings.
+* Render them to markdown or html.
+* Crosslink to generated documentation.
+
+For developers:
+
+* Easy to extend / create new renderers.
+* Simple: each step of the process is explained in detail, so you can use a single
+  part (e.g. render a docstring to markdown) if you want.
