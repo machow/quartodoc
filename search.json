@@ -28,18 +28,32 @@
     "text": "The “See Also” section"
   },
   {
-    "objectID": "get-started/renderers.html",
-    "href": "get-started/renderers.html",
-    "title": "Renderers",
-    "section": "",
-    "text": "Coming soon!"
-  },
-  {
     "objectID": "get-started/overview.html",
     "href": "get-started/overview.html",
     "title": "Overview",
     "section": "",
     "text": "Coming soon!"
+  },
+  {
+    "objectID": "get-started/overview.html#goals",
+    "href": "get-started/overview.html#goals",
+    "title": "Overview",
+    "section": "Goals",
+    "text": "Goals\n\nLoad docstrings (with griffe)\nRender docstrings (e.g. with MdRenderer)\nEnable cross references to function documentation.\n\nLink to functions within a doc.\nLink to functions in other docs.\nGenerate an inventory file for other docs to link to yours.\n\n(WIP) Generate high-level summaries.\n\nClass summaries, with methods.\nTables of function names and descriptions."
+  },
+  {
+    "objectID": "get-started/overview.html#different-documentation-structures",
+    "href": "get-started/overview.html#different-documentation-structures",
+    "title": "Overview",
+    "section": "Different documentation structures",
+    "text": "Different documentation structures\n\nAll functions listed on a single page.\nFunctions split across a few pages (e.g. parsers, renderers).\nEach function gets its own page."
+  },
+  {
+    "objectID": "get-started/interlinks.html",
+    "href": "get-started/interlinks.html",
+    "title": "Interlinks filter",
+    "section": "",
+    "text": "Coming soon!\nSee the interlinks folder, which defines a WIP quarto filter for providing crossrefs."
   },
   {
     "objectID": "get-started/quickstart.html",
@@ -52,6 +66,34 @@
     "objectID": "get-started/docstrings.html",
     "href": "get-started/docstrings.html",
     "title": "Handling docstrings",
+    "section": "",
+    "text": "quartodoc uses the library griffe to load and parse docstrings."
+  },
+  {
+    "objectID": "get-started/docstrings.html#reading-docstrings",
+    "href": "get-started/docstrings.html#reading-docstrings",
+    "title": "Handling docstrings",
+    "section": "Reading docstrings",
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Function('get_object', None, None)>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f8ab0382280>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ab0757a30>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f8ab07579d0>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ab0757970>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f8ab03b4040>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+  },
+  {
+    "objectID": "get-started/docstrings.html#parsed-docstring-structure",
+    "href": "get-started/docstrings.html#parsed-docstring-structure",
+    "title": "Handling docstrings",
+    "section": "Parsed docstring structure",
+    "text": "Parsed docstring structure\n\nnumpydocstring - defines the numpydoc format for writing docstrings.\ngriffe modules for representing docstrings:\n\ngriffe.dataclasses\ngriffe.docstrings.dataclasses"
+  },
+  {
+    "objectID": "get-started/docstrings.html#rendering-docstrings",
+    "href": "get-started/docstrings.html#rendering-docstrings",
+    "title": "Handling docstrings",
+    "section": "Rendering docstrings",
+    "text": "Rendering docstrings\nquartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML. Tree visitors define how each type of object in the parse tree should be handled.\n\nimport griffe.dataclasses as dc\nimport griffe.docstrings.dataclasses as ds\n\nfrom plum import dispatch\nfrom typing import Union\n\n\nclass SomeRenderer:\n    def __init__(self, header_level: int = 1):\n        self.header_level = header_level\n\n    @dispatch\n    def visit(self, el):\n        raise NotImplementedError(f\"Unsupported type: {type(el)}\")\n\n    @dispatch\n    def visit(self, el: Union[dc.Alias, dc.Object]):\n        header = \"#\" * self.header_level\n        str_header = f\"{header} {el.name}\"\n        str_params = f\"N PARAMETERS: {len(el.parameters)}\"\n        str_sections = \"SECTIONS: \" + self.visit(el.docstring)\n        \n        # return something pretty\n        return \"\\n\".join([str_header, str_params, str_sections])\n\n    @dispatch\n    def visit(self, el: dc.Docstring):\n        return \"A docstring with {len(el.parsed)} pieces\"\n\nprint(SomeRenderer(header_level=2).visit(f_obj))\n\n## get_object\nN PARAMETERS: 3\nSECTIONS: A docstring with {len(el.parsed)} pieces\n\n\nNote 3 big pieces:\n\nGeneric dispatch: The plum dispatch function decorates each visit method. The type annotations specify the types of data each version of visit should dispatch on.\nDefault behavior: The first visit method ensures a NotImplementedError is raised by default.\nTree walking: visit methods often call visit again on sub elements."
+  },
+  {
+    "objectID": "get-started/basic-docs.html",
+    "href": "get-started/basic-docs.html",
+    "title": "Generating docs",
     "section": "",
     "text": "Coming soon!"
   },

@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -114,32 +177,71 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link">Overview</a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link active">Handling docstrings</a>
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Generating docs</a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/renderers.html" class="sidebar-item-text sidebar-link">Renderers</a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link">Cross references</a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Advanced</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link active">Handling docstrings</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link">Interlinks filter</a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reading-docstrings" id="toc-reading-docstrings" class="nav-link active" data-scroll-target="#reading-docstrings">Reading docstrings</a>
+  <ul class="collapse">
+  <li><a href="#function-name" id="toc-function-name" class="nav-link" data-scroll-target="#function-name">Function name</a></li>
+  <li><a href="#function-parameters" id="toc-function-parameters" class="nav-link" data-scroll-target="#function-parameters">Function parameters</a></li>
+  <li><a href="#raw-docstring-value" id="toc-raw-docstring-value" class="nav-link" data-scroll-target="#raw-docstring-value">Raw docstring value</a></li>
+  <li><a href="#parsed-docstring" id="toc-parsed-docstring" class="nav-link" data-scroll-target="#parsed-docstring">Parsed docstring</a></li>
+  </ul></li>
+  <li><a href="#parsed-docstring-structure" id="toc-parsed-docstring-structure" class="nav-link" data-scroll-target="#parsed-docstring-structure">Parsed docstring structure</a></li>
+  <li><a href="#rendering-docstrings" id="toc-rendering-docstrings" class="nav-link" data-scroll-target="#rendering-docstrings">Rendering docstrings</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -161,9 +263,146 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Coming soon!</p>
+<p>quartodoc uses the library <a href="https://github.com/mkdocstrings/griffe">griffe</a> to load and parse docstrings.</p>
+<section id="reading-docstrings" class="level2">
+<h2 class="anchored" data-anchor-id="reading-docstrings">Reading docstrings</h2>
+<p>Use the function <a href="../api/#get_object">get_object</a> to read in a docstring from a module.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> get_object</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f_obj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;Function('get_object', None, None)&gt;</code></pre>
+</div>
+</div>
+<p>The result above is a griffe object representing the function <code>quartodoc.get_object</code>, which has two important attributes:</p>
+<ul>
+<li><code>.name</code>: the function’s name.</li>
+<li><code>.parameters</code>: the function’s parameters.</li>
+<li><code>.docstring.value</code>: the actual docstring</li>
+<li><code>.docstring.parsed</code>: the docstring parsed into a tree of griffe objects</li>
+</ul>
+<section id="function-name" class="level3">
+<h3 class="anchored" data-anchor-id="function-name">Function name</h3>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f_obj.name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>'get_object'</code></pre>
+</div>
+</div>
+</section>
+<section id="function-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="function-parameters">Function parameters</h3>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f8ab0382280&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="raw-docstring-value" class="level3">
+<h3 class="anchored" data-anchor-id="raw-docstring-value">Raw docstring value</h3>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f_obj.docstring.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fetch a griffe object.
+
+Parameters
+----------
+module: str
+    A module name.
+object_name: str
+    A function name.
+parser: str
+    A docstring parser to use.
+
+See Also
+--------
+get_function: a deprecated function.
+
+Examples
+--------
+
+&gt;&gt;&gt; get_function("quartodoc", "get_function")
+&lt;Function('get_function', ...</code></pre>
+</div>
+</div>
+</section>
+<section id="parsed-docstring" class="level3">
+<h3 class="anchored" data-anchor-id="parsed-docstring">Parsed docstring</h3>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ab0757a30&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f8ab07579d0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ab0757970&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f8ab03b4040&gt;]</code></pre>
+</div>
+</div>
+<p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
+</section>
+</section>
+<section id="parsed-docstring-structure" class="level2">
+<h2 class="anchored" data-anchor-id="parsed-docstring-structure">Parsed docstring structure</h2>
+<ul>
+<li><a href="https://numpydoc.readthedocs.io/en/latest/format.html">numpydocstring</a> - defines the numpydoc format for writing docstrings.</li>
+<li>griffe modules for representing docstrings:
+<ul>
+<li><a href="https://mkdocstrings.github.io/griffe/reference/griffe/dataclasses/#griffe.dataclasses">griffe.dataclasses</a></li>
+<li><a href="https://mkdocstrings.github.io/griffe/reference/griffe/docstrings/dataclasses/#griffe.docstrings.dataclasses">griffe.docstrings.dataclasses</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="rendering-docstrings" class="level2">
+<h2 class="anchored" data-anchor-id="rendering-docstrings">Rendering docstrings</h2>
+<p>quartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML. Tree visitors define how each type of object in the parse tree should be handled.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> griffe.dataclasses <span class="im">as</span> dc</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> griffe.docstrings.dataclasses <span class="im">as</span> ds</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plum <span class="im">import</span> dispatch</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Union</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SomeRenderer:</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, header_level: <span class="bu">int</span> <span class="op">=</span> <span class="dv">1</span>):</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.header_level <span class="op">=</span> header_level</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">@dispatch</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> visit(<span class="va">self</span>, el):</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="ss">f"Unsupported type: </span><span class="sc">{</span><span class="bu">type</span>(el)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">@dispatch</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> visit(<span class="va">self</span>, el: Union[dc.Alias, dc.Object]):</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        header <span class="op">=</span> <span class="st">"#"</span> <span class="op">*</span> <span class="va">self</span>.header_level</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        str_header <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>header<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>el<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        str_params <span class="op">=</span> <span class="ss">f"N PARAMETERS: </span><span class="sc">{</span><span class="bu">len</span>(el.parameters)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        str_sections <span class="op">=</span> <span class="st">"SECTIONS: "</span> <span class="op">+</span> <span class="va">self</span>.visit(el.docstring)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># return something pretty</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join([str_header, str_params, str_sections])</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">@dispatch</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> visit(<span class="va">self</span>, el: dc.Docstring):</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"A docstring with {len(el.parsed)} pieces"</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(SomeRenderer(header_level<span class="op">=</span><span class="dv">2</span>).visit(f_obj))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## get_object
+N PARAMETERS: 3
+SECTIONS: A docstring with {len(el.parsed)} pieces</code></pre>
+</div>
+</div>
+<p>Note 3 big pieces:</p>
+<ul>
+<li><strong>Generic dispatch</strong>: The plum <code>dispatch</code> function decorates each <code>visit</code> method. The type annotations specify the types of data each version of visit should dispatch on.</li>
+<li><strong>Default behavior</strong>: The first <code>visit</code> method ensures a <code>NotImplementedError</code> is raised by default.</li>
+<li><strong>Tree walking</strong>: <code>visit</code> methods often call <code>visit</code> again on sub elements.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

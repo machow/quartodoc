@@ -114,32 +114,64 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link active">Overview</a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Handling docstrings</a>
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Generating docs</a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/renderers.html" class="sidebar-item-text sidebar-link">Renderers</a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link">Cross references</a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Advanced</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Handling docstrings</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link">Interlinks filter</a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#different-documentation-structures" id="toc-different-documentation-structures" class="nav-link" data-scroll-target="#different-documentation-structures">Different documentation structures</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -162,8 +194,34 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>Coming soon!</p>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<ul>
+<li>Load docstrings (with <a href="https://github.com/mkdocstrings/griffe">griffe</a>)</li>
+<li>Render docstrings (e.g.&nbsp;with <a href="../api/#sec-MdRenderer">MdRenderer</a>)</li>
+<li>Enable cross references to function documentation.
+<ul>
+<li>Link to functions within a doc.</li>
+<li>Link to functions in other docs.</li>
+<li>Generate an inventory file for other docs to link to yours.</li>
+</ul></li>
+<li>(WIP) Generate high-level summaries.
+<ul>
+<li>Class summaries, with methods.</li>
+<li>Tables of function names and descriptions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="different-documentation-structures" class="level2">
+<h2 class="anchored" data-anchor-id="different-documentation-structures">Different documentation structures</h2>
+<ul>
+<li>All functions listed on a single page.</li>
+<li>Functions split across a few pages (e.g.&nbsp;parsers, renderers).</li>
+<li>Each function gets its own page.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
