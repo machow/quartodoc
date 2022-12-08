@@ -7,6 +7,11 @@ jupyter:
     name: python3
 ---
 
+::: {.callout-warning} 
+quartodoc is work in progress! For a basic implementation, take a look at the [docs folder](https://github.com/machow/quartodoc/tree/main/docs) for this site,
+including [this script](https://github.com/machow/quartodoc/blob/main/docs/1_generate_api.py) used to generate API pages.
+:::
+
 Coming soon!
 
 ## Goals
