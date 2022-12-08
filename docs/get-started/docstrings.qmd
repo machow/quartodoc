@@ -7,4 +7,106 @@ jupyter:
     name: python3
 ---
 
-Coming soon!
+quartodoc uses the library [griffe](https://github.com/mkdocstrings/griffe) to load and parse docstrings.
+
+## Reading docstrings
+
+Use the function [get_object](/api/#get_object) to read in a docstring from a module.
+
+
+```{python}
+from quartodoc import get_object
+
+f_obj = get_object("quartodoc", "get_object")
+f_obj
+```
+
+The result above is a griffe object representing the function `quartodoc.get_object`,
+which has two important attributes:
+
+* `.name`: the function's name.
+* `.parameters`: the function's parameters.
+* `.docstring.value`: the actual docstring
+* `.docstring.parsed`: the docstring parsed into a tree of griffe objects
+
+### Function name
+
+```{python}
+f_obj.name
+```
+
+### Function parameters
+
+```{python}
+f_obj.parameters
+```
+
+### Raw docstring value
+
+```{python}
+print(f_obj.docstring.value)
+```
+
+### Parsed docstring
+
+```{python}
+f_obj.docstring.parsed
+```
+
+The docstring into a tree lets us define visitors, which can visit each element and
+do useful things. For example, print a high-level overview of its structure, or render it to markdown.
+
+## Parsed docstring structure
+
+* [numpydocstring](https://numpydoc.readthedocs.io/en/latest/format.html) - defines the numpydoc format for writing docstrings.
+* griffe modules for representing docstrings:
+  - [griffe.dataclasses](https://mkdocstrings.github.io/griffe/reference/griffe/dataclasses/#griffe.dataclasses)
+  - [griffe.docstrings.dataclasses](https://mkdocstrings.github.io/griffe/reference/griffe/docstrings/dataclasses/#griffe.docstrings.dataclasses)
+
+
+## Rendering docstrings
+
+quartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML.
+Tree visitors define how each type of object in the parse tree should be handled.
+
+```{python}
+import griffe.dataclasses as dc
+import griffe.docstrings.dataclasses as ds
+
+from plum import dispatch
+from typing import Union
+
+
+class SomeRenderer:
+    def __init__(self, header_level: int = 1):
+        self.header_level = header_level
+
+    @dispatch
+    def visit(self, el):
+        raise NotImplementedError(f"Unsupported type: {type(el)}")
+
+    @dispatch
+    def visit(self, el: Union[dc.Alias, dc.Object]):
+        header = "#" * self.header_level
+        str_header = f"{header} {el.name}"
+        str_params = f"N PARAMETERS: {len(el.parameters)}"
+        str_sections = "SECTIONS: " + self.visit(el.docstring)
+        
+        # return something pretty
+        return "\n".join([str_header, str_params, str_sections])
+
+    @dispatch
+    def visit(self, el: dc.Docstring):
+        return "A docstring with {len(el.parsed)} pieces"
+
+print(SomeRenderer(header_level=2).visit(f_obj))
+```
+
+Note 3 big pieces:
+
+* **Generic dispatch**: The plum `dispatch` function decorates each `visit` method. The type annotations
+  specify the types of data each version of visit should dispatch on.
+* **Default behavior**: The first `visit` method ensures a `NotImplementedError` is raised by default.
+* **Tree walking**: `visit` methods often call `visit` again on sub elements.
+
+

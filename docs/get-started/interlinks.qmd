@@ -1,0 +1,12 @@
+---
+title: Interlinks filter
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+Coming soon!
+
+See the [interlinks folder](https://github.com/machow/quartodoc/tree/main/interlinks), which defines a WIP quarto filter for providing crossrefs.

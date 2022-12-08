@@ -21,10 +21,15 @@ website:
       style: floating
       align: left
       contents:
-        - get-started/overview.qmd
-        - get-started/docstrings.qmd
-        - get-started/renderers.qmd
-        - get-started/crossrefs.qmd
+        - section: "Basics"
+          contents:
+            - get-started/overview.qmd
+            - get-started/basic-docs.qmd
+            - get-started/crossrefs.qmd
+        - section: "Advanced"
+          contents:
+            - get-started/docstrings.qmd
+            - get-started/interlinks.qmd
     - id: dummy
 
 
