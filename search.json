@@ -32,7 +32,7 @@
     "href": "get-started/overview.html",
     "title": "Overview",
     "section": "",
-    "text": "Coming soon!"
+    "text": "Warning\n\n\n\nquartodoc is work in progress! For a basic implementation, take a look at the docs folder for this site, including this script used to generate API pages.\nComing soon!"
   },
   {
     "objectID": "get-started/overview.html#goals",
@@ -88,7 +88,7 @@
     "href": "get-started/docstrings.html#reading-docstrings",
     "title": "Handling docstrings",
     "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Function('get_object', None, None)>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7fbe00988340>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7fbe009883a0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fbe00988ee0>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7fbe00988f40>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fbe00988fa0>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Function('get_object', None, None)>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f5288c3b400>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f5298019ee0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f52980190d0>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f5298019c70>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f5288c69070>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
   },
   {
     "objectID": "get-started/docstrings.html#parsed-docstring-structure",
@@ -165,6 +165,6 @@
     "href": "index.html",
     "title": "quartodoc",
     "section": "",
-    "text": "For users:\n\nRead and interact with docstrings.\nRender them to markdown or html.\nCrosslink to generated documentation.\n\nFor developers:\n\nEasy to extend / create new renderers.\nSimple: each step of the process is explained in detail, so you can use a single part (e.g. render a docstring to markdown) if you want."
+    "text": "Warning\n\n\n\nquartodoc is work in progress! For a basic implementation, take a look at the docs folder for this site, including this script used to generate API pages.\n\n\nFor users:\n\nRead and interact with docstrings.\nRender them to markdown or html.\nCrosslink to generated documentation.\n\nFor developers:\n\nEasy to extend / create new renderers.\nSimple: each step of the process is explained in detail, so you can use a single part (e.g. render a docstring to markdown) if you want."
   }
 ]
