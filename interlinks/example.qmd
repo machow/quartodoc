@@ -1,15 +1,15 @@
 ---
 title: "Interlinks Example"
 filters:
-  - interlinks
+  - interlinks.py
 interlinks:
   sources:
     siuba:
-      url: https://siuba.org
+      url: https://siuba.org/
       inv: null 
       fallback: objects_siuba.json
     vetiver:
-      url: https://vetiver.rstudio.com
+      url: https://vetiver.rstudio.com/
       inv: null
       fallback: objects_vetiver.json
 ---
@@ -20,10 +20,11 @@ interlinks:
 
 Tilde means don't display module:
 
-* `vetiver.SKLearnHandler`{.ref}
-* `~vetiver.SKLearnHandler`{.ref}
-* `siuba:siuba.dply.verbs.mutate`{.ref}
+* :ref:`vetiver.SKLearnHandler`
+* :ref:`~vetiver.SKLearnHandler`
+* :ref:`siuba.dply.verbs.mutate`
   - TODO: should be able to use `domain:...` to use a specific inventory file.
-* `some explanation <mutate>`{.ref}
+* :refzzz:`some explanation <mutate>`
   - TODO: this syntax let's you change the text of the link.
-* [some explanation](vetiver.SKLearnHandler)
+* [some explanation](`vetiver.SKLearnHandler`)
+* [](`vetiver.SKLearnHandler`)
