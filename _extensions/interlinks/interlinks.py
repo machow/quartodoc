@@ -7,6 +7,10 @@ from plum import dispatch
 inventory = {}
 
 
+class ConfigError(Exception):
+    pass
+
+
 def load_mock_inventory(items: "dict[str, str]"):
     for k, v in items.items():
         inventory[k] = v
@@ -75,7 +79,7 @@ def parse_rst_style_ref(full_text):
 
     pf.debug(full_text)
 
-    m = re.match(r"(?P<text>.+?)\<(?P<ref>[a-zA-Z\.\-: ]+)\>", full_text)
+    m = re.match(r"(?P<text>.+?)\<(?P<ref>[a-zA-Z\.\-: _]+)\>", full_text)
     if m is None:
         # TODO: print a warning or something
         return full_text, None
@@ -98,7 +102,17 @@ def visit(el, doc):
 def visit(el: pf.MetaList, doc):
     meta = doc.get_metadata()
 
-    for doc_name, cfg in meta["interlinks"]["sources"].items():
+    try:
+        sources = meta["interlinks"]["sources"]
+    except KeyError:
+        raise ConfigError(
+            "No interlinks.sources field detected in your metadata."
+            "Please add this to your header:\n\n"
+            "interlinks:"
+            "\n sources:"
+            "\n    - <source_name>: {url: ..., inv: ..., fallback: ... }"
+        )
+    for doc_name, cfg in sources.items():
         json_data = json.load(open(cfg["fallback"]))
 
         for item in json_data["items"]:
