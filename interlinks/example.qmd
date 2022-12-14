@@ -18,13 +18,12 @@ interlinks:
 
 ## Testing
 
-Tilde means don't display module:
 
-* :ref:`vetiver.SKLearnHandler`
-* :ref:`~vetiver.SKLearnHandler`
-* :ref:`siuba.dply.verbs.mutate`
-  - TODO: should be able to use `domain:...` to use a specific inventory file.
-* :refzzz:`some explanation <mutate>`
-  - TODO: this syntax let's you change the text of the link.
-* [some explanation](`vetiver.SKLearnHandler`)
-* [](`vetiver.SKLearnHandler`)
+| style | syntax | output |
+| ----- | ------ | ------ |
+| md custom text  | `[some explanation](`vetiver.SKLearnHandler`)` | [some explanation](`vetiver.SKLearnHandler`) |
+| md blank text   | `[](`vetiver.SKLearnHandler`)` | [](`vetiver.SKLearnHandler`) |
+| md blank text (~shortened)| `[](`~vetiver.SKLearnHandler`)` | [](`~vetiver.SKLearnHandler`) |
+| rst custom text | `` :ref:`some explanation <vetiver.SKLearnHandler>` `` | :ref:`some explanation <vetiver.SKLearnHandler>` |
+| rst blank text  | `` :ref:`vetiver.SKLearnHandler` `` | :ref:`vetiver.SKLearnHandler` |
+| rst blank text (~shortened) | `` :ref:`~vetiver.SKLearnHandler` `` | :ref:`~vetiver.SKLearnHandler` |

@@ -7,7 +7,32 @@ from plum import dispatch
 inventory = {}
 
 
-def ref_to_anchor(ref, text):
+def load_mock_inventory(items: "dict[str, str]"):
+    for k, v in items.items():
+        inventory[k] = v
+
+
+def ref_to_anchor(ref: str, text: "str | pf.ListContainer | None"):
+    """Return a Link element based on ref in interlink format
+
+    Parameters
+    ----------
+    ref:
+        The interlink reference (e.g. "my_module.my_function").
+    text:
+        The text to be displayed for the link.
+
+    Examples
+    --------
+
+    >>> url = "https://example.org/functools.partial.html"
+    >>> load_mock_inventory({"functools.partial": {"full_uri": url, "name": "functools.partial"}})
+    >>> ref_to_anchor("functools.partial")
+    Link(Str(functools.partial); url='https://example.org/functools.partial.html')
+
+    >>> ref_to_anchor("~functools.partial")
+    Link(Str(partial); url='https://example.org/functools.partial.html')
+    """
     # TODO: for now we just mutate el
     is_shortened = ref.startswith("~")
 
@@ -28,9 +53,39 @@ def ref_to_anchor(ref, text):
     else:
         # when the element is an Link, content is a ListContainer, but it has to be
         # *splatted back into Link?
-        return pf.Link(*text, url=dst_url)
+        if isinstance(text, pf.ListContainer):
+            return pf.Link(*text, url=dst_url)
+        elif isinstance(text, str):
+            return pf.Link(pf.Str(text), url=dst_url)
+        else:
+            raise TypeError(f"Unsupported type: {type(text)}")
 
     return pf.Link(name, url=dst_url)
+
+
+def parse_rst_style_ref(full_text):
+    """
+    Returns
+    -------
+    tuple
+        The parsed title (None if no title specified), and corresponding reference.
+    """
+
+    import re
+
+    pf.debug(full_text)
+
+    m = re.match(r"(?P<text>.+?)\<(?P<ref>[a-zA-Z\.\-: ]+)\>", full_text)
+    if m is None:
+        # TODO: print a warning or something
+        return full_text, None
+
+    text, ref = m.groups()
+
+    return ref, text
+
+
+# Visitor ================================================================================
 
 
 @dispatch
@@ -63,12 +118,14 @@ def visit(el: pf.Doc, doc):
 
 
 @dispatch
-def visit(el: pf.Code, doc):
-    # TODO: also need to remove ref. Should handle in parent?
-    left_el = el.prev
+def visit(el: pf.Plain, doc):
+    cont = el.content
+    if len(cont) == 2 and cont[0] == pf.Str(":ref:") and isinstance(cont[1], pf.Code):
+        _, code = el.content
 
-    if left_el == pf.Str(":ref:"):
-        return ref_to_anchor(el.text, None)
+        ref, title = parse_rst_style_ref(code.text)
+
+        return pf.Plain(ref_to_anchor(ref, title))
 
     return el
 
