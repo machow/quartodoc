@@ -1,59 +1,31 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "get-started/crossrefs.html",
+    "href": "get-started/crossrefs.html",
+    "title": "Cross references",
     "section": "",
-    "text": "About this site"
+    "text": "Coming soon!"
   },
   {
-    "objectID": "api/index.html",
-    "href": "api/index.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "get_object(module: str, object_name: str, parser: str = 'numpy')\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\n\n\n\n\nget_function: a deprecated function.\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
+    "objectID": "get-started/crossrefs.html#link-within-a-doc",
+    "href": "get-started/crossrefs.html#link-within-a-doc",
+    "title": "Cross references",
+    "section": "Link within a doc",
+    "text": "Link within a doc\n\n@sec-get_object doesn’t seem to work: ?@sec-get-_object.\nget_object"
   },
   {
-    "objectID": "api/index.html#parameters-1",
-    "href": "api/index.html#parameters-1",
-    "title": "quartodoc",
-    "section": "Parameters",
-    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nproject\nstr\nName of the project (often the package name).\nrequired\n\n\nversion\nstr\nVersion of the project (often the package version).\nrequired\n\n\nitems\nlist[dc.Object\ndc.Alias]\nA docstring parser to use.\n\n\nuri\nstr\nCallable[dc.Object, str]\nLink relative to the docs where the items documentation lives.\n\n\ndispname\nstr\nCallable[dc.Object, str]\nName to be shown when a link to the item is made."
+    "objectID": "get-started/crossrefs.html#link-to-external-docs",
+    "href": "get-started/crossrefs.html#link-to-external-docs",
+    "title": "Cross references",
+    "section": "Link to external docs",
+    "text": "Link to external docs\n\nInventory files"
   },
   {
-    "objectID": "api/index.html#examples-1",
-    "href": "api/index.html#examples-1",
-    "title": "quartodoc",
-    "section": "Examples",
-    "text": "Examples\n>>> f_obj = get_object(\"quartodoc\", \"create_inventory\")\n>>> inv = create_inventory(\"example\", \"0.0\", [f_obj])\n>>> inv\nInventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)\nTo preview the inventory, we can convert it to a dictionary:\n>>> _to_clean_dict(inv)\n{'project': 'example',\n 'version': '0.0',\n 'count': 1,\n 'items': [{'name': 'quartodoc.create_inventory',\n   'domain': 'py',\n   'role': 'function',\n   'priority': '1',\n   'uri': 'quartodoc.create_inventory.html',\n   'dispname': '-'}]}"
-  },
-  {
-    "objectID": "api/index.html#parameters-2",
-    "href": "api/index.html#parameters-2",
-    "title": "quartodoc",
-    "section": "Parameters",
-    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nin_name\nUnion[str, soi.Inventory]\nName of inventory file.\nrequired\n\n\nout_name\n\nOutput file name.\nNone"
-  },
-  {
-    "objectID": "api/index.html#parameters-3",
-    "href": "api/index.html#parameters-3",
-    "title": "quartodoc",
-    "section": "Parameters",
-    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nheader_level\nint\nThe level of the header (e.g. 1 is the biggest).\n2\n\n\nshow_signature\nbool\nWhether to show the function signature.\nTrue"
-  },
-  {
-    "objectID": "api/index.html#examples-2",
-    "href": "api/index.html#examples-2",
-    "title": "quartodoc",
-    "section": "Examples",
-    "text": "Examples\n>>> from quartodoc import MdRenderer, get_object\n>>> renderer = MdRenderer(header_level=2)\n>>> f = get_object(\"quartodoc\", \"get_object\")\n>>> print(renderer.to_md(f)[:81])\n## get_object\n`get_object(module: str, object_name: str, parser: str = 'numpy')`"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "Warning\n\n\n\nquartodoc is work in progress! For a basic implementation, take a look at the docs folder for this site, including this script used to generate API pages.\n\n\nFor users:\n\nRead and interact with docstrings.\nRender them to markdown or html.\nCrosslink to generated documentation.\n\nFor developers:\n\nEasy to extend / create new renderers.\nSimple: each step of the process is explained in detail, so you can use a single part (e.g. render a docstring to markdown) if you want."
+    "objectID": "get-started/crossrefs.html#the-see-also-section",
+    "href": "get-started/crossrefs.html#the-see-also-section",
+    "title": "Cross references",
+    "section": "The “See Also” section",
+    "text": "The “See Also” section"
   },
   {
     "objectID": "get-started/overview.html",
@@ -98,6 +70,13 @@
     "text": "Configuring the interlinks filter\nConfigure the filter in _quarto.yml or on specific pages:\nfilters:\n  - interlinks\ninterlinks:\n  sources:\n    numpy:\n      url: https://numpy.org/doc/stable/\n      inv: null \n      fallback: objects_numpy.json\n    python:\n      url: https://docs.python.org/3/\n      inv: null\n      fallback: objects_python.json\nWhere files like objects_numpy.json and objects_python.json are their inventories converted to JSON, using the functions from the section above.\nobjects.inv live at the root of sphinx project urls:\n\nnumpy: https://numpy.org/doc/stable/objects.inv\npython: https://docs.python.org/3/objects.inv\n\nThe rough idea is that this plugin will behave similar to jupyterbook linking, which supports both some intersphinx syntax, but also markdown syntax."
   },
   {
+    "objectID": "get-started/quickstart.html",
+    "href": "get-started/quickstart.html",
+    "title": "Quickstart",
+    "section": "",
+    "text": "Ahhh yeah."
+  },
+  {
     "objectID": "get-started/docstrings.html",
     "href": "get-started/docstrings.html",
     "title": "Handling docstrings",
@@ -109,7 +88,7 @@
     "href": "get-started/docstrings.html#reading-docstrings",
     "title": "Handling docstrings",
     "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Function('get_object', 217, 245)>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f808c8c7550>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f808fce74c0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f808cc4d250>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f808cc4d160>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f808c852be0>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Function('get_object', 217, 245)>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f68e86da430>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f68ecb782b0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f68e86e5d90>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f68ecb78ac0>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f68e86e5b50>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
   },
   {
     "objectID": "get-started/docstrings.html#parsed-docstring-structure",
@@ -126,13 +105,6 @@
     "text": "Rendering docstrings\nquartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML. Tree visitors define how each type of object in the parse tree should be handled.\n\nimport griffe.dataclasses as dc\nimport griffe.docstrings.dataclasses as ds\n\nfrom plum import dispatch\nfrom typing import Union\n\n\nclass SomeRenderer:\n    def __init__(self, header_level: int = 1):\n        self.header_level = header_level\n\n    @dispatch\n    def visit(self, el):\n        raise NotImplementedError(f\"Unsupported type: {type(el)}\")\n\n    @dispatch\n    def visit(self, el: Union[dc.Alias, dc.Object]):\n        header = \"#\" * self.header_level\n        str_header = f\"{header} {el.name}\"\n        str_params = f\"N PARAMETERS: {len(el.parameters)}\"\n        str_sections = \"SECTIONS: \" + self.visit(el.docstring)\n        \n        # return something pretty\n        return \"\\n\".join([str_header, str_params, str_sections])\n\n    @dispatch\n    def visit(self, el: dc.Docstring):\n        return \"A docstring with {len(el.parsed)} pieces\"\n\nprint(SomeRenderer(header_level=2).visit(f_obj))\n\n## get_object\nN PARAMETERS: 3\nSECTIONS: A docstring with {len(el.parsed)} pieces\n\n\nNote 3 big pieces:\n\nGeneric dispatch: The plum dispatch function decorates each visit method. The type annotations specify the types of data each version of visit should dispatch on.\nDefault behavior: The first visit method ensures a NotImplementedError is raised by default.\nTree walking: visit methods often call visit again on sub elements."
   },
   {
-    "objectID": "get-started/quickstart.html",
-    "href": "get-started/quickstart.html",
-    "title": "Quickstart",
-    "section": "",
-    "text": "Ahhh yeah."
-  },
-  {
     "objectID": "get-started/basic-docs.html",
     "href": "get-started/basic-docs.html",
     "title": "Generating docs",
@@ -140,31 +112,59 @@
     "text": "Coming soon!"
   },
   {
-    "objectID": "get-started/crossrefs.html",
-    "href": "get-started/crossrefs.html",
-    "title": "Cross references",
+    "objectID": "api/index.html",
+    "href": "api/index.html",
+    "title": "quartodoc",
     "section": "",
-    "text": "Coming soon!"
+    "text": "get_object(module: str, object_name: str, parser: str = 'numpy')\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\n\n\n\n\nget_function: a deprecated function.\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
   },
   {
-    "objectID": "get-started/crossrefs.html#link-within-a-doc",
-    "href": "get-started/crossrefs.html#link-within-a-doc",
-    "title": "Cross references",
-    "section": "Link within a doc",
-    "text": "Link within a doc\n\n@sec-get_object doesn’t seem to work: ?@sec-get-_object.\nget_object"
+    "objectID": "api/index.html#parameters-1",
+    "href": "api/index.html#parameters-1",
+    "title": "quartodoc",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nproject\nstr\nName of the project (often the package name).\nrequired\n\n\nversion\nstr\nVersion of the project (often the package version).\nrequired\n\n\nitems\nlist[dc.Object\ndc.Alias]\nA docstring parser to use.\n\n\nuri\nstr\nCallable[dc.Object, str]\nLink relative to the docs where the items documentation lives.\n\n\ndispname\nstr\nCallable[dc.Object, str]\nName to be shown when a link to the item is made."
   },
   {
-    "objectID": "get-started/crossrefs.html#link-to-external-docs",
-    "href": "get-started/crossrefs.html#link-to-external-docs",
-    "title": "Cross references",
-    "section": "Link to external docs",
-    "text": "Link to external docs\n\nInventory files"
+    "objectID": "api/index.html#examples-1",
+    "href": "api/index.html#examples-1",
+    "title": "quartodoc",
+    "section": "Examples",
+    "text": "Examples\n>>> f_obj = get_object(\"quartodoc\", \"create_inventory\")\n>>> inv = create_inventory(\"example\", \"0.0\", [f_obj])\n>>> inv\nInventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)\nTo preview the inventory, we can convert it to a dictionary:\n>>> _to_clean_dict(inv)\n{'project': 'example',\n 'version': '0.0',\n 'count': 1,\n 'items': [{'name': 'quartodoc.create_inventory',\n   'domain': 'py',\n   'role': 'function',\n   'priority': '1',\n   'uri': 'quartodoc.create_inventory.html',\n   'dispname': '-'}]}"
   },
   {
-    "objectID": "get-started/crossrefs.html#the-see-also-section",
-    "href": "get-started/crossrefs.html#the-see-also-section",
-    "title": "Cross references",
-    "section": "The “See Also” section",
-    "text": "The “See Also” section"
+    "objectID": "api/index.html#parameters-2",
+    "href": "api/index.html#parameters-2",
+    "title": "quartodoc",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nin_name\nUnion[str, soi.Inventory]\nName of inventory file.\nrequired\n\n\nout_name\n\nOutput file name.\nNone"
+  },
+  {
+    "objectID": "api/index.html#parameters-3",
+    "href": "api/index.html#parameters-3",
+    "title": "quartodoc",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nheader_level\nint\nThe level of the header (e.g. 1 is the biggest).\n2\n\n\nshow_signature\nbool\nWhether to show the function signature.\nTrue"
+  },
+  {
+    "objectID": "api/index.html#examples-2",
+    "href": "api/index.html#examples-2",
+    "title": "quartodoc",
+    "section": "Examples",
+    "text": "Examples\n>>> from quartodoc import MdRenderer, get_object\n>>> renderer = MdRenderer(header_level=2)\n>>> f = get_object(\"quartodoc\", \"get_object\")\n>>> print(renderer.to_md(f)[:81])\n## get_object\n`get_object(module: str, object_name: str, parser: str = 'numpy')`"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "Warning\n\n\n\nquartodoc is work in progress! For a basic implementation, take a look at the docs folder for this site, including this script used to generate API pages.\n\n\nFor users:\n\nRead and interact with docstrings.\nRender them to markdown or html.\nCrosslink to generated documentation.\n\nFor developers:\n\nEasy to extend / create new renderers.\nSimple: each step of the process is explained in detail, so you can use a single part (e.g. render a docstring to markdown) if you want."
   }
 ]
