@@ -4,6 +4,17 @@ project:
   resources:
     - objects.json
 
+filters:
+  - "interlinks"
+
+interlinks:
+  sources:
+    quartodoc:
+      # TODO: how to have it be "site root"?
+      url: "/"
+      inv: null
+      fallback: objects.json
+
 website:
   title: "quartodoc"
   navbar:

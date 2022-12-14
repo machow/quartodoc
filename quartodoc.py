@@ -340,7 +340,7 @@ class MdRenderer:
         _str_pars = self.to_md(el.parameters)
         str_sig = f"`{el.name}({_str_pars})`"
 
-        _anchor = f"{{#sec-{ el.name }}}"
+        _anchor = f"{{#{ el.name }}}"
         str_title = f"{'#' * self.header_level} {el.name} {_anchor}"
 
         str_body = []

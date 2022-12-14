@@ -9,6 +9,8 @@ from quartodoc import (
     __version__,
 )
 
+# Settings --------------------------------------------------------------------
+
 FUNCTIONS = [
     "get_object",
     "create_inventory",
@@ -17,16 +19,17 @@ FUNCTIONS = [
 ]
 
 PACKAGE = "quartodoc"
+API_FOLDER = "api"
 
 # +
 root = Path(sys.argv[0]).parent
 renderer = MdRenderer(header_level=1)
 
-p = root / "api"
+p = root / API_FOLDER
 p.mkdir(exist_ok=True)
 # -
 
-# Stage 1: inventory file ----
+# Stage 1: inventory file -----------------------------------------------------
 all_objects = []
 for name in FUNCTIONS:
     all_objects.append(get_object(PACKAGE, name))
@@ -35,12 +38,12 @@ inv = create_inventory(
     PACKAGE,
     __version__,
     all_objects,
-    uri=lambda s: f"api/#{s.name}",
+    uri=lambda s: f"{API_FOLDER}/#{s.name}",
     dispname=lambda s: f"{s.name}",
 )
 convert_inventory(inv, "objects.json")
 
-# Stage 2: render api pages ----
+# Stage 2: render api pages ---------------------------------------------------
 all_content = []
 for f_obj in all_objects:
     print(f_obj.name)

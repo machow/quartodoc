@@ -9,6 +9,16 @@ jupyter:
 
 Coming soon!
 
+| style | link text | syntax | output |
+| ----- | ---- | ------ | ------ |
+| manual |  | `[a link](../api/#get_object)` | [a link](../api/#get_object) | 
+| md | custom  | `` [some explanation](`quartodoc.get_object`) `` | [some explanation](`quartodoc.get_object`) |
+| md | default | `` [](`quartodoc.get_object`) `` | [](`quartodoc.get_object`) |
+| md | shortened | `` [](`~quartodoc.get_object`) `` | [](`~quartodoc.get_object`) |
+| rst | custom | `` :ref:`some explanation <quartodoc.get_object>` `` | :ref:`some explanation <quartodoc.get_object>` |
+| rst | default | `` :ref:`quartodoc.get_object` `` | :ref:`quartodoc.get_object` |
+| rst | shortened | `` :ref:`~quartodoc.get_object` `` | :ref:`~quartodoc.get_object` |
+
 ## Link within a doc
 
 * `@sec-get_object` doesn't seem to work: @sec-get-_object.

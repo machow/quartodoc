@@ -1,0 +1,29 @@
+---
+title: "Interlinks Example"
+filters:
+  - interlinks.py
+interlinks:
+  sources:
+    siuba:
+      url: https://siuba.org/
+      inv: null 
+      fallback: objects_siuba.json
+    vetiver:
+      url: https://vetiver.rstudio.com/
+      inv: null
+      fallback: objects_vetiver.json
+---
+
+## Heading {#sec-hello}
+
+## Testing
+
+
+| style | syntax | output |
+| ----- | ------ | ------ |
+| md custom text  | `[some explanation](`vetiver.SKLearnHandler`)` | [some explanation](`vetiver.SKLearnHandler`) |
+| md blank text   | `[](`vetiver.SKLearnHandler`)` | [](`vetiver.SKLearnHandler`) |
+| md blank text (~shortened)| `[](`~vetiver.SKLearnHandler`)` | [](`~vetiver.SKLearnHandler`) |
+| rst custom text | `` :ref:`some explanation <vetiver.SKLearnHandler>` `` | :ref:`some explanation <vetiver.SKLearnHandler>` |
+| rst blank text  | `` :ref:`vetiver.SKLearnHandler` `` | :ref:`vetiver.SKLearnHandler` |
+| rst blank text (~shortened) | `` :ref:`~vetiver.SKLearnHandler` `` | :ref:`~vetiver.SKLearnHandler` |
