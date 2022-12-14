@@ -77,7 +77,7 @@ def parse_rst_style_ref(full_text):
 
     import re
 
-    pf.debug(full_text)
+    # pf.debug(full_text)
 
     m = re.match(r"(?P<text>.+?)\<(?P<ref>[a-zA-Z\.\-: _]+)\>", full_text)
     if m is None:
@@ -147,8 +147,6 @@ def visit(el: pf.Plain, doc):
 @dispatch
 def visit(el: pf.Link, doc):
     if el.url.startswith("%60") and el.url.endswith("%60"):
-        pf.debug("In a markdown link ref")
-
         url = el.url[3:-3]
 
         # Get URL ----
