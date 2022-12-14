@@ -1,4 +1,4 @@
-# get_object {#sec-get_object}
+# get_object {#get_object}
 
 `get_object(module: str, object_name: str, parser: str = 'numpy')`
 
@@ -23,21 +23,21 @@ get_function: a deprecated function.
 <Function('get_function', ...
 ```
 
-# create_inventory {#sec-create_inventory}
+# create_inventory {#create_inventory}
 
-`create_inventory(project: str, version: str, items: list[dc.Object | dc.Alias], uri: str | Callable[dc.Object, str] = <function <lambda> at 0x105878700>, dispname: str | Callable[dc.Object, str] = '-')`
+`create_inventory(project: str, version: str, items: list[dc.Object | dc.Alias], uri: str | Callable[dc.Object, str] = lambda s: f'{s.canonical_path}.html', dispname: str | Callable[dc.Object, str] = '-')`
 
 Return a sphinx inventory file.
 
 ## Parameters
 
-| Name       | Type                           | Description                                                    | Default                              |
-|------------|--------------------------------|----------------------------------------------------------------|--------------------------------------|
-| `project`  | str                            | Name of the project (often the package name).                  | required                             |
-| `version`  | str                            | Version of the project (often the package version).            | required                             |
-| `items`    | list[dc.Object | dc.Alias]     | A docstring parser to use.                                     | required                             |
-| `uri`      | str | Callable[dc.Object, str] | Link relative to the docs where the items documentation lives. | `<function <lambda> at 0x105878700>` |
-| `dispname` | str | Callable[dc.Object, str] | Name to be shown when a link to the item is made.              | `'-'`                                |
+| Name       | Type                           | Description                                                    | Default                                |
+|------------|--------------------------------|----------------------------------------------------------------|----------------------------------------|
+| `project`  | str                            | Name of the project (often the package name).                  | required                               |
+| `version`  | str                            | Version of the project (often the package version).            | required                               |
+| `items`    | list[dc.Object | dc.Alias]     | A docstring parser to use.                                     | required                               |
+| `uri`      | str | Callable[dc.Object, str] | Link relative to the docs where the items documentation lives. | `lambda s: f'{s.canonical_path}.html'` |
+| `dispname` | str | Callable[dc.Object, str] | Name to be shown when a link to the item is made.              | `'-'`                                  |
 
 ## Examples
 
@@ -63,7 +63,7 @@ To preview the inventory, we can convert it to a dictionary:
    'dispname': '-'}]}
 ```
 
-# convert_inventory {#sec-convert_inventory}
+# convert_inventory {#convert_inventory}
 
 `convert_inventory(in_name: Union[str, soi.Inventory], out_name=None)`
 
@@ -76,7 +76,7 @@ Convert a sphinx inventory file to json.
 | `in_name`  | Union[str, soi.Inventory] | Name of inventory file. | required  |
 | `out_name` |                           | Output file name.       | `None`    |
 
-# MdRenderer {#sec-MdRenderer}
+# MdRenderer {#MdRenderer}
 
 `MdRenderer(self, header_level: int = 2, show_signature: bool = True, hook_pre=None)`
 
