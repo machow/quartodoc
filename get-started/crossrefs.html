@@ -198,6 +198,60 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>Coming soon!</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>style</th>
+<th>link text</th>
+<th>syntax</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>manual</td>
+<td></td>
+<td><code>[a link](../api/#get_object)</code></td>
+<td><a href="../api/#get_object">a link</a></td>
+</tr>
+<tr class="even">
+<td>md</td>
+<td>custom</td>
+<td><code>[some explanation](`quartodoc.get_object`)</code></td>
+<td><a href="../api/#get_object">some explanation</a></td>
+</tr>
+<tr class="odd">
+<td>md</td>
+<td>default</td>
+<td><code>[](`quartodoc.get_object`)</code></td>
+<td><a href="../api/#get_object">quartodoc.get_object</a></td>
+</tr>
+<tr class="even">
+<td>md</td>
+<td>shortened</td>
+<td><code>[](`~quartodoc.get_object`)</code></td>
+<td><a href="../api/#get_object">get_object</a></td>
+</tr>
+<tr class="odd">
+<td>rst</td>
+<td>custom</td>
+<td><code>:ref:`some explanation &lt;quartodoc.get_object&gt;`</code></td>
+<td><a href="../api/#get_object">some explanation </a></td>
+</tr>
+<tr class="even">
+<td>rst</td>
+<td>default</td>
+<td><code>:ref:`quartodoc.get_object`</code></td>
+<td><a href="../api/#get_object">quartodoc.get_object</a></td>
+</tr>
+<tr class="odd">
+<td>rst</td>
+<td>shortened</td>
+<td><code>:ref:`~quartodoc.get_object`</code></td>
+<td><a href="../api/#get_object">get_object</a></td>
+</tr>
+</tbody>
+</table>
 <section id="link-within-a-doc" class="level2">
 <h2 class="anchored" data-anchor-id="link-within-a-doc">Link within a doc</h2>
 <ul>

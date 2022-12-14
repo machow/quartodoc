@@ -172,22 +172,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sec-get_object" id="toc-sec-get_object" class="nav-link active" data-scroll-target="#sec-get_object">get_object</a>
+  <li><a href="#get_object" id="toc-get_object" class="nav-link active" data-scroll-target="#get_object">get_object</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul></li>
-  <li><a href="#sec-create_inventory" id="toc-sec-create_inventory" class="nav-link" data-scroll-target="#sec-create_inventory">create_inventory</a>
+  <li><a href="#create_inventory" id="toc-create_inventory" class="nav-link" data-scroll-target="#create_inventory">create_inventory</a>
   <ul class="collapse">
   <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters</a></li>
   <li><a href="#examples-1" id="toc-examples-1" class="nav-link" data-scroll-target="#examples-1">Examples</a></li>
   </ul></li>
-  <li><a href="#sec-convert_inventory" id="toc-sec-convert_inventory" class="nav-link" data-scroll-target="#sec-convert_inventory">convert_inventory</a>
+  <li><a href="#convert_inventory" id="toc-convert_inventory" class="nav-link" data-scroll-target="#convert_inventory">convert_inventory</a>
   <ul class="collapse">
   <li><a href="#parameters-2" id="toc-parameters-2" class="nav-link" data-scroll-target="#parameters-2">Parameters</a></li>
   </ul></li>
-  <li><a href="#sec-MdRenderer" id="toc-sec-MdRenderer" class="nav-link" data-scroll-target="#sec-MdRenderer">MdRenderer</a>
+  <li><a href="#MdRenderer" id="toc-MdRenderer" class="nav-link" data-scroll-target="#MdRenderer">MdRenderer</a>
   <ul class="collapse">
   <li><a href="#parameters-3" id="toc-parameters-3" class="nav-link" data-scroll-target="#parameters-3">Parameters</a></li>
   <li><a href="#examples-2" id="toc-examples-2" class="nav-link" data-scroll-target="#examples-2">Examples</a></li>
@@ -200,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="sec-get_object" class="level1">
+<section id="get_object" class="level1">
 <h1>get_object</h1>
 <p><code>get_object(module: str, object_name: str, parser: str = 'numpy')</code></p>
 <p>Fetch a griffe object.</p>
@@ -247,9 +247,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Function(<span class="st">'get_function'</span>, ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="sec-create_inventory" class="level1">
+<section id="create_inventory" class="level1">
 <h1>create_inventory</h1>
-<p><code>create_inventory(project: str, version: str, items: list[dc.Object | dc.Alias], uri: str | Callable[dc.Object, str] = &lt;function &lt;lambda&gt; at 0x105878700&gt;, dispname: str | Callable[dc.Object, str] = '-')</code></p>
+<p><code>create_inventory(project: str, version: str, items: list[dc.Object | dc.Alias], uri: str | Callable[dc.Object, str] = lambda s: f'{s.canonical_path}.html', dispname: str | Callable[dc.Object, str] = '-')</code></p>
 <p>Return a sphinx inventory file.</p>
 <section id="parameters-1" class="level2">
 <h2 class="anchored" data-anchor-id="parameters-1">Parameters</h2>
@@ -258,7 +258,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <col style="width: 8%">
 <col style="width: 21%">
 <col style="width: 43%">
-<col style="width: 26%">
+<col style="width: 27%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -321,7 +321,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   <span class="st">'dispname'</span>: <span class="st">'-'</span>}]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="sec-convert_inventory" class="level1">
+<section id="convert_inventory" class="level1">
 <h1>convert_inventory</h1>
 <p><code>convert_inventory(in_name: Union[str, soi.Inventory], out_name=None)</code></p>
 <p>Convert a sphinx inventory file to json.</p>
@@ -359,7 +359,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </section>
 </section>
-<section id="sec-MdRenderer" class="level1">
+<section id="MdRenderer" class="level1">
 <h1>MdRenderer</h1>
 <p><code>MdRenderer(self, header_level: int = 2, show_signature: bool = True, hook_pre=None)</code></p>
 <p>Render docstrings to markdown.</p>
