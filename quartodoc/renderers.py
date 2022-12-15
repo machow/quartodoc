@@ -1,11 +1,8 @@
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
-
 from dataclasses import dataclass
 from tabulate import tabulate
-
 from plum import dispatch
-
 from typing import Tuple, Union
 
 

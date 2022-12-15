@@ -74,3 +74,22 @@ def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Objec
     f_data = mod._modules_collection[f"{module}.{object_name}"]
 
     return f_data
+
+
+# Builders ====================================================================
+
+# renderer
+# package name
+# version
+# api_directory
+# exclude
+# style: one-big-page, individual
+
+# jobs:
+#   - tracks paths to things (uri, dispname)
+
+# phases:
+#   - collect
+#   - render (and record uri, dispname)
+#   - compose autosummaries
+#   - dump inventory
