@@ -5,6 +5,8 @@ from griffe import dataclasses as dc
 
 from plum import dispatch  # noqa
 
+from typing import Any
+
 
 # Docstring loading / parsing =================================================
 
@@ -76,6 +78,82 @@ def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Objec
     return f_data
 
 
+# pkgdown =====================================================================
+
+
+class Builder:
+    pass
+
+
+class BuilderPkgdown(Builder):
+    def __init__(
+        self,
+        sections: "list[Any]",
+        pkg_name: str,
+        dir: str = "reference",
+        title: str = "Function reference",
+    ):
+        self.validate(sections)
+
+        self.sections = sections
+        self.pkg_name = pkg_name
+        self.dir = dir
+        self.title = title
+
+    def build(self):
+        raise NotImplementedError()
+
+    def render_index(self):
+        rendered_sections = list(map(self.render_section, self.sections))
+        str_sections = "\n\n".join(rendered_sections)
+
+        return f"# {self.title}\n\n{str_sections}"
+
+    def render_section(self, section):
+        header = f"## {section['title']}\n\n{section['desc']}"
+
+        thead = "| name | description |\n| --- | --- |"
+
+        rendered = []
+        for func_name in section["contents"]:
+            obj = get_object(self.pkg_name, func_name)
+            rendered.append(self.render_object(obj))
+
+        str_func_table = "\n".join([thead, *rendered])
+        return f"{header}\n\n{str_func_table}"
+
+    def render_object(self, obj):
+        # get high-level description
+        docstring_parts = obj.docstring.parsed
+        if len(docstring_parts):
+            # TODO: or canonical_path
+            name = obj.name
+            description = docstring_parts[0].value
+            short = description.split("\n")[0]
+            return f"| {name} | {short} |"
+        else:
+            raise Exception("Function `{obj.canonical_path}` has no description")
+
+    def validate(self, d):
+        return True
+
+
+"""
+build:
+  style: pkgdown
+  dir: reference
+  sections:
+    - title: ...
+      desc: ...
+      contents:
+        - some_func
+        - another_func
+    - title: ...
+      desc: ...
+      contents:
+        - starts_with("...")
+"""
+
 # Builders ====================================================================
 
 # renderer
@@ -93,3 +171,39 @@ def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Objec
 #   - render (and record uri, dispname)
 #   - compose autosummaries
 #   - dump inventory
+
+# build(object, config)
+# build(Function, FunctionCfg)
+# build(Class, ClsCfg)
+
+# quartodoc
+#   build:
+#     - dir: api
+#       module: "quartodoc"
+#       include: ...
+#       exclude: ["preview"]
+#       overrides:
+
+
+# quartodoc
+#   module: "quartodoc"
+#   style: one-big-page
+#   sections:
+#     - dir: api
+#       include:
+#         - preview
+
+
+# quartodoc
+#   module: "quartodoc"
+#   style: many-pages
+#   sections:
+#     - file: api/ast.qmd
+#       include:
+#         - preview
+#     - file: api/renderers.qmd
+#       include:
+#         - "
+#   index:
+#
+# OR port pkgdown first
