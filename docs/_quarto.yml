@@ -3,6 +3,7 @@ project:
   output-dir: _build
   resources:
     - objects.json
+  pre-render: "python -m quartodoc _quarto.yml"
 
 filters:
   - "interlinks"
@@ -10,10 +11,46 @@ filters:
 interlinks:
   sources:
     quartodoc:
-      # TODO: how to have it be "site root"?
+      # TODO: add note that this works as the site root
       url: "/"
       inv: null
       fallback: objects.json
+
+quartodoc:
+  style: pkgdown
+  dir: api
+  package: quartodoc
+  sections:
+    - title: API Builders
+      desc: |
+        Builders are responsible for building documentation. They tie all the pieces
+        of quartodoc together, and can be defined in your _quarto.yml config.
+      contents:
+        - Builder
+        - BuilderPkgdown
+        - BuilderSinglePage
+
+    - title: Docstring Renderers
+      desc: |
+        Renderers convert parsed docstrings into a target format, like markdown.
+      contents:
+        - MdRenderer
+
+    - title: Inspection
+      desc: |
+        These functions Fetch and analyze python objects, including parsing docstrings.
+      contents:
+        - get_object
+        - preview
+
+    - title: Inventory links
+      desc: |
+        Inventory files map a functions name to its corresponding url in your docs.
+        These functions allow you to create and transform inventory files.
+      contents:
+        - create_inventory
+        - convert_inventory
+
 
 website:
   title: "quartodoc"

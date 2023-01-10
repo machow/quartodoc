@@ -39,6 +39,10 @@ def escape(val: str):
     return f"`{val}`"
 
 
+def sanitize(val: str):
+    return val.replace("\n", " ")
+
+
 # to_md -----------------------------------------------------------------------
 # griffe function dataclass structure:
 #   Object:
@@ -61,7 +65,35 @@ def escape(val: str):
 #   https://github.com/mkdocstrings/python/tree/master/src/mkdocstrings_handlers/python/templates
 
 
-class MdRenderer:
+class Renderer:
+    style: str
+    _registry: "dict[str, Renderer]" = {}
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+
+        if cls.style in cls._registry:
+            raise KeyError(f"A builder for style {cls.style} already exists")
+
+        cls._registry[cls.style] = cls
+
+    @classmethod
+    def from_config(cls, cfg: "dict | Renderer | str"):
+        if isinstance(cfg, Renderer):
+            return cfg
+        elif isinstance(cfg, str):
+            style, cfg = cfg, {}
+        elif isinstance(cfg, dict):
+            style = cfg["style"]
+            cfg = {k: v for k, v in cfg.items() if k != "style"}
+        else:
+            raise TypeError(type(cfg))
+
+        subclass = cls._registry[style]
+        return subclass(**cfg)
+
+
+class MdRenderer(Renderer):
     """Render docstrings to markdown.
 
     Parameters
@@ -83,6 +115,8 @@ class MdRenderer:
 
     """
 
+    style = "markdown"
+
     def __init__(
         self, header_level: int = 2, show_signature: bool = True, hook_pre=None
     ):
@@ -101,7 +135,7 @@ class MdRenderer:
         _str_pars = self.to_md(el.parameters)
         str_sig = f"`{el.name}({_str_pars})`"
 
-        _anchor = f"{{#sec-{ el.name }}}"
+        _anchor = f"{{ #{el.name} }}"
         str_title = f"{'#' * self.header_level} {el.name} {_anchor}"
 
         str_body = []
@@ -168,7 +202,7 @@ class MdRenderer:
             annotation = el.annotation
         else:
             annotation = el.annotation.full if el.annotation else None
-        return (escape(el.name), annotation, el.description, default)
+        return (escape(el.name), annotation, sanitize(el.description), default)
 
     # examples ----
 

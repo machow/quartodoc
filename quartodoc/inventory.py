@@ -134,13 +134,10 @@ def _create_inventory_item(
     dispname: "str | Callable[dc.Object, str]" = "-",
     priority="1",
 ) -> soi.DataObjStr:
-    if isinstance(item, dc.Alias):
-        target = item.target
-    else:
-        target = item
+    target = item
 
     return soi.DataObjStr(
-        name=target.canonical_path,
+        name=target.path,
         domain="py",
         role=target.kind.value,
         priority=priority,
