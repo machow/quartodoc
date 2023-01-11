@@ -2,10 +2,16 @@ from griffe.loader import GriffeLoader
 from griffe.docstrings.parsers import Parser, parse
 from griffe.docstrings import dataclasses as ds  # noqa
 from griffe import dataclasses as dc
-
 from plum import dispatch  # noqa
 
-from typing import Any
+from .inventory import create_inventory
+
+from typing import Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import sphobjinv as soi
+
+    from griffe import dataclasses as dc
 
 
 # Docstring loading / parsing =================================================
@@ -90,6 +96,7 @@ class BuilderPkgdown(Builder):
         self,
         sections: "list[Any]",
         pkg_name: str,
+        version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
     ):
@@ -97,11 +104,31 @@ class BuilderPkgdown(Builder):
 
         self.sections = sections
         self.pkg_name = pkg_name
+        self.version = None
         self.dir = dir
         self.title = title
 
+        self.items: "dict[str, dc.Object | dc.Alias]" = {}
+        self.create_items()
+
+        self.inventory: "None | soi.Inventory"
+        self.create_inventory()
+
     def build(self):
         raise NotImplementedError()
+
+    def create_items(self):
+        for section in self.sections:
+            for func_name in section["contents"]:
+                obj = get_object(self.pkg_name, func_name)
+                self.items[obj.path] = obj
+
+    def create_inventory(self):
+        # TODO: get package version
+        version = "0.0.9999" if self.version is None else self.version
+        self.inventory = create_inventory(
+            self.pkg_name, version, list(self.items.values()), self.fetch_object_uri
+        )
 
     def render_index(self):
         rendered_sections = list(map(self.render_section, self.sections))
@@ -125,14 +152,19 @@ class BuilderPkgdown(Builder):
     def render_object(self, obj):
         # get high-level description
         docstring_parts = obj.docstring.parsed
+
+        # TODO: look up from inventory?
+        link = f"[{obj.path}](`{obj.path}`)"
         if len(docstring_parts):
             # TODO: or canonical_path
-            name = obj.name
             description = docstring_parts[0].value
             short = description.split("\n")[0]
-            return f"| {name} | {short} |"
+            return f"| {link} | {short} |"
         else:
             raise Exception("Function `{obj.canonical_path}` has no description")
+
+    def fetch_object_uri(self, obj):
+        return f"{self.dir}/{obj.canonical_path}.html"
 
     def validate(self, d):
         return True
