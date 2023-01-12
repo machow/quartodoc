@@ -48,12 +48,14 @@ def ref_to_anchor(ref: str, text: "str | pf.ListContainer | None"):
     except KeyError:
         raise KeyError(f"Cross reference not found in an inventory file: {stripped}")
 
+    pf.debug(f"TEXT IS: {text}")
     if not text:
+        name = entry["name"] if entry["dispname"] == "-" else entry["dispname"]
         if is_shortened:
             # shorten names from module.sub_module.func_name -> func_name
-            name = pf.Str(entry["name"].split(".")[-1])
+            name = pf.Str(name.split(".")[-1])
         else:
-            name = pf.Str(entry["name"])
+            name = pf.Str(name)
     else:
         # when the element is an Link, content is a ListContainer, but it has to be
         # *splatted back into Link?
