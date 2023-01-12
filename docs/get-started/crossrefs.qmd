@@ -19,10 +19,6 @@ Coming soon!
 | rst | default | `` :ref:`quartodoc.get_object` `` | :ref:`quartodoc.get_object` |
 | rst | shortened | `` :ref:`~quartodoc.get_object` `` | :ref:`~quartodoc.get_object` |
 
-## Link within a doc
-
-* `@sec-get_object` doesn't seem to work: @sec-get-_object.
-* [get_object](/api/#sec-get_object)
 
 ## Link to external docs
 

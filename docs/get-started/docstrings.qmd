@@ -9,13 +9,25 @@ jupyter:
 
 quartodoc uses the library [griffe](https://github.com/mkdocstrings/griffe) to load and parse docstrings.
 
+## Docstring structure
+
+quartodoc currently expects docstrings to be in the [numpydocstring](https://numpydoc.readthedocs.io/en/latest/format.html) format.
+
+Docstrings are loaded and parsed using [griffe](https://mkdocstrings.github.io/griffe),
+which uses custom data classes to represent the structure of a program:
+
+- [griffe.dataclasses](https://mkdocstrings.github.io/griffe/reference/griffe/dataclasses/#griffe.dataclasses) - represent the structure of python objects.
+- [griffe.docstrings.dataclasses](https://mkdocstrings.github.io/griffe/reference/griffe/docstrings/dataclasses/#griffe.docstrings.dataclasses) - represent the structure of parsed docstrings.
+
+
+
 ## Reading docstrings
 
 Use the function [get_object](/api/#get_object) to read in a docstring from a module.
 
 
 ```{python}
-from quartodoc import get_object
+from quartodoc import get_object, preview
 
 f_obj = get_object("quartodoc", "get_object")
 f_obj
@@ -56,13 +68,29 @@ f_obj.docstring.parsed
 The docstring into a tree lets us define visitors, which can visit each element and
 do useful things. For example, print a high-level overview of its structure, or render it to markdown.
 
-## Parsed docstring structure
+## Previewing docstrings
 
-* [numpydocstring](https://numpydoc.readthedocs.io/en/latest/format.html) - defines the numpydoc format for writing docstrings.
-* griffe modules for representing docstrings:
-  - [griffe.dataclasses](https://mkdocstrings.github.io/griffe/reference/griffe/dataclasses/#griffe.dataclasses)
-  - [griffe.docstrings.dataclasses](https://mkdocstrings.github.io/griffe/reference/griffe/docstrings/dataclasses/#griffe.docstrings.dataclasses)
+Use the preview function to see the overall structure of a parsed docstring.
 
+```{python}
+from quartodoc import get_object, preview
+
+f_obj = get_object("quartodoc", "get_object")
+```
+
+### Raw docstring
+
+
+```{python}
+print(f_obj.docstring.value)
+```
+
+### Preview
+
+
+```{python}
+preview(f_obj.docstring.parsed)
+```
 
 ## Rendering docstrings
 
@@ -109,4 +137,12 @@ Note 3 big pieces:
 * **Default behavior**: The first `visit` method ensures a `NotImplementedError` is raised by default.
 * **Tree walking**: `visit` methods often call `visit` again on sub elements.
 
+
+## Parsing other docstring formats
+
+Currently, quartodoc expects docstrings in the numpydoc format.
+However, the tool it uses under the hood (griffe) is easy to customize, and supports multiple formats.
+
+See the griffe [loading docs](https://mkdocstrings.github.io/griffe/loading/) for instructions.
+Specifically, the [GriffeLoader](https://mkdocstrings.github.io/griffe/reference/griffe/loader/#griffe.loader.GriffeLoader) takes options for customizing docstring parsing.
 
