@@ -3,6 +3,7 @@ README.md: README.qmd
 
 docs-build:
 	cd docs && quarto add --no-prompt ..
+	cd docs && python -m quartodoc
 	quarto render docs
 
 requirements-dev.txt:
