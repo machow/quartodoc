@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,69 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -172,25 +109,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get_object" id="toc-get_object" class="nav-link active" data-scroll-target="#get_object">get_object</a>
+  <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
-  </ul></li>
-  <li><a href="#create_inventory" id="toc-create_inventory" class="nav-link" data-scroll-target="#create_inventory">create_inventory</a>
-  <ul class="collapse">
-  <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters</a></li>
-  <li><a href="#examples-1" id="toc-examples-1" class="nav-link" data-scroll-target="#examples-1">Examples</a></li>
-  </ul></li>
-  <li><a href="#convert_inventory" id="toc-convert_inventory" class="nav-link" data-scroll-target="#convert_inventory">convert_inventory</a>
-  <ul class="collapse">
-  <li><a href="#parameters-2" id="toc-parameters-2" class="nav-link" data-scroll-target="#parameters-2">Parameters</a></li>
-  </ul></li>
-  <li><a href="#MdRenderer" id="toc-MdRenderer" class="nav-link" data-scroll-target="#MdRenderer">MdRenderer</a>
-  <ul class="collapse">
-  <li><a href="#parameters-3" id="toc-parameters-3" class="nav-link" data-scroll-target="#parameters-3">Parameters</a></li>
-  <li><a href="#examples-2" id="toc-examples-2" class="nav-link" data-scroll-target="#examples-2">Examples</a></li>
+  <li><a href="#api-builders" id="toc-api-builders" class="nav-link" data-scroll-target="#api-builders">API Builders</a></li>
+  <li><a href="#docstring-renderers" id="toc-docstring-renderers" class="nav-link" data-scroll-target="#docstring-renderers">Docstring Renderers</a></li>
+  <li><a href="#inspection" id="toc-inspection" class="nav-link" data-scroll-target="#inspection">Inspection</a></li>
+  <li><a href="#inventory-links" id="toc-inventory-links" class="nav-link" data-scroll-target="#inventory-links">Inventory links</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -200,210 +124,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="get_object" class="level1">
-<h1>get_object</h1>
-<p><code>get_object(module: str, object_name: str, parser: str = 'numpy')</code></p>
-<p>Fetch a griffe object.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<section id="function-reference" class="level1">
+<h1>Function reference</h1>
+<section id="api-builders" class="level2">
+<h2 class="anchored" data-anchor-id="api-builders">API Builders</h2>
+<p>Builders are responsible for building documentation. They tie all the pieces of quartodoc together, and can be defined in your _quarto.yml config.</p>
 <table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td><code>module</code></td>
-<td>str</td>
-<td>A module name.</td>
-<td>required</td>
+<td><a href="../api/Builder.html">Builder</a></td>
+<td>Base class for building API docs.</td>
 </tr>
 <tr class="even">
-<td><code>object_name</code></td>
-<td>str</td>
-<td>A function name.</td>
-<td>required</td>
+<td><a href="../api/BuilderPkgdown.html">BuilderPkgdown</a></td>
+<td>Build an API in R pkgdown style.</td>
 </tr>
 <tr class="odd">
-<td><code>parser</code></td>
-<td>str</td>
-<td>A docstring parser to use.</td>
-<td><code>'numpy'</code></td>
+<td><a href="../api/BuilderSinglePage.html">BuilderSinglePage</a></td>
+<td>Build an API with all docs embedded on a single page.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="see-also" class="level2">
-<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
-<p>get_function: a deprecated function.</p>
-</section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> get_function(<span class="st">"quartodoc"</span>, <span class="st">"get_function"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Function(<span class="st">'get_function'</span>, ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="create_inventory" class="level1">
-<h1>create_inventory</h1>
-<p><code>create_inventory(project: str, version: str, items: list[dc.Object | dc.Alias], uri: str | Callable[dc.Object, str] = lambda s: f'{s.canonical_path}.html', dispname: str | Callable[dc.Object, str] = '-')</code></p>
-<p>Return a sphinx inventory file.</p>
-<section id="parameters-1" class="level2">
-<h2 class="anchored" data-anchor-id="parameters-1">Parameters</h2>
+<section id="docstring-renderers" class="level2">
+<h2 class="anchored" data-anchor-id="docstring-renderers">Docstring Renderers</h2>
+<p>Renderers convert parsed docstrings into a target format, like markdown.</p>
 <table class="table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 21%">
-<col style="width: 43%">
-<col style="width: 27%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td><code>project</code></td>
-<td>str</td>
-<td>Name of the project (often the package name).</td>
-<td>required</td>
-</tr>
-<tr class="even">
-<td><code>version</code></td>
-<td>str</td>
-<td>Version of the project (often the package version).</td>
-<td>required</td>
-</tr>
-<tr class="odd">
-<td><code>items</code></td>
-<td>list[dc.Object</td>
-<td>dc.Alias]</td>
-<td>A docstring parser to use.</td>
-</tr>
-<tr class="even">
-<td><code>uri</code></td>
-<td>str</td>
-<td>Callable[dc.Object, str]</td>
-<td>Link relative to the docs where the items documentation lives.</td>
-</tr>
-<tr class="odd">
-<td><code>dispname</code></td>
-<td>str</td>
-<td>Callable[dc.Object, str]</td>
-<td>Name to be shown when a link to the item is made.</td>
+<td><a href="../api/MdRenderer.html">MdRenderer</a></td>
+<td>Render docstrings to markdown.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="examples-1" class="level2">
-<h2 class="anchored" data-anchor-id="examples-1">Examples</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"create_inventory"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv <span class="op">=</span> create_inventory(<span class="st">"example"</span>, <span class="st">"0.0"</span>, [f_obj])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Inventory(project<span class="op">=</span><span class="st">'example'</span>, version<span class="op">=</span><span class="st">'0.0'</span>, source_type<span class="op">=&lt;</span>SourceTypes.Manual: <span class="st">'manual'</span><span class="op">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>To preview the inventory, we can convert it to a dictionary:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> _to_clean_dict(inv)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>{<span class="st">'project'</span>: <span class="st">'example'</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'version'</span>: <span class="st">'0.0'</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="st">'count'</span>: <span class="dv">1</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="st">'items'</span>: [{<span class="st">'name'</span>: <span class="st">'quartodoc.create_inventory'</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">'domain'</span>: <span class="st">'py'</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">'role'</span>: <span class="st">'function'</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="st">'priority'</span>: <span class="st">'1'</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">'uri'</span>: <span class="st">'quartodoc.create_inventory.html'</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   <span class="st">'dispname'</span>: <span class="st">'-'</span>}]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="convert_inventory" class="level1">
-<h1>convert_inventory</h1>
-<p><code>convert_inventory(in_name: Union[str, soi.Inventory], out_name=None)</code></p>
-<p>Convert a sphinx inventory file to json.</p>
-<section id="parameters-2" class="level2">
-<h2 class="anchored" data-anchor-id="parameters-2">Parameters</h2>
+<section id="inspection" class="level2">
+<h2 class="anchored" data-anchor-id="inspection">Inspection</h2>
+<p>These functions Fetch and analyze python objects, including parsing docstrings.</p>
 <table class="table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 36%">
-<col style="width: 33%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td><code>in_name</code></td>
-<td>Union[str, soi.Inventory]</td>
-<td>Name of inventory file.</td>
-<td>required</td>
+<td><a href="../api/get_object.html">get_object</a></td>
+<td>Fetch a griffe object.</td>
 </tr>
 <tr class="even">
-<td><code>out_name</code></td>
-<td></td>
-<td>Output file name.</td>
-<td><code>None</code></td>
+<td><a href="../api/preview.html">preview</a></td>
+<td>Print a friendly representation of a griffe object (e.g.&nbsp;function, docstring)</td>
 </tr>
 </tbody>
 </table>
 </section>
-</section>
-<section id="MdRenderer" class="level1">
-<h1>MdRenderer</h1>
-<p><code>MdRenderer(self, header_level: int = 2, show_signature: bool = True, hook_pre=None)</code></p>
-<p>Render docstrings to markdown.</p>
-<section id="parameters-3" class="level2">
-<h2 class="anchored" data-anchor-id="parameters-3">Parameters</h2>
+<section id="inventory-links" class="level2">
+<h2 class="anchored" data-anchor-id="inventory-links">Inventory links</h2>
+<p>Inventory files map a functions name to its corresponding url in your docs. These functions allow you to create and transform inventory files.</p>
 <table class="table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 9%">
-<col style="width: 57%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td><code>header_level</code></td>
-<td>int</td>
-<td>The level of the header (e.g.&nbsp;1 is the biggest).</td>
-<td><code>2</code></td>
+<td><a href="../api/create_inventory.html">create_inventory</a></td>
+<td>Return a sphinx inventory file.</td>
 </tr>
 <tr class="even">
-<td><code>show_signature</code></td>
-<td>bool</td>
-<td>Whether to show the function signature.</td>
-<td><code>True</code></td>
+<td><a href="../api/convert_inventory.html">convert_inventory</a></td>
+<td>Convert a sphinx inventory file to json.</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="examples-2" class="level2">
-<h2 class="anchored" data-anchor-id="examples-2">Examples</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> MdRenderer, get_object</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> renderer <span class="op">=</span> MdRenderer(header_level<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(renderer.to_md(f)[:<span class="dv">81</span>])</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">## get_object</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>`get_object(module: <span class="bu">str</span>, object_name: <span class="bu">str</span>, parser: <span class="bu">str</span> <span class="op">=</span> <span class="st">'numpy'</span>)`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

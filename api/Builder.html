@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Quickstart</title>
+<title>quartodoc – builder</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -105,31 +105,80 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#Builder" id="toc-Builder" class="nav-link active" data-scroll-target="#Builder">Builder</a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Quickstart</h1>
-</div>
 
 
+<section id="Builder" class="level2">
+<h2 class="anchored" data-anchor-id="Builder">Builder</h2>
+<p><code>Builder(self, sections: list[Any], package: str, version: str | None = None, dir: str = 'reference', title: str = 'Function reference', renderer: dict | Renderer | str = 'markdown')</code></p>
+<p>Base class for building API docs.</p>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 66%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sections</code></td>
+<td>list[Any]</td>
+<td>A list of sections, with items to document.</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>package</code></td>
+<td>str</td>
+<td>The name of the package.</td>
+<td>required</td>
+</tr>
+<tr class="odd">
+<td><code>version</code></td>
+<td>str</td>
+<td>None</td>
+<td>The package version. By default this attempts to look up the current package version (TODO).</td>
+</tr>
+<tr class="even">
+<td><code>dir</code></td>
+<td>str</td>
+<td>Name of API directory.</td>
+<td><code>'reference'</code></td>
+</tr>
+<tr class="odd">
+<td><code>title</code></td>
+<td>str</td>
+<td>Title of the API index page.</td>
+<td><code>'Function reference'</code></td>
+</tr>
+</tbody>
+</table>
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<p>Ahhh yeah.</p>
-
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

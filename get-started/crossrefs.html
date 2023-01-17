@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../get-started/architecture.html" rel="next">
+<link href="../get-started/basic-docs.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -149,6 +151,11 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../get-started/architecture.html" class="sidebar-item-text sidebar-link">Architecture</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Handling docstrings</a>
   </div>
 </li>
@@ -168,8 +175,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#link-within-a-doc" id="toc-link-within-a-doc" class="nav-link active" data-scroll-target="#link-within-a-doc">Link within a doc</a></li>
-  <li><a href="#link-to-external-docs" id="toc-link-to-external-docs" class="nav-link" data-scroll-target="#link-to-external-docs">Link to external docs</a>
+  <li><a href="#link-to-external-docs" id="toc-link-to-external-docs" class="nav-link active" data-scroll-target="#link-to-external-docs">Link to external docs</a>
   <ul class="collapse">
   <li><a href="#inventory-files" id="toc-inventory-files" class="nav-link" data-scroll-target="#inventory-files">Inventory files</a></li>
   </ul></li>
@@ -218,47 +224,40 @@ ul.task-list li input[type="checkbox"] {
 <td>md</td>
 <td>custom</td>
 <td><code>[some explanation](`quartodoc.get_object`)</code></td>
-<td><a href="../api/#get_object">some explanation</a></td>
+<td><a href="../api/get_object.html">some explanation</a></td>
 </tr>
 <tr class="odd">
 <td>md</td>
 <td>default</td>
 <td><code>[](`quartodoc.get_object`)</code></td>
-<td><a href="../api/#get_object">quartodoc.get_object</a></td>
+<td><a href="../api/get_object.html">get_object</a></td>
 </tr>
 <tr class="even">
 <td>md</td>
 <td>shortened</td>
 <td><code>[](`~quartodoc.get_object`)</code></td>
-<td><a href="../api/#get_object">get_object</a></td>
+<td><a href="../api/get_object.html">get_object</a></td>
 </tr>
 <tr class="odd">
 <td>rst</td>
 <td>custom</td>
 <td><code>:ref:`some explanation &lt;quartodoc.get_object&gt;`</code></td>
-<td><a href="../api/#get_object">some explanation </a></td>
+<td><a href="../api/get_object.html">some explanation </a></td>
 </tr>
 <tr class="even">
 <td>rst</td>
 <td>default</td>
 <td><code>:ref:`quartodoc.get_object`</code></td>
-<td><a href="../api/#get_object">quartodoc.get_object</a></td>
+<td><a href="../api/get_object.html">get_object</a></td>
 </tr>
 <tr class="odd">
 <td>rst</td>
 <td>shortened</td>
 <td><code>:ref:`~quartodoc.get_object`</code></td>
-<td><a href="../api/#get_object">get_object</a></td>
+<td><a href="../api/get_object.html">get_object</a></td>
 </tr>
 </tbody>
 </table>
-<section id="link-within-a-doc" class="level2">
-<h2 class="anchored" data-anchor-id="link-within-a-doc">Link within a doc</h2>
-<ul>
-<li><code>@sec-get_object</code> doesn’t seem to work: <strong>?@sec-get-_object</strong>.</li>
-<li><a href="../api/#sec-get_object">get_object</a></li>
-</ul>
-</section>
 <section id="link-to-external-docs" class="level2">
 <h2 class="anchored" data-anchor-id="link-to-external-docs">Link to external docs</h2>
 <section id="inventory-files" class="level3">
@@ -405,6 +404,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../get-started/basic-docs.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Generating docs</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../get-started/architecture.html" class="pagination-link">
+        <span class="nav-page-text">Architecture</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

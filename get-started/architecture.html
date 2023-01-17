@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Quickstart</title>
+<title>quartodoc - Architecture</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../get-started/docstrings.html" rel="next">
+<link href="../get-started/crossrefs.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -58,12 +60,15 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -80,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../get-started/overview.html">
+    <a class="nav-link active" href="../get-started/overview.html" aria-current="page">
  <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -99,20 +104,84 @@ ul.task-list li input[type="checkbox"] {
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Architecture</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Generating docs</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link">Cross references</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Advanced</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/architecture.html" class="sidebar-item-text sidebar-link active">Architecture</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Handling docstrings</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link">Interlinks filter</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quickstart</h1>
+<h1 class="title d-none d-lg-block">Architecture</h1>
 </div>
 
 
@@ -127,7 +196,114 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Ahhh yeah.</p>
+<div class="column-page-right">
+<div class="cell" data-fig-width="10">
+<div class="cell-output-display">
+<div>
+<p>
+</p><pre class="mermaid mermaid-js" data-tooltip-selector="#mermaid-tooltip-1">classDiagram
+
+    class BuilderConfig {
+        style: str
+        package: str
+        version: str = None
+        dir: str = "Reference"
+        title: str = "Function reference"       
+        sections: list[SectionConfig]
+        out_inventory: str = "objects.json"
+        out_inder: str = "index.qmd"        
+        renderer: Renderer
+    }
+
+    class SectionConfig {
+        title: str
+        desc: str
+        //
+        // list of api functions
+        contents: list[str]
+    }
+
+    
+    class Introspect {
+        // functions for analyzing python objects
+        // and docstrings
+        get_object(module, object_name) -&gt; griffe object
+
+    }
+
+    class Inventory {
+        // functions to work with sphinx inventories,
+        // which are used for cross-references
+        convert_inventory(in_name, out_name)
+        create_inventory(project, version, items, ...)
+
+    }
+    class Renderer {
+        style: str
+        header_level: int = 2
+        show_signature: bool = True
+        hook_pre: Callable = None
+        render(el: griffe object)
+    }
+
+    class Builder {
+        // Includes all BuilderConfig properties
+        ...BuilderConfig
+
+        //
+        // via create_* methods
+        items: dict[str, griffe object]
+        inventory: sphobjinv.Inventory
+
+
+        build()
+        create_items()
+        create_inventory()
+        fetch_object_uri()
+        fetch_object_dispname()
+        render_index()
+        write_doc_pages()
+        from_config() -&gt; Builder
+    }
+
+    class BuilderPkgdown {
+        // write R pkgdown style docs
+        style: "pkgdown"
+        render_index()
+        fetch_object_uri()
+        fetch_object_dispname()
+    }
+    
+    class BuilderSinglePage {
+        // writes one big page of docs
+        style: "single-page"
+        render_index()
+        fetch_object_uri()
+        write_doc_pages()
+    }
+
+    class MdRenderer {
+        render()
+    }
+
+
+    Builder &lt;|-- BuilderPkgdown
+    Builder &lt;|-- BuilderSinglePage
+    BuilderConfig --&gt; SectionConfig
+    BuilderConfig &lt;-- Builder: from_config
+    Introspect &lt;-- Builder: create_items    
+    Inventory &lt;-- Builder: create_inventory(self.package, ..., self.items, self.fetch_*)
+    Renderer &lt;-- Builder
+    Renderer &lt;|-- MdRenderer
+</pre>
+<div id="mermaid-tooltip-1" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
+</div>
 
 
 
@@ -265,6 +441,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../get-started/crossrefs.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Cross references</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../get-started/docstrings.html" class="pagination-link">
+        <span class="nav-page-text">Handling docstrings</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
