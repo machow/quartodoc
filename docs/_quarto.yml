@@ -3,7 +3,10 @@ project:
   output-dir: _build
   resources:
     - objects.json
-  pre-render: "python -m quartodoc _quarto.yml"
+  #pre-render: "python -m quartodoc _quarto.yml"
+
+website:
+  navigation: true
 
 filters:
   - "interlinks"
@@ -76,6 +79,7 @@ website:
             - get-started/crossrefs.qmd
         - section: "Advanced"
           contents:
+            - get-started/architecture.qmd
             - get-started/docstrings.qmd
             - get-started/interlinks.qmd
     - id: dummy
