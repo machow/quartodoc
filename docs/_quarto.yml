@@ -54,7 +54,7 @@ quartodoc:
 
 website:
   title: "quartodoc"
-  navigation: true
+  page-navigation: true
   navbar:
     left:
       - file: get-started/overview.qmd
