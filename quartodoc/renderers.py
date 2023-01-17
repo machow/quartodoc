@@ -1,5 +1,6 @@
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
+from griffe.expressions import Expression, Name
 from dataclasses import dataclass
 from tabulate import tabulate
 from plum import dispatch
@@ -129,6 +130,15 @@ class MdRenderer(Renderer):
         raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
+    def to_md(self, el: str):
+        return el
+
+    @dispatch
+    def to_md(self, el: Union[Expression, Name]):
+        # these are used often for annotations, and full returns it as a string
+        return el.full
+
+    @dispatch
     def to_md(self, el: Union[dc.Alias, dc.Object]):
         # TODO: replace hard-coded header level
 
@@ -203,6 +213,19 @@ class MdRenderer(Renderer):
         else:
             annotation = el.annotation.full if el.annotation else None
         return (escape(el.name), annotation, sanitize(el.description), default)
+
+    # attributes ----
+
+    @dispatch
+    def to_md(self, el: ds.DocstringSectionAttributes):
+        header = ["Name", "Type", "Description"]
+        rows = list(map(self.to_md, el.value))
+
+        return tabulate(rows, header, tablefmt="github")
+
+    @dispatch
+    def to_md(self, el: ds.DocstringAttribute):
+        return el.name, self.to_md(el.annotation), el.description
 
     # examples ----
 
