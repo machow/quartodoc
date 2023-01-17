@@ -5,9 +5,6 @@ project:
     - objects.json
   #pre-render: "python -m quartodoc _quarto.yml"
 
-website:
-  navigation: true
-
 filters:
   - "interlinks"
 
@@ -57,6 +54,7 @@ quartodoc:
 
 website:
   title: "quartodoc"
+  navigation: true
   navbar:
     left:
       - file: get-started/overview.qmd
