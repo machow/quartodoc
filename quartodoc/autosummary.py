@@ -142,6 +142,7 @@ class Builder:
         dir: str = "reference",
         title: str = "Function reference",
         renderer: "dict | Renderer | str" = "markdown",
+        out_index: str = None,
     ):
         self.validate(sections)
 
@@ -158,6 +159,9 @@ class Builder:
         self.create_inventory()
 
         self.renderer = Renderer.from_config(renderer)
+
+        if out_index is not None:
+            self.out_index = out_index
 
     def build(self):
         """Build index page, sphinx inventory, and individual doc pages."""
