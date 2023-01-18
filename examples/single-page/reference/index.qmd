@@ -12,8 +12,8 @@ Fetch a griffe object.
 | `object_name` | str    | A function name.           | required  |
 | `parser`      | str    | A docstring parser to use. | `'numpy'` |
 
-See Also
---------
+### See_Also
+
 get_function: a deprecated function.
 
 ### Examples

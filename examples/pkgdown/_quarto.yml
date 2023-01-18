@@ -19,6 +19,7 @@ format:
   html:
     theme:
       light: minty
+    toc: true
 
 quartodoc:
   style: pkgdown
