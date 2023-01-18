@@ -1,3 +1,4 @@
+from enum import Enum
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from griffe.expressions import Expression, Name
@@ -24,6 +25,28 @@ def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
         return ExampleText(value)
 
     raise ValueError(f"Unsupported first element in tuple: {kind}")
+
+
+def docstring_section_narrow(el: ds.DocstringSection) -> ds.DocstringSection:
+    # attempt to narrow down text sections
+    prefix = "See Also\n---"
+    if isinstance(el, ds.DocstringSectionText) and el.value.startswith(prefix):
+        stripped = el.value.replace(prefix, "", 1).lstrip("-\n")
+        return DocstringSectionSeeAlso(stripped, el.title)
+
+    return el
+
+
+class DocstringSectionKindPatched(Enum):
+    see_also = "see also"
+
+
+class DocstringSectionSeeAlso(ds.DocstringSection):
+    kind = DocstringSectionKindPatched.see_also
+
+    def __init__(self, value: str, title: "str | None"):
+        self.value = value
+        super().__init__(title)
 
 
 @dataclass
@@ -153,8 +176,9 @@ class MdRenderer(Renderer):
             pass
         else:
             for section in el.docstring.parsed:
-                title = section.kind.name
-                body = self.to_md(section)
+                new_el = docstring_section_narrow(section)
+                title = new_el.kind.name
+                body = self.to_md(new_el)
 
                 if title != "text":
                     header = f"{'#' * (self.header_level + 1)} {title.title()}"
@@ -192,9 +216,17 @@ class MdRenderer(Renderer):
 
     # docstring parts -------------------------------------------------------------
 
+    # text ----
+    # note this can be a number of things. for example, opening docstring text,
+    # or a section with a header not included in the numpydoc standard
     @dispatch
     def to_md(self, el: ds.DocstringSectionText):
-        return el.value
+        new_el = docstring_section_narrow(el)
+        if isinstance(new_el, ds.DocstringSectionText):
+            # ensures we don't recurse forever
+            return el.value
+
+        return self.to_md(new_el)
 
     # parameters ----
 
@@ -226,6 +258,13 @@ class MdRenderer(Renderer):
     @dispatch
     def to_md(self, el: ds.DocstringAttribute):
         return el.name, self.to_md(el.annotation), el.description
+
+    # see also ----
+
+    @dispatch
+    def to_md(self, el: DocstringSectionSeeAlso):
+        # TODO: attempt to parse See Also sections
+        return el.value
 
     # examples ----
 

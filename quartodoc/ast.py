@@ -6,7 +6,7 @@ from typing import Union
 # TODO: these classes are created to wrap some tuple outputs
 #       we should consolidate logic for transforming the griffe
 #       docstring here (or open a griffe issue).
-from .renderers import tuple_to_data, ExampleCode, ExampleText
+from .renderers import tuple_to_data, docstring_section_narrow, ExampleCode, ExampleText
 
 
 # Tree previewer ==============================================================
@@ -127,11 +127,15 @@ class Formatter:
         return getattr(obj, k)
 
     def transform(self, obj):
+        # TODO: currently this transform happens here, and in the renderer.
+        #       let's consolidate this into one step (when getting the object)
         if isinstance(obj, tuple):
             try:
                 return tuple_to_data(obj)
             except ValueError:
                 pass
+        elif isinstance(obj, ds.DocstringSectionText):
+            return docstring_section_narrow(obj)
 
         return obj
 
