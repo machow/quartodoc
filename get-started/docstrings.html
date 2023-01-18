@@ -323,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7fce7c7c2550&gt;</code></pre>
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f53ccbc3730&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -360,10 +360,10 @@ Examples
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fce7cb36be0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fce7cb36f40&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fce7cb36100&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fce7c707130&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f53ccf3adf0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f53cca96130&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f53cca961c0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f53cca96340&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -437,10 +437,10 @@ Examples
 │                     ├─description = 'A docstring parser to use.'
 │                     ├─name = 'parser'
 │                     └─value = "'numpy'"
-├─2 = █─DocstringSectionText
-│     ├─kind = &lt;DocstringSectionKind.text: 'text'&gt;
+├─2 = █─DocstringSectionSeeAlso
+│     ├─kind = &lt;DocstringSectionKindPatched.see_also: 'see also'&gt;
 │     ├─title = None
-│     └─value = 'See Also\n--------\nget_function: a deprecated fu ...
+│     └─value = 'get_function: a deprecated function.'
 └─3 = █─DocstringSectionExamples
       ├─kind = &lt;DocstringSectionKind.examples: 'examples'&gt;
       ├─title = None
