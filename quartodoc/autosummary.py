@@ -105,6 +105,10 @@ class Builder:
         Name of API directory.
     title:
         Title of the API index page.
+    renderer: Renderer
+        The renderer used to convert docstrings (e.g. to markdown).
+    out_index:
+        The output path of the index file, used to list all API functions.
     """
 
     # builder dispatching ----
@@ -114,6 +118,7 @@ class Builder:
     # misc config
     out_inventory: str = "objects.json"
     out_index: str = "index.qmd"
+    out_page_suffix = ".qmd"
 
     # quarto yaml config -----
     # TODO: add model for section with the fields:
@@ -143,6 +148,7 @@ class Builder:
         title: str = "Function reference",
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
+        use_interlinks: bool = False,
     ):
         self.validate(sections)
 
@@ -162,6 +168,8 @@ class Builder:
 
         if out_index is not None:
             self.out_index = out_index
+
+        self.use_interlinks = use_interlinks
 
     def build(self):
         """Build index page, sphinx inventory, and individual doc pages."""
@@ -222,6 +230,14 @@ class Builder:
 
         raise NotImplementedError()
 
+    def render_item_link(self, obj):
+        if self.use_interlinks:
+            return f"[](`{obj.path}`)"
+
+        link = "/" + self.fetch_object_uri(obj, suffix=self.out_page_suffix)
+        name = self.fetch_object_dispname(obj)
+        return f"[{name}]({link})"
+
     def write_doc_pages(self):
         """Write individual function documentation pages."""
 
@@ -231,7 +247,7 @@ class Builder:
             html_path = Path(self.fetch_object_uri(item))
             html_path.parent.mkdir(exist_ok=True, parents=True)
 
-            html_path.with_suffix(".qmd").write_text(rendered)
+            html_path.with_suffix(self.out_page_suffix).write_text(rendered)
 
     # constructors ----
 
@@ -289,7 +305,7 @@ class BuilderPkgdown(Builder):
             docstring_parts = doc.parsed
 
         # TODO: look up from inventory?
-        link = f"[](`{obj.path}`)"
+        link = self.render_item_link(obj)
         if len(docstring_parts):
             # TODO: or canonical_path
             description = docstring_parts[0].value
@@ -298,8 +314,8 @@ class BuilderPkgdown(Builder):
         else:
             return f"| {link} | |"
 
-    def fetch_object_uri(self, obj):
-        return f"{self.dir}/{obj.name}.html"
+    def fetch_object_uri(self, obj, suffix=".html"):
+        return f"{self.dir}/{obj.name}{suffix}"
 
     def fetch_object_dispname(self, obj):
         return obj.name
@@ -311,10 +327,10 @@ class BuilderSinglePage(Builder):
     style = "single-page"
 
     def render_index(self):
-        return "\n\n".join([self.renderer.to_md(item) for item in self.items])
+        return "\n\n".join([self.renderer.to_md(item) for item in self.items.values()])
 
     def fetch_object_uri(self, obj):
-        index_name = Path(self.out_index).with_suffix("html")
+        index_name = Path(self.out_index).with_suffix(".html")
         return f"{self.dir}/{index_name}#{obj.path}"
 
     def write_doc_pages(self):
