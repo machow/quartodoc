@@ -182,6 +182,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link active">Overview</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basics</a>
@@ -192,12 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link active">Overview</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Generating docs</a>
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Configuring docs</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -243,8 +243,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
   <li><a href="#basic-use" id="toc-basic-use" class="nav-link" data-scroll-target="#basic-use">Basic use</a></li>
-  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#different-documentation-structures" id="toc-different-documentation-structures" class="nav-link" data-scroll-target="#different-documentation-structures">Different documentation structures</a></li>
+  <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a></li>
+  <li><a href="#example-sites" id="toc-example-sites" class="nav-link" data-scroll-target="#example-sites">Example sites</a></li>
   </ul>
 </nav>
     </div>
@@ -281,7 +281,7 @@ Warning
 <p>quartodoc is work in progress!</p>
 </div>
 </div>
-<p>quartodoc let’s you quickly generate python package documentation, using markdown and quarto. It is designed as an alternative to sphinx.</p>
+<p>quartodoc let’s you quickly generate python package documentation, using markdown and <a href="https://quarto.org">quarto</a>. It is designed as an alternative to Sphinx.</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install quartodoc</span>
@@ -291,6 +291,8 @@ Warning
 </section>
 <section id="basic-use" class="level2">
 <h2 class="anchored" data-anchor-id="basic-use">Basic use</h2>
+<p>Getting started with quartodoc takes two steps: configuring a quarto website, and generating documentation pages for your library.</p>
+<p>First, create a <code>_quarto.yml</code> file with the following:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
@@ -302,13 +304,18 @@ Warning
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> quartodoc</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Some functions</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">desc</span><span class="kw">:</span><span class="at"> These functions inspect and parse docstrings.</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">desc</span><span class="kw">:</span><span class="at"> Functions to inspect docstrings.</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> get_object</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> preview</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next, run this command to generate your API pages:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This should create a <code>reference/</code> directory with an <code>index.qmd</code> and documentation pages for listed functions, like <code>get_object</code> and <code>preview</code>.</p>
+<p>Finally, preview your website with quarto:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="goals" class="level2">
-<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<section id="key-features" class="level2">
+<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
 <ul>
 <li>Load docstrings (with <a href="https://github.com/mkdocstrings/griffe">griffe</a>)</li>
 <li>Render docstrings (e.g.&nbsp;with <a href="../api/#sec-MdRenderer">MdRenderer</a>)</li>
@@ -318,20 +325,42 @@ Warning
 <li>Link to functions in other docs.</li>
 <li>Generate an inventory file for other docs to link to yours.</li>
 </ul></li>
-<li>(WIP) Generate high-level summaries.
+<li>Generate high-level summaries.
 <ul>
-<li>Class summaries, with methods.</li>
+<li>First line of docstring used as description.</li>
+<li>Class doc pages have table of class attributes.</li>
 <li>Tables of function names and descriptions.</li>
 </ul></li>
 </ul>
 </section>
-<section id="different-documentation-structures" class="level2">
-<h2 class="anchored" data-anchor-id="different-documentation-structures">Different documentation structures</h2>
-<ul>
-<li>All functions listed on a single page.</li>
-<li>Functions split across a few pages (e.g.&nbsp;parsers, renderers).</li>
-<li>Each function gets its own page.</li>
-</ul>
+<section id="example-sites" class="level2">
+<h2 class="anchored" data-anchor-id="example-sites">Example sites</h2>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>style</th>
+<th>source</th>
+<th>layout</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../examples/pkgdown/reference">pkgdown</a></td>
+<td><a href="https://github.com/machow/quartodoc/tree/main/examples/pkgdown">github</a></td>
+<td>Index page with a title and short description for functions listed in each section. Each function gets its own documentation page.</td>
+</tr>
+<tr class="even">
+<td><a href="../examples/single-page/reference">single-page</a></td>
+<td><a href="https://github.com/machow/quartodoc/tree/main/examples/single-page">github</a></td>
+<td>Index page has function documentation embedded on it.</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
@@ -475,7 +504,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="../get-started/basic-docs.html" class="pagination-link">
-        <span class="nav-page-text">Generating docs</span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text">Configuring docs</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

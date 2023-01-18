@@ -183,6 +183,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basics</a>
@@ -193,12 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link">Overview</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Generating docs</a>
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Configuring docs</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -323,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f818c082730&gt;</code></pre>
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f29d85546d0&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -360,10 +360,10 @@ Examples
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f818c3f31f0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f818c3f3df0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f818c3f3ee0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f8184f49190&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f29d88c8d60&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f29d88c8760&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f29d88c8700&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f29d84c9ee0&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>

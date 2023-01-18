@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "Warning\n\n\n\nquartodoc is work in progress! For a basic implementation, take a look at the docs folder for this site, including this script used to generate API pages.\n\n\nFor users:\n\nRead and interact with docstrings.\nRender them to markdown or html.\nCrosslink to generated documentation.\n\nFor developers:\n\nEasy to extend / create new renderers.\nSimple: each step of the process is explained in detail, so you can use a single part (e.g. render a docstring to markdown) if you want."
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -32,7 +25,7 @@
     "href": "api/Builder.html",
     "title": "quartodoc",
     "section": "",
-    "text": "Builder(self, sections: list[Any], package: str, version: str | None = None, dir: str = 'reference', title: str = 'Function reference', renderer: dict | Renderer | str = 'markdown', out_index: str = None, use_interlinks: bool = False)\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsections\nlist[Any]\nA list of sections, with items to document.\nrequired\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nversion\nstr\nNone\nThe package version. By default this attempts to look up the current package version (TODO).\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\ndict\nRenderer\nstr\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone"
+    "text": "Builder(self, package: str, sections: list[Any], version: str | None = None, dir: str = 'reference', title: str = 'Function reference', renderer: dict | Renderer | str = 'markdown', out_index: str = None, use_interlinks: bool = False)\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\nlist[Any]\nA list of sections, with items to document.\nrequired\n\n\nversion\nstr\nNone\nThe package version. By default this attempts to look up the current package version (TODO).\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\ndict\nRenderer\nstr\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone"
   },
   {
     "objectID": "api/index.html",
@@ -109,7 +102,7 @@
     "href": "get-started/docstrings.html#reading-docstrings",
     "title": "Handling docstrings",
     "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f818c082730>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f818c3f31f0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f818c3f3df0>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f818c3f3ee0>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f8184f49190>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f29d85546d0>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f29d88c8d60>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f29d88c8760>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f29d88c8700>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f29d84c9ee0>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
   },
   {
     "objectID": "get-started/docstrings.html#previewing-docstrings",
@@ -154,13 +147,6 @@
     "text": "Configuring the interlinks filter\nConfigure the filter in _quarto.yml or on specific pages:\nfilters:\n  - interlinks\ninterlinks:\n  sources:\n    numpy:\n      url: https://numpy.org/doc/stable/\n      inv: null \n      fallback: objects_numpy.json\n    python:\n      url: https://docs.python.org/3/\n      inv: null\n      fallback: objects_python.json\nWhere files like objects_numpy.json and objects_python.json are their inventories converted to JSON, using the functions from the section above.\nobjects.inv live at the root of sphinx project urls:\n\nnumpy: https://numpy.org/doc/stable/objects.inv\npython: https://docs.python.org/3/objects.inv\n\nThe rough idea is that this plugin will behave similar to jupyterbook linking, which supports both some intersphinx syntax, but also markdown syntax."
   },
   {
-    "objectID": "get-started/quickstart.html",
-    "href": "get-started/quickstart.html",
-    "title": "Quickstart",
-    "section": "",
-    "text": "Ahhh yeah."
-  },
-  {
     "objectID": "get-started/crossrefs.html",
     "href": "get-started/crossrefs.html",
     "title": "Cross references",
@@ -186,7 +172,7 @@
     "href": "get-started/overview.html",
     "title": "Overview",
     "section": "",
-    "text": "Warning\n\n\n\nquartodoc is work in progress!\nquartodoc let’s you quickly generate python package documentation, using markdown and quarto. It is designed as an alternative to sphinx."
+    "text": "Warning\n\n\n\nquartodoc is work in progress!\nquartodoc let’s you quickly generate python package documentation, using markdown and quarto. It is designed as an alternative to Sphinx."
   },
   {
     "objectID": "get-started/overview.html#installation",
@@ -200,27 +186,48 @@
     "href": "get-started/overview.html#basic-use",
     "title": "Overview",
     "section": "Basic use",
-    "text": "Basic use\nproject:\n  type: website\n  resources:\n    - objects.json\n\nquartodoc:\n  style: single-page\n  dir: reference\n  package: quartodoc\n  sections:\n    - title: Some functions\n      desc: These functions inspect and parse docstrings.\n      contents:\n        - get_object\n        - preview"
+    "text": "Basic use\nGetting started with quartodoc takes two steps: configuring a quarto website, and generating documentation pages for your library.\nFirst, create a _quarto.yml file with the following:\nproject:\n  type: website\n  resources:\n    - objects.json\n\nquartodoc:\n  style: single-page\n  dir: reference\n  package: quartodoc\n  sections:\n    - title: Some functions\n      desc: Functions to inspect docstrings.\n      contents:\n        - get_object\n        - preview\nNext, run this command to generate your API pages:\npython -m quartodoc\nThis should create a reference/ directory with an index.qmd and documentation pages for listed functions, like get_object and preview.\nFinally, preview your website with quarto:\nquarto preview"
   },
   {
-    "objectID": "get-started/overview.html#goals",
-    "href": "get-started/overview.html#goals",
+    "objectID": "get-started/overview.html#key-features",
+    "href": "get-started/overview.html#key-features",
     "title": "Overview",
-    "section": "Goals",
-    "text": "Goals\n\nLoad docstrings (with griffe)\nRender docstrings (e.g. with MdRenderer)\nEnable cross references to function documentation.\n\nLink to functions within a doc.\nLink to functions in other docs.\nGenerate an inventory file for other docs to link to yours.\n\n(WIP) Generate high-level summaries.\n\nClass summaries, with methods.\nTables of function names and descriptions."
+    "section": "Key Features",
+    "text": "Key Features\n\nLoad docstrings (with griffe)\nRender docstrings (e.g. with MdRenderer)\nEnable cross references to function documentation.\n\nLink to functions within a doc.\nLink to functions in other docs.\nGenerate an inventory file for other docs to link to yours.\n\nGenerate high-level summaries.\n\nFirst line of docstring used as description.\nClass doc pages have table of class attributes.\nTables of function names and descriptions."
   },
   {
-    "objectID": "get-started/overview.html#different-documentation-structures",
-    "href": "get-started/overview.html#different-documentation-structures",
+    "objectID": "get-started/overview.html#example-sites",
+    "href": "get-started/overview.html#example-sites",
     "title": "Overview",
-    "section": "Different documentation structures",
-    "text": "Different documentation structures\n\nAll functions listed on a single page.\nFunctions split across a few pages (e.g. parsers, renderers).\nEach function gets its own page."
+    "section": "Example sites",
+    "text": "Example sites\n\n\n\n\n\n\n\n\nstyle\nsource\nlayout\n\n\n\n\npkgdown\ngithub\nIndex page with a title and short description for functions listed in each section. Each function gets its own documentation page.\n\n\nsingle-page\ngithub\nIndex page has function documentation embedded on it."
   },
   {
     "objectID": "get-started/basic-docs.html",
     "href": "get-started/basic-docs.html",
-    "title": "Generating docs",
+    "title": "Configuring docs",
     "section": "",
-    "text": "Coming soon!"
+    "text": "quartodoc is configured by adding a quartodoc section to your _quarto.yml:\nquartodoc:\n  style: single-page\n  dir: reference\n  package: quartodoc\n  sections:\n    - title: Some functions\n      desc: Functions to inspect docstrings.\n      contents:\n        - get_object\n        - preview"
+  },
+  {
+    "objectID": "get-started/basic-docs.html#options",
+    "href": "get-started/basic-docs.html#options",
+    "title": "Configuring docs",
+    "section": "Options",
+    "text": "Options\nThe quartodoc section takes a style field, specifying which Builder to use (currently “pkgdown” or “single-page”; see Examples).\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\nlist[Any]\nA list of sections, with items to document.\nrequired\n\n\nversion\nstr\nNone\nThe package version. By default this attempts to look up the current package version (TODO).\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\ndict\nRenderer\nstr\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone"
+  },
+  {
+    "objectID": "get-started/basic-docs.html#section-options",
+    "href": "get-started/basic-docs.html#section-options",
+    "title": "Configuring docs",
+    "section": "Section options",
+    "text": "Section options\nThe sections field defines which functions to document.\n\n\n\nName\nType\nDescription\n\n\n\n\ntitle\nstr\nA title for the section\n\n\ndesc\nstr\nA description for the section\n\n\ncontents\nlist[str]\nA list of functions to document"
+  },
+  {
+    "objectID": "get-started/basic-docs.html#looking-up-functions",
+    "href": "get-started/basic-docs.html#looking-up-functions",
+    "title": "Configuring docs",
+    "section": "Looking up functions",
+    "text": "Looking up functions\nFinding functions to document involves two pieces of configuration:\n\nthe package name.\na list of functions for content.\n\nquartodoc:\n  package: quartodoc\n  sections:\n    - contents:\n        # top-level function: quartodoc.get_object\n        - get_object\n\n        # top-level class: quartodoc.MdRenderer\n        - MdRenderer\n\n        # submodule function: quartodoc.ast.preview\n        - ast.preview\nThe functions listed in contents are assumed to be imported from the package.\n\nClass methods\nCurrently, quartodoc can’t look up class methods. (Though this would be quick to implement!)."
   }
 ]
