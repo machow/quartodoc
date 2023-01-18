@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "single-page example",
+    "section": "",
+    "text": "get_object(module: str, object_name: str, parser: str = 'numpy')\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'"
+  },
+  {
+    "objectID": "reference/index.html#see-also",
+    "href": "reference/index.html#see-also",
+    "title": "single-page example",
+    "section": "See Also",
+    "text": "See Also\nget_function: a deprecated function.\n\nExamples\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
+  },
+  {
+    "objectID": "reference/index.html#preview",
+    "href": "reference/index.html#preview",
+    "title": "single-page example",
+    "section": "preview",
+    "text": "preview\npreview(ast: dc.Object | ds.Docstring | object)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\nExamples\n>>> from quartodoc import get_object\n>>> obj = get_object(\"quartodoc\", \"get_object\")\n>>> preview(obj.docstring.parsed)\n ...\n>>> preview(obj)\n ..."
+  }
+]

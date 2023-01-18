@@ -84,6 +84,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../examples/">
+ <span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -123,16 +127,16 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="Builder" class="level2">
 <h2 class="anchored" data-anchor-id="Builder">Builder</h2>
-<p><code>Builder(self, sections: list[Any], package: str, version: str | None = None, dir: str = 'reference', title: str = 'Function reference', renderer: dict | Renderer | str = 'markdown', out_index: str = None)</code></p>
+<p><code>Builder(self, sections: list[Any], package: str, version: str | None = None, dir: str = 'reference', title: str = 'Function reference', renderer: dict | Renderer | str = 'markdown', out_index: str = None, use_interlinks: bool = False)</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
 <col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 66%">
-<col style="width: 16%">
+<col style="width: 14%">
+<col style="width: 61%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -172,6 +176,18 @@ ul.task-list li input[type="checkbox"] {
 <td>str</td>
 <td>Title of the API index page.</td>
 <td><code>'Function reference'</code></td>
+</tr>
+<tr class="even">
+<td><code>renderer</code></td>
+<td>dict</td>
+<td>Renderer</td>
+<td>str</td>
+</tr>
+<tr class="odd">
+<td><code>out_index</code></td>
+<td>str</td>
+<td>The output path of the index file, used to list all API functions.</td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>

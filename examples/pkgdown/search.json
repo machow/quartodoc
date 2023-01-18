@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "reference/preview.html",
+    "href": "reference/preview.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "preview(ast: dc.Object | ds.Docstring | object)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n>>> from quartodoc import get_object\n>>> obj = get_object(\"quartodoc\", \"get_object\")\n>>> preview(obj.docstring.parsed)\n ...\n>>> preview(obj)\n ..."
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "These functions inspect and parse docstrings.\n\n\n\nget_object\nFetch a griffe object.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)"
+  },
+  {
+    "objectID": "reference/get_object.html",
+    "href": "reference/get_object.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "get_object(module: str, object_name: str, parser: str = 'numpy')\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'"
+  },
+  {
+    "objectID": "reference/get_object.html#see-also",
+    "href": "reference/get_object.html#see-also",
+    "title": "pkgdown example",
+    "section": "See Also",
+    "text": "See Also\nget_function: a deprecated function.\n\nExamples\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
+  }
+]

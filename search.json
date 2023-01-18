@@ -14,6 +14,13 @@
     "text": "About this site"
   },
   {
+    "objectID": "examples/index.html",
+    "href": "examples/index.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "pkgdown\nsingle-page"
+  },
+  {
     "objectID": "api/preview.html",
     "href": "api/preview.html",
     "title": "quartodoc",
@@ -25,7 +32,7 @@
     "href": "api/Builder.html",
     "title": "quartodoc",
     "section": "",
-    "text": "Builder(self, sections: list[Any], package: str, version: str | None = None, dir: str = 'reference', title: str = 'Function reference', renderer: dict | Renderer | str = 'markdown', out_index: str = None)\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsections\nlist[Any]\nA list of sections, with items to document.\nrequired\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nversion\nstr\nNone\nThe package version. By default this attempts to look up the current package version (TODO).\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'"
+    "text": "Builder(self, sections: list[Any], package: str, version: str | None = None, dir: str = 'reference', title: str = 'Function reference', renderer: dict | Renderer | str = 'markdown', out_index: str = None, use_interlinks: bool = False)\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsections\nlist[Any]\nA list of sections, with items to document.\nrequired\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nversion\nstr\nNone\nThe package version. By default this attempts to look up the current package version (TODO).\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\ndict\nRenderer\nstr\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone"
   },
   {
     "objectID": "api/index.html",
@@ -109,7 +116,7 @@
     "href": "get-started/docstrings.html#reading-docstrings",
     "title": "Handling docstrings",
     "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f2574101400>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f2574479f70>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f2574479220>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f2574479670>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f2574043100>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7fce7c7c2550>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7fce7cb36be0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fce7cb36f40>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7fce7cb36100>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fce7c707130>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
   },
   {
     "objectID": "get-started/docstrings.html#previewing-docstrings",
@@ -186,7 +193,21 @@
     "href": "get-started/overview.html",
     "title": "Overview",
     "section": "",
-    "text": "Warning\n\n\n\nquartodoc is work in progress! For a basic implementation, take a look at the docs folder for this site, including this script used to generate API pages.\nComing soon!"
+    "text": "Warning\n\n\n\nquartodoc is work in progress!\nquartodoc let’s you quickly generate python package documentation, using markdown and quarto. It is designed as an alternative to sphinx."
+  },
+  {
+    "objectID": "get-started/overview.html#installation",
+    "href": "get-started/overview.html#installation",
+    "title": "Overview",
+    "section": "Installation",
+    "text": "Installation\npython -m pip install quartodoc\n\n# or from github\npython -m pip install git+https://github.com/machow/quartodoc.git"
+  },
+  {
+    "objectID": "get-started/overview.html#basic-use",
+    "href": "get-started/overview.html#basic-use",
+    "title": "Overview",
+    "section": "Basic use",
+    "text": "Basic use\nproject:\n  type: website\n  resources:\n    - objects.json\n\nquartodoc:\n  style: single-page\n  dir: reference\n  package: quartodoc\n  sections:\n    - title: Some functions\n      desc: These functions inspect and parse docstrings.\n      contents:\n        - get_object\n        - preview"
   },
   {
     "objectID": "get-started/overview.html#goals",
