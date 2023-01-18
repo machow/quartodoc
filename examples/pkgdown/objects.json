@@ -1,0 +1,1 @@
+{"project": "quartodoc", "version": "0.0.9999", "count": 2, "items": [{"name": "quartodoc.get_object", "domain": "py", "role": "function", "priority": "1", "uri": "reference/get_object.html", "dispname": "get_object"}, {"name": "quartodoc.preview", "domain": "py", "role": "function", "priority": "1", "uri": "reference/preview.html", "dispname": "preview"}]}

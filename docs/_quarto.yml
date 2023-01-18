@@ -3,6 +3,8 @@ project:
   output-dir: _build
   resources:
     - objects.json
+    - examples/single-page
+    - examples/pkgdown
   #pre-render: "python -m quartodoc _quarto.yml"
 
 filters:
@@ -59,6 +61,8 @@ website:
     left:
       - file: get-started/overview.qmd
         text: Get Started
+      - file: examples/
+        text: Examples
       - href: api/
         text: Reference
     right:
