@@ -2,6 +2,7 @@ README.md: README.qmd
 	quarto render $<
 
 examples/%/_site: examples/%/_quarto.yml
+	python -m quartodoc $<
 	quarto render $(dir $<)
 
 docs/examples/%: examples/%/_site

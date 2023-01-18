@@ -1,6 +1,20 @@
 import click
+import contextlib
+import os
+
+from pathlib import Path
 
 from .autosummary import Builder
+
+
+@contextlib.contextmanager
+def chdir(new_dir):
+    prev = os.getcwd()
+    os.chdir(new_dir)
+    try:
+        yield new_dir
+    finally:
+        os.chdir(prev)
 
 
 @click.command()
@@ -12,7 +26,8 @@ def build(config, dry_run):
     if dry_run:
         click.echo(builder.render_index())
     else:
-        builder.build()
+        with chdir(Path(config).parent):
+            builder.build()
 
 
 if __name__ == "__main__":

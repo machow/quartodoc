@@ -94,10 +94,10 @@ class Builder:
 
     Parameters
     ----------
-    sections: ConfigSection
-        A list of sections, with items to document.
     package: str
         The name of the package.
+    sections: ConfigSection
+        A list of sections, with items to document.
     version:
         The package version. By default this attempts to look up the current package
         version (TODO).
@@ -141,8 +141,8 @@ class Builder:
 
     def __init__(
         self,
-        sections: "list[Any]",
         package: str,
+        sections: "list[Any]",
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",

@@ -74,9 +74,9 @@ website:
       style: floating
       align: left
       contents:
+        - get-started/overview.qmd
         - section: "Basics"
           contents:
-            - get-started/overview.qmd
             - get-started/basic-docs.qmd
             - get-started/crossrefs.qmd
         - section: "Advanced"

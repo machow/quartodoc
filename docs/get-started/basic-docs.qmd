@@ -1,5 +1,5 @@
 ---
-title: Generating docs
+title: Configuring docs
 jupyter:
   kernelspec:
     display_name: Python 3 (ipykernel)
@@ -7,4 +7,76 @@ jupyter:
     name: python3
 ---
 
-Coming soon!
+## Adding configuration
+
+quartodoc is configured by adding a `quartodoc` section to your `_quarto.yml`:
+
+```yaml
+quartodoc:
+  style: single-page
+  dir: reference
+  package: quartodoc
+  sections:
+    - title: Some functions
+      desc: Functions to inspect docstrings.
+      contents:
+        - get_object
+        - preview
+```
+
+## Options
+
+The `quartodoc` section takes a `style` field, specifying which [](`quartodoc.Builder`)
+to use (currently "pkgdown" or "single-page"; see [Examples](/examples/)).
+
+```{python}
+#| echo: false
+#| output: asis
+from quartodoc import get_object, MdRenderer
+
+obj = get_object("quartodoc", "Builder")
+renderer = MdRenderer()
+
+doc_parts = obj.docstring.parsed
+doc_params = [entry for entry in doc_parts if entry.kind.name == "parameters"][0]
+print(renderer.to_md(doc_params))
+```
+
+## Section options
+
+The `sections` field defines which functions to document.
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| title | str | A title for the section |
+| desc | str | A description for the section |
+| contents | list[str] | A list of functions to document |
+
+
+## Looking up functions
+
+Finding functions to document involves two pieces of configuration:
+
+* the package name.
+* a list of functions for content.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - contents:
+        # top-level function: quartodoc.get_object
+        - get_object
+
+        # top-level class: quartodoc.MdRenderer
+        - MdRenderer
+
+        # submodule function: quartodoc.ast.preview
+        - ast.preview
+```
+
+The functions listed in `contents` are assumed to be imported from the package.
+
+### Class methods
+
+Currently, quartodoc can't look up class methods. (Though this would be quick to implement!).
