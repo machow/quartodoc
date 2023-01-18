@@ -8,11 +8,40 @@ jupyter:
 ---
 
 ::: {.callout-warning} 
-quartodoc is work in progress! For a basic implementation, take a look at the [docs folder](https://github.com/machow/quartodoc/tree/main/docs) for this site,
-including [this script](https://github.com/machow/quartodoc/blob/main/docs/1_generate_api.py) used to generate API pages.
+quartodoc is work in progress!
 :::
 
-Coming soon!
+quartodoc let's you quickly generate python package documentation,
+using markdown and quarto. It is designed as an alternative to sphinx.
+
+## Installation
+
+```bash
+python -m pip install quartodoc
+
+# or from github
+python -m pip install git+https://github.com/machow/quartodoc.git
+```
+
+## Basic use
+
+```yaml
+project:
+  type: website
+  resources:
+    - objects.json
+
+quartodoc:
+  style: single-page
+  dir: reference
+  package: quartodoc
+  sections:
+    - title: Some functions
+      desc: These functions inspect and parse docstrings.
+      contents:
+        - get_object
+        - preview
+```
 
 ## Goals
 
