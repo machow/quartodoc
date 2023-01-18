@@ -4,6 +4,7 @@ project:
     - objects.json
 
 website:
+  title: pkgdown example
   navbar:
     left:
       - href: https://machow.github.io/quartodoc/
@@ -14,7 +15,10 @@ website:
       - icon: github
         href: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
 
-
+format:
+  html:
+    theme:
+      light: minty
 
 quartodoc:
   style: pkgdown

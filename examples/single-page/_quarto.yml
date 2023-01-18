@@ -4,6 +4,7 @@ project:
     - objects.json
 
 website:
+  title: single-page example
   navbar:
     left:
       - href: https://machow.github.io/quartodoc/
@@ -13,6 +14,10 @@ website:
     right:
       - icon: github
         href: https://github.com/machow/quartodoc/tree/main/examples/single-page
+
+format:
+  html:
+    theme: minty
 
 quartodoc:
   style: single-page
