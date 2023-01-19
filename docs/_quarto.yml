@@ -79,12 +79,15 @@ website:
           contents:
             - get-started/basic-docs.qmd
             - get-started/crossrefs.qmd
+            - get-started/sidebar.qmd
         - section: "Advanced"
           contents:
-            - get-started/architecture.qmd
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
             - get-started/interlinks.qmd
+        - section: "Extra Topics"
+          contents:
+            - get-started/architecture.qmd
     - id: dummy
 
 
