@@ -4,7 +4,7 @@
     "href": "reference/preview.html",
     "title": "pkgdown example",
     "section": "",
-    "text": "preview(ast: dc.Object | ds.Docstring | object)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n>>> from quartodoc import get_object\n>>> obj = get_object(\"quartodoc\", \"get_object\")\n>>> preview(obj.docstring.parsed)\n ...\n>>> preview(obj)\n ..."
+    "text": "preview(ast: dc.Object | ds.Docstring | object, max_depth=999)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n>>> from quartodoc import get_object\n>>> obj = get_object(\"quartodoc\", \"get_object\")\n>>> preview(obj.docstring.parsed)\n ...\n>>> preview(obj)\n ..."
   },
   {
     "objectID": "reference/index.html",
