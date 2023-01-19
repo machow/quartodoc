@@ -1,5 +1,5 @@
 ---
-title: Cross references
+title: Linking to pages
 jupyter:
   kernelspec:
     display_name: Python 3 (ipykernel)
@@ -9,25 +9,20 @@ jupyter:
 
 Coming soon!
 
-| style | link text | syntax | output |
-| ----- | ---- | ------ | ------ |
-| manual |  | `[a link](../api/#get_object)` | [a link](../api/#get_object) | 
-| md | custom  | `` [some explanation](`quartodoc.get_object`) `` | [some explanation](`quartodoc.get_object`) |
-| md | default | `` [](`quartodoc.get_object`) `` | [](`quartodoc.get_object`) |
-| md | shortened | `` [](`~quartodoc.get_object`) `` | [](`~quartodoc.get_object`) |
-| rst | custom | `` :ref:`some explanation <quartodoc.get_object>` `` | :ref:`some explanation <quartodoc.get_object>` |
-| rst | default | `` :ref:`quartodoc.get_object` `` | :ref:`quartodoc.get_object` |
-| rst | shortened | `` :ref:`~quartodoc.get_object` `` | :ref:`~quartodoc.get_object` |
+## Linking by path
 
-## Link within a doc
+You can link to function docs by using the path to the generated documentation file:
 
-* `@sec-get_object` doesn't seem to work: @sec-get-_object.
-* [get_object](/api/#sec-get_object)
+``[get_object](/reference/get_object.qmd)``
 
-## Link to external docs
 
-### Inventory files
+* /reference/
+
+
+## Linking by function name
 
 
 ## The "See Also" section
+
+
 

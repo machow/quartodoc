@@ -1,0 +1,24 @@
+## get_object { #get_object }
+
+`get_object(module: str, object_name: str, parser: str = 'numpy')`
+
+Fetch a griffe object.
+
+### Parameters
+
+| Name          | Type   | Description                | Default   |
+|---------------|--------|----------------------------|-----------|
+| `module`      | str    | A module name.             | required  |
+| `object_name` | str    | A function name.           | required  |
+| `parser`      | str    | A docstring parser to use. | `'numpy'` |
+
+### See_Also
+
+get_function: a deprecated function.
+
+### Examples
+
+```python
+>>> get_function("quartodoc", "get_function")
+<Function('get_function', ...
+```

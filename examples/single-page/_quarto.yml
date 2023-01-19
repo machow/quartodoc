@@ -1,0 +1,32 @@
+project:
+  type: website
+  resources:
+    - objects.json
+
+website:
+  title: single-page example
+  navbar:
+    left:
+      - href: https://machow.github.io/quartodoc/
+        text: quartodoc home
+      - file: reference/index.qmd
+        text: "Reference"
+    right:
+      - icon: github
+        href: https://github.com/machow/quartodoc/tree/main/examples/single-page
+
+format:
+  html:
+    theme: minty
+    toc: true
+
+quartodoc:
+  style: single-page
+  dir: reference
+  package: quartodoc
+  sections:
+    - title: Some functions
+      desc: These functions inspect and parse docstrings.
+      contents:
+        - get_object
+        - preview

@@ -1,0 +1,10 @@
+# Function reference
+
+## Some functions
+
+These functions inspect and parse docstrings.
+
+| | |
+| --- | --- |
+| [get_object](/reference/get_object.qmd) | Fetch a griffe object. |
+| [preview](/reference/preview.qmd) | Print a friendly representation of a griffe object (e.g. function, docstring) |

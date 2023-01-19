@@ -1,0 +1,110 @@
+---
+title: Architecture
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+:::{.column-page-right}
+
+```{mermaid}
+%%| fig-width: 10
+classDiagram
+
+    class BuilderConfig {
+        style: str
+        package: str
+        version: str = None
+        dir: str = "Reference"
+        title: str = "Function reference"       
+        sections: list[SectionConfig]
+        out_inventory: str = "objects.json"
+        out_inder: str = "index.qmd"        
+        renderer: Renderer
+    }
+
+    class SectionConfig {
+        title: str
+        desc: str
+        //
+        // list of api functions
+        contents: list[str]
+    }
+
+    
+    class Introspect {
+        // functions for analyzing python objects
+        // and docstrings
+        get_object(module, object_name) -> griffe object
+
+    }
+
+    class Inventory {
+        // functions to work with sphinx inventories,
+        // which are used for cross-references
+        convert_inventory(in_name, out_name)
+        create_inventory(project, version, items, ...)
+
+    }
+    class Renderer {
+        style: str
+        header_level: int = 2
+        show_signature: bool = True
+        hook_pre: Callable = None
+        render(el: griffe object)
+    }
+
+    class Builder {
+        // Includes all BuilderConfig properties
+        ...BuilderConfig
+
+        //
+        // via create_* methods
+        items: dict[str, griffe object]
+        inventory: sphobjinv.Inventory
+
+
+        build()
+        create_items()
+        create_inventory()
+        fetch_object_uri()
+        fetch_object_dispname()
+        render_index()
+        write_doc_pages()
+        from_config() -> Builder
+    }
+
+    class BuilderPkgdown {
+        // write R pkgdown style docs
+        style: "pkgdown"
+        render_index()
+        fetch_object_uri()
+        fetch_object_dispname()
+    }
+    
+    class BuilderSinglePage {
+        // writes one big page of docs
+        style: "single-page"
+        render_index()
+        fetch_object_uri()
+        write_doc_pages()
+    }
+
+    class MdRenderer {
+        render()
+    }
+
+
+    Builder <|-- BuilderPkgdown
+    Builder <|-- BuilderSinglePage
+    BuilderConfig --> SectionConfig
+    BuilderConfig <-- Builder: from_config
+    Introspect <-- Builder: create_items    
+    Inventory <-- Builder: create_inventory(self.package, ..., self.items, self.fetch_*)
+    Renderer <-- Builder
+    Renderer <|-- MdRenderer
+```
+
+:::

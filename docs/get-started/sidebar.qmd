@@ -1,0 +1,8 @@
+---
+title: Sidebar navigation
+---
+
+Currently, adding API reference pages to the left-hand sidebar requires manually
+listing each page in `_quarto.yml`. See the [quarto sidebar docs](https://quarto.org/docs/websites/website-navigation.html#side-navigation) for details.
+
+Generating sidebar entries is being tracked in [this quartodoc issue](https://github.com/machow/quartodoc/issues/20).

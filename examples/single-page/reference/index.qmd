@@ -1,0 +1,47 @@
+## get_object { #get_object }
+
+`get_object(module: str, object_name: str, parser: str = 'numpy')`
+
+Fetch a griffe object.
+
+### Parameters
+
+| Name          | Type   | Description                | Default   |
+|---------------|--------|----------------------------|-----------|
+| `module`      | str    | A module name.             | required  |
+| `object_name` | str    | A function name.           | required  |
+| `parser`      | str    | A docstring parser to use. | `'numpy'` |
+
+### See_Also
+
+get_function: a deprecated function.
+
+### Examples
+
+```python
+>>> get_function("quartodoc", "get_function")
+<Function('get_function', ...
+```
+
+## preview { #preview }
+
+`preview(ast: dc.Object | ds.Docstring | object)`
+
+Print a friendly representation of a griffe object (e.g. function, docstring)
+
+### Examples
+
+```python
+>>> from quartodoc import get_object
+>>> obj = get_object("quartodoc", "get_object")
+```
+
+```python
+>>> preview(obj.docstring.parsed)
+ ...
+```
+
+```python
+>>> preview(obj)
+ ...
+```

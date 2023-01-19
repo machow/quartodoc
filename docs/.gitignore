@@ -1,2 +1,6 @@
 /.quarto/
 _site
+reference
+
+examples/pkgdown
+examples/single-page

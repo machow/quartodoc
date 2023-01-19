@@ -1,0 +1,11 @@
+| style | source | layout |
+| ----- | ------ | ------ |
+| [pkgdown] | [github][pkgdown-code] | Index page with a title and short description for functions listed in each section. Each function gets its own documentation page. |
+| [single-page] | [github][sp-code] | Index page has function documentation embedded on it. |
+
+: {tbl-colwidths="[20, 20, 60]"}
+
+[pkgdown]: /examples/pkgdown/reference
+[pkgdown-code]: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
+[single-page]: /examples/single-page/reference
+[sp-code]: https://github.com/machow/quartodoc/tree/main/examples/single-page

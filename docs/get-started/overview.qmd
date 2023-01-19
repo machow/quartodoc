@@ -1,5 +1,7 @@
 ---
 title: Overview
+aliases:
+  - ../index.html
 jupyter:
   kernelspec:
     display_name: Python 3 (ipykernel)
@@ -8,26 +10,85 @@ jupyter:
 ---
 
 ::: {.callout-warning} 
-quartodoc is work in progress! For a basic implementation, take a look at the [docs folder](https://github.com/machow/quartodoc/tree/main/docs) for this site,
-including [this script](https://github.com/machow/quartodoc/blob/main/docs/1_generate_api.py) used to generate API pages.
+quartodoc is work in progress!
 :::
 
-Coming soon!
+quartodoc let's you quickly generate python package documentation,
+using markdown and [quarto](https://quarto.org).
+It is designed as an alternative to Sphinx.
 
-## Goals
+## Installation
+
+```bash
+python -m pip install quartodoc
+
+# or from github
+python -m pip install git+https://github.com/machow/quartodoc.git
+```
+
+## Basic use
+
+Getting started with quartodoc takes two steps: configuring a quarto website,
+and generating documentation pages for your library.
+
+First, create a `_quarto.yml` file with the following:
+
+```yaml
+project:
+  type: website
+  resources:
+    - objects.json
+
+quartodoc:
+  style: single-page
+  dir: reference
+  package: quartodoc
+  sections:
+    - title: Some functions
+      desc: Functions to inspect docstrings.
+      contents:
+        - get_object
+        - preview
+```
+
+Next, run this command to generate your API pages:
+
+```bash
+python -m quartodoc
+```
+
+This should create a `reference/` directory with an `index.qmd` and documentation
+pages for listed functions, like `get_object` and `preview`.
+
+Finally, preview your website with quarto:
+
+```bash
+quarto preview
+```
+
+## Key Features
 
 * Load docstrings (with [griffe](https://github.com/mkdocstrings/griffe))
 * Render docstrings (e.g. with [MdRenderer](/api/#sec-MdRenderer))
-* Enable cross references to function documentation.
+* Enable cross references to function documentation (with interlinks filter).
   - Link to functions within a doc.
   - Link to functions in other docs.
   - Generate an inventory file for other docs to link to yours.
-* (WIP) Generate high-level summaries.
-  - Class summaries, with methods.
-  - Tables of function names and descriptions.
+* Generate high-level summaries (with [Builder](/api/#api-builders)).
+  - First line of docstring used as description.
+  - Class doc pages have table of class attributes.
+  - Index pages list function names and descriptions.
 
-## Different documentation structures
+## Example sites
 
-* All functions listed on a single page.
-* Functions split across a few pages (e.g. parsers, renderers).
-* Each function gets its own page.
+| style | source | layout |
+| ----- | ------ | ------ |
+| [pkgdown] | [github][pkgdown-code] | Index page with a title and short description for functions listed in each section. Each function gets its own documentation page. |
+| [single-page] | [github][sp-code] | Index page has function documentation embedded on it. |
+
+: {tbl-colwidths="[20, 20, 60]"}
+
+[pkgdown]: /examples/pkgdown/reference
+[pkgdown-code]: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
+[single-page]: /examples/single-page/reference
+[sp-code]: https://github.com/machow/quartodoc/tree/main/examples/single-page

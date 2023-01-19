@@ -31,6 +31,8 @@ python3 -m pip install -e git+https://github.com/machow/quartodoc.git#egg=quarto
 
 ## Basic use
 
+### Render a docstring
+
 ```{python}
 #| output: false
 
@@ -67,6 +69,27 @@ print(
     >>> get_function("quartodoc", "get_function")
     <Function('get_function', ...
     ```
+
+### Build an index page
+
+```{python}
+#| output: false
+
+from quartodoc.autosummary import BuilderPkgdown
+
+builder = BuilderPkgdown(
+    [
+        {"title": "first", "desc": "section 1", "contents": ["get_object", "get_function"]},
+        {"title": "2nd", "desc": "section 2", "contents": ["MdRenderer"]}
+    ],
+    "quartodoc"
+    )
+
+print(
+    builder.render_index()
+)
+    
+```
 
 
 
