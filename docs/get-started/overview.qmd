@@ -70,14 +70,14 @@ quarto preview
 
 * Load docstrings (with [griffe](https://github.com/mkdocstrings/griffe))
 * Render docstrings (e.g. with [MdRenderer](/api/#sec-MdRenderer))
-* Enable cross references to function documentation.
+* Enable cross references to function documentation (with interlinks filter).
   - Link to functions within a doc.
   - Link to functions in other docs.
   - Generate an inventory file for other docs to link to yours.
-* Generate high-level summaries.
+* Generate high-level summaries (with [Builder](/api/#api-builders)).
   - First line of docstring used as description.
   - Class doc pages have table of class attributes.
-  - Tables of function names and descriptions.
+  - Index pages list function names and descriptions.
 
 ## Example sites
 

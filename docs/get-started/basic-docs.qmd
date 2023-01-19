@@ -24,7 +24,7 @@ quartodoc:
         - preview
 ```
 
-## Options
+## Top-level options
 
 The `quartodoc` section takes a `style` field, specifying which [](`quartodoc.Builder`)
 to use (currently "pkgdown" or "single-page"; see [Examples](/examples/)).

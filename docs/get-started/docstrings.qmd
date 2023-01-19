@@ -92,52 +92,6 @@ print(f_obj.docstring.value)
 preview(f_obj.docstring.parsed)
 ```
 
-## Rendering docstrings
-
-quartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML.
-Tree visitors define how each type of object in the parse tree should be handled.
-
-```{python}
-import griffe.dataclasses as dc
-import griffe.docstrings.dataclasses as ds
-
-from plum import dispatch
-from typing import Union
-
-
-class SomeRenderer:
-    def __init__(self, header_level: int = 1):
-        self.header_level = header_level
-
-    @dispatch
-    def visit(self, el):
-        raise NotImplementedError(f"Unsupported type: {type(el)}")
-
-    @dispatch
-    def visit(self, el: Union[dc.Alias, dc.Object]):
-        header = "#" * self.header_level
-        str_header = f"{header} {el.name}"
-        str_params = f"N PARAMETERS: {len(el.parameters)}"
-        str_sections = "SECTIONS: " + self.visit(el.docstring)
-        
-        # return something pretty
-        return "\n".join([str_header, str_params, str_sections])
-
-    @dispatch
-    def visit(self, el: dc.Docstring):
-        return "A docstring with {len(el.parsed)} pieces"
-
-print(SomeRenderer(header_level=2).visit(f_obj))
-```
-
-Note 3 big pieces:
-
-* **Generic dispatch**: The plum `dispatch` function decorates each `visit` method. The type annotations
-  specify the types of data each version of visit should dispatch on.
-* **Default behavior**: The first `visit` method ensures a `NotImplementedError` is raised by default.
-* **Tree walking**: `visit` methods often call `visit` again on sub elements.
-
-
 ## Parsing other docstring formats
 
 Currently, quartodoc expects docstrings in the numpydoc format.
@@ -145,4 +99,3 @@ However, the tool it uses under the hood (griffe) is easy to customize, and supp
 
 See the griffe [loading docs](https://mkdocstrings.github.io/griffe/loading/) for instructions.
 Specifically, the [GriffeLoader](https://mkdocstrings.github.io/griffe/reference/griffe/loader/#griffe.loader.GriffeLoader) takes options for customizing docstring parsing.
-

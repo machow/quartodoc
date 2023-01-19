@@ -1,0 +1,131 @@
+---
+title: Rendering docstrings
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+The previous section covered how to read and preview parsed docstrings.
+In this section, we'll look at how to render a parsed docstring into a format
+that can be used in documentation, like markdown or HTML.
+
+## Setting up problem
+
+Suppose that we wanted to take a function like `get_object()` and render a summary, with:
+
+* The number of parameters it takes.
+* The number of sections in its parsed docstring.
+
+For `get_object()` it might look like the following:
+
+```
+## get_object
+N PARAMETERS: 3
+SECTIONS: A docstring with 4 pieces
+```
+
+## Inspecting a function
+
+As covered in the previous section, we can preview information about `get_object()`.
+
+```{python}
+from quartodoc import get_object, preview
+
+f_obj = get_object("quartodoc", "get_object")
+
+preview(f_obj, max_depth=3)
+```
+
+Note the following pieces:
+
+* `preview()` takes a max_depth argument, that limits how much information it shows.
+* `get_object()` takes 3 parameters.
+* `get_object()` has a docstring with 4 sections.
+
+Importantly, the nodes (`█`) in the tree mention the name class of the python objects
+being previewed (e.g. `Alias`, `Expression`, `Parameters`).
+We'll need these to specify how to render objects of each class.
+
+## Generic dispatch
+
+Generic dispatch is the main programming technique used by quartodoc renderers.
+It let's you define how a function (like `render()`) should operate on different
+types of objects.
+
+```{python}
+from plum import dispatch
+
+import griffe.dataclasses as dc
+import griffe.docstrings.dataclasses as ds
+
+
+@dispatch
+def render(el: object):
+    print(f"Default rendering: {type(el)}")
+
+@dispatch
+def render(el: dc.Alias):
+    print("Alias rendering")
+    render(el.parameters)
+
+@dispatch
+def render(el: list):
+    print("List rendering")
+    [render(entry) for entry in el]
+
+
+render(f_obj)
+```
+
+## Defining a Renderer
+
+quartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML.
+Tree visitors define how each type of object in the parse tree should be handled.
+
+```{python}
+import griffe.dataclasses as dc
+import griffe.docstrings.dataclasses as ds
+
+from quartodoc import get_object
+from plum import dispatch
+from typing import Union
+
+
+class SomeRenderer:
+    def __init__(self, header_level: int = 1):
+        self.header_level = header_level
+
+    @dispatch
+    def visit(self, el):
+        raise NotImplementedError(f"Unsupported type: {type(el)}")
+
+    @dispatch
+    def visit(self, el: Union[dc.Alias, dc.Object]):
+        header = "#" * self.header_level
+        str_header = f"{header} {el.name}"
+        str_params = f"N PARAMETERS: {len(el.parameters)}"
+        str_sections = "SECTIONS: " + self.visit(el.docstring)
+        
+        # return something pretty
+        return "\n".join([str_header, str_params, str_sections])
+
+    @dispatch
+    def visit(self, el: dc.Docstring):
+        return f"A docstring with {len(el.parsed)} pieces"
+
+
+f_obj = get_object("quartodoc", "get_object")
+
+print(SomeRenderer(header_level=2).visit(f_obj))
+```
+
+Note 3 big pieces:
+
+* **Generic dispatch**: The plum `dispatch` function decorates each `visit` method. The type annotations
+  specify the types of data each version of visit should dispatch on.
+* **Default behavior**: The first `visit` method ensures a `NotImplementedError` is raised by default.
+* **Tree walking**: `visit` methods often call `visit` again on sub elements.
+
+

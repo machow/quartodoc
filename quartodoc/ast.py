@@ -13,9 +13,22 @@ from .renderers import tuple_to_data, docstring_section_narrow, ExampleCode, Exa
 
 
 @dispatch
-def fields(el: Union[dc.Object, dc.ObjectAliasMixin]):
-    options = ["name", "canonical_path", "classes", "members", "functions", "docstring"]
+def fields(el: dc.Object):
+    options = [
+        "name",
+        "canonical_path",
+        "classes",
+        "parameters",
+        "members",
+        "functions",
+        "docstring",
+    ]
     return [opt for opt in options if hasattr(el, opt)]
+
+
+@dispatch
+def fields(el: dc.ObjectAliasMixin):
+    return fields(el.target)
 
 
 @dispatch
@@ -86,10 +99,11 @@ class Formatter:
     icon_connector = "│ "
     string_truncate_mark = " ..."
 
-    def __init__(self, string_max_length: int = 50):
+    def __init__(self, string_max_length: int = 50, max_depth=999):
         self.string_max_length = string_max_length
+        self.max_depth = max_depth
 
-    def format(self, call, pad=0):
+    def format(self, call, depth=0, pad=0):
         """Return a Symbolic or Call back as a nice tree, with boxes for nodes."""
 
         call = self.transform(call)
@@ -105,10 +119,17 @@ class Formatter:
 
         call_str = self.icon_block + call.__class__.__name__
 
+        # short-circuit for max depth ----
+        if depth >= self.max_depth:
+            return call_str + self.string_truncate_mark
+
+        # format arguments ----
         fields_str = []
         for name in crnt_fields:
             val = self.get_field(call, name)
-            formatted_val = self.format(val, pad=len(str(name)) + self.n_spaces)
+            formatted_val = self.format(
+                val, depth + 1, pad=len(str(name)) + self.n_spaces
+            )
             fields_str.append(f"{name} = {formatted_val}")
 
         padded = []
@@ -154,7 +175,7 @@ class Formatter:
         return prefix + connector.join(x.splitlines())
 
 
-def preview(ast: "dc.Object | ds.Docstring | object"):
+def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999):
     """Print a friendly representation of a griffe object (e.g. function, docstring)
 
     Examples
@@ -170,4 +191,4 @@ def preview(ast: "dc.Object | ds.Docstring | object"):
      ...
 
     """
-    print(Formatter().format(ast))
+    print(Formatter(max_depth=max_depth).format(ast))

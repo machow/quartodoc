@@ -83,6 +83,7 @@ website:
           contents:
             - get-started/architecture.qmd
             - get-started/docstrings.qmd
+            - get-started/renderers.qmd
             - get-started/interlinks.qmd
     - id: dummy
 
