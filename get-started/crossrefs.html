@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Cross references</title>
+<title>quartodoc - Linking to pages</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/architecture.html" rel="next">
+<link href="../get-started/sidebar.html" rel="next">
 <link href="../get-started/basic-docs.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -107,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Cross references</h1>
+      <h1 class="quarto-secondary-nav-title">Linking to pages</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -140,7 +140,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link active">Cross references</a>
+  <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link active">Linking to pages</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
       </ul>
@@ -155,12 +160,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/architecture.html" class="sidebar-item-text sidebar-link">Architecture</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Handling docstrings</a>
+  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Inspecting docstrings</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -175,6 +175,21 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Extra Topics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/architecture.html" class="sidebar-item-text sidebar-link">Architecture</a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -184,10 +199,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#link-to-external-docs" id="toc-link-to-external-docs" class="nav-link active" data-scroll-target="#link-to-external-docs">Link to external docs</a>
-  <ul class="collapse">
-  <li><a href="#inventory-files" id="toc-inventory-files" class="nav-link" data-scroll-target="#inventory-files">Inventory files</a></li>
-  </ul></li>
+  <li><a href="#linking-by-path" id="toc-linking-by-path" class="nav-link active" data-scroll-target="#linking-by-path">Linking by path</a></li>
+  <li><a href="#linking-by-function-name" id="toc-linking-by-function-name" class="nav-link" data-scroll-target="#linking-by-function-name">Linking by function name</a></li>
   <li><a href="#the-see-also-section" id="toc-the-see-also-section" class="nav-link" data-scroll-target="#the-see-also-section">The “See Also” section</a></li>
   </ul>
 </nav>
@@ -197,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Cross references</h1>
+<h1 class="title d-none d-lg-block">Linking to pages</h1>
 </div>
 
 
@@ -213,65 +226,16 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>Coming soon!</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>style</th>
-<th>link text</th>
-<th>syntax</th>
-<th>output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>manual</td>
-<td></td>
-<td><code>[a link](../api/#get_object)</code></td>
-<td><a href="../api/#get_object">a link</a></td>
-</tr>
-<tr class="even">
-<td>md</td>
-<td>custom</td>
-<td><code>[some explanation](`quartodoc.get_object`)</code></td>
-<td><a href="../api/get_object.html">some explanation</a></td>
-</tr>
-<tr class="odd">
-<td>md</td>
-<td>default</td>
-<td><code>[](`quartodoc.get_object`)</code></td>
-<td><a href="../api/get_object.html">get_object</a></td>
-</tr>
-<tr class="even">
-<td>md</td>
-<td>shortened</td>
-<td><code>[](`~quartodoc.get_object`)</code></td>
-<td><a href="../api/get_object.html">get_object</a></td>
-</tr>
-<tr class="odd">
-<td>rst</td>
-<td>custom</td>
-<td><code>:ref:`some explanation &lt;quartodoc.get_object&gt;`</code></td>
-<td><a href="../api/get_object.html">some explanation </a></td>
-</tr>
-<tr class="even">
-<td>rst</td>
-<td>default</td>
-<td><code>:ref:`quartodoc.get_object`</code></td>
-<td><a href="../api/get_object.html">get_object</a></td>
-</tr>
-<tr class="odd">
-<td>rst</td>
-<td>shortened</td>
-<td><code>:ref:`~quartodoc.get_object`</code></td>
-<td><a href="../api/get_object.html">get_object</a></td>
-</tr>
-</tbody>
-</table>
-<section id="link-to-external-docs" class="level2">
-<h2 class="anchored" data-anchor-id="link-to-external-docs">Link to external docs</h2>
-<section id="inventory-files" class="level3">
-<h3 class="anchored" data-anchor-id="inventory-files">Inventory files</h3>
+<section id="linking-by-path" class="level2">
+<h2 class="anchored" data-anchor-id="linking-by-path">Linking by path</h2>
+<p>You can link to function docs by using the path to the generated documentation file:</p>
+<p><code>[get_object](/reference/get_object.qmd)</code></p>
+<ul>
+<li>/reference/</li>
+</ul>
 </section>
+<section id="linking-by-function-name" class="level2">
+<h2 class="anchored" data-anchor-id="linking-by-function-name">Linking by function name</h2>
 </section>
 <section id="the-see-also-section" class="level2">
 <h2 class="anchored" data-anchor-id="the-see-also-section">The “See Also” section</h2>
@@ -420,8 +384,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/architecture.html" class="pagination-link">
-        <span class="nav-page-text">Architecture</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/sidebar.html" class="pagination-link">
+        <span class="nav-page-text">Sidebar navigation</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

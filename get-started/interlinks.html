@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../get-started/architecture.html" rel="next">
 <link href="../get-started/renderers.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -139,7 +140,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link">Cross references</a>
+  <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link">Linking to pages</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
       </ul>
@@ -154,12 +160,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/architecture.html" class="sidebar-item-text sidebar-link">Architecture</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Handling docstrings</a>
+  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Inspecting docstrings</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -170,6 +171,21 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link active">Interlinks filter</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Extra Topics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/architecture.html" class="sidebar-item-text sidebar-link">Architecture</a>
   </div>
 </li>
       </ul>
@@ -185,6 +201,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#generating-a-sphinx-inventory" id="toc-generating-a-sphinx-inventory" class="nav-link active" data-scroll-target="#generating-a-sphinx-inventory">Generating a sphinx inventory</a></li>
   <li><a href="#configuring-the-interlinks-filter" id="toc-configuring-the-interlinks-filter" class="nav-link" data-scroll-target="#configuring-the-interlinks-filter">Configuring the interlinks filter</a></li>
+  <li><a href="#link-formats" id="toc-link-formats" class="nav-link" data-scroll-target="#link-formats">Link formats</a></li>
   </ul>
 </nav>
     </div>
@@ -241,6 +258,63 @@ interlinks:
 <li>python: https://docs.python.org/3/objects.inv</li>
 </ul>
 <p>The rough idea is that this plugin will behave similar to <a href="https://jupyterbook.org/en/stable/content/references.html">jupyterbook linking</a>, which supports both some intersphinx syntax, but also markdown syntax.</p>
+</section>
+<section id="link-formats" class="level2">
+<h2 class="anchored" data-anchor-id="link-formats">Link formats</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>style</th>
+<th>link text</th>
+<th>syntax</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>manual</td>
+<td></td>
+<td><code>[a link](../api/#get_object)</code></td>
+<td><a href="../api/#get_object">a link</a></td>
+</tr>
+<tr class="even">
+<td>md</td>
+<td>custom</td>
+<td><code>[some explanation](`quartodoc.get_object`)</code></td>
+<td><a href="../api/get_object.html">some explanation</a></td>
+</tr>
+<tr class="odd">
+<td>md</td>
+<td>default</td>
+<td><code>[](`quartodoc.get_object`)</code></td>
+<td><a href="../api/get_object.html">get_object</a></td>
+</tr>
+<tr class="even">
+<td>md</td>
+<td>shortened</td>
+<td><code>[](`~quartodoc.get_object`)</code></td>
+<td><a href="../api/get_object.html">get_object</a></td>
+</tr>
+<tr class="odd">
+<td>rst</td>
+<td>custom</td>
+<td><code>:ref:`some explanation &lt;quartodoc.get_object&gt;`</code></td>
+<td><a href="../api/get_object.html">some explanation </a></td>
+</tr>
+<tr class="even">
+<td>rst</td>
+<td>default</td>
+<td><code>:ref:`quartodoc.get_object`</code></td>
+<td><a href="../api/get_object.html">get_object</a></td>
+</tr>
+<tr class="odd">
+<td>rst</td>
+<td>shortened</td>
+<td><code>:ref:`~quartodoc.get_object`</code></td>
+<td><a href="../api/get_object.html">get_object</a></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
@@ -386,6 +460,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../get-started/architecture.html" class="pagination-link">
+        <span class="nav-page-text">Architecture</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
