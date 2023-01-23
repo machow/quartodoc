@@ -1,7 +1,6 @@
 from enum import Enum
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
-from griffe.expressions import Expression, Name
 from dataclasses import dataclass
 from tabulate import tabulate
 from plum import dispatch
@@ -148,6 +147,12 @@ class MdRenderer(Renderer):
         self.show_signature = show_signature
         self.hook_pre = hook_pre
 
+    def _render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
+        if isinstance(el, (type(None), str)):
+            return el
+
+        return el.full
+
     @dispatch
     def to_md(self, el):
         raise NotImplementedError(f"Unsupported type: {type(el)}")
@@ -156,13 +161,18 @@ class MdRenderer(Renderer):
     def to_md(self, el: str):
         return el
 
-    @dispatch
-    def to_md(self, el: Union[Expression, Name]):
-        # these are used often for annotations, and full returns it as a string
-        return el.full
+    # TODO: remove, as this is now handled by _render_annotation
+    # @dispatch
+    # def to_md(self, el: Union[Expression, Name]):
+    #    # these are used often for annotations, and full returns it as a string
+    #    return el.full
 
     @dispatch
-    def to_md(self, el: Union[dc.Alias, dc.Object]):
+    def to_md(self, el: dc.Alias):
+        return self.to_md(el.target)
+
+    @dispatch
+    def to_md(self, el: dc.Object):
         # TODO: replace hard-coded header level
 
         _str_pars = self.to_md(el.parameters)
@@ -177,7 +187,7 @@ class MdRenderer(Renderer):
         else:
             for section in el.docstring.parsed:
                 new_el = docstring_section_narrow(section)
-                title = new_el.kind.name
+                title = new_el.kind.value
                 body = self.to_md(new_el)
 
                 if title != "text":
@@ -193,6 +203,10 @@ class MdRenderer(Renderer):
 
         return "\n\n".join(parts)
 
+    @dispatch
+    def to_md(self, el: dc.Attribute):
+        raise NotImplementedError()
+
     # signature parts -------------------------------------------------------------
 
     @dispatch
@@ -205,9 +219,10 @@ class MdRenderer(Renderer):
         splats = {dc.ParameterKind.var_keyword, dc.ParameterKind.var_positional}
         has_default = el.default and el.kind not in splats
 
-        if el.annotation and has_default:
+        annotation = self._render_annotation(el.annotation)
+        if annotation and has_default:
             return f"{el.name}: {el.annotation} = {el.default}"
-        elif el.annotation:
+        elif annotation:
             return f"{el.name}: {el.annotation}"
         elif has_default:
             return f"{el.name}={el.default}"
@@ -240,10 +255,8 @@ class MdRenderer(Renderer):
     def to_md(self, el: ds.DocstringParameter) -> Tuple[str]:
         # TODO: if default is not, should return the word "required" (unescaped)
         default = "required" if el.default is None else escape(el.default)
-        if isinstance(el.annotation, str):
-            annotation = el.annotation
-        else:
-            annotation = el.annotation.full if el.annotation else None
+
+        annotation = self._render_annotation(el.annotation)
         return (escape(el.name), annotation, sanitize(el.description), default)
 
     # attributes ----
@@ -257,7 +270,8 @@ class MdRenderer(Renderer):
 
     @dispatch
     def to_md(self, el: ds.DocstringAttribute):
-        return el.name, self.to_md(el.annotation), el.description
+        annotation = self._render_annotation(el.annotation)
+        return el.name, self.to_md(annotation), el.description
 
     # see also ----
 
@@ -283,15 +297,15 @@ class MdRenderer(Renderer):
     # returns ----
 
     @dispatch
-    def to_md(self, el: ds.DocstringSectionReturns):
+    def to_md(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
         rows = list(map(self.to_md, el.value))
         header = ["Type", "Description"]
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
-    def to_md(self, el: ds.DocstringReturn):
+    def to_md(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
         # similar to DocstringParameter, but no name or default
-        annotation = el.annotation.full if el.annotation else None
+        annotation = self._render_annotation(el.annotation)
         return (annotation, el.description)
 
     # unsupported parts ----
@@ -303,7 +317,6 @@ class MdRenderer(Renderer):
     @dispatch.multi(
         (ds.DocstringAdmonition,),
         (ds.DocstringDeprecated,),
-        (ds.DocstringRaise,),
         (ds.DocstringWarn,),
         (ds.DocstringYield,),
         (ds.DocstringReceive,),
