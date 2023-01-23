@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#get_object" id="toc-get_object" class="nav-link active" data-scroll-target="#get_object">get_object</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#see_also" id="toc-see_also" class="nav-link" data-scroll-target="#see_also">See_Also</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul></li>
   </ul>
@@ -192,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="get_object" class="level2">
 <h2 class="anchored" data-anchor-id="get_object">get_object</h2>
-<p><code>get_object(module: str, object_name: str, parser: str = 'numpy')</code></p>
+<p><code>get_object(module: str, object_name: str, parser: str = 'numpy', load_aliases=True, modules_collection: None | ModulesCollection = None)</code></p>
 <p>Fetch a griffe object.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -224,11 +224,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>A docstring parser to use.</td>
 <td><code>'numpy'</code></td>
 </tr>
+<tr class="even">
+<td><code>load_aliases</code></td>
+<td></td>
+<td>For aliases that were imported from other modules, should we load that module?</td>
+<td><code>True</code></td>
+</tr>
+<tr class="odd">
+<td><code>modules_collection</code></td>
+<td>None</td>
+<td>ModulesCollection</td>
+<td>A griffe <a href="https://mkdocstrings.github.io/griffe/reference/griffe/collections/#griffe.collections.ModulesCollection">ModulesCollection</a>, used to hold loaded modules.</td>
+</tr>
 </tbody>
 </table>
 </section>
-<section id="see_also" class="level3">
-<h3 class="anchored" data-anchor-id="see_also">See_Also</h3>
+<section id="see-also" class="level3">
+<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
 <p>get_function: a deprecated function.</p>
 </section>
 <section id="examples" class="level3">

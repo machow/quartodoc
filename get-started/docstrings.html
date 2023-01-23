@@ -342,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f02542939a0&gt;</code></pre>
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7fc174314a30&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -361,6 +361,10 @@ object_name: str
     A function name.
 parser: str
     A docstring parser to use.
+load_aliases: bool
+    For aliases that were imported from other modules, should we load that module?
+modules_collection: optional
+    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
 See Also
 --------
@@ -379,10 +383,10 @@ Examples
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f02541fc3a0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f02541fc340&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f02541fc4c0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f02541ff730&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fc174208190&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fc174208160&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fc174208130&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fc174208430&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -411,6 +415,10 @@ object_name: str
     A function name.
 parser: str
     A docstring parser to use.
+load_aliases: bool
+    For aliases that were imported from other modules, should we load that module?
+modules_collection: optional
+    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
 See Also
 --------
@@ -450,12 +458,24 @@ Examples
 │               │     ├─description = 'A function name.'
 │               │     ├─name = 'object_name'
 │               │     └─value = None
-│               └─2 = █─DocstringParameter
-│                     ├─annotation = Name(source='str', full='str')
-│                     ├─default = "'numpy'"
-│                     ├─description = 'A docstring parser to use.'
-│                     ├─name = 'parser'
-│                     └─value = "'numpy'"
+│               ├─2 = █─DocstringParameter
+│               │     ├─annotation = Name(source='str', full='str')
+│               │     ├─default = "'numpy'"
+│               │     ├─description = 'A docstring parser to use.'
+│               │     ├─name = 'parser'
+│               │     └─value = "'numpy'"
+│               ├─3 = █─DocstringParameter
+│               │     ├─annotation = None
+│               │     ├─default = 'True'
+│               │     ├─description = 'For aliases that were imported from other modules ...
+│               │     ├─name = 'load_aliases'
+│               │     └─value = 'True'
+│               └─4 = █─DocstringParameter
+│                     ├─annotation = Name(source='None | ModulesCollection', full='None ...
+│                     ├─default = 'None'
+│                     ├─description = 'A griffe [](`~griffe.collections.ModulesCollectio ...
+│                     ├─name = 'modules_collection'
+│                     └─value = 'None'
 ├─2 = █─DocstringSectionSeeAlso
 │     ├─kind = &lt;DocstringSectionKindPatched.see_also: 'see also'&gt;
 │     ├─title = None
