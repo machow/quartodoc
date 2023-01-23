@@ -1,22 +1,119 @@
+import itertools
 import json
 import panflute as pf
 
+from quartodoc.inventory import Ref, RefSyntaxError
+from pathlib import Path
 from plum import dispatch
 
 
-inventory = {}
+# Hold all inventory items in a singleton -------------------------------------
+
+# TODO: make entries into dataclass
+# has fields: name, domain, role, priority, invname, full_uri
+
+
+class InvLookupError(Exception):
+    pass
+
+
+class Inventories:
+    def __init__(self):
+        self.registry = {}
+
+    def items(self):
+        return itertools.chain(*self.registry.values())
+
+    def load_inventory(self, inventory, url, invname):
+        all_items = []
+        for item in inventory["items"]:
+            # TODO: what are the rules for inventories with overlapping names?
+            #       it seems like this is where priority and using source name as an
+            #       optional prefix in references is useful (e.g. siuba:a.b.c).
+            full_uri = url + item["uri"].replace("$", item["name"])
+            enh_item = {**item, "invname": invname, "full_uri": full_uri}
+            all_items.append(enh_item)
+
+        self.registry[invname] = all_items
+
+    def lookup_reference(self, ref: Ref):
+        # return global_inventory[ref]
+
+        crnt_items = self.items()
+        for field in ["name", "role", "domain", "invname"]:
+            if field == "name":
+                # target may have ~ option in front, so we strip it off
+                field_value = ref.target.lstrip("~")
+            else:
+                field_value = getattr(ref, field)
+
+            crnt_items = _filter_by_field(crnt_items, field, field_value)
+
+        results = list(crnt_items)
+        if not results:
+            raise InvLookupError(
+                f"Cross reference not found in an inventory file: `{ref}`"
+            )
+
+        if len(results) > 1:
+            raise InvLookupError(
+                f"Cross reference matches multiple entries.\n"
+                f"Matching entries: {len(results)}\n"
+                f"Reference: {ref}\n"
+                f"Top 2 matches: \n  * {results[0]}\n  * {results[1]}"
+            )
+
+        return results[0]
+
+
+global_inventory = Inventories()
+
+
+# Utility functions -----------------------------------------------------------
 
 
 class ConfigError(Exception):
     pass
 
 
-def load_mock_inventory(items: "dict[str, str]"):
-    for k, v in items.items():
-        inventory[k] = v
+def get_path_to_root():
+    # I have no idea how to get the documentation root,
+    # except to get the path the extension script, which
+    # lives in <root>/_extensions/interlinks, and work back
+    return Path(__file__).parent.parent.parent
 
 
-def ref_to_anchor(ref: str, text: "str | pf.ListContainer | None"):
+def load_inventories(interlinks: dict):
+    p_root = get_path_to_root()
+
+    sources = interlinks["sources"]
+    cache = interlinks.get("cache", "_inv")
+
+    # load this sites inventory ----
+    site_inv = interlinks.get("site_inv", "objects.json")
+
+    json_data = json.load(open(p_root / site_inv))
+    global_inventory.load_inventory(json_data, url="/", invname="")
+
+    # load other inventories ----
+    for doc_name, cfg in sources.items():
+
+        fname = doc_name + "_objects.json"
+        inv_path = p_root / Path(cache) / fname
+
+        json_data = json.load(open(inv_path))
+
+        global_inventory.load_inventory(json_data, url=cfg["url"], invname=doc_name)
+
+
+def _filter_by_field(items, field_name: str, value: "str | None" = None):
+    if value is None:
+        return items
+
+    return (item for item in items if item[field_name] == value)
+
+
+def ref_to_anchor(raw: str, text: "str | pf.ListContainer | None"):
     """Return a Link element based on ref in interlink format
 
     Parameters
@@ -38,17 +135,17 @@ def ref_to_anchor(ref: str, text: "str | pf.ListContainer | None"):
     Link(Str(partial); url='https://example.org/functools.partial.html')
     """
     # TODO: for now we just mutate el
-    is_shortened = ref.startswith("~")
-
-    stripped = ref.lstrip("~")
 
     try:
-        entry = inventory[stripped]
-        dst_url = entry["full_uri"]
-    except KeyError:
-        raise KeyError(f"Cross reference not found in an inventory file: {stripped}")
+        ref = Ref.from_string(raw)
+    except RefSyntaxError as e:
+        pf.debug("WARNING: ", str(e))
 
-    pf.debug(f"TEXT IS: {text}")
+    is_shortened = ref.target.startswith("~")
+
+    entry = global_inventory.lookup_reference(ref)
+    dst_url = entry["full_uri"]
+
     if not text:
         name = entry["name"] if entry["dispname"] == "-" else entry["dispname"]
         if is_shortened:
@@ -79,8 +176,6 @@ def parse_rst_style_ref(full_text):
 
     import re
 
-    # pf.debug(full_text)
-
     m = re.match(r"(?P<text>.+?)\<(?P<ref>[a-zA-Z\.\-: _]+)\>", full_text)
     if m is None:
         # TODO: print a warning or something
@@ -105,7 +200,7 @@ def visit(el: pf.MetaList, doc):
     meta = doc.get_metadata()
 
     try:
-        sources = meta["interlinks"]["sources"]
+        interlinks = meta["interlinks"]
     except KeyError:
         raise ConfigError(
             "No interlinks.sources field detected in your metadata."
@@ -114,16 +209,8 @@ def visit(el: pf.MetaList, doc):
             "\n sources:"
             "\n    - <source_name>: {url: ..., inv: ..., fallback: ... }"
         )
-    for doc_name, cfg in sources.items():
-        json_data = json.load(open(cfg["fallback"]))
 
-        for item in json_data["items"]:
-            # TODO: what are the rules for inventories with overlapping names?
-            #       it seems like this is where priority and using source name as an
-            #       optional prefix in references is useful (e.g. siuba:a.b.c).
-            full_uri = cfg["url"] + item["uri"].replace("$", item["name"])
-            enh_item = {**item, "full_uri": full_uri}
-            inventory[item["name"]] = enh_item
+    load_inventories(interlinks)
 
     return el
 
@@ -133,29 +220,32 @@ def visit(el: pf.Doc, doc):
     return el
 
 
-@dispatch
-def visit(el: pf.Plain, doc):
-    cont = el.content
-    if len(cont) == 2 and cont[0] == pf.Str(":ref:") and isinstance(cont[1], pf.Code):
-        _, code = el.content
-
-        ref, title = parse_rst_style_ref(code.text)
-
-        return pf.Plain(ref_to_anchor(ref, title))
-
-    return el
+# TODO: the syntax :ref:`target` is not trivial to implement. The pandoc AST
+# often embeds it in a list of Plain with other elements. Currently, we only
+# support the syntax inside of links.
+#
+# @dispatch
+# def visit(el: pf.Plain, doc):
+#     cont = el.content
+#     if len(cont) == 2 and cont[0] == pf.Str(":ref:") and isinstance(cont[1], pf.Code):
+#         _, code = el.content
+#
+#         ref, title = parse_rst_style_ref(code.text)
+#
+#         return pf.Plain(ref_to_anchor(ref, title))
+#
+#     return el
 
 
 @dispatch
 def visit(el: pf.Link, doc):
-    if el.url.startswith("%60") and el.url.endswith("%60"):
-        url = el.url[3:-3]
-
+    url = el.url
+    if (url.startswith("%60") or url.startswith(":")) and url.endswith("%60"):
         # Get URL ----
-
-        # TODO: url can be form external+invname:domain:reftype:target
-        # for now, assume it's simply <target>. e.g. siuba.dply.verbs.mutate
-        return ref_to_anchor(url, el.content)
+        try:
+            return ref_to_anchor(url.replace("%60", "`"), el.content)
+        except InvLookupError as e:
+            pf.debug("WARNING: " + str(e))
 
     return el
 

@@ -2,21 +2,16 @@ project:
   type: website
   output-dir: _build
   resources:
-    - objects.json
     - examples/single-page
     - examples/pkgdown
-  #pre-render: "python -m quartodoc _quarto.yml"
 
 filters:
   - "interlinks"
 
 interlinks:
   sources:
-    quartodoc:
-      # TODO: add note that this works as the site root
-      url: "/"
-      inv: null
-      fallback: objects.json
+    python:
+      url: https://docs.python.org/3/
 
 quartodoc:
   style: pkgdown

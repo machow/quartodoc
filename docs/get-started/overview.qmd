@@ -54,7 +54,7 @@ quartodoc:
 Next, run this command to generate your API pages:
 
 ```bash
-python -m quartodoc
+python -m quartodoc build
 ```
 
 This should create a `reference/` directory with an `index.qmd` and documentation
