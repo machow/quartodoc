@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/sidebar.html" rel="next">
+<link href="../get-started/interlinks.html" rel="next">
 <link href="../get-started/basic-docs.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -145,6 +145,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link">Interlinks filter</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
@@ -166,11 +171,6 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/renderers.html" class="sidebar-item-text sidebar-link">Rendering docstrings</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link">Interlinks filter</a>
   </div>
 </li>
       </ul>
@@ -202,6 +202,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#linking-by-path" id="toc-linking-by-path" class="nav-link active" data-scroll-target="#linking-by-path">Linking by path</a></li>
   <li><a href="#linking-by-function-name" id="toc-linking-by-function-name" class="nav-link" data-scroll-target="#linking-by-function-name">Linking by function name</a></li>
   <li><a href="#the-see-also-section" id="toc-the-see-also-section" class="nav-link" data-scroll-target="#the-see-also-section">The “See Also” section</a></li>
+  <li><a href="#type-annotations-in-docstrings" id="toc-type-annotations-in-docstrings" class="nav-link" data-scroll-target="#type-annotations-in-docstrings">Type annotations in docstrings</a></li>
   </ul>
 </nav>
     </div>
@@ -225,20 +226,58 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Coming soon!</p>
 <section id="linking-by-path" class="level2">
 <h2 class="anchored" data-anchor-id="linking-by-path">Linking by path</h2>
-<p>You can link to function docs by using the path to the generated documentation file:</p>
-<p><code>[get_object](/reference/get_object.qmd)</code></p>
-<ul>
-<li>/reference/</li>
-</ul>
+<p>You can use <a href="https://quarto.org/docs/authoring/markdown-basics.html#links-images">quarto’s markdown linking syntax</a> to link to function docs, by using the path to the generated documentation file.</p>
+<p>Here are some examples:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>code</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>[get_object](/reference/get_object.qmd)</code></td>
+<td><a href="../reference/get_object.qmd">get_object</a></td>
+</tr>
+<tr class="even">
+<td><code>[link text](/reference/MdRenderer.qmd)</code></td>
+<td><a href="../reference/MdRenderer.qmd">link text</a></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="linking-by-function-name" class="level2">
 <h2 class="anchored" data-anchor-id="linking-by-function-name">Linking by function name</h2>
+<p>Use quartodoc’s <a href="../get-started/interlinks.html">interlinking filter</a> to link to functions using only their names:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>code</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>[](`quartodoc.get_object`)</code></td>
+<td><a href="../api/get_object.html">get_object</a></td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the link above puts the function name in backticks, rather than using the path to its documentation: <code>`quartodoc.get_object`</code>.</p>
+<p>You can also use this approach to link to other documentation sites. For example, including links to quartodoc, or https://docs.python.org/3 using function names.</p>
+<p>See the <a href="../get-started/interlinks.html">interlinks documentation</a> for set up and usage.</p>
 </section>
 <section id="the-see-also-section" class="level2">
 <h2 class="anchored" data-anchor-id="the-see-also-section">The “See Also” section</h2>
+<p>A major goal of quartodoc is to automatically turn text in the “See Also” section of docstrings into links.</p>
+<p>See <a href="https://github.com/machow/quartodoc/issues/21">this issue</a> for more details on parsing See Also sections, and <a href="https://github.com/machow/quartodoc/issues/22">this issue</a> on turning type annotations into links.</p>
+</section>
+<section id="type-annotations-in-docstrings" class="level2">
+<h2 class="anchored" data-anchor-id="type-annotations-in-docstrings">Type annotations in docstrings</h2>
+<p>This is planned, but currently unimplemented. See <a href="https://github.com/machow/quartodoc/issues/22">this issue</a> on turning type annotations into links.</p>
 
 
 </section>
@@ -384,8 +423,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/sidebar.html" class="pagination-link">
-        <span class="nav-page-text">Sidebar navigation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/interlinks.html" class="pagination-link">
+        <span class="nav-page-text">Interlinks filter</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

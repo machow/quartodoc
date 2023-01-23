@@ -25,7 +25,7 @@
     "href": "get-started/renderers.html#inspecting-a-function",
     "title": "Rendering docstrings",
     "section": "Inspecting a function",
-    "text": "Inspecting a function\nAs covered in the previous section, we can preview information about get_object().\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\npreview(f_obj, max_depth=3)\n\n█─Alias\n├─name = 'get_object'\n├─annotation = █─Expression\n│              ├─0 = Name(source='dc', full='griffe.dataclasses')\n│              ├─1 = '.'\n│              └─2 = Name(source='Object', full='griffe.dataclasses.Obj ...\n├─parameters = █─Parameters\n│              ├─0 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'module'\n│              │     └─default = None\n│              ├─1 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'object_name'\n│              │     └─default = None\n│              └─2 = █─Parameter\n│                    ├─annotation = Name(source='str', full='str')\n│                    ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│                    ├─name = 'parser'\n│                    └─default = \"'numpy'\"\n└─docstring = █─Docstring\n              ├─parser = <Parser.numpy: 'numpy'>\n              └─parsed = █─list\n                         ├─0 = █─DocstringSectionText ...\n                         ├─1 = █─DocstringSectionParameters ...\n                         ├─2 = █─DocstringSectionSeeAlso ...\n                         └─3 = █─DocstringSectionExamples ...\n\n\nNote the following pieces:\n\npreview() takes a max_depth argument, that limits how much information it shows.\nget_object() takes 3 parameters.\nget_object() has a docstring with 4 sections.\n\nImportantly, the nodes (█) in the tree mention the name class of the python objects being previewed (e.g. Alias, Expression, Parameters). We’ll need these to specify how to render objects of each class."
+    "text": "Inspecting a function\nAs covered in the previous section, we can preview information about get_object().\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\npreview(f_obj, max_depth=3)\n\n█─Alias\n├─name = 'get_object'\n├─annotation = █─Expression\n│              ├─0 = Name(source='dc', full='griffe.dataclasses')\n│              ├─1 = '.'\n│              └─2 = Name(source='Object', full='griffe.dataclasses.Obj ...\n├─parameters = █─Parameters\n│              ├─0 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'module'\n│              │     └─default = None\n│              ├─1 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'object_name'\n│              │     └─default = None\n│              └─2 = █─Parameter\n│                    ├─annotation = Name(source='str', full='str')\n│                    ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│                    ├─name = 'parser'\n│                    └─default = \"'numpy'\"\n└─docstring = █─Docstring\n              ├─parser = <Parser.numpy: 'numpy'>\n              └─parsed = █─list\n                         ├─0 = █─DocstringSectionText ...\n                         ├─1 = █─DocstringSectionParameters ...\n                         ├─2 = █─DocstringSectionSeeAlso ...\n                         └─3 = █─DocstringSectionExamples ...\n\n\n\n\n\nNote the following pieces:\n\npreview() takes a max_depth argument, that limits how much information it shows.\nget_object() takes 3 parameters.\nget_object() has a docstring with 4 sections.\n\nImportantly, the nodes (█) in the tree mention the name class of the python objects being previewed (e.g. Alias, Expression, Parameters). We’ll need these to specify how to render objects of each class."
   },
   {
     "objectID": "get-started/renderers.html#generic-dispatch",
@@ -81,28 +81,28 @@
     "href": "get-started/interlinks.html",
     "title": "Interlinks filter",
     "section": "",
-    "text": "The interlinks filter allows you to provide crossreferences within and between documentation. It requires of two parts:"
+    "text": "The interlinks filter allows you to provide crossreferences within and between documentation. It consists of three pieces:"
   },
   {
-    "objectID": "get-started/interlinks.html#what-is-a-sphinx-inventory-file",
-    "href": "get-started/interlinks.html#what-is-a-sphinx-inventory-file",
+    "objectID": "get-started/interlinks.html#installing",
+    "href": "get-started/interlinks.html#installing",
     "title": "Interlinks filter",
-    "section": "What is a sphinx inventory file?",
-    "text": "What is a sphinx inventory file?\nSphinx inventory files provide information about where the documentation for functions live on a website.\nMost sphinx sites name them object.inv:\n\nnumpy: https://numpy.org/doc/stable/objects.inv\npython: https://docs.python.org/3/objects.inv"
+    "section": "Installing",
+    "text": "Installing\nUse the quarto add command to install the interlinks filter:\nquarto add machow/quartodoc\n\n\n\n\n\n\nNote\n\n\n\nThe code for the filter can be found in quartodoc’s _extension folder"
   },
   {
     "objectID": "get-started/interlinks.html#configuring-the-interlinks-filter",
     "href": "get-started/interlinks.html#configuring-the-interlinks-filter",
     "title": "Interlinks filter",
     "section": "Configuring the interlinks filter",
-    "text": "Configuring the interlinks filter\nConfigure the filter in _quarto.yml or on specific pages:\nfilters:\n  - interlinks\n\ninterlinks:\n  sources:\n    numpy:\n      url: https://numpy.org/doc/stable/\n    python:\n      url: https://docs.python.org/3/\nNotice 3 important pieces in this config:\n\nThe numpy and python fields indicate that we’re getting inventories for the library numpy, and python builtin libraries.\nThe url fields indicate where inventory files can be found.\nThe fallback field indicates where we should save the file, so we don’t need to download it repeatedly."
+    "text": "Configuring the interlinks filter\nConfigure the filter in _quarto.yml or on specific pages, by adding these sections:\nfilters:\n  - interlinks\n\ninterlinks:\n  sources:\n    numpy:\n      url: https://numpy.org/doc/stable/\n    python:\n      url: https://docs.python.org/3/\nNotice 2 important pieces in this config:\n\nThe numpy and python fields indicate that we’re getting inventories for the library numpy, and python builtin libraries.\nThe url fields indicate where inventory files can be found.\n\nBy default, downloaded inventory files will be saved in the _inv folder of your documentation directory."
   },
   {
-    "objectID": "get-started/interlinks.html#generating-sphinx-inventories",
-    "href": "get-started/interlinks.html#generating-sphinx-inventories",
+    "objectID": "get-started/interlinks.html#running-the-interlinks-filter",
+    "href": "get-started/interlinks.html#running-the-interlinks-filter",
     "title": "Interlinks filter",
-    "section": "Generating sphinx inventories",
-    "text": "Generating sphinx inventories\nFirst, build the reference for your own site, which includes an objects.json inventory:\npython -m quartodoc build\nSecond, retrieve the inventory files for any other sources:\npython -m quartodoc interlinks\nFinally you should see the filter run when previewing your docs:\nquarto preview"
+    "section": "Running the interlinks filter",
+    "text": "Running the interlinks filter\nFirst, build the reference for your own site, which includes an objects.json inventory:\npython -m quartodoc build\nSecond, retrieve the inventory files for any other sources:\npython -m quartodoc interlinks\nFinally you should see the filter run when previewing your docs:\nquarto preview"
   },
   {
     "objectID": "get-started/interlinks.html#link-formats",
@@ -117,6 +117,13 @@
     "title": "Interlinks filter",
     "section": "Link filtering syntax",
     "text": "Link filtering syntax\nSometimes multiple documentation sites use the same target (e.g. function) names. The inventory format includes multiple pieces of information that can be used to refer to a specific entry in the inventory:\n\ninventory_name\nrole: what kind of object is it? e.g. function, class.\ndomain: what kind of piece of documentation is it? For example, \"py\" indicates it is a python function, and \"c\" indicates it’s a C function. This lets sites document libraries that are implemented in multiple languages.\n\nFiltering by these pieces of information can be down using the following syntax:\n:external+inventory_name:domain:role:`target`\n:domain:role:`target`\n:role:`target`\n`target`\nNotice that this syntax allows you to go from more specific information (i.e. `target` on the right), to least specific information (role, then domain).\nIn practice, it’s often enough to specify the role of a function, like:\n\n:function:`quartodoc.get_object`\n:class:`quartodoc.MdRenderer`\n\n\nExample: python.org print\nFor example, python.org has two entries for the name print.\n\n\n\ndomain\nrole\nlink syntax\n\n\n\n\nstd\n2to3fixer\n[](:std:2to3fixer:`print`)\n\n\npy\nfunction\n[](:py:function:`print`)"
+  },
+  {
+    "objectID": "get-started/interlinks.html#what-is-a-sphinx-inventory-file",
+    "href": "get-started/interlinks.html#what-is-a-sphinx-inventory-file",
+    "title": "Interlinks filter",
+    "section": "What is a sphinx inventory file?",
+    "text": "What is a sphinx inventory file?\nSphinx inventory files provide information about where the documentation for functions live on a website.\nMost sphinx sites name them object.inv:\n\nnumpy: https://numpy.org/doc/stable/objects.inv\npython: https://docs.python.org/3/objects.inv\n\nSee the sphobjinv docs for thorough details on these files, and how they’re used in sphinx."
   },
   {
     "objectID": "get-started/interlinks.html#more-information",
@@ -151,7 +158,7 @@
     "href": "get-started/docstrings.html#reading-docstrings",
     "title": "Inspecting docstrings",
     "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7faa684939d0>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7faa68873f10>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7faa68873040>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7faa68873700>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7faa683fd550>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f10108958e0>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f1010c7a280>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f1010c7a6d0>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f1010c7aa60>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f1010c7a220>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
   },
   {
     "objectID": "get-started/docstrings.html#previewing-docstrings",
@@ -200,28 +207,28 @@
     "href": "get-started/crossrefs.html",
     "title": "Linking to pages",
     "section": "",
-    "text": "Coming soon!"
-  },
-  {
-    "objectID": "get-started/crossrefs.html#linking-by-path",
-    "href": "get-started/crossrefs.html#linking-by-path",
-    "title": "Linking to pages",
-    "section": "Linking by path",
-    "text": "Linking by path\nYou can link to function docs by using the path to the generated documentation file:\n[get_object](/reference/get_object.qmd)\n\n/reference/"
+    "text": "You can use quarto’s markdown linking syntax to link to function docs, by using the path to the generated documentation file.\nHere are some examples:\n\n\n\ncode\nresult\n\n\n\n\n[get_object](/reference/get_object.qmd)\nget_object\n\n\n[link text](/reference/MdRenderer.qmd)\nlink text"
   },
   {
     "objectID": "get-started/crossrefs.html#linking-by-function-name",
     "href": "get-started/crossrefs.html#linking-by-function-name",
     "title": "Linking to pages",
     "section": "Linking by function name",
-    "text": "Linking by function name"
+    "text": "Linking by function name\nUse quartodoc’s interlinking filter to link to functions using only their names:\n\n\n\ncode\nresult\n\n\n\n\n[](`quartodoc.get_object`)\nget_object\n\n\n\nNotice that the link above puts the function name in backticks, rather than using the path to its documentation: `quartodoc.get_object`.\nYou can also use this approach to link to other documentation sites. For example, including links to quartodoc, or https://docs.python.org/3 using function names.\nSee the interlinks documentation for set up and usage."
   },
   {
     "objectID": "get-started/crossrefs.html#the-see-also-section",
     "href": "get-started/crossrefs.html#the-see-also-section",
     "title": "Linking to pages",
     "section": "The “See Also” section",
-    "text": "The “See Also” section"
+    "text": "The “See Also” section\nA major goal of quartodoc is to automatically turn text in the “See Also” section of docstrings into links.\nSee this issue for more details on parsing See Also sections, and this issue on turning type annotations into links."
+  },
+  {
+    "objectID": "get-started/crossrefs.html#type-annotations-in-docstrings",
+    "href": "get-started/crossrefs.html#type-annotations-in-docstrings",
+    "title": "Linking to pages",
+    "section": "Type annotations in docstrings",
+    "text": "Type annotations in docstrings\nThis is planned, but currently unimplemented. See this issue on turning type annotations into links."
   },
   {
     "objectID": "get-started/sidebar.html",

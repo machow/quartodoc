@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/architecture.html" rel="next">
-<link href="../get-started/renderers.html" rel="prev">
+<link href="../get-started/sidebar.html" rel="next">
+<link href="../get-started/crossrefs.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -208,6 +208,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link active">Interlinks filter</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
@@ -229,11 +234,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/renderers.html" class="sidebar-item-text sidebar-link">Rendering docstrings</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link active">Interlinks filter</a>
   </div>
 </li>
       </ul>
@@ -262,14 +262,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-a-sphinx-inventory-file" id="toc-what-is-a-sphinx-inventory-file" class="nav-link active" data-scroll-target="#what-is-a-sphinx-inventory-file">What is a sphinx inventory file?</a></li>
+  <li><a href="#installing" id="toc-installing" class="nav-link active" data-scroll-target="#installing">Installing</a></li>
   <li><a href="#configuring-the-interlinks-filter" id="toc-configuring-the-interlinks-filter" class="nav-link" data-scroll-target="#configuring-the-interlinks-filter">Configuring the interlinks filter</a></li>
-  <li><a href="#generating-sphinx-inventories" id="toc-generating-sphinx-inventories" class="nav-link" data-scroll-target="#generating-sphinx-inventories">Generating sphinx inventories</a></li>
+  <li><a href="#running-the-interlinks-filter" id="toc-running-the-interlinks-filter" class="nav-link" data-scroll-target="#running-the-interlinks-filter">Running the interlinks filter</a></li>
   <li><a href="#link-formats" id="toc-link-formats" class="nav-link" data-scroll-target="#link-formats">Link formats</a></li>
   <li><a href="#link-filtering-syntax" id="toc-link-filtering-syntax" class="nav-link" data-scroll-target="#link-filtering-syntax">Link filtering syntax</a>
   <ul class="collapse">
   <li><a href="#example-python.org-print" id="toc-example-python.org-print" class="nav-link" data-scroll-target="#example-python.org-print">Example: python.org print</a></li>
   </ul></li>
+  <li><a href="#what-is-a-sphinx-inventory-file" id="toc-what-is-a-sphinx-inventory-file" class="nav-link" data-scroll-target="#what-is-a-sphinx-inventory-file">What is a sphinx inventory file?</a></li>
   <li><a href="#more-information" id="toc-more-information" class="nav-link" data-scroll-target="#more-information">More information</a></li>
   </ul>
 </nav>
@@ -294,47 +295,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>The interlinks filter allows you to provide crossreferences within and between documentation. It requires of two parts:</p>
+<p>The interlinks filter allows you to provide crossreferences within and between documentation. It consists of three pieces:</p>
 <ol type="1">
-<li>Specifying sphinx inventories for the filter to use in your quarto configuration.</li>
-<li>Generating sphinx inventories for the filter to use.</li>
+<li><strong>Install</strong>: adding the extension to your quarto project.</li>
+<li><strong>Configure</strong>: specifying sphinx inventories for the filter to use in your <code>_quarto.yml</code> config.</li>
+<li><strong>Run</strong>: Generating sphinx inventories for the filter to use.</li>
 </ol>
-<section id="what-is-a-sphinx-inventory-file" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-a-sphinx-inventory-file">What is a sphinx inventory file?</h2>
-<p>Sphinx inventory files provide information about where the documentation for functions live on a website.</p>
-<p>Most sphinx sites name them <code>object.inv</code>:</p>
-<ul>
-<li>numpy: https://numpy.org/doc/stable/objects.inv</li>
-<li>python: https://docs.python.org/3/objects.inv</li>
-</ul>
+<section id="installing" class="level2">
+<h2 class="anchored" data-anchor-id="installing">Installing</h2>
+<p>Use the <a href="https://quarto.org/docs/extensions/filters.html#distribution">quarto add command</a> to install the interlinks filter:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add machow/quartodoc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The code for the filter can be found in quartodoc’s <a href="https://github.com/machow/quartodoc/tree/main/_extensions/interlinks">_extension folder</a></p>
+</div>
+</div>
 </section>
 <section id="configuring-the-interlinks-filter" class="level2">
 <h2 class="anchored" data-anchor-id="configuring-the-interlinks-filter">Configuring the interlinks filter</h2>
-<p>Configure the filter in <code>_quarto.yml</code> or on specific pages:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> interlinks</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interlinks</span><span class="kw">:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sources</span><span class="kw">:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numpy</span><span class="kw">:</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://numpy.org/doc/stable/</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">python</span><span class="kw">:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://docs.python.org/3/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Notice 3 important pieces in this config:</p>
+<p>Configure the filter in <code>_quarto.yml</code> or on specific pages, by adding these sections:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> interlinks</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interlinks</span><span class="kw">:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sources</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numpy</span><span class="kw">:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://numpy.org/doc/stable/</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">python</span><span class="kw">:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://docs.python.org/3/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice 2 important pieces in this config:</p>
 <ul>
 <li>The <code>numpy</code> and <code>python</code> fields indicate that we’re getting inventories for the library numpy, and python builtin libraries.</li>
 <li>The <code>url</code> fields indicate where inventory files can be found.</li>
-<li>The <code>fallback</code> field indicates where we should save the file, so we don’t need to download it repeatedly.</li>
 </ul>
+<p>By default, downloaded inventory files will be saved in the <code>_inv</code> folder of your documentation directory.</p>
 </section>
-<section id="generating-sphinx-inventories" class="level2">
-<h2 class="anchored" data-anchor-id="generating-sphinx-inventories">Generating sphinx inventories</h2>
+<section id="running-the-interlinks-filter" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-interlinks-filter">Running the interlinks filter</h2>
 <p>First, build the reference for your own site, which includes an objects.json inventory:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Second, retrieve the inventory files for any other sources:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc interlinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc interlinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Finally you should see the filter run when previewing your docs:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="link-formats" class="level2">
 <h2 class="anchored" data-anchor-id="link-formats">Link formats</h2>
@@ -389,10 +400,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>domain</code>: what kind of piece of documentation is it? For example, <code>"py"</code> indicates it is a python function, and <code>"c"</code> indicates it’s a C function. This lets sites document libraries that are implemented in multiple languages.</li>
 </ul>
 <p>Filtering by these pieces of information can be down using the following syntax:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode rst code-with-copy"><code class="sourceCode rest"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:external+inventory_name:domain:role:</span><span class="dv">`target`</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">:domain:role:</span><span class="dv">`target`</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">:role:</span><span class="dv">`target`</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dv">`target`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode rst code-with-copy"><code class="sourceCode rest"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:external+inventory_name:domain:role:</span><span class="dv">`target`</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">:domain:role:</span><span class="dv">`target`</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">:role:</span><span class="dv">`target`</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dv">`target`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice that this syntax allows you to go from more specific information (i.e.&nbsp;<code>`target`</code> on the right), to least specific information (<code>role</code>, then <code>domain</code>).</p>
 <p>In practice, it’s often enough to specify the role of a function, like:</p>
 <ul>
@@ -424,6 +435,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
+</section>
+<section id="what-is-a-sphinx-inventory-file" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-sphinx-inventory-file">What is a sphinx inventory file?</h2>
+<p>Sphinx inventory files provide information about where the documentation for functions live on a website.</p>
+<p>Most sphinx sites name them <code>object.inv</code>:</p>
+<ul>
+<li>numpy: https://numpy.org/doc/stable/objects.inv</li>
+<li>python: https://docs.python.org/3/objects.inv</li>
+</ul>
+<p>See the <a href="https://sphobjinv.readthedocs.io/en/stable/">sphobjinv docs</a> for thorough details on these files, and how they’re used in sphinx.</p>
 </section>
 <section id="more-information" class="level2">
 <h2 class="anchored" data-anchor-id="more-information">More information</h2>
@@ -570,13 +591,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/renderers.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rendering docstrings</span>
+      <a href="../get-started/crossrefs.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Linking to pages</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/architecture.html" class="pagination-link">
-        <span class="nav-page-text">Architecture</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/sidebar.html" class="pagination-link">
+        <span class="nav-page-text">Sidebar navigation</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
