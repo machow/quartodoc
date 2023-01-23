@@ -1,5 +1,6 @@
 import sphobjinv as soi
 
+from dataclasses import dataclass
 from griffe import dataclasses as dc
 
 from typing import Union, Callable
@@ -153,3 +154,64 @@ def _maybe_call(s: "str | Callable", obj):
         return s
 
     raise TypeError(f"Expected string or callable, received: {type(s)}")
+
+
+class RefSyntaxError(Exception):
+    pass
+
+
+@dataclass
+class Ref:
+    """Represent a sphinx-style reference.
+
+    These have this format
+        :external+<invname>:<domain>:<role>:`<target>`
+
+    """
+
+    target: "str"
+    role: "None | str" = None
+    domain: "None | str" = None
+    invname: "None | str" = None
+
+    external: bool = False
+
+    @classmethod
+    def from_string(cls, ref: str):
+        if not (ref.startswith(":") or ref.startswith("`")):
+            raise RefSyntaxError(
+                'Ref must start with ":" or "`".\n' f"Received ref string: {ref}"
+            )
+
+        if not ref.endswith("`"):
+            raise RefSyntaxError(
+                'Ref must end with "`"\n' f"Received ref string: {ref}"
+            )
+
+        # Note that optional options after :external: go right-to-left.
+        # e.g. :role:`target`
+        # e.g. :external:role:`target`
+        # e.g. :external:domain:role:`target`
+
+        kwargs = {}
+
+        # TODO: user may have omitted the starting `
+        params, kwargs["target"], _ = ref.rsplit("`", 2)
+
+        if params != "":
+            if ref.startswith(":external"):
+                external, *parts = params.lstrip(":").rstrip(":").split(":")
+
+                kwargs["external"] = True
+                if "+" in external:
+                    kwargs["invname"] = external.split("+")[-1]
+                else:
+                    kwargs["invname"] = None
+
+            else:
+                kwargs["invname"] = None
+                parts = params.lstrip(":").rstrip(":").split(":")
+
+            kwargs.update(zip(["role", "domain"], reversed(parts)))
+
+        return cls(**kwargs)

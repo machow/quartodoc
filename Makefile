@@ -2,7 +2,7 @@ README.md: README.qmd
 	quarto render $<
 
 examples/%/_site: examples/%/_quarto.yml
-	python -m quartodoc $<
+	python -m quartodoc build $<
 	quarto render $(dir $<)
 
 docs/examples/%: examples/%/_site
@@ -13,7 +13,8 @@ docs-build-examples: docs/examples/single-page docs/examples/pkgdown
 
 docs-build: docs-build-examples
 	cd docs && quarto add --no-prompt ..
-	cd docs && python -m quartodoc
+	cd docs && python -m quartodoc build
+	cd docs && python -m quartodoc interlinks
 	quarto render docs
 
 requirements-dev.txt:

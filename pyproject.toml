@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 markers = [
 ]
 testpaths = [
-    "tests.py"
+    "quartodoc/tests"
 ]
 
 [tool.setuptools_scm]

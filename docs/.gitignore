@@ -2,5 +2,13 @@
 _site
 reference
 
+# examples
 examples/pkgdown
 examples/single-page
+
+# reference folder
+api
+
+# interlinks
+_inv
+objects.json
