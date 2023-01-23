@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -199,9 +262,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#generating-a-sphinx-inventory" id="toc-generating-a-sphinx-inventory" class="nav-link active" data-scroll-target="#generating-a-sphinx-inventory">Generating a sphinx inventory</a></li>
+  <li><a href="#what-is-a-sphinx-inventory-file" id="toc-what-is-a-sphinx-inventory-file" class="nav-link active" data-scroll-target="#what-is-a-sphinx-inventory-file">What is a sphinx inventory file?</a></li>
   <li><a href="#configuring-the-interlinks-filter" id="toc-configuring-the-interlinks-filter" class="nav-link" data-scroll-target="#configuring-the-interlinks-filter">Configuring the interlinks filter</a></li>
+  <li><a href="#generating-sphinx-inventories" id="toc-generating-sphinx-inventories" class="nav-link" data-scroll-target="#generating-sphinx-inventories">Generating sphinx inventories</a></li>
   <li><a href="#link-formats" id="toc-link-formats" class="nav-link" data-scroll-target="#link-formats">Link formats</a></li>
+  <li><a href="#link-filtering-syntax" id="toc-link-filtering-syntax" class="nav-link" data-scroll-target="#link-filtering-syntax">Link filtering syntax</a>
+  <ul class="collapse">
+  <li><a href="#example-python.org-print" id="toc-example-python.org-print" class="nav-link" data-scroll-target="#example-python.org-print">Example: python.org print</a></li>
+  </ul></li>
+  <li><a href="#more-information" id="toc-more-information" class="nav-link" data-scroll-target="#more-information">More information</a></li>
   </ul>
 </nav>
     </div>
@@ -225,39 +294,47 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Coming soon! See the <a href="https://github.com/machow/quartodoc/tree/main/interlinks">interlinks folder</a>, which defines a WIP quarto filter for providing crossrefs.</p>
 <p>The interlinks filter allows you to provide crossreferences within and between documentation. It requires of two parts:</p>
 <ol type="1">
-<li>Generating a sphinx inventory for your own docs.</li>
 <li>Specifying sphinx inventories for the filter to use in your quarto configuration.</li>
+<li>Generating sphinx inventories for the filter to use.</li>
 </ol>
-<section id="generating-a-sphinx-inventory" class="level2">
-<h2 class="anchored" data-anchor-id="generating-a-sphinx-inventory">Generating a sphinx inventory</h2>
-<p>A sphinx inventory file, generated by <a href="../api/#sec-create_inventory">create_inventory</a>, and then dumped to JSON using <a href="../api/#sec-convert_inventory">convert_inventory</a>.</p>
-<p>For an overview of the sphinx inventory format, see <a href="https://sphobjinv.readthedocs.io">the sphobjinv docs</a></p>
-</section>
-<section id="configuring-the-interlinks-filter" class="level2">
-<h2 class="anchored" data-anchor-id="configuring-the-interlinks-filter">Configuring the interlinks filter</h2>
-<p>Configure the filter in <code>_quarto.yml</code> or on specific pages:</p>
-<pre><code>filters:
-  - interlinks
-interlinks:
-  sources:
-    numpy:
-      url: https://numpy.org/doc/stable/
-      inv: null 
-      fallback: objects_numpy.json
-    python:
-      url: https://docs.python.org/3/
-      inv: null
-      fallback: objects_python.json</code></pre>
-<p>Where files like <code>objects_numpy.json</code> and <code>objects_python.json</code> are their inventories converted to JSON, using the functions from the section above.</p>
-<p><code>objects.inv</code> live at the root of sphinx project urls:</p>
+<section id="what-is-a-sphinx-inventory-file" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-sphinx-inventory-file">What is a sphinx inventory file?</h2>
+<p>Sphinx inventory files provide information about where the documentation for functions live on a website.</p>
+<p>Most sphinx sites name them <code>object.inv</code>:</p>
 <ul>
 <li>numpy: https://numpy.org/doc/stable/objects.inv</li>
 <li>python: https://docs.python.org/3/objects.inv</li>
 </ul>
-<p>The rough idea is that this plugin will behave similar to <a href="https://jupyterbook.org/en/stable/content/references.html">jupyterbook linking</a>, which supports both some intersphinx syntax, but also markdown syntax.</p>
+</section>
+<section id="configuring-the-interlinks-filter" class="level2">
+<h2 class="anchored" data-anchor-id="configuring-the-interlinks-filter">Configuring the interlinks filter</h2>
+<p>Configure the filter in <code>_quarto.yml</code> or on specific pages:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> interlinks</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interlinks</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sources</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numpy</span><span class="kw">:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://numpy.org/doc/stable/</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">python</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://docs.python.org/3/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice 3 important pieces in this config:</p>
+<ul>
+<li>The <code>numpy</code> and <code>python</code> fields indicate that we’re getting inventories for the library numpy, and python builtin libraries.</li>
+<li>The <code>url</code> fields indicate where inventory files can be found.</li>
+<li>The <code>fallback</code> field indicates where we should save the file, so we don’t need to download it repeatedly.</li>
+</ul>
+</section>
+<section id="generating-sphinx-inventories" class="level2">
+<h2 class="anchored" data-anchor-id="generating-sphinx-inventories">Generating sphinx inventories</h2>
+<p>First, build the reference for your own site, which includes an objects.json inventory:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Second, retrieve the inventory files for any other sources:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc interlinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally you should see the filter run when previewing your docs:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="link-formats" class="level2">
 <h2 class="anchored" data-anchor-id="link-formats">Link formats</h2>
@@ -295,26 +372,64 @@ interlinks:
 <td><code>[](`~quartodoc.get_object`)</code></td>
 <td><a href="../api/get_object.html">get_object</a></td>
 </tr>
+</tbody>
+</table>
+<!--
+| rst | custom | `` :ref:`some explanation <quartodoc.get_object>` `` | :ref:`some explanation <quartodoc.get_object>` |
+| rst | default | `` :ref:`quartodoc.get_object` `` | :ref:`quartodoc.get_object` |
+| rst | shortened | `` :ref:`~quartodoc.get_object` `` | :ref:`~quartodoc.get_object` |
+-->
+</section>
+<section id="link-filtering-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="link-filtering-syntax">Link filtering syntax</h2>
+<p>Sometimes multiple documentation sites use the same target (e.g.&nbsp;function) names. The inventory format includes multiple pieces of information that can be used to refer to a specific entry in the inventory:</p>
+<ul>
+<li><code>inventory_name</code></li>
+<li><code>role</code>: what kind of object is it? e.g.&nbsp;function, class.</li>
+<li><code>domain</code>: what kind of piece of documentation is it? For example, <code>"py"</code> indicates it is a python function, and <code>"c"</code> indicates it’s a C function. This lets sites document libraries that are implemented in multiple languages.</li>
+</ul>
+<p>Filtering by these pieces of information can be down using the following syntax:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode rst code-with-copy"><code class="sourceCode rest"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:external+inventory_name:domain:role:</span><span class="dv">`target`</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">:domain:role:</span><span class="dv">`target`</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">:role:</span><span class="dv">`target`</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dv">`target`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that this syntax allows you to go from more specific information (i.e.&nbsp;<code>`target`</code> on the right), to least specific information (<code>role</code>, then <code>domain</code>).</p>
+<p>In practice, it’s often enough to specify the role of a function, like:</p>
+<ul>
+<li><code>:function:`quartodoc.get_object`</code></li>
+<li><code>:class:`quartodoc.MdRenderer`</code></li>
+</ul>
+<section id="example-python.org-print" class="level3">
+<h3 class="anchored" data-anchor-id="example-python.org-print">Example: python.org print</h3>
+<p>For example, python.org has two entries for the name <code>print</code>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>domain</th>
+<th>role</th>
+<th>link syntax</th>
+</tr>
+</thead>
+<tbody>
 <tr class="odd">
-<td>rst</td>
-<td>custom</td>
-<td><code>:ref:`some explanation &lt;quartodoc.get_object&gt;`</code></td>
-<td><a href="../api/get_object.html">some explanation </a></td>
+<td>std</td>
+<td>2to3fixer</td>
+<td><a href="https://docs.python.org/3/library/2to3.html#to3fixer-print"><code>[](:std:2to3fixer:`print`)</code></a></td>
 </tr>
 <tr class="even">
-<td>rst</td>
-<td>default</td>
-<td><code>:ref:`quartodoc.get_object`</code></td>
-<td><a href="../api/get_object.html">get_object</a></td>
-</tr>
-<tr class="odd">
-<td>rst</td>
-<td>shortened</td>
-<td><code>:ref:`~quartodoc.get_object`</code></td>
-<td><a href="../api/get_object.html">get_object</a></td>
+<td>py</td>
+<td>function</td>
+<td><a href="https://docs.python.org/3/library/functions.html#print"><code>[](:py:function:`print`)</code></a></td>
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="more-information" class="level2">
+<h2 class="anchored" data-anchor-id="more-information">More information</h2>
+<p>Under the hood, quarto doc generates sphinx inventories for an API e using <a href="../api/#sec-create_inventory">create_inventory</a>, and then dumps it to JSON using <a href="../api/#sec-convert_inventory">convert_inventory</a>.</p>
+<p>For an overview of the sphinx inventory format, see <a href="https://sphobjinv.readthedocs.io">the sphobjinv docs</a>.</p>
+<p>The rough idea is that this plugin will behave similar to <a href="https://jupyterbook.org/en/stable/content/references.html">jupyterbook linking</a>, which supports both some intersphinx syntax, but also markdown syntax.</p>
 
 
 </section>
