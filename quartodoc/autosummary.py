@@ -1,4 +1,9 @@
+import logging
+
+from functools import partial
 from griffe.loader import GriffeLoader
+from griffe.collections import ModulesCollection
+from griffe.dataclasses import Alias
 from griffe.docstrings.parsers import Parser, parse
 from griffe.docstrings import dataclasses as ds  # noqa
 from griffe import dataclasses as dc
@@ -14,6 +19,10 @@ if TYPE_CHECKING:
     import sphobjinv as soi
 
     from griffe import dataclasses as dc
+    from griffe.collections import ModulesCollection
+
+
+_log = logging.getLogger(__name__)
 
 
 # Docstring loading / parsing =================================================
@@ -55,7 +64,13 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
     return f_data
 
 
-def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Object:
+def get_object(
+    module: str,
+    object_name: str,
+    parser: str = "numpy",
+    load_aliases=True,
+    modules_collection: "None | ModulesCollection" = None,
+) -> dc.Object:
     """Fetch a griffe object.
 
     Parameters
@@ -66,6 +81,10 @@ def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Objec
         A function name.
     parser: str
         A docstring parser to use.
+    load_aliases: bool
+        For aliases that were imported from other modules, should we load that module?
+    modules_collection: optional
+        A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
     See Also
     --------
@@ -78,10 +97,20 @@ def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Objec
     <Function('get_function', ...
 
     """
-    griffe = GriffeLoader(docstring_parser=Parser(parser))
+    griffe = GriffeLoader(
+        docstring_parser=Parser(parser), modules_collection=modules_collection
+    )
     mod = griffe.load_module(module)
 
     f_data = mod._modules_collection[f"{module}.{object_name}"]
+
+    # Alias objects can refer to objects imported from other modules.
+    # in this case, we need to import the target's module in order to resolve
+    # the alias
+    if isinstance(f_data, Alias) and load_aliases:
+        target_mod = f_data.target_path.split(".")[0]
+        if target_mod != module:
+            griffe.load_module(target_mod)
 
     return f_data
 
@@ -174,12 +203,15 @@ class Builder:
     def build(self):
         """Build index page, sphinx inventory, and individual doc pages."""
 
+        _log.info("Rendering index")
         content = self.render_index()
 
+        _log.info(f"Writing index to directory: {self.dir}")
         p_index = Path(self.dir) / self.out_index
         p_index.parent.mkdir(exist_ok=True, parents=True)
         p_index.write_text(content)
 
+        _log.info(f"Saving inventory to {self.out_inventory}")
         convert_inventory(self.inventory, self.out_inventory)
 
         self.write_doc_pages()
@@ -193,9 +225,14 @@ class Builder:
     def create_items(self):
         """Collect items for all docstrings."""
 
+        collection = ModulesCollection()
+        f_get_object = partial(get_object, modules_collection=collection)
+
+        _log.info("Creating items")
         for section in self.sections:
             for func_name in section["contents"]:
-                obj = get_object(self.package, func_name)
+                _log.info(f"Getting object for `{self.package}.{func_name}`")
+                obj = f_get_object(self.package, func_name)
                 self.items[obj.path] = obj
 
     # inventory ----
@@ -204,6 +241,7 @@ class Builder:
         """Generate sphinx inventory object."""
 
         # TODO: get package version
+        _log.info("Creating inventory")
         version = "0.0.9999" if self.version is None else self.version
         self.inventory = create_inventory(
             self.package,
@@ -243,6 +281,7 @@ class Builder:
 
         # TODO: rename to_md to render or something
         for item in self.items.values():
+            _log.info(f"Rendering `{item.canonical_path}`")
             rendered = self.renderer.to_md(item)
             html_path = Path(self.fetch_object_uri(item))
             html_path.parent.mkdir(exist_ok=True, parents=True)
@@ -289,6 +328,7 @@ class BuilderPkgdown(Builder):
 
         rendered = []
         for func_name in section["contents"]:
+            # TODO: shouldn't need to collect object again after .create_items()
             obj = get_object(self.package, func_name)
             rendered.append(self._render_object(obj))
 

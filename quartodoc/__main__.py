@@ -9,6 +9,22 @@ from pathlib import Path
 from quartodoc import Builder, convert_inventory
 
 
+def _enable_logs():
+    import logging
+    import sys
+
+    root = logging.getLogger("quartodoc")
+    root.setLevel(logging.INFO)
+
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
+    handler.setFormatter(formatter)
+    root.addHandler(handler)
+
+
 @contextlib.contextmanager
 def chdir(new_dir):
     prev = os.getcwd()
@@ -27,7 +43,11 @@ def cli():
 @click.command()
 @click.argument("config", default="_quarto.yml")
 @click.option("--dry-run", is_flag=True, default=False)
-def build(config, dry_run):
+@click.option("--verbose", is_flag=True, default=False)
+def build(config, dry_run, verbose):
+    if verbose:
+        _enable_logs()
+
     builder = Builder.from_quarto_config(config)
 
     if dry_run:
