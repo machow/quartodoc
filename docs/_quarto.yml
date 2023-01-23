@@ -74,12 +74,12 @@ website:
           contents:
             - get-started/basic-docs.qmd
             - get-started/crossrefs.qmd
+            - get-started/interlinks.qmd
             - get-started/sidebar.qmd
         - section: "Advanced"
           contents:
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
-            - get-started/interlinks.qmd
         - section: "Extra Topics"
           contents:
             - get-started/architecture.qmd

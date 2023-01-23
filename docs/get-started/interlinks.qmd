@@ -9,25 +9,29 @@ jupyter:
 
 
 The interlinks filter allows you to provide crossreferences within and between documentation.
-It requires of two parts:
+It consists of three pieces:
 
-1. Specifying sphinx inventories for the filter to use in your quarto configuration.
-2. Generating sphinx inventories for the filter to use.
+1. **Install**: adding the extension to your quarto project.
+1. **Configure**: specifying sphinx inventories for the filter to use in your `_quarto.yml` config.
+2. **Run**: Generating sphinx inventories for the filter to use.
 
-## What is a sphinx inventory file?
+## Installing
 
-Sphinx inventory files provide information about where the documentation for
-functions live on a website.
+Use the [quarto add command](https://quarto.org/docs/extensions/filters.html#distribution)
+to install the interlinks filter:
 
-Most sphinx sites name them `object.inv`:
+```bash
+quarto add machow/quartodoc
+```
 
-* numpy: https://numpy.org/doc/stable/objects.inv
-* python: https://docs.python.org/3/objects.inv
-
+:::{.callout-note}
+The code for the filter can be found in quartodoc's
+[_extension folder](https://github.com/machow/quartodoc/tree/main/_extensions/interlinks)
+:::
 
 ## Configuring the interlinks filter
 
-Configure the filter in `_quarto.yml` or on specific pages:
+Configure the filter in `_quarto.yml` or on specific pages, by adding these sections:
 
 ```yaml
 filters:
@@ -41,16 +45,17 @@ interlinks:
       url: https://docs.python.org/3/
 ```
 
-Notice 3 important pieces in this config:
+Notice 2 important pieces in this config:
 
 * The `numpy` and `python` fields indicate that we're getting inventories for the
   library numpy, and python builtin libraries.
 * The `url` fields indicate where inventory files can be found.
-* The `fallback` field indicates where we should save the file, so we don't need
-  to download it repeatedly.
+
+By default, downloaded inventory files will be saved in the `_inv` folder of your
+documentation directory.
 
 
-## Generating sphinx inventories
+## Running the interlinks filter
 
 First, build the reference for your own site, which includes an objects.json inventory:
 
@@ -125,6 +130,20 @@ For example, python.org has two entries for the name `print`.
 | --- | --- | --- |
 | std | 2to3fixer | [``[](:std:2to3fixer:`print`)``](:std:2to3fixer:`print`) |
 | py | function | [``[](:py:function:`print`)``](:py:function:`print`) |
+
+
+## What is a sphinx inventory file?
+
+Sphinx inventory files provide information about where the documentation for
+functions live on a website.
+
+Most sphinx sites name them `object.inv`:
+
+* numpy: https://numpy.org/doc/stable/objects.inv
+* python: https://docs.python.org/3/objects.inv
+
+See the [sphobjinv docs](https://sphobjinv.readthedocs.io/en/stable/) for thorough
+details on these files, and how they're used in sphinx.
 
 
 ## More information

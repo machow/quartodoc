@@ -7,22 +7,46 @@ jupyter:
     name: python3
 ---
 
-Coming soon!
-
 ## Linking by path
 
-You can link to function docs by using the path to the generated documentation file:
+You can use [quarto's markdown linking syntax](https://quarto.org/docs/authoring/markdown-basics.html#links-images)
+to link to function docs, by using the path to the generated documentation file.
 
-``[get_object](/reference/get_object.qmd)``
+Here are some examples:
 
-
-* /reference/
+| code | result |
+| ---- | ------ |
+| ``[get_object](/reference/get_object.qmd)`` | [get_object](/reference/get_object.qmd) |
+| ``[link text](/reference/MdRenderer.qmd)`` | [link text](/reference/MdRenderer.qmd) |
 
 
 ## Linking by function name
 
+Use quartodoc's [interlinking filter](./interlinks.qmd) to link to functions using only their names:
+
+| code | result |
+| ---- | ------ |
+| ``[](`quartodoc.get_object`)`` | [](`quartodoc.get_object`) |
+
+Notice that the link above puts the function name in backticks, rather than using
+the path to its documentation: `` `quartodoc.get_object` ``.
+
+You can also use this approach to link to other documentation sites.
+For example, including links to quartodoc, or https://docs.python.org/3 using function names.
+
+See the [interlinks documentation](./interlinks.qmd) for set up and usage.
+
 
 ## The "See Also" section
 
+A major goal of quartodoc is to automatically turn text in the "See Also" section
+of docstrings into links.
 
+See [this issue](https://github.com/machow/quartodoc/issues/21) for more details
+on parsing See Also sections, and [this issue](https://github.com/machow/quartodoc/issues/22)
+on turning type annotations into links.
 
+## Type annotations in docstrings
+
+This is planned, but currently unimplemented. See [this issue](https://github.com/machow/quartodoc/issues/22)
+on turning type annotations into links.
