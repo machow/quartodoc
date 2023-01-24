@@ -4,6 +4,7 @@ project:
   resources:
     - examples/single-page
     - examples/pkgdown
+    - examples/shiny
 
 filters:
   - "interlinks"

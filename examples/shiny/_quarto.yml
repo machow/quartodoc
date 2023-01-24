@@ -4,7 +4,7 @@ project:
     - objects.json
 
 website:
-  title: pkgdown example
+  title: Shiny
   navbar:
     left:
       - file: reference/index.qmd
@@ -16,13 +16,29 @@ website:
 format:
   html:
     theme:
-      light: minty
+      light: cosmo
     toc: true
+
+filters:
+  - interlinks
+  - shinylive
+
+interlinks:
+  sources:
+    numpy:
+      url: https://numpy.org/doc/stable/
+    python:
+      url: https://docs.python.org/3/
+    griffe:
+      url: https://mkdocstrings.github.io/griffe/
 
 quartodoc:
   style: pkgdown
   dir: reference
   package: shiny
+  out_index: _api_index.qmd
+  renderer:
+    style: _renderer.py
   sections:
     - title: Page containers
       desc: Create a user interface page container.
@@ -190,5 +206,6 @@ quartodoc:
         - session.require_active_session
         - session.session_context
         - reactive.get_current_context
-        # TODO: this is loaded as an attribute, since it's highly dynamic
+        # TODO: this is loaded as an attribute, since it's an instance of a
+        # custom class
         #- input_handler.input_handlers
