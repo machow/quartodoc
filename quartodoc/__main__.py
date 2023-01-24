@@ -69,7 +69,8 @@ def interlinks(config, dry_run):
     p_root = Path(config).parent
 
     if interlinks is None:
-        raise KeyError("No interlinks field found in your quarto config.")
+        print("No interlinks field found in your quarto config. Quitting.")
+        return
 
     for k, v in interlinks["sources"].items():
 
