@@ -112,6 +112,12 @@ class Renderer:
         else:
             raise TypeError(type(cfg))
 
+        if style.endswith(".py"):
+            import importlib
+
+            mod = importlib.import_module(style.rsplit(".", 1)[0])
+            return mod.Renderer(**cfg)
+
         subclass = cls._registry[style]
         return subclass(**cfg)
 
