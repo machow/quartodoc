@@ -4,6 +4,7 @@ README.md: README.qmd
 examples/%/_site: examples/%/_quarto.yml
 	cd examples/$* && quarto add --no-prompt ../..
 	cd examples/$* && python -m quartodoc build _quarto.yml --verbose
+	cd examples/$* && python -m quartodoc interlinks
 	quarto render $(dir $<)
 
 docs/examples/%: examples/%/_site
