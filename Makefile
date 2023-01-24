@@ -2,7 +2,9 @@ README.md: README.qmd
 	quarto render $<
 
 examples/%/_site: examples/%/_quarto.yml
-	cd examples/$* && quarto add --no-prompt ../..
+	cd examples/$* \
+		&& quarto add --no-prompt ../.. \
+		&& quarto add --no-prompt quarto-ext/shinylive
 	cd examples/$* && python -m quartodoc build _quarto.yml --verbose
 	cd examples/$* && python -m quartodoc interlinks
 	quarto render $(dir $<)
