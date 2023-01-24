@@ -80,7 +80,12 @@ def get_path_to_root():
     # I have no idea how to get the documentation root,
     # except to get the path the extension script, which
     # lives in <root>/_extensions/interlinks, and work back
-    return Path(__file__).parent.parent.parent
+    p_root = Path(__file__).parent.parent.parent
+
+    if p_root.name == "_extensions":
+        return p_root.parent
+
+    return p_root
 
 
 def load_inventories(interlinks: dict):
@@ -196,7 +201,8 @@ def visit(el, doc):
 
 
 @dispatch
-def visit(el: pf.MetaList, doc):
+def visit(el: pf.Doc, doc):
+
     meta = doc.get_metadata()
 
     try:
@@ -212,11 +218,6 @@ def visit(el: pf.MetaList, doc):
 
     load_inventories(interlinks)
 
-    return el
-
-
-@dispatch
-def visit(el: pf.Doc, doc):
     return el
 
 
