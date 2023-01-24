@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Shiny – input_slider</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Shiny</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../reference/index.html">
+ <span class="menu-text">Reference</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rstudio/py-shiny"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#input_slider" id="toc-input_slider" class="nav-link active" data-scroll-target="#input_slider">input_slider</a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  </ul></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="input_slider" class="level2">
+<h2 class="anchored" data-anchor-id="input_slider">input_slider</h2>
+<p><code>input_slider(id: str, label: TagChildArg, min: SliderValueArg, max: SliderValueArg, value: Union[SliderValueArg, Iterable[SliderValueArg]], step: Optional[SliderStepArg] = None, ticks: bool = True, animate: Union[bool, AnimationOptions] = False, width: Optional[str] = None, sep: str = ',', pre: Optional[str] = None, post: Optional[str] = None, time_format: Optional[str] = None, timezone: Optional[str] = None, drag_range: bool = True)</code></p>
+<p>Constructs a slider widget to select a number, date, or date-time from a range.</p>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
+<table class="table">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 11%">
+<col style="width: 82%">
+<col style="width: 2%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id</code></td>
+<td>str</td>
+<td>An input id.</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>label</code></td>
+<td>htmltools.TagChildArg</td>
+<td>An input label.</td>
+<td>required</td>
+</tr>
+<tr class="odd">
+<td><code>min</code></td>
+<td>shiny.ui._input_slider.SliderValueArg</td>
+<td>The minimum allowed value.</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>max</code></td>
+<td>shiny.ui._input_slider.SliderValueArg</td>
+<td>The maximum allowed value.</td>
+<td>required</td>
+</tr>
+<tr class="odd">
+<td><code>value</code></td>
+<td>Union[SliderValueArg, Iterable[SliderValueArg]]</td>
+<td>Initial value.</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>step</code></td>
+<td>Optional[SliderStepArg]</td>
+<td>Interval to use when stepping between min and max.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>ticks</code></td>
+<td>bool</td>
+<td><code>False</code> to hide tick marks, <code>True</code> to show them according to some simple heuristics.</td>
+<td><code>True</code></td>
+</tr>
+<tr class="even">
+<td><code>animate</code></td>
+<td>Union[bool, AnimationOptions]</td>
+<td><code>True</code> to show simple animation controls with default settings; <code>False</code> not to; or a custom settings list, such as those created using :class:<code>AnimationOptions()</code>.</td>
+<td><code>False</code></td>
+</tr>
+<tr class="odd">
+<td><code>width</code></td>
+<td>Optional[str]</td>
+<td>The CSS width, e.g.&nbsp;‘400px’, or ‘100%’</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>sep</code></td>
+<td>str</td>
+<td>Separator between thousands places in numbers.</td>
+<td><code>','</code></td>
+</tr>
+<tr class="odd">
+<td><code>pre</code></td>
+<td>Optional[str]</td>
+<td>A prefix string to put in front of the value.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>post</code></td>
+<td>Optional[str]</td>
+<td>A suffix string to put after the value.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>time_format</code></td>
+<td>Optional[str]</td>
+<td>Only used if the slider values are :func:<code>~datetime.date</code> or :func:<code>~datetime.datetime</code> objects. A time format string, to be passed to the Javascript strftime library. See https://github.com/samsonjs/strftime for more details. For Dates, the default is “%F” (like “2015-07-01”), and for Datetimes, the default is “%F %T” (like “2015-07-01 15:32:10”).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>timezone</code></td>
+<td>Optional[str]</td>
+<td>Only used if the values are :func:<code>~datetime.datetime</code> objects. A string specifying the time zone offset for the displayed times, in the format “+HHMM” or “-HHMM”. If <code>None</code> (the default), times will be displayed in the browser’s time zone. The value “+0000” will result in UTC time.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>drag_range</code></td>
+<td>bool</td>
+<td>This option is used only if it is a range slider (with two values). If <code>True</code> (the default), the range can be dragged. In other words, the min and max can be dragged together. If <code>False</code>, the range cannot be dragged.</td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns" class="level3">
+<h3 class="anchored" data-anchor-id="returns">Returns</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A UI element</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p>.. admonition:: Server value</p>
+<p>A number, date, or date-time (depending on the class of value), or in the case of slider range, a list of two numbers/dates/date-times.</p>
+</section>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
+<p>~shiny.ui.update_slider</p>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<pre class="shinylive-python"><code>#| standalone: true
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_slider("obs", "Number of bins:", min=10, max=100, value=30),
+    ui.output_plot("distPlot"),
+)
+
+
+def server(input: Inputs, output: Outputs, session: Session):
+    @output
+    @render.plot
+    def distPlot():
+        np.random.seed(19680801)
+        x = 100 + 15 * np.random.randn(437)
+
+        fig, ax = plt.subplots()
+        ax.hist(x, input.obs(), density=True)
+        return fig
+
+
+app = App(app_ui, server)
+</code></pre>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
