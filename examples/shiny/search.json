@@ -32,7 +32,7 @@
     "href": "reference/page_fixed.html",
     "title": "Shiny",
     "section": "",
-    "text": "page_fixed(args: Any, title: Optional[str] = None, lang: Optional[str] = None, kwargs: str)\nCreate a fixed page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\nkwargs Attributes on the page level container.\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n:func:~shiny.ui.page_fluid :func:~shiny.ui.page_bootstrap :func:~shiny.ui.page_navbar"
+    "text": "page_fixed(args: Any, title: Optional[str] = None, lang: Optional[str] = None, kwargs: str)\nCreate a fixed page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\nkwargs Attributes on the page level container.\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fluid page_bootstrap page_navbar"
   },
   {
     "objectID": "reference/page_fixed.html#examples",
@@ -95,7 +95,7 @@
     "href": "reference/output_text_verbatim.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.output_text"
+    "text": "Example\nSee output_text"
   },
   {
     "objectID": "reference/input_date_range.html",
@@ -256,7 +256,7 @@
     "href": "reference/page_fluid.html",
     "title": "Shiny",
     "section": "",
-    "text": "page_fluid(args: Any, title: Optional[str] = None, lang: Optional[str] = None, kwargs: str)\nCreate a fluid page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\nkwargs\nstr\nAttributes on the page level container.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n:func:~shiny.ui.page_fixed :func:~shiny.ui.page_bootstrap :func:~shiny.ui.page_navbar"
+    "text": "page_fluid(args: Any, title: Optional[str] = None, lang: Optional[str] = None, kwargs: str)\nCreate a fluid page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\nkwargs\nstr\nAttributes on the page level container.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fixed page_bootstrap page_navbar"
   },
   {
     "objectID": "reference/page_fluid.html#examples",
@@ -347,7 +347,7 @@
     "href": "reference/notification_remove.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:notification_show."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/panel_absolute.html",
@@ -725,7 +725,7 @@
     "href": "reference/panel_sidebar.html",
     "title": "Shiny",
     "section": "",
-    "text": "panel_sidebar(args: TagChildArg, width: int = 4, kwargs: TagAttrArg)\nCreate a sidebar panel\nSee :func:~shiny.ui.layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the sidebar.\n()\n\n\nwidth\nint\nThe width of the sidebar (an integer between 1 and 12)\n4\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the sidebar tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n:func:~shiny.ui.panel_sidebar :func:~shiny.ui.panel_main"
+    "text": "panel_sidebar(args: TagChildArg, width: int = 4, kwargs: TagAttrArg)\nCreate a sidebar panel\nSee :func:~shiny.ui.layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the sidebar.\n()\n\n\nwidth\nint\nThe width of the sidebar (an integer between 1 and 12)\n4\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the sidebar tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\npanel_sidebar panel_main"
   },
   {
     "objectID": "reference/text.html",
@@ -760,7 +760,7 @@
     "href": "reference/modal_remove.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:modal."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/invalidate_later.html",
@@ -788,7 +788,7 @@
     "href": "reference/nav_menu.html",
     "title": "Shiny",
     "section": "",
-    "text": "nav_menu(title: TagChildArg, args: Union[Nav, str], value: Optional[str] = None, icon: TagChildArg = None, align: Literal[left, right] = 'left')\nCreate a menu of nav items.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nhtmltools.TagChildArg\nA title to display. Can be a character string or UI elements (i.e., tags).\nrequired\n\n\n*args\nUnion[Nav, str]\nA collection of nav items (e.g., :func:~shiny.ui.nav) and/or strings. Strings will be rendered as a section header unless the string is a set of two or more hyphens (e.g., ---), in which case it will be rendered as a divider.\n()\n\n\nvalue\nOptional[str]\nThe value of the item. This is used to determine whether the item is active (when an id is provided to the nav container), programmatically select the item (e.g., :func:~shiny.ui.update_navs), and/or be provided to the selected argument of the navigation container (e.g., :func:~shiny.ui.navset_tab).\nNone\n\n\nicon\nhtmltools.TagChildArg\nAn icon to appear inline with the button/link.\nNone\n\n\nalign\nLiteral[left, right]\nHorizontal alignment of the dropdown menu relative to dropdown toggle.\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element representing both the navigation menu.\n\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See :func:~shiny.ui.nav"
+    "text": "nav_menu(title: TagChildArg, args: Union[Nav, str], value: Optional[str] = None, icon: TagChildArg = None, align: Literal[left, right] = 'left')\nCreate a menu of nav items.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nhtmltools.TagChildArg\nA title to display. Can be a character string or UI elements (i.e., tags).\nrequired\n\n\n*args\nUnion[Nav, str]\nA collection of nav items (e.g., :func:~shiny.ui.nav) and/or strings. Strings will be rendered as a section header unless the string is a set of two or more hyphens (e.g., ---), in which case it will be rendered as a divider.\n()\n\n\nvalue\nOptional[str]\nThe value of the item. This is used to determine whether the item is active (when an id is provided to the nav container), programmatically select the item (e.g., :func:~shiny.ui.update_navs), and/or be provided to the selected argument of the navigation container (e.g., :func:~shiny.ui.navset_tab).\nNone\n\n\nicon\nhtmltools.TagChildArg\nAn icon to appear inline with the button/link.\nNone\n\n\nalign\nLiteral[left, right]\nHorizontal alignment of the dropdown menu relative to dropdown toggle.\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element representing both the navigation menu.\n\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See nav"
   },
   {
     "objectID": "reference/input_action_link.html",
@@ -844,7 +844,7 @@
     "href": "reference/modal_button.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:modal."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/input_text.html",
@@ -879,7 +879,7 @@
     "href": "reference/panel_fixed.html",
     "title": "Shiny",
     "section": "",
-    "text": "panel_fixed(args: TagChildArg, kwargs: TagAttrArg)\nCreate a panel of absolutely positioned content.\nThis function is equivalent to calling :func:~shiny.ui.panel_absolute with fixed=True (i.e., the panel does not scroll with the rest of the page). See :func:~shiny.ui.panel_absolute for more information.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrArg\nArguments passed along to :func:~shiny.ui.panel_absolute.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n:func:~shiny.ui.panel_absolute"
+    "text": "panel_fixed(args: TagChildArg, kwargs: TagAttrArg)\nCreate a panel of absolutely positioned content.\nThis function is equivalent to calling :func:~shiny.ui.panel_absolute with fixed=True (i.e., the panel does not scroll with the rest of the page). See :func:~shiny.ui.panel_absolute for more information.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrArg\nArguments passed along to :func:~shiny.ui.panel_absolute.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\npanel_absolute"
   },
   {
     "objectID": "reference/isolate.html",
@@ -928,7 +928,7 @@
     "href": "reference/panel_main.html",
     "title": "Shiny",
     "section": "",
-    "text": "panel_main(args: TagChildArg, width: int = 8, kwargs: TagAttrArg)\nCreate an main area panel\nSee :func:~shiny.ui.layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the main area.\n()\n\n\nwidth\nint\nThe width of the main area (an integer between 1 and 12)\n8\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the main area tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n:func:~shiny.ui.panel_sidebar :func:~shiny.ui.layout_sidebar"
+    "text": "panel_main(args: TagChildArg, width: int = 8, kwargs: TagAttrArg)\nCreate an main area panel\nSee :func:~shiny.ui.layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the main area.\n()\n\n\nwidth\nint\nThe width of the main area (an integer between 1 and 12)\n8\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the main area tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\npanel_sidebar layout_sidebar"
   },
   {
     "objectID": "reference/notification_show.html",
@@ -949,7 +949,7 @@
     "href": "reference/row.html",
     "title": "Shiny",
     "section": "",
-    "text": "row(args: TagChildArg, kwargs: TagAttrArg)\nResponsive row-column based layout\nLayout UI components using Bootstrap’s grid layout system. Use row() to group elements that should appear on the same line (if the browser has adequate width) and :func:~shiny.ui.column to define how much horizontal space within a 12-unit wide grid each on of these elements should occupy. See the layout guide <https://shiny.rstudio.com/articles/layout-guide.html>_ for more context and examples.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nAny number of child elements\n()\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the row tag\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n:func:~shiny.ui.column"
+    "text": "row(args: TagChildArg, kwargs: TagAttrArg)\nResponsive row-column based layout\nLayout UI components using Bootstrap’s grid layout system. Use row() to group elements that should appear on the same line (if the browser has adequate width) and :func:~shiny.ui.column to define how much horizontal space within a 12-unit wide grid each on of these elements should occupy. See the layout guide <https://shiny.rstudio.com/articles/layout-guide.html>_ for more context and examples.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nAny number of child elements\n()\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the row tag\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\ncolumn"
   },
   {
     "objectID": "reference/row.html#examples",
@@ -970,7 +970,7 @@
     "href": "reference/navset_tab_card.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.nav"
+    "text": "Example\nSee nav"
   },
   {
     "objectID": "reference/update_selectize.html",
@@ -1082,7 +1082,14 @@
     "href": "reference/page_navbar.html",
     "title": "Shiny",
     "section": "",
-    "text": "page_navbar(args: NavSetArg, title: Optional[Union[str, Tag, TagList]] = None, id: Optional[str] = None, selected: Optional[str] = None, position: Literal[static-top, fixed-top, fixed-bottom] = 'static-top', header: Optional[TagChildArg] = None, footer: Optional[TagChildArg] = None, bg: Optional[str] = None, inverse: bool = False, collapsible: bool = True, fluid: bool = True, window_title: Union[str, MISSING_TYPE] = MISSING, lang: Optional[str] = None)\nCreate a navbar with a navs bar and a title.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nshiny.types.NavSetArg\nUI elements.\n()\n\n\ntitle\nOptional[Union[str, Tag, TagList]]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nposition\nLiteral[static-top, fixed-top, fixed-bottom]\nDetermines whether the navbar should be displayed at the top of the page with normal scrolling behavior (“static-top”), pinned at the top (“fixed-top”), or pinned at the bottom (“fixed-bottom”). Note that using “fixed-top” or “fixed-bottom” will cause the navbar to overlay your body content, unless you add padding (e.g., tags.style(\"body {padding-top: 70px;}\")).\n'static-top'\n\n\nheader\nOptional[TagChildArg]\nUI to display above the selected content.\nNone\n\n\nfooter\nOptional[TagChildArg]\nUI to display below the selected content.\nNone\n\n\nbg\nOptional[str]\nBackground color of the navbar (a CSS color).\nNone\n\n\ninverse\nbool\nEither True for a light text color or False for a dark text color.\nFalse\n\n\ncollapsible\nbool\nTrue to automatically collapse the navigation elements into a menu when the width of the browser is less than 940 pixels (useful for viewing on smaller touchscreen device)\nTrue\n\n\nfluid\nbool\nTrue to use fluid layout; False to use fixed layout.\nTrue\n\n\nwindow_title\nUnion[str, MISSING_TYPE]\nThe browser’s window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nMISSING\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n\nfunc:~shiny.ui.nav :func:~shiny.ui.nav_menu :func:~shiny.ui.navset_bar :func:~shiny.ui.page_fluid\n\n\nExample\n\n\n\n\nSee :func:~shiny.ui.nav."
+    "text": "page_navbar(args: NavSetArg, title: Optional[Union[str, Tag, TagList]] = None, id: Optional[str] = None, selected: Optional[str] = None, position: Literal[static-top, fixed-top, fixed-bottom] = 'static-top', header: Optional[TagChildArg] = None, footer: Optional[TagChildArg] = None, bg: Optional[str] = None, inverse: bool = False, collapsible: bool = True, fluid: bool = True, window_title: Union[str, MISSING_TYPE] = MISSING, lang: Optional[str] = None)\nCreate a navbar with a navs bar and a title.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nshiny.types.NavSetArg\nUI elements.\n()\n\n\ntitle\nOptional[Union[str, Tag, TagList]]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nposition\nLiteral[static-top, fixed-top, fixed-bottom]\nDetermines whether the navbar should be displayed at the top of the page with normal scrolling behavior (“static-top”), pinned at the top (“fixed-top”), or pinned at the bottom (“fixed-bottom”). Note that using “fixed-top” or “fixed-bottom” will cause the navbar to overlay your body content, unless you add padding (e.g., tags.style(\"body {padding-top: 70px;}\")).\n'static-top'\n\n\nheader\nOptional[TagChildArg]\nUI to display above the selected content.\nNone\n\n\nfooter\nOptional[TagChildArg]\nUI to display below the selected content.\nNone\n\n\nbg\nOptional[str]\nBackground color of the navbar (a CSS color).\nNone\n\n\ninverse\nbool\nEither True for a light text color or False for a dark text color.\nFalse\n\n\ncollapsible\nbool\nTrue to automatically collapse the navigation elements into a menu when the width of the browser is less than 940 pixels (useful for viewing on smaller touchscreen device)\nTrue\n\n\nfluid\nbool\nTrue to use fluid layout; False to use fixed layout.\nTrue\n\n\nwindow_title\nUnion[str, MISSING_TYPE]\nThe browser’s window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nMISSING\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\nnav nav_menu  page_fluid"
+  },
+  {
+    "objectID": "reference/page_navbar.html#example",
+    "href": "reference/page_navbar.html#example",
+    "title": "Shiny",
+    "section": "Example",
+    "text": "Example\nSee nav."
   },
   {
     "objectID": "reference/navset_tab.html",
@@ -1096,7 +1103,7 @@
     "href": "reference/navset_tab.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.nav"
+    "text": "Example\nSee nav"
   },
   {
     "objectID": "reference/update_radio_buttons.html",
@@ -1159,14 +1166,14 @@
     "href": "reference/column.html",
     "title": "Shiny",
     "section": "",
-    "text": "column(width: int, args: TagChildArg, offset: int = 0, kwargs: TagAttrArg)\nResponsive row-column based layout\nSee :func:~shiny.ui.row for more information.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nwidth\nint\nThe width of the column (an integer between 1 and 12)\nrequired\n\n\nargs\nhtmltools.TagChildArg\nUI elements to place within the column\n()\n\n\noffset\nint\nThe number of columns to offset this column from the end of the previous column.\n0\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the column tag\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n:func:~shiny.ui.row"
+    "text": "column(width: int, args: TagChildArg, offset: int = 0, kwargs: TagAttrArg)\nResponsive row-column based layout\nSee :func:~shiny.ui.row for more information.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nwidth\nint\nThe width of the column (an integer between 1 and 12)\nrequired\n\n\nargs\nhtmltools.TagChildArg\nUI elements to place within the column\n()\n\n\noffset\nint\nThe number of columns to offset this column from the end of the previous column.\n0\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the column tag\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\nrow"
   },
   {
     "objectID": "reference/panel_well.html",
     "href": "reference/panel_well.html",
     "title": "Shiny",
     "section": "",
-    "text": "panel_well(args: TagChildArg, kwargs: TagAttrArg)\nCreate a well panel\nCreates a panel with a slightly inset border and grey background. Equivalent to Bootstrap’s well CSS class.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the panel tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n:func:~shiny.ui.panel_sidebar :func:~shiny.ui.panel_main"
+    "text": "panel_well(args: TagChildArg, kwargs: TagAttrArg)\nCreate a well panel\nCreates a panel with a slightly inset border and grey background. Equivalent to Bootstrap’s well CSS class.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the panel tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\npanel_sidebar panel_main"
   },
   {
     "objectID": "reference/navset_pill_list.html",
@@ -1180,7 +1187,7 @@
     "href": "reference/navset_pill_list.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.nav"
+    "text": "Example\nSee nav"
   },
   {
     "objectID": "reference/panel_conditional.html",
@@ -1544,7 +1551,7 @@
     "href": "reference/navset_pill.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.nav"
+    "text": "Example\nSee nav"
   },
   {
     "objectID": "reference/update_select.html",
@@ -1705,7 +1712,7 @@
     "href": "reference/nav_control.html",
     "title": "Shiny",
     "section": "",
-    "text": "nav_control(args: TagChildArg)\nPlace a control in the navigation container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nhtmltools.TagChildArg\nUI elements to display as the nav item.\n()\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See :func:~shiny.ui.nav"
+    "text": "nav_control(args: TagChildArg)\nPlace a control in the navigation container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nhtmltools.TagChildArg\nUI elements to display as the nav item.\n()\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See nav"
   },
   {
     "objectID": "reference/Calc.html",
@@ -1782,7 +1789,7 @@
     "href": "reference/navset_pill_card.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.nav"
+    "text": "Example\nSee nav"
   },
   {
     "objectID": "reference/TagList.html",
@@ -1845,14 +1852,14 @@
     "href": "reference/page_bootstrap.html",
     "title": "Shiny",
     "section": "",
-    "text": "page_bootstrap(args: Any, title: Optional[str] = None, lang: Optional[str] = None)\nCreate a Bootstrap UI page container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n:func:~shiny.ui.page_fluid :func:~shiny.ui.page_navbar"
+    "text": "page_bootstrap(args: Any, title: Optional[str] = None, lang: Optional[str] = None)\nCreate a Bootstrap UI page container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fluid page_navbar"
   },
   {
     "objectID": "reference/layout_sidebar.html",
     "href": "reference/layout_sidebar.html",
     "title": "Shiny",
     "section": "",
-    "text": "layout_sidebar(sidebar: TagChildArg, main: TagChildArg, position: Literal[left, right] = 'left')\nLayout a sidebar and main area\nCreate a layout with a sidebar (:func:~shiny.ui.panel_sidebar) and main area (:func:~shiny.ui.panel_main). The sidebar is displayed with a distinct background color and typically contains input controls. By default, the main area occupies 2/3 of the horizontal width and typically contains outputs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsidebar\nhtmltools.TagChildArg\nA UI element to place in the sidebar (typically a :func:~shiny.ui.panel_sidebar)\nrequired\n\n\nmain\nhtmltools.TagChildArg\nA UI element to place in the main area (typically a :func:~shiny.ui.panel_main)\nrequired\n\n\nposition\nLiteral[left, right]\nThe position of the sidebar (left or right)\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n:func:~shiny.ui.panel_sidebar :func:~shiny.ui.panel_main"
+    "text": "layout_sidebar(sidebar: TagChildArg, main: TagChildArg, position: Literal[left, right] = 'left')\nLayout a sidebar and main area\nCreate a layout with a sidebar (:func:~shiny.ui.panel_sidebar) and main area (:func:~shiny.ui.panel_main). The sidebar is displayed with a distinct background color and typically contains input controls. By default, the main area occupies 2/3 of the horizontal width and typically contains outputs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsidebar\nhtmltools.TagChildArg\nA UI element to place in the sidebar (typically a :func:~shiny.ui.panel_sidebar)\nrequired\n\n\nmain\nhtmltools.TagChildArg\nA UI element to place in the main area (typically a :func:~shiny.ui.panel_main)\nrequired\n\n\nposition\nLiteral[left, right]\nThe position of the sidebar (left or right)\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\npanel_sidebar panel_main"
   },
   {
     "objectID": "reference/layout_sidebar.html#examples",
@@ -1908,13 +1915,13 @@
     "href": "reference/modal_show.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:modal."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Shiny",
     "section": "",
-    "text": "#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 40),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def txt():\n        return f\"The value of n*2 is {input.n() * 2}\"\n\napp = App(app_ui, server)"
+    "text": "page_navbar\nprint\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 40),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def txt():\n        return f\"The value of n*2 is {input.n() * 2}\"\n\napp = App(app_ui, server)"
   }
 ]
