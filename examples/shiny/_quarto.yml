@@ -3,6 +3,9 @@ project:
   resources:
     - objects.json
 
+metadata-files:
+  - reference/_sidebar.yml
+
 website:
   title: Shiny
   navbar:
@@ -37,6 +40,7 @@ quartodoc:
   dir: reference
   package: shiny
   out_index: _api_index.qmd
+  sidebar: reference/_sidebar.yml
   renderer:
     style: _renderer.py
     show_signature_annotations: false
