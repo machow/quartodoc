@@ -6,6 +6,9 @@ project:
     - examples/pkgdown
     - examples/shiny
 
+metadata-files:
+  - api/_sidebar.yml
+
 filters:
   - "interlinks"
 
@@ -20,6 +23,7 @@ quartodoc:
   style: pkgdown
   dir: api
   package: quartodoc
+  sidebar: "api/_sidebar.yml"
   sections:
     - title: API Builders
       desc: |
@@ -86,7 +90,6 @@ website:
         - section: "Extra Topics"
           contents:
             - get-started/architecture.qmd
-    - id: dummy
 
 
 format:

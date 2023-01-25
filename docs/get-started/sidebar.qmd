@@ -2,7 +2,31 @@
 title: Sidebar navigation
 ---
 
-Currently, adding API reference pages to the left-hand sidebar requires manually
-listing each page in `_quarto.yml`. See the [quarto sidebar docs](https://quarto.org/docs/websites/website-navigation.html#side-navigation) for details.
+quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.
 
-Generating sidebar entries is being tracked in [this quartodoc issue](https://github.com/machow/quartodoc/issues/20).
+In order to create a sidebar for your docs, add the following options to your `_quarto.yml`:
+
+```yaml
+# tell quarto to read the sidebar file
+metadata-files:
+  - _sidebar.yml
+
+
+# tell quartodoc to generate the sidebar file
+quartodoc:
+  sidebar: "_sidebar.yml"
+  # other options ...
+```
+
+Note that running `python -m quartodoc build` will now produce a file called `_sidebar.yml`,
+with a [quarto sidebar configuration](https://quarto.org/docs/websites/website-navigation.html#side-navigation).
+The quarto [`metadata-files` option](https://quarto.org/docs/projects/quarto-projects.html#metadata-includes) ensures
+it's included with the configuration in `_quarto.yml`.
+
+Here is what the sidebar for the [quartodoc reference page](/api) looks like:
+
+<div class="sourceCode">
+<pre class="sourceCode yaml"><code class="sourceCode yaml">
+{{< include /api/_sidebar.yml >}}
+</code></pre>
+</div>
