@@ -1,3 +1,5 @@
+import re
+
 from enum import Enum
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
@@ -64,6 +66,14 @@ def escape(val: str):
 
 def sanitize(val: str):
     return val.replace("\n", " ")
+
+
+def convert_rst_link_to_md(rst):
+    expr = (
+        r"((:external(\+[a-zA-Z\._]+))?(:[a-zA-Z\._]+)?:[a-zA-Z\._]+:`~?[a-zA-Z\._]+`)"
+    )
+
+    return re.sub(expr, r"[](\1)", rst, flags=re.MULTILINE)
 
 
 # to_md -----------------------------------------------------------------------
@@ -284,7 +294,7 @@ class MdRenderer(Renderer):
     @dispatch
     def to_md(self, el: DocstringSectionSeeAlso):
         # TODO: attempt to parse See Also sections
-        return el.value
+        return convert_rst_link_to_md(el.value)
 
     # examples ----
 
