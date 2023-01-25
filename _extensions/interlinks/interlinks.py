@@ -47,6 +47,10 @@ class Inventories:
             else:
                 field_value = getattr(ref, field)
 
+            if field == "role":
+                # for some reason, things like :func: are short for :function:.
+                field_value = self.normalize_role(field_value)
+
             crnt_items = _filter_by_field(crnt_items, field, field_value)
 
         results = list(crnt_items)
@@ -64,6 +68,12 @@ class Inventories:
             )
 
         return results[0]
+
+    def normalize_role(self, role_name):
+        if role_name == "func":
+            return "function"
+
+        return role_name
 
 
 global_inventory = Inventories()
@@ -194,14 +204,7 @@ def parse_rst_style_ref(full_text):
 # Visitor ================================================================================
 
 
-@dispatch
-def visit(el, doc):
-    return el
-    # raise TypeError(f"Unsupported type: {type(el)}")
-
-
-@dispatch
-def visit(el: pf.Doc, doc):
+def prepare(doc: pf.Doc):
 
     meta = doc.get_metadata()
 
@@ -218,7 +221,13 @@ def visit(el: pf.Doc, doc):
 
     load_inventories(interlinks)
 
+    return doc
+
+
+@dispatch
+def visit(el, doc):
     return el
+    # raise TypeError(f"Unsupported type: {type(el)}")
 
 
 # TODO: the syntax :ref:`target` is not trivial to implement. The pandoc AST
@@ -252,7 +261,7 @@ def visit(el: pf.Link, doc):
 
 
 def main(doc=None):
-    return pf.run_filter(visit, doc=None)
+    return pf.run_filter(visit, prepare=prepare, doc=None)
 
 
 if __name__ == "__main__":
