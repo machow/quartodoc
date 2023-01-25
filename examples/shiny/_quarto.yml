@@ -39,6 +39,7 @@ quartodoc:
   out_index: _api_index.qmd
   renderer:
     style: _renderer.py
+    show_signature_annotations: false
   sections:
     - title: Page containers
       desc: Create a user interface page container.
