@@ -1,4 +1,5 @@
 import logging
+import yaml
 
 from functools import partial
 from griffe.loader import GriffeLoader
@@ -177,6 +178,7 @@ class Builder:
         title: str = "Function reference",
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
+        sidebar: "str | None" = None,
         use_interlinks: bool = False,
     ):
         self.validate(sections)
@@ -194,6 +196,8 @@ class Builder:
         self.create_inventory()
 
         self.renderer = Renderer.from_config(renderer)
+
+        self.sidebar = sidebar
 
         if out_index is not None:
             self.out_index = out_index
@@ -214,7 +218,13 @@ class Builder:
         _log.info(f"Saving inventory to {self.out_inventory}")
         convert_inventory(self.inventory, self.out_inventory)
 
+        _log.info("Writing doc pages")
         self.write_doc_pages()
+
+        if self.sidebar:
+            _log.info(f"Writing sidebar yaml to {self.sidebar}")
+            d_sidebar = self.generate_sidebar()
+            yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
     def validate(self, d):
         # TODO: validate sections (or config values generally)
@@ -233,7 +243,7 @@ class Builder:
             for func_name in section["contents"]:
                 _log.info(f"Getting object for `{self.package}.{func_name}`")
                 obj = f_get_object(self.package, func_name)
-                self.items[obj.path] = obj
+                self.items[func_name] = obj
 
     # inventory ----
 
@@ -287,6 +297,20 @@ class Builder:
             html_path.parent.mkdir(exist_ok=True, parents=True)
 
             html_path.with_suffix(self.out_page_suffix).write_text(rendered)
+
+    # sidebar ----
+
+    def generate_sidebar(self):
+        contents = [f"{self.dir}/{self.out_index}"]
+        for section in self.sections:
+            links = [
+                self.fetch_object_uri(self.items[k], suffix=self.out_page_suffix)
+                for k in section["contents"]
+            ]
+
+            contents.append({"section": section["title"], "contents": links})
+
+        return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
 
     # constructors ----
 
