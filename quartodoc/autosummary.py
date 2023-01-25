@@ -139,6 +139,8 @@ class Builder:
         The renderer used to convert docstrings (e.g. to markdown).
     out_index:
         The output path of the index file, used to list all API functions.
+    sidebar:
+        The output path for a sidebar yaml config (by default no config generated).
     """
 
     # builder dispatching ----
