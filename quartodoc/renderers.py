@@ -174,7 +174,9 @@ class MdRenderer(Renderer):
         if isinstance(el, (type(None), str)):
             return el
 
-        return el.full
+        # TODO: maybe there is a way to get tabulate to handle this?
+        # unescaped pipes screw up table formatting
+        return el.full.replace("|", "\\|")
 
     @dispatch
     def to_md(self, el):
