@@ -141,6 +141,8 @@ class MdRenderer(Renderer):
         The level of the header (e.g. 1 is the biggest).
     show_signature: bool
         Whether to show the function signature.
+    show_signature_annotations: bool
+        Whether to show annotations in the function signature.
 
     Examples
     --------
@@ -157,10 +159,15 @@ class MdRenderer(Renderer):
     style = "markdown"
 
     def __init__(
-        self, header_level: int = 2, show_signature: bool = True, hook_pre=None
+        self,
+        header_level: int = 2,
+        show_signature: bool = True,
+        show_signature_annotations: bool = False,
+        hook_pre=None,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
+        self.show_signature_annotations = show_signature_annotations
         self.hook_pre = hook_pre
 
     def _render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
@@ -236,10 +243,11 @@ class MdRenderer(Renderer):
         has_default = el.default and el.kind not in splats
 
         annotation = self._render_annotation(el.annotation)
-        if annotation and has_default:
-            return f"{el.name}: {el.annotation} = {el.default}"
-        elif annotation:
-            return f"{el.name}: {el.annotation}"
+        if self.show_signature_annotations:
+            if annotation and has_default:
+                return f"{el.name}: {el.annotation} = {el.default}"
+            elif annotation:
+                return f"{el.name}: {el.annotation}"
         elif has_default:
             return f"{el.name}={el.default}"
 
