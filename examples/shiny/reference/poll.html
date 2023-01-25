@@ -126,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="poll" class="level2">
 <h2 class="anchored" data-anchor-id="poll">poll</h2>
-<p><code>poll(poll_func: Union[Callable[[], Any], Callable[[], Awaitable[Any]]], interval_secs: float = 1, equals: Callable[[Any, Any], bool] = eq, priority: int = 0, session: Union[MISSING_TYPE, Session, None] = MISSING)</code></p>
+<p><code>poll(poll_func, interval_secs=1, equals=eq, priority=0, session=MISSING)</code></p>
 <p>Create a reactive polling object.</p>
 <p>Polling is a technique that approximates “real-time” or streaming updates, using a data source that does not actually have push notifications but does have a quick way to repeatedly check for changes on demand.</p>
 <p>A reactive polling object is constructed using two functions: a polling function, which is a fast-running, inexpensive function that is used to determine whether some data source has changed (such as the timestamp of a file, or a <code>SELECT MAX(updated) FROM table</code> query); and a slower-running reading function that actually loads and returns the data that is desired. The <code>poll()</code> function is intended to be used as a decorator: the poll function is passed as the <code>poll_func</code> arg to <code>@poll()</code>, while the data reading function is the target of the decorator.</p>

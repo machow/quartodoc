@@ -124,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="Calc" class="level2">
 <h2 class="anchored" data-anchor-id="Calc">Calc</h2>
-<p><code>Calc(fn: Optional[Union[CalcFunction[T], CalcFunctionAsync[T]]] = None, session: Union[MISSING_TYPE, Session, None] = MISSING)</code></p>
+<p><code>Calc(fn=None, session=MISSING)</code></p>
 <p>Mark a function as a reactive calculation.</p>
 <p>A reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., :class:<code>~shiny.Inputs</code>, :class:<code>~shiny.reactive.Value</code>, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are “invalidated” and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.</p>
 <section id="parameters" class="level3">
