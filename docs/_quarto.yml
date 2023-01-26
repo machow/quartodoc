@@ -83,6 +83,7 @@ website:
             - get-started/crossrefs.qmd
             - get-started/interlinks.qmd
             - get-started/sidebar.qmd
+            - get-started/extending.qmd
         - section: "Advanced"
           contents:
             - get-started/docstrings.qmd
