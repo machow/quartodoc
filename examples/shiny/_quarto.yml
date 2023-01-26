@@ -40,10 +40,12 @@ quartodoc:
   dir: reference
   package: shiny
   out_index: _api_index.qmd
+  display_name: relative
   sidebar: reference/_sidebar.yml
   renderer:
     style: _renderer.py
     show_signature_annotations: false
+    display_name: relative
   sections:
     - title: Page containers
       desc: Create a user interface page container.
