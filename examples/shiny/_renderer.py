@@ -1,6 +1,7 @@
 from importlib.resources import files
 from quartodoc import MdRenderer
 from plum import dispatch
+from typing import Union
 
 from griffe import dataclasses as dc
 
@@ -29,7 +30,7 @@ class Renderer(MdRenderer):
     style = "shiny"
 
     @dispatch
-    def to_md(self, el: dc.Object):
+    def to_md(self, el: Union[dc.Object, dc.Alias]):
         rendered = super().to_md(el)
 
         p_example = SHINY_PATH / "examples" / el.name / "app.py"
