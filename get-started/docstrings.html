@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../get-started/renderers.html" rel="next">
-<link href="../get-started/sidebar.html" rel="prev">
+<link href="../get-started/extending.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -214,6 +214,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/extending.html" class="sidebar-item-text sidebar-link">More Customization</a>
   </div>
 </li>
       </ul>
@@ -342,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f1f98406f70&gt;</code></pre>
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f8cd0ec3fa0&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -383,10 +388,10 @@ Examples
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f1f98aadee0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f1f98aadd00&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f1f98aad4c0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f1f98318790&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ce059ab80&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f8ce059abb0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ce059af70&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f8cd0dd3850&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -634,8 +639,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/sidebar.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Sidebar navigation</span>
+      <a href="../get-started/extending.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">More Customization</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -158,7 +158,7 @@
     "href": "get-started/docstrings.html#reading-docstrings",
     "title": "Inspecting docstrings",
     "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f1f98406f70>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f1f98aadee0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f1f98aadd00>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f1f98aad4c0>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f1f98318790>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f8cd0ec3fa0>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ce059ab80>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f8ce059abb0>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8ce059af70>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f8cd0dd3850>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
   },
   {
     "objectID": "get-started/docstrings.html#previewing-docstrings",
@@ -201,6 +201,34 @@
     "title": "Configuring docs",
     "section": "Looking up functions",
     "text": "Looking up functions\nFinding functions to document involves two pieces of configuration:\n\nthe package name.\na list of functions for content.\n\nquartodoc:\n  package: quartodoc\n  sections:\n    - contents:\n        # top-level function: quartodoc.get_object\n        - get_object\n\n        # top-level class: quartodoc.MdRenderer\n        - MdRenderer\n\n        # submodule function: quartodoc.ast.preview\n        - ast.preview\nThe functions listed in contents are assumed to be imported from the package.\n\nClass methods\nCurrently, quartodoc can’t look up class methods. (Though this would be quick to implement!)."
+  },
+  {
+    "objectID": "get-started/extending.html",
+    "href": "get-started/extending.html",
+    "title": "More Customization",
+    "section": "",
+    "text": "This page details 3 common aspects of quartodoc you can extend:"
+  },
+  {
+    "objectID": "get-started/extending.html#using-a-custom-index-page",
+    "href": "get-started/extending.html#using-a-custom-index-page",
+    "title": "More Customization",
+    "section": "Using a custom index page",
+    "text": "Using a custom index page\nUse a custom index page to add content before or after the automatically generated API index.\nYou can do this by setting quartodoc’s out_index to be something other than index.qmd, and then including it in a custom index.qmd file.\nFirst, set out_index in your _quarto.yml:\nwebsite:\n  navbar:\n    left:\n      - file: reference/index.qmd\n        text: Reference\n\nquartodoc:\n  dir: reference\n  out_index: reference/_api_index.qmd\nThen, create the file reference/index.qmd to have the form:\n---\n---\n\nSome custom content.\n\n\n{{< include /reference/_api_index.qmd >}}\n\n\nMore content stuff.\nNotice that the shortcode {{< include … >}} is used to insert the index file generated by quartodoc (_api_index.qmd)."
+  },
+  {
+    "objectID": "get-started/extending.html#using-a-custom-renderer",
+    "href": "get-started/extending.html#using-a-custom-renderer",
+    "title": "More Customization",
+    "section": "Using a custom Renderer",
+    "text": "Using a custom Renderer\nUse a custom renderer to add custom content after a renderered docstring, or to change the rendering process in general.\nYou can do this by creating a custom file for your renderer in your docs folder, like _renderer.py, and then referencing it in your _quarto.yml.\nquartodoc:\n  renderer:\n    style: _renderer.py\nSee the shiny example docs, which contains a custom renderer."
+  },
+  {
+    "objectID": "get-started/extending.html#using-a-custom-builder",
+    "href": "get-started/extending.html#using-a-custom-builder",
+    "title": "More Customization",
+    "section": "Using a custom Builder",
+    "text": "Using a custom Builder\nSince the Builder controls the full quartodoc build process, using a custom builder provides total flexibility. This option currently isn’t available, but would be easy to enable.\nPlease leave a note on this issue if you need to use a custom builder."
   },
   {
     "objectID": "get-started/crossrefs.html",
