@@ -292,16 +292,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="MdRenderer" class="level2">
 <h2 class="anchored" data-anchor-id="MdRenderer">MdRenderer</h2>
-<p><code>MdRenderer(self, header_level=2, show_signature=True, show_signature_annotations=False, hook_pre=None)</code></p>
+<p><code>MdRenderer(self, header_level=2, show_signature=True, show_signature_annotations=False, display_name='name', hook_pre=None)</code></p>
 <p>Render docstrings to markdown.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
-<col style="width: 28%">
-<col style="width: 7%">
-<col style="width: 53%">
-<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 2%">
+<col style="width: 84%">
+<col style="width: 3%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -329,6 +329,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>bool</td>
 <td>Whether to show annotations in the function signature.</td>
 <td><code>False</code></td>
+</tr>
+<tr class="even">
+<td><code>display_name</code></td>
+<td>str</td>
+<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
+<td><code>'name'</code></td>
 </tr>
 </tbody>
 </table>

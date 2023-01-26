@@ -311,10 +311,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>quartodoc</code> section takes a <code>style</code> field, specifying which <a href="../api/Builder.html">Builder</a> to use (currently “pkgdown” or “single-page”; see <a href="../examples/">Examples</a>).</p>
 <table class="table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 16%">
-<col style="width: 60%">
-<col style="width: 15%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 80%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -372,6 +372,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>str | None</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
 <td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>display_name</code></td>
+<td>str</td>
+<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
+<td><code>'name'</code></td>
 </tr>
 </tbody>
 </table>

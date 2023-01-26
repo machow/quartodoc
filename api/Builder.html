@@ -228,16 +228,16 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="Builder" class="level2">
 <h2 class="anchored" data-anchor-id="Builder">Builder</h2>
-<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, use_interlinks=False)</code></p>
+<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, use_interlinks=False, display_name='name')</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 16%">
-<col style="width: 60%">
-<col style="width: 15%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 80%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -295,6 +295,12 @@ ul.task-list li input[type="checkbox"] {
 <td>str | None</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
 <td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>display_name</code></td>
+<td>str</td>
+<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
+<td><code>'name'</code></td>
 </tr>
 </tbody>
 </table>
