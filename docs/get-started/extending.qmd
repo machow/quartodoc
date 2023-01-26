@@ -1,0 +1,77 @@
+---
+title: More Customization
+---
+
+This page details 3 common aspects of quartodoc you can extend:
+
+* The reference index page generated (which lists all your functions).
+* The way docstrings are renderered.
+* The overall building process.
+
+
+## Using a custom index page
+
+Use a custom index page to add content before or after the automatically generated
+API index.
+
+You can do this by setting quartodoc's `out_index` to be something other than `index.qmd`,
+and then including it in a custom `index.qmd` file.
+
+First, set `out_index` in your `_quarto.yml`:
+
+```yaml
+website:
+  navbar:
+    left:
+      - file: reference/index.qmd
+        text: Reference
+
+quartodoc:
+  dir: reference
+  out_index: reference/_api_index.qmd
+```
+
+Then, create the file `reference/index.qmd` to have the form:
+
+```bash
+---
+---
+
+Some custom content.
+
+
+{{< include /reference/_api_index.qmd >}}
+
+
+More content stuff.
+```
+
+Notice that the shortcode `{{< include ... >}}` is used to insert the index file generated
+by quartodoc (`_api_index.qmd`).
+
+
+## Using a custom Renderer
+
+Use a custom renderer to add custom content after a renderered docstring, or
+to change the rendering process in general.
+
+You can do this by creating a custom file for your renderer in your docs folder, like `_renderer.py`,
+and then referencing it in your `_quarto.yml`.
+
+```yaml
+quartodoc:
+  renderer:
+    style: _renderer.py
+```
+
+See the [shiny example docs](https://github.com/machow/quartodoc/tree/main/examples/shiny), which contains a custom renderer.
+
+
+## Using a custom Builder
+
+Since the Builder controls the full quartodoc build process, using a custom builder
+provides total flexibility. This option currently isn't available, but would be easy
+to enable.
+
+Please leave a note on [this issue](https://github.com/machow/quartodoc/issues/34) if you
+need to use a custom builder.
