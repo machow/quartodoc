@@ -141,6 +141,12 @@ class Builder:
         The output path of the index file, used to list all API functions.
     sidebar:
         The output path for a sidebar yaml config (by default no config generated).
+    display_name: str
+        The default name shown for documented functions. Either "name", "relative",
+        "full", or "canonical". These options range from just the function name, to its
+        full path relative to its package, to including the package name, to its
+        the its full path relative to its .__module__.
+
     """
 
     # builder dispatching ----
@@ -182,6 +188,7 @@ class Builder:
         out_index: str = None,
         sidebar: "str | None" = None,
         use_interlinks: bool = False,
+        display_name: str = "name",
     ):
         self.validate(sections)
 
@@ -190,6 +197,7 @@ class Builder:
         self.version = None
         self.dir = dir
         self.title = title
+        self.display_name = display_name
 
         self.items: "dict[str, dc.Object | dc.Alias]" = {}
         self.create_items()
@@ -263,15 +271,27 @@ class Builder:
             self.fetch_object_dispname,
         )
 
-    def fetch_object_uri(self, obj):
+    def fetch_object_uri(self, obj, suffix=".html"):
         """Define the final url that will point to individual doc pages."""
 
-        return f"{self.dir}/{obj.path}.html"
+        dispname = self.fetch_object_dispname(obj)
+        return f"{self.dir}/{dispname}{suffix}"
 
     def fetch_object_dispname(self, obj):
         """Define the name that will be displayed for individual api functions."""
 
-        return obj.path
+        if self.display_name == "name":
+            return obj.name
+        elif self.display_name == "relative":
+            return ".".join(obj.path.split(".")[1:])
+
+        elif self.display_name == "full":
+            return obj.path
+
+        elif self.display_name == "canonical":
+            return obj.canonical_path
+
+        raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
     # rendering ----
 
@@ -380,11 +400,8 @@ class BuilderPkgdown(Builder):
         else:
             return f"| {link} | |"
 
-    def fetch_object_uri(self, obj, suffix=".html"):
-        return f"{self.dir}/{obj.name}{suffix}"
-
-    def fetch_object_dispname(self, obj):
-        return obj.name
+    # def fetch_object_dispname(self, obj):
+    #    return obj.name
 
 
 class BuilderSinglePage(Builder):

@@ -143,6 +143,11 @@ class MdRenderer(Renderer):
         Whether to show the function signature.
     show_signature_annotations: bool
         Whether to show annotations in the function signature.
+    display_name: str
+        The default name shown for documented functions. Either "name", "relative",
+        "full", or "canonical". These options range from just the function name, to its
+        full path relative to its package, to including the package name, to its
+        the its full path relative to its .__module__.
 
     Examples
     --------
@@ -163,11 +168,13 @@ class MdRenderer(Renderer):
         header_level: int = 2,
         show_signature: bool = True,
         show_signature_annotations: bool = False,
+        display_name: str = "name",
         hook_pre=None,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
+        self.display_name = display_name
         self.hook_pre = hook_pre
 
     def _render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
@@ -177,6 +184,21 @@ class MdRenderer(Renderer):
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
         return el.full.replace("|", "\\|")
+
+    def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
+        # TODO: copied from Builder, should move into util function
+        if self.display_name == "name":
+            return el.name
+        elif self.display_name == "relative":
+            return ".".join(el.path.split(".")[1:])
+
+        elif self.display_name == "full":
+            return el.path
+
+        elif self.display_name == "canonical":
+            return el.canonical_path
+
+        raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
     @dispatch
     def to_md(self, el):
@@ -192,19 +214,20 @@ class MdRenderer(Renderer):
     #    # these are used often for annotations, and full returns it as a string
     #    return el.full
 
-    @dispatch
-    def to_md(self, el: dc.Alias):
-        return self.to_md(el.target)
+    # @dispatch
+    # def to_md(self, el: dc.Alias):
+    #    return self.to_md(el.target)
 
     @dispatch
-    def to_md(self, el: dc.Object):
+    def to_md(self, el: Union[dc.Object, dc.Alias]):
         # TODO: replace hard-coded header level
 
+        _str_dispname = self._fetch_object_dispname(el)
         _str_pars = self.to_md(el.parameters)
-        str_sig = f"`{el.name}({_str_pars})`"
+        str_sig = f"`{_str_dispname}({_str_pars})`"
 
-        _anchor = f"{{ #{el.name} }}"
-        str_title = f"{'#' * self.header_level} {el.name} {_anchor}"
+        _anchor = f"{{ #{_str_dispname} }}"
+        str_title = f"{'#' * self.header_level} {_str_dispname} {_anchor}"
 
         str_body = []
         if el.docstring is None:
