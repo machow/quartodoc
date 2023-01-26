@@ -1,6 +1,6 @@
 ## preview { #preview }
 
-`preview(ast: dc.Object | ds.Docstring | object, max_depth=999)`
+`preview(ast, max_depth=999)`
 
 Print a friendly representation of a griffe object (e.g. function, docstring)
 
