@@ -1,18 +1,20 @@
 ## get_object { #get_object }
 
-`get_object(module: str, object_name: str, parser: str = 'numpy')`
+`get_object(module, object_name, parser='numpy', load_aliases=True, modules_collection=None)`
 
 Fetch a griffe object.
 
 ### Parameters
 
-| Name          | Type   | Description                | Default   |
-|---------------|--------|----------------------------|-----------|
-| `module`      | str    | A module name.             | required  |
-| `object_name` | str    | A function name.           | required  |
-| `parser`      | str    | A docstring parser to use. | `'numpy'` |
+| Name                 | Type                      | Description                                                                        | Default   |
+|----------------------|---------------------------|------------------------------------------------------------------------------------|-----------|
+| `module`             | str                       | A module name.                                                                     | required  |
+| `object_name`        | str                       | A function name.                                                                   | required  |
+| `parser`             | str                       | A docstring parser to use.                                                         | `'numpy'` |
+| `load_aliases`       |                           | For aliases that were imported from other modules, should we load that module?     | `True`    |
+| `modules_collection` | None \| ModulesCollection | A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules. | `None`    |
 
-### See_Also
+### See Also
 
 get_function: a deprecated function.
 

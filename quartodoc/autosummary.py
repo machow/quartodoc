@@ -1,4 +1,10 @@
+import logging
+import yaml
+
+from functools import partial
 from griffe.loader import GriffeLoader
+from griffe.collections import ModulesCollection
+from griffe.dataclasses import Alias
 from griffe.docstrings.parsers import Parser, parse
 from griffe.docstrings import dataclasses as ds  # noqa
 from griffe import dataclasses as dc
@@ -14,6 +20,10 @@ if TYPE_CHECKING:
     import sphobjinv as soi
 
     from griffe import dataclasses as dc
+    from griffe.collections import ModulesCollection
+
+
+_log = logging.getLogger(__name__)
 
 
 # Docstring loading / parsing =================================================
@@ -55,7 +65,13 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
     return f_data
 
 
-def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Object:
+def get_object(
+    module: str,
+    object_name: str,
+    parser: str = "numpy",
+    load_aliases=True,
+    modules_collection: "None | ModulesCollection" = None,
+) -> dc.Object:
     """Fetch a griffe object.
 
     Parameters
@@ -66,6 +82,10 @@ def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Objec
         A function name.
     parser: str
         A docstring parser to use.
+    load_aliases: bool
+        For aliases that were imported from other modules, should we load that module?
+    modules_collection: optional
+        A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
     See Also
     --------
@@ -78,10 +98,20 @@ def get_object(module: str, object_name: str, parser: str = "numpy") -> dc.Objec
     <Function('get_function', ...
 
     """
-    griffe = GriffeLoader(docstring_parser=Parser(parser))
+    griffe = GriffeLoader(
+        docstring_parser=Parser(parser), modules_collection=modules_collection
+    )
     mod = griffe.load_module(module)
 
     f_data = mod._modules_collection[f"{module}.{object_name}"]
+
+    # Alias objects can refer to objects imported from other modules.
+    # in this case, we need to import the target's module in order to resolve
+    # the alias
+    if isinstance(f_data, Alias) and load_aliases:
+        target_mod = f_data.target_path.split(".")[0]
+        if target_mod != module:
+            griffe.load_module(target_mod)
 
     return f_data
 
@@ -109,6 +139,14 @@ class Builder:
         The renderer used to convert docstrings (e.g. to markdown).
     out_index:
         The output path of the index file, used to list all API functions.
+    sidebar:
+        The output path for a sidebar yaml config (by default no config generated).
+    display_name: str
+        The default name shown for documented functions. Either "name", "relative",
+        "full", or "canonical". These options range from just the function name, to its
+        full path relative to its package, to including the package name, to its
+        the its full path relative to its .__module__.
+
     """
 
     # builder dispatching ----
@@ -148,7 +186,9 @@ class Builder:
         title: str = "Function reference",
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
+        sidebar: "str | None" = None,
         use_interlinks: bool = False,
+        display_name: str = "name",
     ):
         self.validate(sections)
 
@@ -157,6 +197,7 @@ class Builder:
         self.version = None
         self.dir = dir
         self.title = title
+        self.display_name = display_name
 
         self.items: "dict[str, dc.Object | dc.Alias]" = {}
         self.create_items()
@@ -166,6 +207,8 @@ class Builder:
 
         self.renderer = Renderer.from_config(renderer)
 
+        self.sidebar = sidebar
+
         if out_index is not None:
             self.out_index = out_index
 
@@ -174,15 +217,24 @@ class Builder:
     def build(self):
         """Build index page, sphinx inventory, and individual doc pages."""
 
+        _log.info("Rendering index")
         content = self.render_index()
 
+        _log.info(f"Writing index to directory: {self.dir}")
         p_index = Path(self.dir) / self.out_index
         p_index.parent.mkdir(exist_ok=True, parents=True)
         p_index.write_text(content)
 
+        _log.info(f"Saving inventory to {self.out_inventory}")
         convert_inventory(self.inventory, self.out_inventory)
 
+        _log.info("Writing doc pages")
         self.write_doc_pages()
+
+        if self.sidebar:
+            _log.info(f"Writing sidebar yaml to {self.sidebar}")
+            d_sidebar = self.generate_sidebar()
+            yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
     def validate(self, d):
         # TODO: validate sections (or config values generally)
@@ -193,10 +245,15 @@ class Builder:
     def create_items(self):
         """Collect items for all docstrings."""
 
+        collection = ModulesCollection()
+        f_get_object = partial(get_object, modules_collection=collection)
+
+        _log.info("Creating items")
         for section in self.sections:
             for func_name in section["contents"]:
-                obj = get_object(self.package, func_name)
-                self.items[obj.path] = obj
+                _log.info(f"Getting object for `{self.package}.{func_name}`")
+                obj = f_get_object(self.package, func_name)
+                self.items[func_name] = obj
 
     # inventory ----
 
@@ -204,6 +261,7 @@ class Builder:
         """Generate sphinx inventory object."""
 
         # TODO: get package version
+        _log.info("Creating inventory")
         version = "0.0.9999" if self.version is None else self.version
         self.inventory = create_inventory(
             self.package,
@@ -213,15 +271,27 @@ class Builder:
             self.fetch_object_dispname,
         )
 
-    def fetch_object_uri(self, obj):
+    def fetch_object_uri(self, obj, suffix=".html"):
         """Define the final url that will point to individual doc pages."""
 
-        return f"{self.dir}/{obj.path}.html"
+        dispname = self.fetch_object_dispname(obj)
+        return f"{self.dir}/{dispname}{suffix}"
 
     def fetch_object_dispname(self, obj):
         """Define the name that will be displayed for individual api functions."""
 
-        return obj.path
+        if self.display_name == "name":
+            return obj.name
+        elif self.display_name == "relative":
+            return ".".join(obj.path.split(".")[1:])
+
+        elif self.display_name == "full":
+            return obj.path
+
+        elif self.display_name == "canonical":
+            return obj.canonical_path
+
+        raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
     # rendering ----
 
@@ -243,11 +313,26 @@ class Builder:
 
         # TODO: rename to_md to render or something
         for item in self.items.values():
+            _log.info(f"Rendering `{item.canonical_path}`")
             rendered = self.renderer.to_md(item)
             html_path = Path(self.fetch_object_uri(item))
             html_path.parent.mkdir(exist_ok=True, parents=True)
 
             html_path.with_suffix(self.out_page_suffix).write_text(rendered)
+
+    # sidebar ----
+
+    def generate_sidebar(self):
+        contents = [f"{self.dir}/{self.out_index}"]
+        for section in self.sections:
+            links = [
+                self.fetch_object_uri(self.items[k], suffix=self.out_page_suffix)
+                for k in section["contents"]
+            ]
+
+            contents.append({"section": section["title"], "contents": links})
+
+        return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
 
     # constructors ----
 
@@ -289,6 +374,7 @@ class BuilderPkgdown(Builder):
 
         rendered = []
         for func_name in section["contents"]:
+            # TODO: shouldn't need to collect object again after .create_items()
             obj = get_object(self.package, func_name)
             rendered.append(self._render_object(obj))
 
@@ -314,11 +400,8 @@ class BuilderPkgdown(Builder):
         else:
             return f"| {link} | |"
 
-    def fetch_object_uri(self, obj, suffix=".html"):
-        return f"{self.dir}/{obj.name}{suffix}"
-
-    def fetch_object_dispname(self, obj):
-        return obj.name
+    # def fetch_object_dispname(self, obj):
+    #    return obj.name
 
 
 class BuilderSinglePage(Builder):

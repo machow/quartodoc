@@ -47,6 +47,10 @@ class Inventories:
             else:
                 field_value = getattr(ref, field)
 
+            if field == "role":
+                # for some reason, things like :func: are short for :function:.
+                field_value = self.normalize_role(field_value)
+
             crnt_items = _filter_by_field(crnt_items, field, field_value)
 
         results = list(crnt_items)
@@ -65,6 +69,12 @@ class Inventories:
 
         return results[0]
 
+    def normalize_role(self, role_name):
+        if role_name == "func":
+            return "function"
+
+        return role_name
+
 
 global_inventory = Inventories()
 
@@ -80,7 +90,12 @@ def get_path_to_root():
     # I have no idea how to get the documentation root,
     # except to get the path the extension script, which
     # lives in <root>/_extensions/interlinks, and work back
-    return Path(__file__).parent.parent.parent
+    p_root = Path(__file__).parent.parent.parent
+
+    if p_root.name == "_extensions":
+        return p_root.parent
+
+    return p_root
 
 
 def load_inventories(interlinks: dict):
@@ -189,14 +204,8 @@ def parse_rst_style_ref(full_text):
 # Visitor ================================================================================
 
 
-@dispatch
-def visit(el, doc):
-    return el
-    # raise TypeError(f"Unsupported type: {type(el)}")
+def prepare(doc: pf.Doc):
 
-
-@dispatch
-def visit(el: pf.MetaList, doc):
     meta = doc.get_metadata()
 
     try:
@@ -212,12 +221,13 @@ def visit(el: pf.MetaList, doc):
 
     load_inventories(interlinks)
 
-    return el
+    return doc
 
 
 @dispatch
-def visit(el: pf.Doc, doc):
+def visit(el, doc):
     return el
+    # raise TypeError(f"Unsupported type: {type(el)}")
 
 
 # TODO: the syntax :ref:`target` is not trivial to implement. The pandoc AST
@@ -251,7 +261,7 @@ def visit(el: pf.Link, doc):
 
 
 def main(doc=None):
-    return pf.run_filter(visit, doc=None)
+    return pf.run_filter(visit, prepare=prepare, doc=None)
 
 
 if __name__ == "__main__":

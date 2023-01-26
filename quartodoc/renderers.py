@@ -1,7 +1,8 @@
+import re
+
 from enum import Enum
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
-from griffe.expressions import Expression, Name
 from dataclasses import dataclass
 from tabulate import tabulate
 from plum import dispatch
@@ -67,6 +68,14 @@ def sanitize(val: str):
     return val.replace("\n", " ")
 
 
+def convert_rst_link_to_md(rst):
+    expr = (
+        r"((:external(\+[a-zA-Z\._]+))?(:[a-zA-Z\._]+)?:[a-zA-Z\._]+:`~?[a-zA-Z\._]+`)"
+    )
+
+    return re.sub(expr, r"[](\1)", rst, flags=re.MULTILINE)
+
+
 # to_md -----------------------------------------------------------------------
 # griffe function dataclass structure:
 #   Object:
@@ -113,6 +122,12 @@ class Renderer:
         else:
             raise TypeError(type(cfg))
 
+        if style.endswith(".py"):
+            import importlib
+
+            mod = importlib.import_module(style.rsplit(".", 1)[0])
+            return mod.Renderer(**cfg)
+
         subclass = cls._registry[style]
         return subclass(**cfg)
 
@@ -126,6 +141,13 @@ class MdRenderer(Renderer):
         The level of the header (e.g. 1 is the biggest).
     show_signature: bool
         Whether to show the function signature.
+    show_signature_annotations: bool
+        Whether to show annotations in the function signature.
+    display_name: str
+        The default name shown for documented functions. Either "name", "relative",
+        "full", or "canonical". These options range from just the function name, to its
+        full path relative to its package, to including the package name, to its
+        the its full path relative to its .__module__.
 
     Examples
     --------
@@ -142,11 +164,41 @@ class MdRenderer(Renderer):
     style = "markdown"
 
     def __init__(
-        self, header_level: int = 2, show_signature: bool = True, hook_pre=None
+        self,
+        header_level: int = 2,
+        show_signature: bool = True,
+        show_signature_annotations: bool = False,
+        display_name: str = "name",
+        hook_pre=None,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
+        self.show_signature_annotations = show_signature_annotations
+        self.display_name = display_name
         self.hook_pre = hook_pre
+
+    def _render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
+        if isinstance(el, (type(None), str)):
+            return el
+
+        # TODO: maybe there is a way to get tabulate to handle this?
+        # unescaped pipes screw up table formatting
+        return el.full.replace("|", "\\|")
+
+    def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
+        # TODO: copied from Builder, should move into util function
+        if self.display_name == "name":
+            return el.name
+        elif self.display_name == "relative":
+            return ".".join(el.path.split(".")[1:])
+
+        elif self.display_name == "full":
+            return el.path
+
+        elif self.display_name == "canonical":
+            return el.canonical_path
+
+        raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
     @dispatch
     def to_md(self, el):
@@ -156,20 +208,22 @@ class MdRenderer(Renderer):
     def to_md(self, el: str):
         return el
 
-    @dispatch
-    def to_md(self, el: Union[Expression, Name]):
-        # these are used often for annotations, and full returns it as a string
-        return el.full
+    # TODO: remove, as this is now handled by _render_annotation
+    # @dispatch
+    # def to_md(self, el: Union[Expression, Name]):
+    #    # these are used often for annotations, and full returns it as a string
+    #    return el.full
 
     @dispatch
-    def to_md(self, el: Union[dc.Alias, dc.Object]):
+    def to_md(self, el: Union[dc.Object, dc.Alias]):
         # TODO: replace hard-coded header level
 
+        _str_dispname = self._fetch_object_dispname(el)
         _str_pars = self.to_md(el.parameters)
-        str_sig = f"`{el.name}({_str_pars})`"
+        str_sig = f"`{_str_dispname}({_str_pars})`"
 
-        _anchor = f"{{ #{el.name} }}"
-        str_title = f"{'#' * self.header_level} {el.name} {_anchor}"
+        _anchor = f"{{ #{_str_dispname} }}"
+        str_title = f"{'#' * self.header_level} {_str_dispname} {_anchor}"
 
         str_body = []
         if el.docstring is None:
@@ -177,7 +231,7 @@ class MdRenderer(Renderer):
         else:
             for section in el.docstring.parsed:
                 new_el = docstring_section_narrow(section)
-                title = new_el.kind.name
+                title = new_el.kind.value
                 body = self.to_md(new_el)
 
                 if title != "text":
@@ -193,6 +247,10 @@ class MdRenderer(Renderer):
 
         return "\n\n".join(parts)
 
+    @dispatch
+    def to_md(self, el: dc.Attribute):
+        raise NotImplementedError()
+
     # signature parts -------------------------------------------------------------
 
     @dispatch
@@ -205,10 +263,12 @@ class MdRenderer(Renderer):
         splats = {dc.ParameterKind.var_keyword, dc.ParameterKind.var_positional}
         has_default = el.default and el.kind not in splats
 
-        if el.annotation and has_default:
-            return f"{el.name}: {el.annotation} = {el.default}"
-        elif el.annotation:
-            return f"{el.name}: {el.annotation}"
+        annotation = self._render_annotation(el.annotation)
+        if self.show_signature_annotations:
+            if annotation and has_default:
+                return f"{el.name}: {el.annotation} = {el.default}"
+            elif annotation:
+                return f"{el.name}: {el.annotation}"
         elif has_default:
             return f"{el.name}={el.default}"
 
@@ -240,10 +300,8 @@ class MdRenderer(Renderer):
     def to_md(self, el: ds.DocstringParameter) -> Tuple[str]:
         # TODO: if default is not, should return the word "required" (unescaped)
         default = "required" if el.default is None else escape(el.default)
-        if isinstance(el.annotation, str):
-            annotation = el.annotation
-        else:
-            annotation = el.annotation.full if el.annotation else None
+
+        annotation = self._render_annotation(el.annotation)
         return (escape(el.name), annotation, sanitize(el.description), default)
 
     # attributes ----
@@ -257,14 +315,15 @@ class MdRenderer(Renderer):
 
     @dispatch
     def to_md(self, el: ds.DocstringAttribute):
-        return el.name, self.to_md(el.annotation), el.description
+        annotation = self._render_annotation(el.annotation)
+        return el.name, self.to_md(annotation), el.description
 
     # see also ----
 
     @dispatch
     def to_md(self, el: DocstringSectionSeeAlso):
         # TODO: attempt to parse See Also sections
-        return el.value
+        return convert_rst_link_to_md(el.value)
 
     # examples ----
 
@@ -283,15 +342,15 @@ class MdRenderer(Renderer):
     # returns ----
 
     @dispatch
-    def to_md(self, el: ds.DocstringSectionReturns):
+    def to_md(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
         rows = list(map(self.to_md, el.value))
         header = ["Type", "Description"]
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
-    def to_md(self, el: ds.DocstringReturn):
+    def to_md(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
         # similar to DocstringParameter, but no name or default
-        annotation = el.annotation.full if el.annotation else None
+        annotation = self._render_annotation(el.annotation)
         return (annotation, el.description)
 
     # unsupported parts ----
@@ -303,7 +362,6 @@ class MdRenderer(Renderer):
     @dispatch.multi(
         (ds.DocstringAdmonition,),
         (ds.DocstringDeprecated,),
-        (ds.DocstringRaise,),
         (ds.DocstringWarn,),
         (ds.DocstringYield,),
         (ds.DocstringReceive,),

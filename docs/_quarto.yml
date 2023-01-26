@@ -4,6 +4,10 @@ project:
   resources:
     - examples/single-page
     - examples/pkgdown
+    - examples/shiny
+
+metadata-files:
+  - api/_sidebar.yml
 
 filters:
   - "interlinks"
@@ -12,11 +16,14 @@ interlinks:
   sources:
     python:
       url: https://docs.python.org/3/
+    griffe:
+      url: https://mkdocstrings.github.io/griffe/
 
 quartodoc:
   style: pkgdown
   dir: api
   package: quartodoc
+  sidebar: "api/_sidebar.yml"
   sections:
     - title: API Builders
       desc: |
@@ -83,7 +90,6 @@ website:
         - section: "Extra Topics"
           contents:
             - get-started/architecture.qmd
-    - id: dummy
 
 
 format:

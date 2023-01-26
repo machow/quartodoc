@@ -1,0 +1,50 @@
+---
+---
+
+# API Reference Intro
+
+This website documents the public API of Shiny (for Python). See the `Getting Started
+tutorial <https://shiny.rstudio.com/py/>`_ for
+a more approachable introduction to the API. The left-hand sidebar lists the full public
+API, without any grouping, but the sections below (linked to the right-hand sidebar)
+break it into semantically similar groups. Most of the reference pages include a live
+example app at the bottom, or at least mention another page with a relevant example.
+
+We've intentionally designed Shiny's API so that you can ``from shiny import *`` to get
+access to most of what you need for most apps without introducing an excessive amount of
+namespace pollution. Namely, it gives you:
+
+* User interface (UI/HTML) helpers, available via the ``ui`` subpackage.
+
+  * To avoid clashing with this ``ui`` namespace when you do ``from shiny import *``, you'll want to name you UI object something else, like ``app_ui``.
+
+* Reactive programming utilities, available via the ``reactive`` subpackage.
+* Decorators for rendering ``output``, available via the ``render`` subpackage.
+
+  * 3rd party packages that want to implement their own rendering functions are encouraged to use a `@render_foo()` naming convention so users may import with `from mypkg import render_foo`.
+
+* A handful of other things you'll want for most apps (e.g., ``App``, ``Module``, etc).
+* If you're using type checking, you'll also want to use the ``Inputs``, ``Outputs``, and ``Session`` Classes
+  to type the instances supplied to your server function, for example:
+
+
+```python
+.. shinylive-editor::
+
+    from shiny import *
+
+    app_ui = ui.page_fluid(
+      ui.input_slider("n", "Value of n", min=1, max=10, value=5),
+      ui.output_text("n2")
+    )
+
+    def server(input: Inputs, output: Outputs, session: Session) -> None:
+        @output
+        @render.text
+        def n2():
+            return f"The value of n*2 is {input.n() * 2}"
+
+    app = App(app_ui, server)
+```
+
+{{< include _api_index.qmd >}}
