@@ -49,6 +49,13 @@
     "text": "See Also\n~shiny.ui.input_checkbox_group"
   },
   {
+    "objectID": "reference/ui.update_checkbox_group.html#examples",
+    "href": "reference/ui.update_checkbox_group.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.tags.p(\"The first checkbox group controls the second\"),\n    ui.input_checkbox_group(\n        \"inCheckboxGroup\", \"Input checkbox\", [\"Item A\", \"Item B\", \"Item C\"]\n    ),\n    ui.input_checkbox_group(\n        \"inCheckboxGroup2\", \"Input checkbox 2\", [\"Item A\", \"Item B\", \"Item C\"]\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        x = input.inCheckboxGroup()\n\n        if x is None:\n            x = []\n        elif isinstance(x, str):\n            x = [x]\n\n        # Can also set the label and select items\n        ui.update_checkbox_group(\n            \"inCheckboxGroup2\",\n            label=\"Checkboxgroup label \" + str(len(x)),\n            choices=x,\n            selected=x,\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/Outputs.html",
     "href": "reference/Outputs.html",
     "title": "Shiny",
@@ -98,6 +105,13 @@
     "text": "See Also\n~shiny.ui.remove_ui ~shiny.render.ui"
   },
   {
+    "objectID": "reference/ui.insert_ui.html#examples",
+    "href": "reference/ui.insert_ui.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"add\", \"Add UI\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    @reactive.event(input.add)\n    def _():\n        ui.insert_ui(\n            ui.input_text(\"txt\" + str(input.add()), \"Enter some text\"),\n            selector=\"#add\",\n            where=\"afterEnd\",\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/reactive.invalidate_later.html",
     "href": "reference/reactive.invalidate_later.html",
     "title": "Shiny",
@@ -110,6 +124,13 @@
     "title": "Shiny",
     "section": "Note",
     "text": "Note\nWhen called within a reactive function (i.e., :func:Effect, :func:Calc, :func:render.ui, etc.), that reactive context is invalidated (and re-executes) after the interval has passed. The re-execution will reset the invalidation flag, so in a typical use case, the object will keep re-executing and waiting for the specified interval. It’s possible to stop this cycle by adding conditional logic that prevents the invalidate_later from being run."
+  },
+  {
+    "objectID": "reference/reactive.invalidate_later.html#examples",
+    "href": "reference/reactive.invalidate_later.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport random\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(ui.output_ui(\"value\"))\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        reactive.invalidate_later(0.5)\n        print(\"Random int: \", random.randint(0, 10000))\n\n    @output\n    @render.ui\n    def value():\n        reactive.invalidate_later(0.5)\n        return \"Random int: \" + str(random.randint(0, 10000))\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/types.SilentCancelOutputException.html",
@@ -144,7 +165,7 @@
     "href": "reference/ui.panel_conditional.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nIn the JS expression, you can refer to input and output JavaScript objects that contain the current values of input and output. For example, if you have an input with an id of foo, then you can use input.foo to read its value. (Be sure not to modify the input/output objects, as this may cause unpredictable behavior.)\nYou are not recommended to use special JavaScript characters such as a period . in the input id’s, but if you do use them anyway, for example, id = \"foo.bar\", you will have to use input[\"foo.bar\"] instead of input.foo.bar to read the input value.\nTip\n\n\n\n\n\n\nA more powerful (but slower) way to conditionally show UI content is to use :func:~shiny.render.ui.\n\n\nSee Also\n\n\n\n~shiny.render.ui ~shiny.ui.output_ui"
+    "text": "Note\nIn the JS expression, you can refer to input and output JavaScript objects that contain the current values of input and output. For example, if you have an input with an id of foo, then you can use input.foo to read its value. (Be sure not to modify the input/output objects, as this may cause unpredictable behavior.)\nYou are not recommended to use special JavaScript characters such as a period . in the input id’s, but if you do use them anyway, for example, id = \"foo.bar\", you will have to use input[\"foo.bar\"] instead of input.foo.bar to read the input value.\nTip\n\n\n\n\n\n\nA more powerful (but slower) way to conditionally show UI content is to use :func:~shiny.render.ui.\n\n\n\n\n~shiny.render.ui ~shiny.ui.output_ui\n\n\nExamples\n\n\n\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_checkbox(\"show\", \"Show radio buttons\", False),\n    ui.panel_conditional(\n        \"input.show\", ui.input_radio_buttons(\"radio\", \"Choose \", [\"slider\", \"select\"])\n    ),\n    ui.panel_conditional(\n        \"input.show && input.radio === 'slider'\",\n        ui.input_slider(\"slider\", None, min=0, max=100, value=50),\n    ),\n    ui.panel_conditional(\n        \"input.show && input.radio === 'select'\",\n        ui.input_select(\"slider\", None, [\"A\", \"B\", \"C\"]),\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.update_numeric.html",
@@ -166,6 +187,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.input_numeric"
+  },
+  {
+    "objectID": "reference/ui.update_numeric.html#examples",
+    "href": "reference/ui.update_numeric.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"controller\", \"Controller\", min=0, max=20, value=10),\n    ui.input_numeric(\"inNumber\", \"Input number\", 0),\n    ui.input_numeric(\"inNumber2\", \"Input number 2\", 0),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        x = input.controller()\n        ui.update_numeric(\"inNumber\", value=x)\n        ui.update_numeric(\n            \"inNumber2\",\n            label=\"Number label \" + str(x),\n            value=x,\n            min=x - 10,\n            max=x + 10,\n            step=5,\n        )\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/module.server.html",
@@ -196,6 +224,13 @@
     "text": "See Also\n~shiny.ui.input_action_button ~shiny.event"
   },
   {
+    "objectID": "reference/ui.input_action_link.html#examples",
+    "href": "reference/ui.input_action_link.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of observations\", min=0, max=1000, value=500),\n    ui.input_action_link(\"go\", \"Go!\"),\n    ui.output_plot(\"plot\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    # reactive.event() to invalidate the plot when the button is pressed but not when\n    # the slider is changed\n    @reactive.event(lambda: input.go, ignore_none=False)\n    def plot():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(input.n())\n        fig, ax = plt.subplots()\n        ax.hist(x, bins=30, density=True)\n        return fig\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.update_selectize.html",
     "href": "reference/ui.update_selectize.html",
     "title": "Shiny",
@@ -215,6 +250,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.input_selectize"
+  },
+  {
+    "objectID": "reference/ui.update_selectize.html#examples",
+    "href": "reference/ui.update_selectize.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\"x\", \"Server side selectize\", choices=None, multiple=True),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        ui.update_selectize(\n            \"x\",\n            choices=[f\"Foo {i}\" for i in range(10000)],\n            selected=[\"Foo 0\", \"Foo 1\"],\n            server=True,\n        )\n\n\napp = App(app_ui, server, debug=True)"
   },
   {
     "objectID": "reference/ui.update_text.html",
@@ -238,11 +280,25 @@
     "text": "See Also\n~shiny.ui.input_text"
   },
   {
+    "objectID": "reference/ui.update_text.html#examples",
+    "href": "reference/ui.update_text.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"controller\", \"Controller\", min=0, max=20, value=10),\n    ui.input_text(\"inText\", \"Input text\"),\n    ui.input_text(\"inText2\", \"Input text 2\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        x = str(input.controller())\n        # This will change the value of input$inText, based on x\n        ui.update_text(\"inText\", value=\"New text \" + x)\n        # Can also set the label, this time for input$inText2\n        ui.update_text(\"inText2\", label=\"New label \" + x, value=\"New text\" + x)\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.output_plot.html",
     "href": "reference/ui.output_plot.html",
     "title": "Shiny",
     "section": "",
     "text": "ui.output_plot(id, width='100%', height='400px', inline=False)\nCreate a output container for a static plot.\nPlace a :func:~shiny.render.plot result in the user interface. See :func:~shiny.render.plot for more details on what types of plots are supported.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nwidth\nstr\nThe CSS width, e.g. ‘400px’, or ‘100%’\n'100%'\n\n\nheight\nstr\nThe CSS height, e.g. ‘100%’ or ‘600px’\n'400px'\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.render.plot ~shiny.ui.output_image"
+  },
+  {
+    "objectID": "reference/ui.output_plot.html#examples",
+    "href": "reference/ui.output_plot.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\n        \"n\", \"input_slider()\", min=10, max=100, value=50, step=5, animate=True\n    ),\n    ui.output_plot(\"p\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot\n    def p():\n        np.random.seed(19680801)\n        x_rand = 100 + 15 * np.random.randn(437)\n        fig, ax = plt.subplots()\n        ax.hist(x_rand, int(input.n()), density=True)\n        return fig\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.page_fluid.html",
@@ -252,11 +308,25 @@
     "text": "ui.page_fluid(args, title=None, lang=None, kwargs)\nCreate a fluid page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\nkwargs\nstr\nAttributes on the page level container.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fixed page_bootstrap page_navbar"
   },
   {
+    "objectID": "reference/ui.page_fluid.html#examples",
+    "href": "reference/ui.page_fluid.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.layout_sidebar(\n        ui.panel_sidebar(ui.input_slider(\"n\", \"N\", min=0, max=100, value=20)),\n        ui.panel_main(ui.output_plot(\"plot\")),\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def plot() -> object:\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n\n        fig, ax = plt.subplots()\n        ax.hist(x, input.n(), density=True)\n        return fig\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.notification_show.html",
     "href": "reference/ui.notification_show.html",
     "title": "Shiny",
     "section": "",
     "text": "ui.notification_show(ui, action=None, duration=5, close_button=True, id=None, type='default', session=None)\nShow a notification to the user.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nui\nhtmltools.TagChildArg\nContent of message.\nrequired\n\n\naction\nOptional[TagList]\nMessage content that represents an action. For example, this could be a link that the user can click on. This is separate from ui so customized layouts can handle the main notification content separately from action content.\nNone\n\n\nduration\nOptional[Union[int, float]]\nNumber of seconds to display the message before it disappears. Use None to make the message not automatically disappear.\n5\n\n\nclose_button\nbool\nIf True, display a button which will make the notification disappear when clicked. If False do not display.\nTrue\n\n\nid\nOptional[str]\nAn optional unique identifier for the notification. If supplied, any existing notification with the same id will be replaced with this one (otherwise, a new notification is created).\nNone\n\n\ntype\nLiteral[default, message, warning, error]\nA string which controls the color of the notification. One of “default” (gray), “message” (blue), “warning” (yellow), or “error” (red).\n'default'\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nThe notification’s\n\n\n\n\n\n\n\n~shiny.ui.notification_remove ~shiny.ui.modal"
+  },
+  {
+    "objectID": "reference/ui.notification_show.html#examples",
+    "href": "reference/ui.notification_show.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show\"),\n    ui.input_action_button(\"remove\", \"Remove\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    ids: list[str] = []\n    n: int = 0\n\n    @reactive.Effect\n    @reactive.event(input.show)\n    def _():\n        nonlocal ids\n        nonlocal n\n        # Save the ID for removal later\n        id = ui.notification_show(\"Message \" + str(n), duration=None)\n        ids.append(id)\n        n += 1\n\n    @reactive.Effect\n    @reactive.event(input.remove)\n    def _():\n        nonlocal ids\n        if ids:\n            ui.notification_remove(ids.pop())\n\n\napp = App(app_ui, server, debug=True)"
   },
   {
     "objectID": "reference/session.get_current_session.html",
@@ -301,6 +371,13 @@
     "text": "See Also\n~shiny.ui.update_text"
   },
   {
+    "objectID": "reference/ui.input_password.html#examples",
+    "href": "reference/ui.input_password.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_password(\"password\", \"Password:\"),\n    ui.input_action_button(\"go\", \"Go\"),\n    ui.output_text_verbatim(\"value\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    @reactive.event(input.go)\n    def value():\n        return input.password()\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.input_date.html",
     "href": "reference/ui.input_date.html",
     "title": "Shiny",
@@ -329,6 +406,13 @@
     "text": "See Also\n~shiny.ui.update_date ~shiny.ui.input_date_range"
   },
   {
+    "objectID": "reference/ui.input_date.html#examples",
+    "href": "reference/ui.input_date.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom datetime import date\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_date(\"date1\", \"Date:\", value=\"2016-02-29\"),\n    # Default value is the date in client's time zone\n    ui.input_date(\"date2\", \"Date:\"),\n    # value is always yyyy-mm-dd, even if the display format is different\n    ui.input_date(\"date3\", \"Date:\", value=\"2016-02-29\", format=\"mm/dd/yy\"),\n    # Pass in a Date object\n    ui.input_date(\"date4\", \"Date:\", value=date(2016, 2, 29)),\n    # Use different language and different first day of week\n    ui.input_date(\"date5\", \"Date:\", language=\"ru\", weekstart=1),\n    # Start with decade view instead of default month view\n    ui.input_date(\"date6\", \"Date:\", startview=\"decade\"),\n    # Disable Mondays and Tuesdays.\n    ui.input_date(\"date7\", \"Date:\", daysofweekdisabled=[1, 2]),\n    # Disable specific dates.\n    ui.input_date(\n        \"date8\",\n        \"Date:\",\n        value=\"2016-02-29\",\n        datesdisabled=[\"2016-03-01\", \"2016-03-02\"],\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/types.FileInfo.html",
     "href": "reference/types.FileInfo.html",
     "title": "Shiny",
@@ -355,6 +439,13 @@
     "title": "Shiny",
     "section": "",
     "text": "ui.output_table(id, kwargs)\nCreate a output container for a table.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\n**kwargs\nhtmltools.TagAttrArg\nAdditional attributes to add to the container.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nSee Also\n\n\n\n——-\n\n\n\nhtmltools.Tag"
+  },
+  {
+    "objectID": "reference/ui.output_table.html#examples",
+    "href": "reference/ui.output_table.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport pathlib\n\nimport pandas as pd\n\nfrom shiny import *\n\ndir = pathlib.Path(__file__).parent\nmtcars = pd.read_csv(dir / \"mtcars.csv\")\n\n\napp_ui = ui.page_fluid(\n    ui.input_checkbox(\"highlight\", \"Highlight min/max values\"),\n    ui.output_table(\"result\"),\n    # Legend\n    ui.panel_conditional(\n        \"input.highlight\",\n        ui.panel_absolute(\n            \"Yellow is maximum, grey is minimum\",\n            bottom=\"6px\",\n            right=\"6px\",\n            class_=\"p-1 bg-light border\",\n        ),\n    ),\n    class_=\"p-3\",\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.table\n    def result():\n        if not input.highlight():\n            # If we're not highlighting values, we can simply\n            # return the pandas data frame as-is; @render.table\n            # will call .to_html() on it.\n            return mtcars\n        else:\n            # We need to use the pandas Styler API. The default\n            # formatting options for Styler are not the same as\n            # DataFrame.to_html(), so we set a few options to\n            # make them match.\n            return (\n                mtcars.style.set_table_attributes(\n                    'class=\"dataframe shiny-table table w-auto\"'\n                )\n                .hide(axis=\"index\")\n                .format(\n                    {\n                        \"mpg\": \"{0:0.1f}\",\n                        \"disp\": \"{0:0.1f}\",\n                        \"drat\": \"{0:0.2f}\",\n                        \"wt\": \"{0:0.3f}\",\n                        \"qsec\": \"{0:0.2f}\",\n                    }\n                )\n                .set_table_styles(\n                    [dict(selector=\"th\", props=[(\"text-align\", \"right\")])]\n                )\n                .highlight_min(color=\"silver\")\n                .highlight_max(color=\"yellow\")\n            )\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/index.html",
@@ -497,6 +588,13 @@
     "text": "See Also\n~shiny.ui.input_action_link ~shiny.event"
   },
   {
+    "objectID": "reference/ui.input_action_button.html#examples",
+    "href": "reference/ui.input_action_button.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of observations\", min=0, max=1000, value=500),\n    ui.input_action_button(\"go\", \"Go!\", class_=\"btn-success\"),\n    ui.output_plot(\"plot\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    # Use reactive.event() to invalidate the plot only when the button is pressed\n    # (not when the slider is changed)\n    @reactive.event(lambda: input.go, ignore_none=False)\n    def plot():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(input.n())\n        fig, ax = plt.subplots()\n        ax.hist(x, bins=30, density=True)\n        return fig\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.input_file.html",
     "href": "reference/ui.input_file.html",
     "title": "Shiny",
@@ -518,6 +616,13 @@
     "text": "See Also\n~shiny.ui.download_button"
   },
   {
+    "objectID": "reference/ui.input_file.html#examples",
+    "href": "reference/ui.input_file.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport pandas as pd\n\nfrom shiny import *\nfrom shiny.types import FileInfo\n\napp_ui = ui.page_fluid(\n    ui.layout_sidebar(\n        ui.panel_sidebar(\n            ui.input_file(\"file1\", \"Choose CSV File\", accept=[\".csv\"], multiple=False),\n            ui.input_checkbox(\"header\", \"Header\", True),\n        ),\n        ui.panel_main(ui.output_ui(\"contents\")),\n    )\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.ui\n    def contents():\n        if input.file1() is None:\n            return \"Please upload a csv file\"\n        f: list[FileInfo] = input.file1()\n        df = pd.read_csv(f[0][\"datapath\"], header=0 if input.header() else None)\n        return ui.HTML(df.to_html(classes=\"table table-striped\"))\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.input_checkbox.html",
     "href": "reference/ui.input_checkbox.html",
     "title": "Shiny",
@@ -537,6 +642,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.input_switch ~shiny.ui.update_checkbox ~shiny.ui.input_checkbox_group ~shiny.ui.input_radio_buttons"
+  },
+  {
+    "objectID": "reference/ui.input_checkbox.html#examples",
+    "href": "reference/ui.input_checkbox.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_checkbox(\"somevalue\", \"Some value\", False), ui.output_ui(\"value\")\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.ui\n    def value():\n        return input.somevalue()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/types.SilentException.html",
@@ -581,6 +693,13 @@
     "text": "See Also\n~shiny.ui.input_checkbox"
   },
   {
+    "objectID": "reference/ui.update_checkbox.html#examples",
+    "href": "reference/ui.update_checkbox.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"controller\", \"Controller\", min=0, max=1, value=0, step=1),\n    ui.input_checkbox(\"inCheckbox\", \"Input checkbox\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        # True if controller is odd, False if even.\n        x_even = input.controller() % 2 == 1\n        ui.update_checkbox(\"inCheckbox\", value=x_even)\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.update_select.html",
     "href": "reference/ui.update_select.html",
     "title": "Shiny",
@@ -602,6 +721,13 @@
     "text": "See Also\n~shiny.ui.input_select ~shiny.ui.update_selectize"
   },
   {
+    "objectID": "reference/ui.update_select.html#examples",
+    "href": "reference/ui.update_select.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.tags.p(\"The checkbox group controls the select input\"),\n    ui.input_checkbox_group(\n        \"inCheckboxGroup\", \"Input checkbox\", [\"Item A\", \"Item B\", \"Item C\"]\n    ),\n    ui.input_select(\"inSelect\", \"Select input\", [\"Item A\", \"Item B\", \"Item C\"]),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        x = input.inCheckboxGroup()\n\n        # Can use [] to remove all choices\n        if x is None:\n            x = []\n        elif isinstance(x, str):\n            x = [x]\n\n        ui.update_select(\n            \"inSelect\",\n            label=\"Select input label \" + str(len(x)),\n            choices=x,\n            selected=x[len(x) - 1] if len(x) > 0 else None,\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.nav.html",
     "href": "reference/ui.nav.html",
     "title": "Shiny",
@@ -609,11 +735,25 @@
     "text": "ui.nav(title, args, value=None, icon=None)\nCreate a nav item pointing to some internal content.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nhtmltools.TagChildArg\nA title to display. Can be a character string or UI elements (i.e., tags).\nrequired\n\n\n*args\nhtmltools.TagChildArg\nUI elements to display when the item is active.\n()\n\n\nvalue\nOptional[str]\nThe value of the item. This is used to determine whether the item is active (when an id is provided to the nav container), programmatically select the item (e.g., :func:~shiny.ui.update_navs), and/or be provided to the selected argument of the navigation container (e.g., :func:~shiny.ui.navset_tab).\nNone\n\n\nicon\nhtmltools.TagChildArg\nAn icon to appear inline with the button/link.\nNone\n\n\n\n\n\n\n~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
   },
   {
+    "objectID": "reference/ui.nav.html#examples",
+    "href": "reference/ui.nav.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom typing import List\n\nfrom shiny import *\nfrom shiny.types import NavSetArg\nfrom shiny.ui import h4\n\n\ndef nav_controls(prefix: str) -> List[NavSetArg]:\n    return [\n        ui.nav(\"a\", prefix + \": tab a content\"),\n        ui.nav(\"b\", prefix + \": tab b content\"),\n        ui.nav_control(\n            ui.a(\n                \"Shiny\",\n                href=\"https://github.com/rstudio/shiny\",\n                target=\"_blank\",\n            )\n        ),\n        ui.nav_spacer(),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav(\"c\", prefix + \": tab c content\"),\n            \"----\",\n            \"Plain text\",\n            \"----\",\n            ui.nav_control(\n                ui.a(\n                    \"RStudio\",\n                    href=\"https://rstudio.com\",\n                    target=\"_blank\",\n                )\n            ),\n            align=\"right\",\n        ),\n    ]\n\n\napp_ui = ui.page_navbar(\n    *nav_controls(\"page_navbar\"),\n    title=\"page_navbar()\",\n    bg=\"#0062cc\",\n    inverse=True,\n    id=\"navbar_id\",\n    footer=ui.div(\n        {\"style\": \"width:80%;margin: 0 auto\"},\n        ui.tags.style(\n            \"\"\"\n            h4 {\n                margin-top: 3em;\n            }\n            \"\"\"\n        ),\n        h4(\"navset_tab()\"),\n        ui.navset_tab(*nav_controls(\"navset_tab()\")),\n        h4(\"navset_pill()\"),\n        ui.navset_pill(*nav_controls(\"navset_pill()\")),\n        h4(\"navset_tab_card()\"),\n        ui.navset_tab_card(*nav_controls(\"navset_tab_card()\")),\n        h4(\"navset_pill_card()\"),\n        ui.navset_pill_card(*nav_controls(\"navset_pill_card()\")),\n        h4(\"navset_pill_list()\"),\n        ui.navset_pill_list(*nav_controls(\"navset_pill_list()\")),\n    )\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        print(\"Current navbar page: \", input.navbar_id())\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/reactive.file_reader.html",
     "href": "reference/reactive.file_reader.html",
     "title": "Shiny",
     "section": "",
     "text": "reactive.file_reader(filepath, interval_secs=1, priority=1, session=MISSING)\nCreate a reactive file reader.\nThis is a decorator, meant to be applied to a no-argument function that reads data from a file on disk. Whenever the file changes (or to be precise, the file size or last modified time changes), past readers of the data are reactively invalidated. This makes it incredibly easy to write apps that automatically update all of their outputs as soon as files on disk change.\nNote that file_reader works only on single files, not directories of files.\nBoth the filepath function and the decorated (file reading) function can read reactive values and ~shiny.reactive.Calc objects. Any invalidations triggered by reactive dependencies will apply to the reactive file reader object immediately (not waiting for the interval_secs delay to expire).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilepath\nUnion[str, os.PathLike[str], Callable[[], str], Callable[[], os.PathLike[str]]]\nEither a string indicating the file path to be monitored, or, a no-argument function that returns such a string. The latter is useful if the file to be monitored depends on some user input, the current date/time, etc. The file path provided MUST exist, otherwise Shiny will treat it as an unhandled error and close the session. If a function is used, make sure it is high performance (or is cached, i.e. use a ~shiny.reactive.Calc), as it will be called very frequently.\nrequired\n\n\ninterval_secs\nfloat\nThe number of seconds to wait after each time the file metadata is checked. Note: depending on what other tasks are executing, the actual wait time may far exceed this value.\n1\n\n\nequals\n\nThe function that will be used to compare each poll_func return value with its immediate predecessor.\nrequired\n\n\npriority\nint\nReactive polling is implemented using an ~shiny.reactive.Effect to call poll_func on a timer; use the priority argument to control the order of this Effect’s execution versus other Effects in your app. See ~shiny.reactive.Effect for more details.\n1\n\n\nsession\nUnion[MISSING_TYPE, Session, None]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session. If there is no current session (i.e. poll is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that should be applied to a no-argument function that (expensively)\n\n\n\nreads whatever data is desired. (This function may be a regular function or a\n\n\n\ncoroutine function.) The result of the decorator is a reactive\n\n\n\nthat always returns up-to-date data, and invalidates callers when changes are\n\n\n\ndetected via polling.\n\n\n\n\n\n\n\n~shiny.reactive.poll"
+  },
+  {
+    "objectID": "reference/reactive.file_reader.html#examples",
+    "href": "reference/reactive.file_reader.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport pathlib\n\nimport pandas as pd\n\nfrom shiny import *\n\ndir = pathlib.Path(__file__).parent\n\napp_ui = ui.page_fluid(ui.output_table(\"result\"), class_=\"p-3\")\n\n\n@reactive.file_reader(dir / \"mtcars.csv\")\ndef read_file():\n    return pd.read_csv(dir / \"mtcars.csv\")\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.table\n    def result():\n        return read_file()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.navset_pill_card.html",
@@ -651,11 +791,25 @@
     "text": "See Also\n~shiny.render.text ~shiny.ui.output_text_verbatim"
   },
   {
+    "objectID": "reference/ui.output_text.html#examples",
+    "href": "reference/ui.output_text.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"txt\", \"Enter the text to display below:\"),\n    ui.row(\n        ui.column(6, ui.output_text(\"text\")),\n        ui.column(6, ui.output_text_verbatim(\"verb\", placeholder=True)),\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    def text():\n        return input.txt()\n\n    @output\n    @render.text\n    def verb():\n        return input.txt()\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.row.html",
     "href": "reference/ui.row.html",
     "title": "Shiny",
     "section": "",
     "text": "ui.row(args, kwargs)\nResponsive row-column based layout\nLayout UI components using Bootstrap’s grid layout system. Use row() to group elements that should appear on the same line (if the browser has adequate width) and :func:~shiny.ui.column to define how much horizontal space within a 12-unit wide grid each on of these elements should occupy. See the layout guide <https://shiny.rstudio.com/articles/layout-guide.html>_ for more context and examples.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nAny number of child elements\n()\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to place on the row tag\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\ncolumn"
+  },
+  {
+    "objectID": "reference/ui.row.html#examples",
+    "href": "reference/ui.row.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.row(\n        ui.column(4, ui.input_slider(\"n\", \"N\", min=0, max=100, value=20)),\n        ui.column(8, ui.output_plot(\"plot\")),\n    )\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def plot() -> object:\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n\n        fig, ax = plt.subplots()\n        ax.hist(x, input.n(), density=True)\n        return fig\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.navset_tab.html",
@@ -691,6 +845,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.input_select ~shiny.ui.input_radio_buttons ~shiny.ui.input_checkbox_group"
+  },
+  {
+    "objectID": "reference/ui.input_selectize.html#examples",
+    "href": "reference/ui.input_selectize.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\n        \"state\",\n        \"Choose a state:\",\n        {\n            \"East Coast\": {\"NY\": \"NY\", \"NJ\": \"NJ\", \"CT\": \"CT\"},\n            \"West Coast\": {\"WA\": \"WA\", \"OR\": \"OR\", \"CA\": \"CA\"},\n            \"Midwest\": {\"MN\": \"MN\", \"WI\": \"WI\", \"IA\": \"IA\"},\n        },\n        multiple=True,\n    ),\n    ui.output_text(\"value\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    def value():\n        return \"You choose: \" + str(input.state())\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.update_switch.html",
@@ -770,6 +931,13 @@
     "text": "See Also\n~shiny.ui.input_radio_buttons"
   },
   {
+    "objectID": "reference/ui.update_radio_buttons.html#examples",
+    "href": "reference/ui.update_radio_buttons.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.tags.p(\"The first radio button group controls the second\"),\n    ui.input_radio_buttons(\n        \"inRadioButtons\", \"Input radio buttons\", [\"Item A\", \"Item B\", \"Item C\"]\n    ),\n    ui.input_radio_buttons(\n        \"inRadioButtons2\", \"Input radio buttons 2\", [\"Item A\", \"Item B\", \"Item C\"]\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        x = input.inRadioButtons()\n\n        # Can also set the label and select items\n        ui.update_radio_buttons(\n            \"inRadioButtons2\",\n            label=\"Radio buttons label \" + x,\n            choices=[x],\n            selected=x,\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.input_checkbox_group.html",
     "href": "reference/ui.input_checkbox_group.html",
     "title": "Shiny",
@@ -791,11 +959,25 @@
     "text": "See Also\n~shiny.ui.update_checkbox_group ~shiny.ui.input_checkbox ~shiny.ui.input_radio_buttons"
   },
   {
+    "objectID": "reference/ui.input_checkbox_group.html#examples",
+    "href": "reference/ui.input_checkbox_group.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_checkbox_group(\n        \"colors\",\n        \"Choose color(s):\",\n        {\n            \"red\": ui.span(\"Red\", style=\"color: #FF0000;\"),\n            \"green\": ui.span(\"Green\", style=\"color: #00AA00;\"),\n            \"blue\": ui.span(\"Blue\", style=\"color: #0000AA;\"),\n        },\n    ),\n    ui.output_ui(\"val\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.ui\n    def val():\n        req(input.colors())\n        return \"You chose \" + \", \".join(input.colors())\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.output_ui.html",
     "href": "reference/ui.output_ui.html",
     "title": "Shiny",
     "section": "",
     "text": "ui.output_ui(id, inline=False, container=None, kwargs)\nCreate a output container for a UI (i.e., HTML) element.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\ncontainer\nOptional[TagFunction]\nA Callable that returns the output container.\nNone\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to be applied to the output container.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.render.ui ~shiny.ui.output_text"
+  },
+  {
+    "objectID": "reference/ui.output_ui.html#examples",
+    "href": "reference/ui.output_ui.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"add\", \"Add more controls\"),\n    ui.output_ui(\"moreControls\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.ui\n    @reactive.event(input.add)\n    def moreControls():\n        return ui.TagList(\n            ui.input_slider(\"n\", \"N\", min=1, max=1000, value=500),\n            ui.input_text(\"label\", \"Label\"),\n        )\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.page_bootstrap.html",
@@ -824,6 +1006,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n:func:ui.include_markdown"
+  },
+  {
+    "objectID": "reference/ui.markdown.html#examples",
+    "href": "reference/ui.markdown.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\nui_app = ui.page_fluid(\n    ui.markdown(\n        \"\"\"\n        # Hello World\n\n        This is **markdown** and here is some `code`:\n\n        ```python\n        print('Hello world!')\n        ```\n        \"\"\"\n    )\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(ui_app, server)"
   },
   {
     "objectID": "reference/ui.column.html",
@@ -861,6 +1050,13 @@
     "text": "ui.remove_ui(selector, multiple=False, immediate=False, session=None)\nRemove UI objects\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nselector\nstr\nA string that is accepted by jQuery’s selector (i.e. the string x to be placed in a $(x) jQuery call) which determines the element(s) to remove. If you want to remove a Shiny input or output, note that many of these are wrapped in <div>s, so you may need to use a somewhat complex selector — see the Examples below. (Alternatively, you could also wrap the inputs/outputs that you want to be able to remove easily in a <div> with an id.)\nrequired\n\n\nmultiple\nbool\nIn case your selector matches more than one element, multiple determines whether Shiny should insert the UI object relative to all matched elements or just relative to the first matched element (default).\nFalse\n\n\nimmediate\nbool\nWhether the UI object should be immediately inserted or removed, or whether Shiny should wait until all outputs have been updated and all effects have been run (default).\nFalse\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone\n\n\n\n\n\n\n~shiny.ui.insert_ui ~shiny.render.ui"
   },
   {
+    "objectID": "reference/ui.remove_ui.html#examples",
+    "href": "reference/ui.remove_ui.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"rmv\", \"Remove UI\"),\n    ui.input_text(\"txt\", \"Click button above to remove me\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    @reactive.event(input.rmv)\n    def _():\n        ui.remove_ui(selector=\"div:has(> #txt)\")\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.input_radio_buttons.html",
     "href": "reference/ui.input_radio_buttons.html",
     "title": "Shiny",
@@ -880,6 +1076,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.update_radio_buttons ~shiny.ui.input_checkbox_group ~shiny.ui.input_checkbox"
+  },
+  {
+    "objectID": "reference/ui.input_radio_buttons.html#examples",
+    "href": "reference/ui.input_radio_buttons.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom htmltools import HTML\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\n        \"rb\",\n        \"Choose one:\",\n        {\n            \"html\": HTML(\"<span style='color:red;'>Red Text</span>\"),\n            \"text\": \"Normal text\",\n        },\n    ),\n    ui.output_ui(\"val\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.ui\n    def val():\n        return \"You chose \" + input.rb()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.modal_show.html",
@@ -903,6 +1106,13 @@
     "text": "ui.download_button(id, label, icon=None, width=None, kwargs)\nCreate a download button\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn id for the download.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nicon\nhtmltools.TagChildArg\nAn icon to display on the button.\nNone\n\n\nwidth\nOptional[str]\nThe width of the button.\nNone\n\n\nkwargs\nhtmltools.TagAttrArg\nAdditional attributes for the button.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.Session.download ~shiny.ui.download_link"
   },
   {
+    "objectID": "reference/ui.download_button.html#examples",
+    "href": "reference/ui.download_button.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport asyncio\nfrom datetime import date\n\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.download_button(\"downloadData\", \"Download\"),\n)\n\n# For more examples of different types of download handlers, see:\n# https://github.com/rstudio/py-shiny/blob/68ffc27/examples/download/app.py#L90\ndef server(input: Inputs, output: Outputs, session: Session):\n    @session.download(\n        filename=lambda: f\"新型-{date.today().isoformat()}-{np.random.randint(100,999)}.csv\"\n    )\n    async def downloadData():\n        await asyncio.sleep(0.25)\n        yield \"one,two,three\\n\"\n        yield \"新,1,2\\n\"\n        yield \"型,4,5\\n\"\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.input_slider.html",
     "href": "reference/ui.input_slider.html",
     "title": "Shiny",
@@ -922,6 +1132,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.update_slider"
+  },
+  {
+    "objectID": "reference/ui.input_slider.html#examples",
+    "href": "reference/ui.input_slider.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"obs\", \"Number of bins:\", min=10, max=100, value=30),\n    ui.output_plot(\"distPlot\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot\n    def distPlot():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n\n        fig, ax = plt.subplots()\n        ax.hist(x, input.obs(), density=True)\n        return fig\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.modal_button.html",
@@ -1008,11 +1225,25 @@
     "text": "Note\nThis result of this function causes a side effect of adding a title tag to the head of the document (this is necessary for the browser to display the title in the browser window). You can also specify a page title explicitly using the title parameter of the top-level page function (e.g., :func:~shiny.ui.page_fluid)."
   },
   {
+    "objectID": "reference/ui.panel_title.html#examples",
+    "href": "reference/ui.panel_title.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(ui.panel_title(\"Page title\", \"Window title\"))\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.modal.html",
     "href": "reference/ui.modal.html",
     "title": "Shiny",
     "section": "",
     "text": "ui.modal(args, title=None, footer=MISSING, size='m', easy_close=False, fade=True, kwargs)\nCreates the UI for a modal dialog, using Bootstrap’s modal class. Modals are typically used for showing important messages, or for presenting UI that requires input from the user, such as a user name and/or password input.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nhtmltools.TagChildArg\nUI elements for the body of the modal.\n()\n\n\ntitle\nOptional[str]\nAn optional title for the modal dialog.\nNone\n\n\nfooter\nUnion[TagChildArg, MISSING_TYPE]\nUI for footer. Use None for no footer.\nMISSING\n\n\nsize\nLiteral[m, s, l, xl]\nOne of “s” for small, “m” (the default) for medium, or “l” for large.\n'm'\n\n\neasy_close\nbool\nIf True, the modal dialog can be dismissed by clicking outside the dialog box, or be pressing the Escape key. If False (the default), the modal dialog can’t be dismissed in those ways; instead it must be dismissed by clicking on a modal_button(), or from a call to modal_remove() on the server.\nFalse\n\n\nfade\nbool\nIf False, the modal dialog will have no fade-in animation (it will simply appear rather than fade in to view).\nTrue\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to be applied to the modal’s body tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.ui.modal_show ~shiny.ui.modal_remove ~shiny.ui.modal_button"
+  },
+  {
+    "objectID": "reference/ui.modal.html#examples",
+    "href": "reference/ui.modal.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show modal dialog\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    @reactive.event(input.show)\n    def _():\n        m = ui.modal(\n            \"This is a somewhat important message.\",\n            title=\"Somewhat important message\",\n            easy_close=True,\n            footer=None,\n        )\n        ui.modal_show(m)\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.panel_fixed.html",
@@ -1043,6 +1274,13 @@
     "text": "See Also\n~shiny.ui.input_date_range"
   },
   {
+    "objectID": "reference/ui.update_date_range.html#examples",
+    "href": "reference/ui.update_date_range.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom datetime import date, timedelta\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Day of month\", min=1, max=30, value=10),\n    ui.input_date_range(\"inDateRange\", \"Input date\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        d = date(2013, 4, input.n())\n        ui.update_date_range(\n            \"inDateRange\",\n            label=\"Date range label \" + str(input.n()),\n            start=d - timedelta(days=1),\n            end=d + timedelta(days=1),\n            min=d - timedelta(days=5),\n            max=d + timedelta(days=5),\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.update_slider.html",
     "href": "reference/ui.update_slider.html",
     "title": "Shiny",
@@ -1064,6 +1302,13 @@
     "text": "See Also\n~shiny.ui.input_slider"
   },
   {
+    "objectID": "reference/ui.update_slider.html#examples",
+    "href": "reference/ui.update_slider.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.layout_sidebar(\n        ui.panel_sidebar(\n            ui.tags.p(\"The first slider controls the second\"),\n            ui.input_slider(\"control\", \"Controller:\", min=0, max=20, value=10, step=1),\n            ui.input_slider(\"receive\", \"Receiver:\", min=0, max=20, value=10, step=1),\n        ),\n        ui.panel_main(),\n    )\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        val = input.control()\n        # Control the value, min, max, and step.\n        # Step size is 2 when input value is even; 1 when value is odd.\n        ui.update_slider(\n            \"receive\", value=val, min=int(val / 2), max=val + 4, step=(val + 1) % 2 + 1\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.modal_remove.html",
     "href": "reference/ui.modal_remove.html",
     "title": "Shiny",
@@ -1083,6 +1328,13 @@
     "title": "Shiny",
     "section": "",
     "text": "reactive.poll(poll_func, interval_secs=1, equals=eq, priority=0, session=MISSING)\nCreate a reactive polling object.\nPolling is a technique that approximates “real-time” or streaming updates, using a data source that does not actually have push notifications but does have a quick way to repeatedly check for changes on demand.\nA reactive polling object is constructed using two functions: a polling function, which is a fast-running, inexpensive function that is used to determine whether some data source has changed (such as the timestamp of a file, or a SELECT MAX(updated) FROM table query); and a slower-running reading function that actually loads and returns the data that is desired. The poll() function is intended to be used as a decorator: the poll function is passed as the poll_func arg to @poll(), while the data reading function is the target of the decorator.\nReactive consumers can invoke the resulting polling object to get the current data, and will automatically invalidate when the polling function detects a change. Polling objects also cache the results of the read function; for this reason, apps where all sessions depend on the same data source may want to declare the polling object at the top level of app.py (outside of the server function).\nBoth poll_func and the decorated (data reading) function can read reactive values and ~shiny.reactive.Calc objects. Any invalidations triggered by reactive dependencies will apply to the reactive polling object immediately (not waiting for the interval_secs delay to expire).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npoll_func\nUnion[Callable[[], Any], Callable[[], Awaitable[Any]]]\nA function to be called frequently to determine whether a data source has changed. The return value should be something that can be compared inexpensively using ==. Both regular functions and coroutine functions are allowed. Note that the poll_func should NOT return a bool that indicates whether the data source has changed. Rather, each poll_func return value will be checked for equality with its preceding poll_func return value (using == semantics by default), and if it differs, the data source will be considered changed.\nrequired\n\n\ninterval_secs\nfloat\nThe number of seconds to wait after each poll_func invocation before polling again. Note: depending on what other tasks are executing, the actual wait time may far exceed this value.\n1\n\n\nequals\nCallable[[Any, Any], bool]\nThe function that will be used to compare each poll_func return value with its immediate predecessor.\neq\n\n\npriority\nint\nReactive polling is implemented using an ~shiny.reactive.Effect to call poll_func on a timer; use the priority argument to control the order of this Effect’s execution versus other Effects in your app. See ~shiny.reactive.Effect for more details.\n0\n\n\nsession\nUnion[MISSING_TYPE, Session, None]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session. If there is no current session (i.e. poll is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that should be applied to a no-argument function that (expensively)\n\n\n\nreads whatever data is desired. (This function may be a regular function or a\n\n\n\ncoroutine function.) The result of the decorator is a reactive\n\n\n\nthat always returns up-to-date data, and invalidates callers when changes are\n\n\n\ndetected via polling.\n\n\n\n\n\n\n\n~shiny.reactive.file_reader"
+  },
+  {
+    "objectID": "reference/reactive.poll.html#examples",
+    "href": "reference/reactive.poll.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport asyncio\nimport random\nimport sqlite3\nfrom datetime import datetime\nfrom typing import Any, Awaitable\n\nimport pandas as pd\n\nfrom shiny import *\n\nSYMBOLS = [\"AAA\", \"BBB\", \"CCC\", \"DDD\", \"EEE\", \"FFF\"]\n\n\ndef timestamp() -> str:\n    return datetime.now().strftime(\"%x %X\")\n\n\ndef rand_price() -> float:\n    return round(random.random() * 250, 2)\n\n\n# === Initialize the database =========================================\n\n\ndef init_db(con: sqlite3.Connection) -> None:\n    cur = con.cursor()\n    try:\n        cur.executescript(\n            \"\"\"\n            CREATE TABLE stock_quotes (timestamp text, symbol text, price real);\n            CREATE INDEX idx_timestamp ON stock_quotes (timestamp);\n            \"\"\"\n        )\n        cur.executemany(\n            \"INSERT INTO stock_quotes (timestamp, symbol, price) VALUES (?, ?, ?)\",\n            [(timestamp(), symbol, rand_price()) for symbol in SYMBOLS],\n        )\n        con.commit()\n    finally:\n        cur.close()\n\n\nconn = sqlite3.connect(\":memory:\")\ninit_db(conn)\n\n\n# === Randomly update the database with an asyncio.task ==============\n\n\ndef update_db(con: sqlite3.Connection) -> None:\n    \"\"\"Update a single stock price entry at random\"\"\"\n\n    cur = con.cursor()\n    try:\n        sym = SYMBOLS[random.randint(0, len(SYMBOLS) - 1)]\n        print(f\"Updating {sym}\")\n        cur.execute(\n            \"UPDATE stock_quotes SET timestamp = ?, price = ? WHERE symbol = ?\",\n            (timestamp(), rand_price(), sym),\n        )\n        con.commit()\n    finally:\n        cur.close()\n\n\nasync def update_db_task(con: sqlite3.Connection) -> Awaitable[None]:\n    \"\"\"Task that alternates between sleeping and updating prices\"\"\"\n    while True:\n        await asyncio.sleep(random.random() * 1.5)\n        update_db(con)\n\n\nasyncio.create_task(update_db_task(conn))\n\n\n# === Create the reactive.poll object ===============================\n\n\ndef tbl_last_modified() -> Any:\n    df = pd.read_sql_query(\"SELECT MAX(timestamp) AS timestamp FROM stock_quotes\", conn)\n    return df[\"timestamp\"].to_list()\n\n\n@reactive.poll(tbl_last_modified, 0.5)\ndef stock_quotes() -> pd.DataFrame:\n    return pd.read_sql_query(\"SELECT timestamp, symbol, price FROM stock_quotes\", conn)\n\n\n# === Define the Shiny UI and server ===============================\n\napp_ui = ui.page_fluid(\n    ui.row(\n        ui.column(\n            8,\n            ui.markdown(\n                \"\"\"\n                # `shiny.reactive.poll` demo\n\n                This example app shows how to stream results from a database (in this\n                case, an in-memory sqlite3) with the help of `shiny.reactive.poll`.\n                \"\"\"\n            ),\n            class_=\"mb-3\",\n        ),\n    ),\n    ui.input_selectize(\"symbols\", \"Filter by symbol\", [\"\"] + SYMBOLS, multiple=True),\n    ui.output_ui(\"table\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session) -> None:\n    def filtered_quotes():\n        df = stock_quotes()\n        if input.symbols():\n            df = df[df[\"symbol\"].isin(input.symbols())]\n        return df\n\n    @output\n    @render.ui\n    def table():\n        return ui.HTML(\n            filtered_quotes().to_html(\n                index=False, classes=\"table font-monospace w-auto\"\n            )\n        )\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/render.ui.html",
@@ -1134,11 +1386,25 @@
     "text": "See Also\n~shiny.ui.input_selectize ~shiny.ui.update_select ~shiny.ui.input_radio_buttons ~shiny.ui.input_checkbox_group"
   },
   {
+    "objectID": "reference/ui.input_select.html#examples",
+    "href": "reference/ui.input_select.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_select(\n        \"state\",\n        \"Choose a state:\",\n        {\n            \"East Coast\": {\"NY\": \"NY\", \"NJ\": \"NJ\", \"CT\": \"CT\"},\n            \"West Coast\": {\"WA\": \"WA\", \"OR\": \"OR\", \"CA\": \"CA\"},\n            \"Midwest\": {\"MN\": \"MN\", \"WI\": \"WI\", \"IA\": \"IA\"},\n        },\n    ),\n    ui.output_text(\"value\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    def value():\n        return \"You choose: \" + str(input.state())\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.output_image.html",
     "href": "reference/ui.output_image.html",
     "title": "Shiny",
     "section": "",
     "text": "ui.output_image(id, width='100%', height='400px', inline=False)\nCreate a output container for a static image.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nwidth\nstr\nThe CSS width, e.g. ‘400px’, or ‘100%’\n'100%'\n\n\nheight\nstr\nThe CSS height, e.g. ‘100%’ or ‘600px’\n'400px'\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.render.image ~shiny.ui.output_plot"
+  },
+  {
+    "objectID": "reference/ui.output_image.html#examples",
+    "href": "reference/ui.output_image.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\nfrom shiny.types import ImgData\n\napp_ui = ui.page_fluid(ui.output_image(\"image\"))\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.image\n    def image():\n        from pathlib import Path\n\n        dir = Path(__file__).resolve().parent\n        img: ImgData = {\"src\": str(dir / \"rstudio-logo.png\"), \"width\": \"150px\"}\n        return img\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/render.text.html",
@@ -1225,6 +1491,13 @@
     "text": "reactive.isolate()\nCreate a non-reactive scope within a reactive scope.\nOrdinarily, the simple act of reading a reactive value causes a relationship to be established between the caller and the reactive value, where a change to the reactive value will cause the caller to re-execute. (The same applies for the act of getting a reactive expression’s value.) with isolate() lets you read a reactive value or expression without establishing this relationship.\nwith isolate() can also be useful for calling reactive expression at the console, which can be useful for debugging. To do so, wrap the calls to the reactive expression with with isolate().\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA context manager that executes the given expression in a scope where reactive\n\n\n\nvalues can be read, but do not cause the reactive scope of the caller to be\n\n\n\nre-evaluated when they change.\n\n\n\n\n\n\n\n~shiny.event"
   },
   {
+    "objectID": "reference/reactive.isolate.html#examples",
+    "href": "reference/reactive.isolate.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of observations\", min=0, max=1000, value=500),\n    ui.input_action_button(\"go\", \"Go!\", class_=\"btn-success\"),\n    ui.output_plot(\"plot\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        # Take a reactive dependency on the action button...\n        input.go()\n\n        # ...but don't take a reactive dependency on the slider\n        with reactive.isolate():\n            np.random.seed(19680801)\n            x = 100 + 15 * np.random.randn(input.n())\n\n        fig, ax = plt.subplots()\n        ax.hist(x, bins=30, density=True)\n        return fig\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.output_text_verbatim.html",
     "href": "reference/ui.output_text_verbatim.html",
     "title": "Shiny",
@@ -1258,6 +1531,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.update_numeric"
+  },
+  {
+    "objectID": "reference/ui.input_numeric.html#examples",
+    "href": "reference/ui.input_numeric.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_numeric(\"obs\", \"Observations:\", 10, min=1, max=100),\n    ui.output_text_verbatim(\"value\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    def value():\n        return input.obs()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.panel_sidebar.html",
@@ -1323,6 +1603,13 @@
     "text": "See Also\n~shiny.Inputs Calc Effect"
   },
   {
+    "objectID": "reference/reactive.Value.html#examples",
+    "href": "reference/reactive.Value.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"minus\", \"-1\"),\n    ui.input_action_button(\"plus\", \"+1\"),\n    ui.br(),\n    ui.output_text(\"value\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    val = reactive.Value(0)\n\n    @reactive.Effect\n    @reactive.event(input.minus)\n    def _():\n        newVal = val.get() - 1\n        val.set(newVal)\n\n    @reactive.Effect\n    @reactive.event(input.plus)\n    def _():\n        newVal = val.get() + 1\n        val.set(newVal)\n\n    @output\n    @render.text\n    def value():\n        return str(val.get())\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/render.table.html",
     "href": "reference/render.table.html",
     "title": "Shiny",
@@ -1351,6 +1638,13 @@
     "text": "reactive.Effect(fn=None, suspended=False, priority=0, session=MISSING)\nMark a function as a reactive side effect.\nA reactive effect is like a reactive calculation (:func:Calc) in that it can read reactive values and call reactive calculations, and will automatically re-execute when those dependencies change. But unlike reactive calculations, it doesn’t return a result and can’t be used as an input to other reactive expressions. Thus, observers are only useful for their side effects (for example, performing I/O).\nAnother contrast between reactive calculations and effects is their execution strategy. Reactive calculations use lazy evaluation; that is, when their dependencies change, they don’t re-execute right away but rather wait until they are called by someone else. Indeed, if they are not called then they will never re-execute. In contrast, effects use eager evaluation; as soon as their dependencies change, they schedule themselves to re-execute.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsuspended\nbool\nIf TRUE, start the effect in a suspended state (i.e., it will not execute until resumed and invalidated).\nFalse\n\n\npriority\nint\nThe new priority. A higher value means higher priority: an effect with a higher priority value will execute before all effects with lower priority values. Positive, negative, and zero values are allowed.\n0\n\n\nsession\nUnion[MISSING_TYPE, Session, None]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that marks a function as a reactive effect (\n\n\n\n\n\n\n\n~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event"
   },
   {
+    "objectID": "reference/reactive.Effect.html#examples",
+    "href": "reference/reactive.Effect.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(ui.input_action_button(\"btn\", \"Press me!\"))\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    @reactive.event(input.btn)\n    def _():\n        ui.insert_ui(\n            ui.p(\"Number of clicks: \", input.btn()), selector=\"#btn\", where=\"afterEnd\"\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.update_navs.html",
     "href": "reference/ui.update_navs.html",
     "title": "Shiny",
@@ -1372,11 +1666,18 @@
     "text": "See Also\n~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.page_navbar"
   },
   {
+    "objectID": "reference/ui.update_navs.html#examples",
+    "href": "reference/ui.update_navs.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.layout_sidebar(\n        ui.panel_sidebar(\n            ui.input_slider(\"controller\", \"Controller\", min=1, max=3, value=1)\n        ),\n        ui.panel_main(\n            ui.navset_tab_card(\n                ui.nav(\"Panel 1\", \"Panel 1 content\", value=\"panel1\"),\n                ui.nav(\"Panel 2\", \"Panel 2 content\", value=\"panel2\"),\n                ui.nav(\"Panel 3\", \"Panel 3 content\", value=\"panel3\"),\n                id=\"inTabset\",\n            )\n        ),\n    )\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        ui.update_navs(\"inTabset\", selected=\"panel\" + str(input.controller()))\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/reactive.Calc.html",
     "href": "reference/reactive.Calc.html",
     "title": "Shiny",
     "section": "",
-    "text": "reactive.Calc(fn=None, session=MISSING)\nMark a function as a reactive calculation.\nA reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., :class:~shiny.Inputs, :class:~shiny.reactive.Value, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are “invalidated” and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nUnion[MISSING_TYPE, Session, None]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that marks a function as a reactive calculation.\n\n\n\n\nTip\n\n\n\n\n\n\nReactive calculations should not produce any side effects; to reactively produce side effects, use :func:~shiny.reactive.Effect instead.\n\n\nSee Also\n\n\n\n~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event"
+    "text": "reactive.Calc(fn=None, session=MISSING)\nMark a function as a reactive calculation.\nA reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., :class:~shiny.Inputs, :class:~shiny.reactive.Value, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are “invalidated” and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nUnion[MISSING_TYPE, Session, None]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that marks a function as a reactive calculation.\n\n\n\n\nTip\n\n\n\n\n\n\nReactive calculations should not produce any side effects; to reactively produce side effects, use :func:~shiny.reactive.Effect instead.\n\n\n\n\n~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event\n\n\nExamples\n\n\n\n#| standalone: true\n\nimport random\nimport time\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"first\", \"Invalidate first (slow) computation\"),\n    ui.input_action_button(\"second\", \"Invalidate second (fast) computation\"),\n    ui.br(),\n    ui.output_ui(\"result\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Calc\n    def first():\n        input.first()\n        p = ui.Progress()\n        for i in range(30):\n            p.set(i / 30, message=\"Computing, please wait...\")\n            time.sleep(0.1)\n        p.close()\n        return random.randint(1, 1000)\n\n    @reactive.Calc\n    def second():\n        input.second()\n        return random.randint(1, 1000)\n\n    @output\n    @render.ui\n    def result():\n        return first() + second()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.input_text.html",
@@ -1398,6 +1699,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.input_text_area"
+  },
+  {
+    "objectID": "reference/ui.input_text.html#examples",
+    "href": "reference/ui.input_text.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"caption\", \"Caption:\", \"Data summary\"),\n    ui.output_text_verbatim(\"value\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    def value():\n        return input.caption()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/session.session_context.html",
@@ -1435,6 +1743,13 @@
     "text": "See Also\n~shiny.ui.update_date_range ~shiny.ui.input_date"
   },
   {
+    "objectID": "reference/ui.input_date_range.html#examples",
+    "href": "reference/ui.input_date_range.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom datetime import date\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_date_range(\n        \"daterange1\", \"Date range:\", start=\"2001-01-01\", end=\"2010-12-31\"\n    ),\n    # Default start and end is the current date in the client's time zone\n    ui.input_date_range(\"daterange2\", \"Date range:\"),\n    # start and end are always specified in yyyy-mm-dd, even if the display\n    # format is different\n    ui.input_date_range(\n        \"daterange3\",\n        \"Date range:\",\n        start=\"2001-01-01\",\n        end=\"2010-12-31\",\n        min=\"2001-01-01\",\n        max=\"2012-12-21\",\n        format=\"mm/dd/yy\",\n        separator=\" - \",\n    ),\n    # Pass in Date objects\n    ui.input_date_range(\n        \"daterange4\", \"Date range:\", start=date(2001, 1, 1), end=date(2010, 12, 31)\n    ),\n    # Use different language and different first day of week\n    ui.input_date_range(\"daterange5\", \"Date range:\", language=\"de\", weekstart=1),\n    # Start with decade view instead of default month view\n    ui.input_date_range(\"daterange6\", \"Date range:\", startview=\"decade\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.panel_main.html",
     "href": "reference/ui.panel_main.html",
     "title": "Shiny",
@@ -1447,6 +1762,13 @@
     "title": "Shiny",
     "section": "",
     "text": "ui.Progress(self, min=0, max=1, session=None)\nInitialize a progress bar.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmin\nint\nThe value that represents the starting point of the progress bar. Must be less than max.\n0\n\n\nmax\nint\nThe value that represents the end of the progress bar. Must be greater than min.\n1\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+  },
+  {
+    "objectID": "reference/ui.Progress.html#examples",
+    "href": "reference/ui.Progress.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport asyncio\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"button\", \"Compute\"),\n    ui.output_text(\"compute\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    @reactive.event(input.button)\n    async def compute():\n        with ui.Progress(min=1, max=15) as p:\n            p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n            for i in range(1, 15):\n                p.set(i, message=\"Computing\")\n                await asyncio.sleep(0.1)\n                # Normally use time.sleep() instead, but it doesn't yet work in Pyodide.\n                # https://github.com/pyodide/pyodide/issues/2354\n\n        return \"Done computing!\"\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.TagList.html",
@@ -1498,6 +1820,13 @@
     "text": "Tip\nThe position (top, left, right, bottom) and size (width, height) parameters are all optional, but you should specify exactly two of top, bottom, and height and exactly two of left, right, and width for predictable results.\nLike most other distance parameters in Shiny, the position and size parameters take a number (interpreted as pixels) or a valid CSS size string, such as \"100px\" (100 pixels) or \"25%\".\nFor arcane HTML reasons, to have the panel fill the page or parent you should specify 0 for top, left, right, and bottom rather than the more obvious width = \"100%\" and height = \"100%\"."
   },
   {
+    "objectID": "reference/ui.panel_absolute.html#examples",
+    "href": "reference/ui.panel_absolute.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.panel_title(\"A basic absolute panel example\", \"Demo\"),\n    ui.panel_absolute(\n        ui.panel_well(\n            \"Drag me around!\", ui.input_slider(\"n\", \"N\", min=0, max=100, value=20)\n        ),\n        draggable=True,\n        width=\"300px\",\n        right=\"50px\",\n        top=\"50%\",\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/session.require_active_session.html",
     "href": "reference/session.require_active_session.html",
     "title": "Shiny",
@@ -1526,6 +1855,13 @@
     "text": "ui.page_fixed(args, title=None, lang=None, kwargs)\nCreate a fixed page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\nkwargs Attributes on the page level container.\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fluid page_bootstrap page_navbar"
   },
   {
+    "objectID": "reference/ui.page_fixed.html#examples",
+    "href": "reference/ui.page_fixed.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fixed(\n    ui.layout_sidebar(\n        ui.panel_sidebar(ui.input_slider(\"n\", \"N\", min=0, max=100, value=20)),\n        ui.panel_main(ui.output_plot(\"plot\")),\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def plot() -> object:\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n\n        fig, ax = plt.subplots()\n        ax.hist(x, input.n(), density=True)\n        return fig\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.update_date.html",
     "href": "reference/ui.update_date.html",
     "title": "Shiny",
@@ -1547,11 +1883,25 @@
     "text": "See Also\n~shiny.ui.input_date"
   },
   {
+    "objectID": "reference/ui.update_date.html#examples",
+    "href": "reference/ui.update_date.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom datetime import date, timedelta\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Day of month\", min=1, max=30, value=10),\n    ui.input_date(\"inDate\", \"Input date\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    def _():\n        d = date(2013, 4, input.n())\n        ui.update_date(\n            \"inDate\",\n            label=\"Date label \" + str(input.n()),\n            value=d,\n            min=d - timedelta(days=3),\n            max=d + timedelta(days=3),\n        )\n\n\napp = App(app_ui, server)"
+  },
+  {
     "objectID": "reference/ui.layout_sidebar.html",
     "href": "reference/ui.layout_sidebar.html",
     "title": "Shiny",
     "section": "",
     "text": "ui.layout_sidebar(sidebar, main, position='left')\nLayout a sidebar and main area\nCreate a layout with a sidebar (:func:~shiny.ui.panel_sidebar) and main area (:func:~shiny.ui.panel_main). The sidebar is displayed with a distinct background color and typically contains input controls. By default, the main area occupies 2/3 of the horizontal width and typically contains outputs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsidebar\nhtmltools.TagChildArg\nA UI element to place in the sidebar (typically a :func:~shiny.ui.panel_sidebar)\nrequired\n\n\nmain\nhtmltools.TagChildArg\nA UI element to place in the main area (typically a :func:~shiny.ui.panel_main)\nrequired\n\n\nposition\nLiteral[left, right]\nThe position of the sidebar (left or right)\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\npanel_sidebar panel_main"
+  },
+  {
+    "objectID": "reference/ui.layout_sidebar.html#examples",
+    "href": "reference/ui.layout_sidebar.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.layout_sidebar(\n        ui.panel_sidebar(ui.input_slider(\"n\", \"N\", min=0, max=100, value=20)),\n        ui.panel_main(ui.output_plot(\"plot\")),\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def plot() -> object:\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n\n        fig, ax = plt.subplots()\n        ax.hist(x, input.n(), density=True)\n        return fig\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.input_text_area.html",
@@ -1573,6 +1923,13 @@
     "title": "Shiny",
     "section": "See Also",
     "text": "See Also\n~shiny.ui.input_text"
+  },
+  {
+    "objectID": "reference/ui.input_text_area.html#examples",
+    "href": "reference/ui.input_text_area.html#examples",
+    "title": "Shiny",
+    "section": "Examples",
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"caption\", \"Caption:\", \"Data summary\"),\n    ui.output_text_verbatim(\"value\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @output\n    @render.text\n    def value():\n        return input.caption()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/run_app.html",

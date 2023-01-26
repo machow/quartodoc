@@ -39,6 +39,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -785,6 +790,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -857,9 +863,41 @@ ul.task-list li input[type="checkbox"] {
 <section id="see-also" class="level3">
 <h3 class="anchored" data-anchor-id="see-also">See Also</h3>
 <p><a href="../reference/ui.page_fluid.html">page_fluid</a> <a href="../reference/ui.page_bootstrap.html">page_bootstrap</a> <a href="../reference/ui.page_navbar.html">page_navbar</a></p>
-
-
 </section>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<pre class="shinylive-python"><code>#| standalone: true
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from shiny import *
+
+app_ui = ui.page_fixed(
+    ui.layout_sidebar(
+        ui.panel_sidebar(ui.input_slider("n", "N", min=0, max=100, value=20)),
+        ui.panel_main(ui.output_plot("plot")),
+    ),
+)
+
+
+def server(input: Inputs, output: Outputs, session: Session):
+    @output
+    @render.plot(alt="A histogram")
+    def plot() -&gt; object:
+        np.random.seed(19680801)
+        x = 100 + 15 * np.random.randn(437)
+
+        fig, ax = plt.subplots()
+        ax.hist(x, input.n(), density=True)
+        return fig
+
+
+app = App(app_ui, server)
+</code></pre>
+
+
 </section>
 
 </main> <!-- /main -->

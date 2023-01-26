@@ -39,6 +39,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -785,6 +790,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -868,6 +874,37 @@ ul.task-list li input[type="checkbox"] {
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <p>~shiny.ui.input_date_range</p>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<pre class="shinylive-python"><code>#| standalone: true
+
+from datetime import date, timedelta
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_slider("n", "Day of month", min=1, max=30, value=10),
+    ui.input_date_range("inDateRange", "Input date"),
+)
+
+
+def server(input: Inputs, output: Outputs, session: Session):
+    @reactive.Effect
+    def _():
+        d = date(2013, 4, input.n())
+        ui.update_date_range(
+            "inDateRange",
+            label="Date range label " + str(input.n()),
+            start=d - timedelta(days=1),
+            end=d + timedelta(days=1),
+            min=d - timedelta(days=5),
+            max=d + timedelta(days=5),
+        )
+
+
+app = App(app_ui, server)
+</code></pre>
 
 
 </section>

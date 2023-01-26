@@ -39,6 +39,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -785,6 +790,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   </ul></li>
   <li><a href="#tip" id="toc-tip" class="nav-link" data-scroll-target="#tip">Tip</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -908,6 +914,33 @@ ul.task-list li input[type="checkbox"] {
 <p>The position (<code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code>) and size (<code>width</code>, <code>height</code>) parameters are all optional, but you should specify exactly two of top, bottom, and height and exactly two of left, right, and width for predictable results.</p>
 <p>Like most other distance parameters in Shiny, the position and size parameters take a number (interpreted as pixels) or a valid CSS size string, such as <code>"100px"</code> (100 pixels) or <code>"25%"</code>.</p>
 <p>For arcane HTML reasons, to have the panel fill the page or parent you should specify 0 for <code>top</code>, <code>left</code>, <code>right</code>, and <code>bottom</code> rather than the more obvious <code>width = "100%"</code> and <code>height = "100%"</code>.</p>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<pre class="shinylive-python"><code>#| standalone: true
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.panel_title("A basic absolute panel example", "Demo"),
+    ui.panel_absolute(
+        ui.panel_well(
+            "Drag me around!", ui.input_slider("n", "N", min=0, max=100, value=20)
+        ),
+        draggable=True,
+        width="300px",
+        right="50px",
+        top="50%",
+    ),
+)
+
+
+def server(input: Inputs, output: Outputs, session: Session):
+    pass
+
+
+app = App(app_ui, server)
+</code></pre>
 
 
 </section>

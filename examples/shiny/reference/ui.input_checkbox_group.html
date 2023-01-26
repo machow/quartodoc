@@ -39,6 +39,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -786,6 +791,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -881,6 +887,37 @@ ul.task-list li input[type="checkbox"] {
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <p>~shiny.ui.update_checkbox_group ~shiny.ui.input_checkbox ~shiny.ui.input_radio_buttons</p>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<pre class="shinylive-python"><code>#| standalone: true
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_checkbox_group(
+        "colors",
+        "Choose color(s):",
+        {
+            "red": ui.span("Red", style="color: #FF0000;"),
+            "green": ui.span("Green", style="color: #00AA00;"),
+            "blue": ui.span("Blue", style="color: #0000AA;"),
+        },
+    ),
+    ui.output_ui("val"),
+)
+
+
+def server(input: Inputs, output: Outputs, session: Session):
+    @output
+    @render.ui
+    def val():
+        req(input.colors())
+        return "You chose " + ", ".join(input.colors())
+
+
+app = App(app_ui, server)
+</code></pre>
 
 
 </section>

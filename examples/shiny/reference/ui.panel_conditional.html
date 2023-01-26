@@ -39,6 +39,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -862,18 +867,48 @@ ul.task-list li input[type="checkbox"] {
 <p>Tip</p>
 <table class="table">
 <colgroup>
-<col style="width: 5%">
+<col style="width: 11%">
 </colgroup>
+<thead>
+<tr class="header">
+<th>A more powerful (but slower) way to conditionally show UI content is to use :func:<code>~shiny.render.ui</code>.</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td>A more powerful (but slower) way to conditionally show UI content is to use :func:<code>~shiny.render.ui</code>.</td>
+<td>~shiny.render.ui ~shiny.ui.output_ui</td>
 </tr>
 <tr class="even">
-<td>See Also</td>
+<td>Examples</td>
 </tr>
 </tbody>
 </table>
-<p>~shiny.render.ui ~shiny.ui.output_ui</p>
+<pre class="shinylive-python"><code>#| standalone: true
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_checkbox("show", "Show radio buttons", False),
+    ui.panel_conditional(
+        "input.show", ui.input_radio_buttons("radio", "Choose ", ["slider", "select"])
+    ),
+    ui.panel_conditional(
+        "input.show &amp;&amp; input.radio === 'slider'",
+        ui.input_slider("slider", None, min=0, max=100, value=50),
+    ),
+    ui.panel_conditional(
+        "input.show &amp;&amp; input.radio === 'select'",
+        ui.input_select("slider", None, ["A", "B", "C"]),
+    ),
+)
+
+
+def server(input: Inputs, output: Outputs, session: Session):
+    pass
+
+
+app = App(app_ui, server)
+</code></pre>
 
 
 </section>

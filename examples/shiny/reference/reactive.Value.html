@@ -39,6 +39,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -787,6 +792,7 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -878,6 +884,44 @@ ul.task-list li input[type="checkbox"] {
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <p>~shiny.Inputs Calc Effect</p>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<pre class="shinylive-python"><code>#| standalone: true
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_action_button("minus", "-1"),
+    ui.input_action_button("plus", "+1"),
+    ui.br(),
+    ui.output_text("value"),
+)
+
+
+def server(input: Inputs, output: Outputs, session: Session):
+    val = reactive.Value(0)
+
+    @reactive.Effect
+    @reactive.event(input.minus)
+    def _():
+        newVal = val.get() - 1
+        val.set(newVal)
+
+    @reactive.Effect
+    @reactive.event(input.plus)
+    def _():
+        newVal = val.get() + 1
+        val.set(newVal)
+
+    @output
+    @render.text
+    def value():
+        return str(val.get())
+
+
+app = App(app_ui, server)
+</code></pre>
 
 
 </section>
