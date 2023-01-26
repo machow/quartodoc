@@ -217,9 +217,16 @@ class MdRenderer(Renderer):
     # @dispatch
     # def to_md(self, el: dc.Alias):
     #    return self.to_md(el.target)
+    @dispatch
+    def to_md(self, el: dc.Alias):
+        # dispatch as if on dc.Object. Not sure how plum wants me to do this.
+        # note that when is used a signature of Union[dc.Object, dc.Alias],
+        # overriding the method for either did not work in subclasses
+        f, _ = self.to_md.resolve_method(type(self), dc.Object)
+        return f(self, el)
 
     @dispatch
-    def to_md(self, el: Union[dc.Object, dc.Alias]):
+    def to_md(self, el: dc.Object):
         # TODO: replace hard-coded header level
 
         _str_dispname = self._fetch_object_dispname(el)
