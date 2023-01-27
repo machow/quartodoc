@@ -11,9 +11,9 @@ def test_get_function():
     )
 
 
-def test_render_to_md():
+def test_renderer_render():
     # TODO: use snapshots?
     f_obj = get_function("quartodoc", "get_function")
 
     renderer = MdRenderer()
-    assert isinstance(renderer.to_md(f_obj), str)
+    assert isinstance(renderer.render(f_obj), str)

@@ -98,34 +98,34 @@ class SomeRenderer:
         self.header_level = header_level
 
     @dispatch
-    def visit(self, el):
+    def render(self, el):
         raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
-    def visit(self, el: Union[dc.Alias, dc.Object]):
+    def render(self, el: Union[dc.Alias, dc.Object]):
         header = "#" * self.header_level
         str_header = f"{header} {el.name}"
         str_params = f"N PARAMETERS: {len(el.parameters)}"
-        str_sections = "SECTIONS: " + self.visit(el.docstring)
+        str_sections = "SECTIONS: " + self.render(el.docstring)
         
         # return something pretty
         return "\n".join([str_header, str_params, str_sections])
 
     @dispatch
-    def visit(self, el: dc.Docstring):
+    def render(self, el: dc.Docstring):
         return f"A docstring with {len(el.parsed)} pieces"
 
 
 f_obj = get_object("quartodoc", "get_object")
 
-print(SomeRenderer(header_level=2).visit(f_obj))
+print(SomeRenderer(header_level=2).render(f_obj))
 ```
 
 Note 3 big pieces:
 
-* **Generic dispatch**: The plum `dispatch` function decorates each `visit` method. The type annotations
-  specify the types of data each version of visit should dispatch on.
-* **Default behavior**: The first `visit` method ensures a `NotImplementedError` is raised by default.
-* **Tree walking**: `visit` methods often call `visit` again on sub elements.
+* **Generic dispatch**: The plum `dispatch` function decorates each `render` method. The type annotations
+  specify the types of data each version of render should dispatch on.
+* **Default behavior**: The first `render` method ensures a `NotImplementedError` is raised by default.
+* **Tree walking**: `render` methods often call `render` again on sub elements.
 
 
