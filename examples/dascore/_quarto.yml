@@ -187,24 +187,25 @@ quartodoc:
         - utils.pd.list_ser_to_str
         - utils.pd.yield_slice_from_kwargs
         - utils.progress.track
+        # TODO: some of these were removed from the more recent dascore version
         # - utils.time.array_to_datetime64
         # - utils.time.array_to_number
         # - utils.time.array_to_timedelta64
-        - utils.time.datetime_to_float
-        - utils.time.float_to_datetime
-        - utils.time.float_to_num
-        - utils.time.float_to_timedelta64
-        - utils.time.get_max_min_times
-        - utils.time.get_select_time
-        - utils.time.is_datetime64
-        - utils.time.pass_time_delta
-        - utils.time.series_to_timedelta64_series
-        - utils.time.str_to_datetime64
-        - utils.time.time_delta_from_str
-        - utils.time.to_datetime64
-        - utils.time.to_number
-        - utils.time.to_timedelta64
-        - utils.time.unpack_pandas_time_delta
+        #- utils.time.datetime_to_float
+        #- utils.time.float_to_datetime
+        #- utils.time.float_to_num
+        #- utils.time.float_to_timedelta64
+        #- utils.time.get_max_min_times
+        #- utils.time.get_select_time
+        #- utils.time.is_datetime64
+        #- utils.time.pass_time_delta
+        #- utils.time.series_to_timedelta64_series
+        #- utils.time.str_to_datetime64
+        #- utils.time.time_delta_from_str
+        #- utils.time.to_datetime64
+        #- utils.time.to_number
+        #- utils.time.to_timedelta64
+        #- utils.time.unpack_pandas_time_delta
     - title: Vizualization
       desc: ""
       contents:
