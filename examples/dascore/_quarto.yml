@@ -1,0 +1,213 @@
+project:
+  type: website
+
+filters:
+  - interlinks
+
+website:
+  title: pkgdown example
+  navbar:
+    left:
+      - file: reference/index.qmd
+        text: "Reference"
+    right:
+      - icon: github
+        href: https://github.com/machow/quartodoc/tree/main/examples/dascore
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+
+interlinks:
+  sources:
+    python:
+      url: https://docs.python.org/3/
+
+quartodoc:
+  style: pkgdown
+  dir: reference
+  package: dascore
+  display_name: relative
+  renderer:
+    style: markdown
+    display_name: relative
+  sections:
+    - title: clients
+      desc: ""
+      contents:
+        - clients.dirspool.DirectorySpool
+        - clients.dirspool.DirectorySpool.get_contents
+        - clients.dirspool.DirectorySpool.select
+        - clients.dirspool.DirectorySpool.spool_path
+        - clients.dirspool.DirectorySpool.update
+        - clients.filespool.FileSpool.update
+    - title: patch
+      desc: ""
+      contents:
+        - core.patch.Patch
+        - core.patch.Patch.attrs
+        - core.patch.Patch.coord_dims
+        - core.patch.Patch.coords
+        - core.patch.Patch.data
+        - core.patch.Patch.dims
+        - core.patch.Patch.equals
+        - core.patch.Patch.io
+        - core.patch.Patch.new
+        - core.patch.Patch.pipe
+        - core.patch.Patch.shape
+        - core.patch.Patch.to_xarray
+        - core.patch.Patch.tran
+        - core.patch.Patch.update_attrs
+        - core.patch.Patch.viz
+    - title: schema
+      desc: ""
+      contents:
+        - core.schema.SimpleValidator.func
+        - core.schema.SimpleValidator.validate
+    - title: spool
+      desc: ""
+      contents:
+        - core.spool.BaseSpool.chunk
+        - core.spool.BaseSpool.get_contents
+        - core.spool.BaseSpool.select
+        - core.spool.BaseSpool.update
+        - core.spool.DataFrameSpool.chunk
+        - core.spool.DataFrameSpool.get_contents
+        - core.spool.DataFrameSpool.new_from_df
+        - core.spool.DataFrameSpool.select
+        - core.spool.spool
+        - core.spool.spool_from_patch
+        - core.spool.spool_from_patch_list
+        - core.spool.spool_from_spool
+        - core.spool.spool_from_str
+    - title: examples
+      desc: ""
+      contents:
+        - examples.get_example_patch
+        - examples.get_example_spool
+        - examples.sin_wave_patch
+        - examples.spool_to_directory
+    - title: IO
+      desc: ""
+      contents:
+        - io.core.FiberIO.get_format
+        - io.core.FiberIO.implements_get_format
+        - io.core.FiberIO.implements_scan
+        - io.core.FiberIO.read
+        - io.core.FiberIO.scan
+        - io.core.FiberIO.write
+        - io.core.read
+        - io.core.scan
+        - io.dasdae.core.DASDAEV1.get_format
+        - io.dasdae.core.DASDAEV1.index
+        - io.dasdae.core.DASDAEV1.read
+        - io.dasdae.core.DASDAEV1.scan
+        - io.dasdae.core.DASDAEV1.write
+        - io.indexer.AbstractIndexer.update
+        - io.indexer.DirectoryIndexer.clear_cache
+        - io.indexer.DirectoryIndexer.ensure_path_exists
+        - io.indexer.DirectoryIndexer.get_contents
+        - io.indexer.DirectoryIndexer.update
+        - io.pickle.core.PickleIO.get_format
+        - io.pickle.core.PickleIO.read
+        - io.pickle.core.PickleIO.write
+        - io.tdms.core.TDMSFormatterV4713.get_format
+        - io.tdms.core.TDMSFormatterV4713.read
+        - io.tdms.core.TDMSFormatterV4713.scan
+        - io.tdms.utils.parse_time_stamp
+        - io.tdms.utils.type_not_supported
+        - io.terra15.core.Terra15FormatterV4.get_format
+        - io.terra15.core.Terra15FormatterV4.read
+        - io.terra15.core.Terra15FormatterV4.scan
+        - io.wav.core.WavIO.write
+    - title: Procs
+      desc: ""
+      contents:
+        - proc.aggregate.aggregate
+        - proc.basic.abs
+        - proc.basic.normalize
+        - proc.basic.rename
+        - proc.basic.squeeze
+        - proc.basic.transpose
+        - proc.detrend.detrend
+        - proc.filter.pass_filter
+        - proc.resample.decimate
+        - proc.resample.interpolate
+        - proc.resample.iresample
+        - proc.resample.resample
+        - proc.select.select
+    - title: Transforms
+      desc: ""
+      contents:
+        - transform.fft.rfft
+        - transform.spectro.spectrogram
+        - transform.strain.velocity_to_strain_rate
+    - title: Utils
+      desc: ""
+      contents:
+        - utils.chunk.ChunkManager.get_instruction_df
+        - utils.coords.assign_coords
+        - utils.coords.Coords.get
+        - utils.coords.Coords.to_nested_dict
+        - utils.coords.Coords.update
+        # - utils.docs.compose_docstring
+        - utils.downloader.fetch
+        - utils.hdf5.HDFPatchIndexManager.decode_table
+        - utils.hdf5.HDFPatchIndexManager.encode_table
+        - utils.hdf5.HDFPatchIndexManager.get_index
+        - utils.hdf5.HDFPatchIndexManager.has_index
+        - utils.hdf5.HDFPatchIndexManager.hdf_kwargs
+        - utils.hdf5.HDFPatchIndexManager.last_updated_timestamp
+        - utils.hdf5.HDFPatchIndexManager.validate_version
+        - utils.hdf5.HDFPatchIndexManager.write_update
+        - utils.mapping.FrozenDict.copy
+        - utils.misc.all_close
+        - utils.misc.append_func
+        - utils.misc.check_evenly_sampled
+        - utils.misc.get_slice
+        - utils.misc.iterate
+        - utils.misc.register_func
+        - utils.misc.suppress_warnings
+        - utils.patch.check_patch_attrs
+        - utils.patch.check_patch_dims
+        - utils.patch.copy_attrs
+        - utils.patch.get_default_patch_name
+        - utils.patch.get_dim_value_from_kwargs
+        - utils.patch.get_start_stop_step
+        - utils.patch.merge_patches
+        - utils.patch.patch_function
+        - utils.patch.scan_patches
+        - utils.pd.adjust_segments
+        - utils.pd.fill_defaults_from_pydantic
+        - utils.pd.get_column_names_from_dim
+        - utils.pd.get_dim_names_from_columns
+        - utils.pd.get_interval_columns
+        - utils.pd.get_regex
+        - utils.pd.list_ser_to_str
+        - utils.pd.yield_slice_from_kwargs
+        - utils.progress.track
+        # TODO: some of these were removed from the more recent dascore version
+        # - utils.time.array_to_datetime64
+        # - utils.time.array_to_number
+        # - utils.time.array_to_timedelta64
+        #- utils.time.datetime_to_float
+        #- utils.time.float_to_datetime
+        #- utils.time.float_to_num
+        #- utils.time.float_to_timedelta64
+        #- utils.time.get_max_min_times
+        #- utils.time.get_select_time
+        #- utils.time.is_datetime64
+        #- utils.time.pass_time_delta
+        #- utils.time.series_to_timedelta64_series
+        #- utils.time.str_to_datetime64
+        #- utils.time.time_delta_from_str
+        #- utils.time.to_datetime64
+        #- utils.time.to_number
+        #- utils.time.to_timedelta64
+        #- utils.time.unpack_pandas_time_delta
+    - title: Vizualization
+      desc: ""
+      contents:
+        - viz.spectrogram.spectrogram
+        - viz.waterfall.waterfall
