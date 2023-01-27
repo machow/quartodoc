@@ -30,8 +30,8 @@ class Renderer(MdRenderer):
     style = "shiny"
 
     @dispatch
-    def to_md(self, el: Union[dc.Object, dc.Alias]):
-        rendered = super().to_md(el)
+    def render(self, el: Union[dc.Object, dc.Alias]):
+        rendered = super().render(el)
 
         p_example = SHINY_PATH / "examples" / el.name / "app.py"
         if p_example.exists():

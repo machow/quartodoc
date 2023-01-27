@@ -76,7 +76,7 @@ def convert_rst_link_to_md(rst):
     return re.sub(expr, r"[](\1)", rst, flags=re.MULTILINE)
 
 
-# to_md -----------------------------------------------------------------------
+# render -----------------------------------------------------------------------
 # griffe function dataclass structure:
 #   Object:
 #     kind: Kind {"module", "class", "function", "attribute"}
@@ -155,7 +155,7 @@ class MdRenderer(Renderer):
     >>> from quartodoc import MdRenderer, get_object
     >>> renderer = MdRenderer(header_level=2)
     >>> f = get_object("quartodoc", "get_object")
-    >>> print(renderer.to_md(f)[:81])
+    >>> print(renderer.render(f)[:81])
     ## get_object
     `get_object(module: str, object_name: str, parser: str = 'numpy')`
 
@@ -201,25 +201,25 @@ class MdRenderer(Renderer):
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
     @dispatch
-    def to_md(self, el):
+    def render(self, el):
         raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
-    def to_md(self, el: str):
+    def render(self, el: str):
         return el
 
     # TODO: remove, as this is now handled by _render_annotation
     # @dispatch
-    # def to_md(self, el: Union[Expression, Name]):
+    # def render(self, el: Union[Expression, Name]):
     #    # these are used often for annotations, and full returns it as a string
     #    return el.full
 
     @dispatch
-    def to_md(self, el: Union[dc.Object, dc.Alias]):
+    def render(self, el: Union[dc.Object, dc.Alias]):
         # TODO: replace hard-coded header level
 
         _str_dispname = self._fetch_object_dispname(el)
-        _str_pars = self.to_md(el.parameters)
+        _str_pars = self.render(el.parameters)
         str_sig = f"`{_str_dispname}({_str_pars})`"
 
         _anchor = f"{{ #{_str_dispname} }}"
@@ -232,7 +232,7 @@ class MdRenderer(Renderer):
             for section in el.docstring.parsed:
                 new_el = docstring_section_narrow(section)
                 title = new_el.kind.value
-                body = self.to_md(new_el)
+                body = self.render(new_el)
 
                 if title != "text":
                     header = f"{'#' * (self.header_level + 1)} {title.title()}"
@@ -248,17 +248,17 @@ class MdRenderer(Renderer):
         return "\n\n".join(parts)
 
     @dispatch
-    def to_md(self, el: dc.Attribute):
+    def render(self, el: dc.Attribute):
         raise NotImplementedError()
 
     # signature parts -------------------------------------------------------------
 
     @dispatch
-    def to_md(self, el: dc.Parameters):
-        return ", ".join(map(self.to_md, el))
+    def render(self, el: dc.Parameters):
+        return ", ".join(map(self.render, el))
 
     @dispatch
-    def to_md(self, el: dc.Parameter):
+    def render(self, el: dc.Parameter):
         # TODO: missing annotation
         splats = {dc.ParameterKind.var_keyword, dc.ParameterKind.var_positional}
         has_default = el.default and el.kind not in splats
@@ -280,24 +280,24 @@ class MdRenderer(Renderer):
     # note this can be a number of things. for example, opening docstring text,
     # or a section with a header not included in the numpydoc standard
     @dispatch
-    def to_md(self, el: ds.DocstringSectionText):
+    def render(self, el: ds.DocstringSectionText):
         new_el = docstring_section_narrow(el)
         if isinstance(new_el, ds.DocstringSectionText):
             # ensures we don't recurse forever
             return el.value
 
-        return self.to_md(new_el)
+        return self.render(new_el)
 
     # parameters ----
 
     @dispatch
-    def to_md(self, el: ds.DocstringSectionParameters):
-        rows = list(map(self.to_md, el.value))
+    def render(self, el: ds.DocstringSectionParameters):
+        rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
-    def to_md(self, el: ds.DocstringParameter) -> Tuple[str]:
+    def render(self, el: ds.DocstringParameter) -> Tuple[str]:
         # TODO: if default is not, should return the word "required" (unescaped)
         default = "required" if el.default is None else escape(el.default)
 
@@ -307,34 +307,34 @@ class MdRenderer(Renderer):
     # attributes ----
 
     @dispatch
-    def to_md(self, el: ds.DocstringSectionAttributes):
+    def render(self, el: ds.DocstringSectionAttributes):
         header = ["Name", "Type", "Description"]
-        rows = list(map(self.to_md, el.value))
+        rows = list(map(self.render, el.value))
 
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
-    def to_md(self, el: ds.DocstringAttribute):
+    def render(self, el: ds.DocstringAttribute):
         annotation = self._render_annotation(el.annotation)
-        return el.name, self.to_md(annotation), el.description
+        return el.name, self.render(annotation), el.description
 
     # see also ----
 
     @dispatch
-    def to_md(self, el: DocstringSectionSeeAlso):
+    def render(self, el: DocstringSectionSeeAlso):
         # TODO: attempt to parse See Also sections
         return convert_rst_link_to_md(el.value)
 
     # examples ----
 
     @dispatch
-    def to_md(self, el: ds.DocstringSectionExamples):
+    def render(self, el: ds.DocstringSectionExamples):
         # its value is a tuple: DocstringSectionKind["text" | "examples"], str
         data = map(tuple_to_data, el.value)
-        return "\n\n".join(list(map(self.to_md, data)))
+        return "\n\n".join(list(map(self.render, data)))
 
     @dispatch
-    def to_md(self, el: ExampleCode):
+    def render(self, el: ExampleCode):
         return f"""```python
 {el.value}
 ```"""
@@ -342,13 +342,13 @@ class MdRenderer(Renderer):
     # returns ----
 
     @dispatch
-    def to_md(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
-        rows = list(map(self.to_md, el.value))
+    def render(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
+        rows = list(map(self.render, el.value))
         header = ["Type", "Description"]
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
-    def to_md(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
+    def render(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
         # similar to DocstringParameter, but no name or default
         annotation = self._render_annotation(el.annotation)
         return (annotation, el.description)
@@ -356,7 +356,7 @@ class MdRenderer(Renderer):
     # unsupported parts ----
 
     @dispatch
-    def to_md(self, el: ExampleText):
+    def render(self, el: ExampleText):
         return el.value
 
     @dispatch.multi(
@@ -367,5 +367,5 @@ class MdRenderer(Renderer):
         (ds.DocstringReceive,),
         (ds.DocstringAttribute,),
     )
-    def to_md(self, el):
+    def render(self, el):
         raise NotImplementedError(f"{type(el)}")

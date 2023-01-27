@@ -311,10 +311,9 @@ class Builder:
     def write_doc_pages(self):
         """Write individual function documentation pages."""
 
-        # TODO: rename to_md to render or something
         for item in self.items.values():
             _log.info(f"Rendering `{item.canonical_path}`")
-            rendered = self.renderer.to_md(item)
+            rendered = self.renderer.render(item)
             html_path = Path(self.fetch_object_uri(item))
             html_path.parent.mkdir(exist_ok=True, parents=True)
 
@@ -410,7 +409,7 @@ class BuilderSinglePage(Builder):
     style = "single-page"
 
     def render_index(self):
-        return "\n\n".join([self.renderer.to_md(item) for item in self.items.values()])
+        return "\n\n".join([self.renderer.render(item) for item in self.items.values()])
 
     def fetch_object_uri(self, obj):
         index_name = Path(self.out_index).with_suffix(".html")

@@ -39,7 +39,7 @@ renderer = MdRenderer()
 
 doc_parts = obj.docstring.parsed
 doc_params = [entry for entry in doc_parts if entry.kind.name == "parameters"][0]
-print(renderer.to_md(doc_params))
+print(renderer.render(doc_params))
 ```
 
 ## Section options
