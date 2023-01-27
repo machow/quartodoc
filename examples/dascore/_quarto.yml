@@ -187,9 +187,9 @@ quartodoc:
         - utils.pd.list_ser_to_str
         - utils.pd.yield_slice_from_kwargs
         - utils.progress.track
-        - utils.time.array_to_datetime64
-        - utils.time.array_to_number
-        - utils.time.array_to_timedelta64
+        # - utils.time.array_to_datetime64
+        # - utils.time.array_to_number
+        # - utils.time.array_to_timedelta64
         - utils.time.datetime_to_float
         - utils.time.float_to_datetime
         - utils.time.float_to_num
