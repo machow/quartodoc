@@ -151,7 +151,7 @@ quartodoc:
         - utils.coords.Coords.get
         - utils.coords.Coords.to_nested_dict
         - utils.coords.Coords.update
-        - utils.docs.compose_docstring
+        # - utils.docs.compose_docstring
         - utils.downloader.fetch
         - utils.hdf5.HDFPatchIndexManager.decode_table
         - utils.hdf5.HDFPatchIndexManager.encode_table
