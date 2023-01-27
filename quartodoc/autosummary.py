@@ -391,7 +391,9 @@ class BuilderPkgdown(Builder):
 
         # TODO: look up from inventory?
         link = self.render_item_link(obj)
-        if len(docstring_parts):
+        if len(docstring_parts) and isinstance(
+            docstring_parts[0], ds.DocstringSectionText
+        ):
             # TODO: or canonical_path
             description = docstring_parts[0].value
             short = description.split("\n")[0]
