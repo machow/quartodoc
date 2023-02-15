@@ -30,20 +30,48 @@ def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
 
 def docstring_section_narrow(el: ds.DocstringSection) -> ds.DocstringSection:
     # attempt to narrow down text sections
+    to_narrow = [
+        DocstringSectionSeeAlso,
+        DocstringSectionNotes,
+        DocstringSectionWarnings,
+    ]
     prefix = "See Also\n---"
-    if isinstance(el, ds.DocstringSectionText) and el.value.startswith(prefix):
-        stripped = el.value.replace(prefix, "", 1).lstrip("-\n")
-        return DocstringSectionSeeAlso(stripped, el.title)
+
+    if isinstance(el, ds.DocstringSectionText):
+        for cls in to_narrow:
+            prefix = cls.kind.value.title() + "\n---"
+            if el.value.lstrip("\n").startswith(prefix):
+
+                stripped = el.value.replace(prefix, "", 1).lstrip("-\n")
+                return cls(stripped, el.title)
 
     return el
 
 
 class DocstringSectionKindPatched(Enum):
     see_also = "see also"
+    notes = "notes"
+    warnings = "warnings"
 
 
 class DocstringSectionSeeAlso(ds.DocstringSection):
     kind = DocstringSectionKindPatched.see_also
+
+    def __init__(self, value: str, title: "str | None"):
+        self.value = value
+        super().__init__(title)
+
+
+class DocstringSectionNotes(ds.DocstringSection):
+    kind = DocstringSectionKindPatched.notes
+
+    def __init__(self, value: str, title: "str | None"):
+        self.value = value
+        super().__init__(title)
+
+
+class DocstringSectionWarnings(ds.DocstringSection):
+    kind = DocstringSectionKindPatched.warnings
 
     def __init__(self, value: str, title: "str | None"):
         self.value = value
