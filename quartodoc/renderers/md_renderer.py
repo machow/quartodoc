@@ -60,7 +60,7 @@ class MdRenderer(Renderer):
 
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        return el.full.replace("|", "\\|")
+        return sanitize(el.full)
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
