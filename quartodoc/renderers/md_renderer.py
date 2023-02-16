@@ -171,6 +171,7 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringSectionParameters):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
+
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
@@ -238,6 +239,7 @@ class MdRenderer(Renderer):
     def render(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
         rows = list(map(self.render, el.value))
         header = ["Type", "Description"]
+
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
