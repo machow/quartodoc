@@ -1,9 +1,11 @@
 import quartodoc.ast as qast
-
 import pytest
+
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from griffe.docstrings.parsers import parse_numpy
+
+from quartodoc import get_object
 
 
 @pytest.mark.parametrize(
@@ -59,3 +61,11 @@ def test_transform_docstring_section_clump():
 
     # what to do here? this should more reasonably be handled when transform
     # operates on the root.
+
+
+def test_preview_no_fail(capsys):
+    qast.preview(get_object("quartodoc", "get_object"))
+
+    res = capsys.readouterr()
+
+    assert "get_object" in res.out
