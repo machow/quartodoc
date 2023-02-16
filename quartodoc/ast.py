@@ -1,12 +1,109 @@
+from enum import Enum
+from dataclasses import dataclass
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from plum import dispatch
 from typing import Union
 
-# TODO: these classes are created to wrap some tuple outputs
-#       we should consolidate logic for transforming the griffe
-#       docstring here (or open a griffe issue).
-from .renderers import tuple_to_data, docstring_section_narrow, ExampleCode, ExampleText
+
+# Transform and patched-in classes ============================================
+# TODO: annotate transform return types. make sure subtypes inherit from correct
+# griffe base objects.
+# TODO: it seems like transform should happen on the root, not individual elements.
+
+
+def transform(el):
+    """Return a more specific docstring element, or simply return the original one."""
+
+    if isinstance(el, tuple):
+        try:
+            return tuple_to_data(el)
+        except ValueError:
+            pass
+    elif isinstance(el, ds.DocstringSection):
+        return _DocstringSectionPatched.transform(el)
+
+    return el
+
+
+# Patch DocstringSection ------------------------------------------------------
+
+
+class DocstringSectionKindPatched(Enum):
+    see_also = "see also"
+    notes = "notes"
+    warnings = "warnings"
+
+
+class _DocstringSectionPatched(ds.DocstringSection):
+    _registry: "dict[Enum, _DocstringSectionPatched]" = {}
+
+    def __init__(self, value: str, title: "str | None" = None):
+        self.value = value
+        super().__init__(title)
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+
+        if cls.kind.value in cls._registry:
+            raise KeyError(f"A section for kind {cls.kind} already exists")
+
+        cls._registry[cls.kind] = cls
+
+    @classmethod
+    def transform(cls, el: ds.DocstringSection) -> ds.DocstringSection:
+        """Attempt to cast DocstringSection element to more specific section type.
+
+        Note that this is meant to patch cases where the general DocstringSectionText
+        class represents a section like See Also, etc..
+        """
+
+        if isinstance(el, ds.DocstringSectionText):
+            for kind, sub_cls in cls._registry.items():
+                prefix = kind.value.title() + "\n---"
+                if el.value.lstrip("\n").startswith(prefix):
+                    stripped = el.value.replace(prefix, "", 1).lstrip("-\n")
+                    return sub_cls(stripped, el.title)
+
+        return el
+
+
+class DocstringSectionSeeAlso(_DocstringSectionPatched):
+    kind = DocstringSectionKindPatched.see_also
+
+
+class DocstringSectionNotes(_DocstringSectionPatched):
+    kind = DocstringSectionKindPatched.notes
+
+
+class DocstringSectionWarnings(_DocstringSectionPatched):
+    kind = DocstringSectionKindPatched.warnings
+
+
+# Patch Example elements ------------------------------------------------------
+
+
+@dataclass
+class ExampleCode:
+    value: str
+
+
+@dataclass
+class ExampleText:
+    value: str
+
+
+def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
+    """Re-format funky tuple setup in example section to be a class."""
+    assert len(el) == 2
+
+    kind, value = el
+    if kind.value == "examples":
+        return ExampleCode(value)
+    elif kind.value == "text":
+        return ExampleText(value)
+
+    raise ValueError(f"Unsupported first element in tuple: {kind}")
 
 
 # Tree previewer ==============================================================
@@ -106,7 +203,7 @@ class Formatter:
     def format(self, call, depth=0, pad=0):
         """Return a Symbolic or Call back as a nice tree, with boxes for nodes."""
 
-        call = self.transform(call)
+        call = transform(call)
 
         crnt_fields = fields(call)
 
@@ -146,19 +243,6 @@ class Formatter:
             return obj[k]
 
         return getattr(obj, k)
-
-    def transform(self, obj):
-        # TODO: currently this transform happens here, and in the renderer.
-        #       let's consolidate this into one step (when getting the object)
-        if isinstance(obj, tuple):
-            try:
-                return tuple_to_data(obj)
-            except ValueError:
-                pass
-        elif isinstance(obj, ds.DocstringSectionText):
-            return docstring_section_narrow(obj)
-
-        return obj
 
     def fmt_pipe(self, x, is_final=False, pad=0):
         if not is_final:
