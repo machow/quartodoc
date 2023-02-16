@@ -207,14 +207,7 @@
     "href": "reference/ui.input_action_link.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_action_link(id, label, icon=None, kwargs)\nCreates a link whose value is initially zero, and increments by one each time it is pressed.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nicon\nhtmltools.TagChildArg\nAn icon to appear inline with the button/link.\nNone\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to be applied to the link.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
-  },
-  {
-    "objectID": "reference/ui.input_action_link.html#notes",
-    "href": "reference/ui.input_action_link.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nAn integer representing the number of clicks."
+    "text": "ui.input_action_link(id, label, icon=None, kwargs)\nCreates a link whose value is initially zero, and increments by one each time it is pressed.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nicon\nhtmltools.TagChildArg\nAn icon to appear inline with the button/link.\nNone\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to be applied to the link.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n.. admonition:: Server value\nAn integer representing the number of clicks."
   },
   {
     "objectID": "reference/ui.input_action_link.html#see-also",
@@ -354,14 +347,7 @@
     "href": "reference/ui.input_password.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_password(id, label, value='', width=None, placeholder=None)\nCreate an password control for entry of passwords.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nplaceholder\nOptional[str]\nThe placeholder of the input.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_password.html#notes",
-    "href": "reference/ui.input_password.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA string of the password input. The default value is unless value is provided."
+    "text": "ui.input_password(id, label, value='', width=None, placeholder=None)\nCreate an password control for entry of passwords.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nplaceholder\nOptional[str]\nThe placeholder of the input.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\nA string of the password input. The default value is unless value is provided."
   },
   {
     "objectID": "reference/ui.input_password.html#see-also",
@@ -571,14 +557,7 @@
     "href": "reference/ui.input_action_button.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_action_button(id, label, icon=None, width=None, kwargs)\nCreates an action button whose value is initially zero, and increments by one each time it is pressed.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nicon\nhtmltools.TagChildArg\nAn icon to appear inline with the button/link.\nNone\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to be applied to the button.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
-  },
-  {
-    "objectID": "reference/ui.input_action_button.html#notes",
-    "href": "reference/ui.input_action_button.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nAn integer representing the number of clicks."
+    "text": "ui.input_action_button(id, label, icon=None, width=None, kwargs)\nCreates an action button whose value is initially zero, and increments by one each time it is pressed.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nicon\nhtmltools.TagChildArg\nAn icon to appear inline with the button/link.\nNone\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nkwargs\nhtmltools.TagAttrArg\nAttributes to be applied to the button.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n.. admonition:: Server value\nAn integer representing the number of clicks."
   },
   {
     "objectID": "reference/ui.input_action_button.html#see-also",
@@ -599,14 +578,7 @@
     "href": "reference/ui.input_file.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_file(id, label, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)\nCreate a file upload control that can be used to upload one or more files.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nmultiple\nbool\nWhether the user should be allowed to select and upload multiple files at once.\nFalse\n\n\naccept\nOptional[Union[str, List[str]]]\nUnique file type specifier(s) which give the browser a hint as to the type of file the server expects. Many browsers use this to prevent the user from selecting an invalid file. Examples of valid values include: * A case insensitive extension like .csv or .rds. * A valid MIME type, like text/plain or application/pdf * One of audio/*, video/*, or image/* meaning any audio, video, or image type, respectively.\nNone\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nbutton_label\nstr\nThe label used on the button.\n'Browse...'\n\n\nplaceholder\nstr\nThe text to show on the input before a file has been uploaded.\n'No file selected'\n\n\ncapture\nOptional[Literal[environment, user]]\nOn mobile devices, this can be used to open the device’s camera for input. If “environment”, it will open the rear-facing camera. If “user”, it will open the front-facing camera. By default, it will accept either still photos or video. To accept only still photos, use accept=\"image/*\"; to accept only video, use accept=\"video/*\".\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_file.html#notes",
-    "href": "reference/ui.input_file.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA list of dictionaries (one for each file upload) with the following keys:\n\n* name: The filename provided by the web browser. This is *not* the path to read\n  to get at the actual data that was uploaded (see 'datapath').\n* size: The size of the uploaded data, in bytes.\n* type: The MIME type reported by the browser (for example, 'text/plain'), or\n  empty string if the browser didn't know.\n* datapath: The path to a temp file that contains the data that was uploaded.\n  This file may be deleted if the user performs another upload operation."
+    "text": "ui.input_file(id, label, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)\nCreate a file upload control that can be used to upload one or more files.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nmultiple\nbool\nWhether the user should be allowed to select and upload multiple files at once.\nFalse\n\n\naccept\nOptional[Union[str, List[str]]]\nUnique file type specifier(s) which give the browser a hint as to the type of file the server expects. Many browsers use this to prevent the user from selecting an invalid file. Examples of valid values include: * A case insensitive extension like .csv or .rds. * A valid MIME type, like text/plain or application/pdf * One of audio/*, video/*, or image/* meaning any audio, video, or image type, respectively.\nNone\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nbutton_label\nstr\nThe label used on the button.\n'Browse...'\n\n\nplaceholder\nstr\nThe text to show on the input before a file has been uploaded.\n'No file selected'\n\n\ncapture\nOptional[Literal[environment, user]]\nOn mobile devices, this can be used to open the device’s camera for input. If “environment”, it will open the rear-facing camera. If “user”, it will open the front-facing camera. By default, it will accept either still photos or video. To accept only still photos, use accept=\"image/*\"; to accept only video, use accept=\"video/*\".\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\nA list of dictionaries (one for each file upload) with the following keys:\n\n* name: The filename provided by the web browser. This is *not* the path to read\n  to get at the actual data that was uploaded (see 'datapath').\n* size: The size of the uploaded data, in bytes.\n* type: The MIME type reported by the browser (for example, 'text/plain'), or\n  empty string if the browser didn't know.\n* datapath: The path to a temp file that contains the data that was uploaded.\n  This file may be deleted if the user performs another upload operation."
   },
   {
     "objectID": "reference/ui.input_file.html#see-also",
@@ -627,14 +599,7 @@
     "href": "reference/ui.input_checkbox.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_checkbox(id, label, value=False, width=None)\nCreate a checkbox that can be used to specify logical values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nbool\nInitial value.\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_checkbox.html#notes",
-    "href": "reference/ui.input_checkbox.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\n``True`` if checked, ``False`` otherwise."
+    "text": "ui.input_checkbox(id, label, value=False, width=None)\nCreate a checkbox that can be used to specify logical values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nbool\nInitial value.\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\n``True`` if checked, ``False`` otherwise."
   },
   {
     "objectID": "reference/ui.input_checkbox.html#see-also",
@@ -830,14 +795,7 @@
     "href": "reference/ui.input_selectize.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_selectize(id, label, choices, selected=None, multiple=False, width=None)\nCreate a select list that can be used to choose a single or multiple items from a list of values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_select.SelectChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nrequired\n\n\nselected\nOptional[Union[str, List[str]]]\nThe values that should be initially selected, if any.\nNone\n\n\nmultiple\nbool\nIs selection of multiple items allowed?\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_selectize.html#notes",
-    "href": "reference/ui.input_selectize.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA list of strings, usually of length 1, with the value of the selected items. When\n``multiple=True`` and nothing is selected, this value will be ``None``."
+    "text": "ui.input_selectize(id, label, choices, selected=None, multiple=False, width=None)\nCreate a select list that can be used to choose a single or multiple items from a list of values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_select.SelectChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nrequired\n\n\nselected\nOptional[Union[str, List[str]]]\nThe values that should be initially selected, if any.\nNone\n\n\nmultiple\nbool\nIs selection of multiple items allowed?\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\nA list of strings, usually of length 1, with the value of the selected items. When\n``multiple=True`` and nothing is selected, this value will be ``None``."
   },
   {
     "objectID": "reference/ui.input_selectize.html#see-also",
@@ -942,14 +900,7 @@
     "href": "reference/ui.input_checkbox_group.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_checkbox_group(id, label, choices, selected=None, inline=False, width=None)\nCreate a group of checkboxes that can be used to toggle multiple choices independently.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_check_radio.ChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nrequired\n\n\nselected\nOptional[Union[str, List[str]]]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_checkbox_group.html#notes",
-    "href": "reference/ui.input_checkbox_group.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA tuple of string(s) with the selected value(s) (if any)."
+    "text": "ui.input_checkbox_group(id, label, choices, selected=None, inline=False, width=None)\nCreate a group of checkboxes that can be used to toggle multiple choices independently.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_check_radio.ChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nrequired\n\n\nselected\nOptional[Union[str, List[str]]]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\nA tuple of string(s) with the selected value(s) (if any)."
   },
   {
     "objectID": "reference/ui.input_checkbox_group.html#see-also",
@@ -1061,14 +1012,7 @@
     "href": "reference/ui.input_radio_buttons.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_radio_buttons(id, label, choices, selected=None, inline=False, width=None)\nCreate a set of radio buttons used to select an item from a list.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_check_radio.ChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nrequired\n\n\nselected\nOptional[str]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nReturns\n\n\nrequired\n\n\nA\n\n\nrequired"
-  },
-  {
-    "objectID": "reference/ui.input_radio_buttons.html#notes",
-    "href": "reference/ui.input_radio_buttons.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA string with the selected value."
+    "text": "ui.input_radio_buttons(id, label, choices, selected=None, inline=False, width=None)\nCreate a set of radio buttons used to select an item from a list.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_check_radio.ChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nrequired\n\n\nselected\nOptional[str]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nReturns\n\n\nrequired\n\n\nA\n\n\nrequired\n\n\n\n\n\n\n.. admonition:: Server value\nA string with the selected value."
   },
   {
     "objectID": "reference/ui.input_radio_buttons.html#see-also",
@@ -1117,14 +1061,7 @@
     "href": "reference/ui.input_slider.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_slider(id, label, min, max, value, step=None, ticks=True, animate=False, width=None, sep=',', pre=None, post=None, time_format=None, timezone=None, drag_range=True)\nConstructs a slider widget to select a number, date, or date-time from a range.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nmin\nshiny.ui._input_slider.SliderValueArg\nThe minimum allowed value.\nrequired\n\n\nmax\nshiny.ui._input_slider.SliderValueArg\nThe maximum allowed value.\nrequired\n\n\nvalue\nUnion[SliderValueArg, Iterable[SliderValueArg]]\nInitial value.\nrequired\n\n\nstep\nOptional[SliderStepArg]\nInterval to use when stepping between min and max.\nNone\n\n\nticks\nbool\nFalse to hide tick marks, True to show them according to some simple heuristics.\nTrue\n\n\nanimate\nUnion[bool, AnimationOptions]\nTrue to show simple animation controls with default settings; False not to; or a custom settings list, such as those created using :class:AnimationOptions().\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nsep\nstr\nSeparator between thousands places in numbers.\n','\n\n\npre\nOptional[str]\nA prefix string to put in front of the value.\nNone\n\n\npost\nOptional[str]\nA suffix string to put after the value.\nNone\n\n\ntime_format\nOptional[str]\nOnly used if the slider values are :func:~datetime.date or :func:~datetime.datetime objects. A time format string, to be passed to the Javascript strftime library. See https://github.com/samsonjs/strftime for more details. For Dates, the default is “%F” (like “2015-07-01”), and for Datetimes, the default is “%F %T” (like “2015-07-01 15:32:10”).\nNone\n\n\ntimezone\nOptional[str]\nOnly used if the values are :func:~datetime.datetime objects. A string specifying the time zone offset for the displayed times, in the format “+HHMM” or “-HHMM”. If None (the default), times will be displayed in the browser’s time zone. The value “+0000” will result in UTC time.\nNone\n\n\ndrag_range\nbool\nThis option is used only if it is a range slider (with two values). If True (the default), the range can be dragged. In other words, the min and max can be dragged together. If False, the range cannot be dragged.\nTrue\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
-  },
-  {
-    "objectID": "reference/ui.input_slider.html#notes",
-    "href": "reference/ui.input_slider.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA number, date, or date-time (depending on the class of value), or in the case of slider range, a list of two numbers/dates/date-times."
+    "text": "ui.input_slider(id, label, min, max, value, step=None, ticks=True, animate=False, width=None, sep=',', pre=None, post=None, time_format=None, timezone=None, drag_range=True)\nConstructs a slider widget to select a number, date, or date-time from a range.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nmin\nshiny.ui._input_slider.SliderValueArg\nThe minimum allowed value.\nrequired\n\n\nmax\nshiny.ui._input_slider.SliderValueArg\nThe maximum allowed value.\nrequired\n\n\nvalue\nUnion[SliderValueArg, Iterable[SliderValueArg]]\nInitial value.\nrequired\n\n\nstep\nOptional[SliderStepArg]\nInterval to use when stepping between min and max.\nNone\n\n\nticks\nbool\nFalse to hide tick marks, True to show them according to some simple heuristics.\nTrue\n\n\nanimate\nUnion[bool, AnimationOptions]\nTrue to show simple animation controls with default settings; False not to; or a custom settings list, such as those created using :class:AnimationOptions().\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nsep\nstr\nSeparator between thousands places in numbers.\n','\n\n\npre\nOptional[str]\nA prefix string to put in front of the value.\nNone\n\n\npost\nOptional[str]\nA suffix string to put after the value.\nNone\n\n\ntime_format\nOptional[str]\nOnly used if the slider values are :func:~datetime.date or :func:~datetime.datetime objects. A time format string, to be passed to the Javascript strftime library. See https://github.com/samsonjs/strftime for more details. For Dates, the default is “%F” (like “2015-07-01”), and for Datetimes, the default is “%F %T” (like “2015-07-01 15:32:10”).\nNone\n\n\ntimezone\nOptional[str]\nOnly used if the values are :func:~datetime.datetime objects. A string specifying the time zone offset for the displayed times, in the format “+HHMM” or “-HHMM”. If None (the default), times will be displayed in the browser’s time zone. The value “+0000” will result in UTC time.\nNone\n\n\ndrag_range\nbool\nThis option is used only if it is a range slider (with two values). If True (the default), the range can be dragged. In other words, the min and max can be dragged together. If False, the range cannot be dragged.\nTrue\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n.. admonition:: Server value\nA number, date, or date-time (depending on the class of value), or in the case of slider range, a list of two numbers/dates/date-times."
   },
   {
     "objectID": "reference/ui.input_slider.html#see-also",
@@ -1159,14 +1096,7 @@
     "href": "reference/ui.input_switch.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_switch(id, label, value=False, width=None)\nCreate a switch that can be used to specify logical values. Similar to ~shiny.ui.input_checkbox, but implies to the user that the change will take effect immediately.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nbool\nInitial value.\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_switch.html#notes",
-    "href": "reference/ui.input_switch.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\n``True`` if checked, ``False`` otherwise."
+    "text": "ui.input_switch(id, label, value=False, width=None)\nCreate a switch that can be used to specify logical values. Similar to ~shiny.ui.input_checkbox, but implies to the user that the change will take effect immediately.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nbool\nInitial value.\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\n``True`` if checked, ``False`` otherwise."
   },
   {
     "objectID": "reference/ui.input_switch.html#see-also",
@@ -1369,14 +1299,7 @@
     "href": "reference/ui.input_select.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_select(id, label, choices, selected=None, multiple=False, selectize=False, width=None, size=None)\nCreate a select list that can be used to choose a single or multiple items from a list of values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_select.SelectChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nrequired\n\n\nselected\nOptional[Union[str, List[str]]]\nThe values that should be initially selected, if any.\nNone\n\n\nmultiple\nbool\nIs selection of multiple items allowed?\nFalse\n\n\nselectize\nbool\nWhether to use selectize.js or not.\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nsize\nOptional[str]\nNumber of items to show in the selection box; a larger number will result in a taller box. Normally, when multiple=False, a select input will be a drop-down list, but when size is set, it will be a box instead.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_select.html#notes",
-    "href": "reference/ui.input_select.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA list of strings, usually of length 1, with the value of the selected items. When\n``multiple=True`` and nothing is selected, this value will be ``None``."
+    "text": "ui.input_select(id, label, choices, selected=None, multiple=False, selectize=False, width=None, size=None)\nCreate a select list that can be used to choose a single or multiple items from a list of values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nchoices\nshiny.ui._input_select.SelectChoicesArg\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nrequired\n\n\nselected\nOptional[Union[str, List[str]]]\nThe values that should be initially selected, if any.\nNone\n\n\nmultiple\nbool\nIs selection of multiple items allowed?\nFalse\n\n\nselectize\nbool\nWhether to use selectize.js or not.\nFalse\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nsize\nOptional[str]\nNumber of items to show in the selection box; a larger number will result in a taller box. Normally, when multiple=False, a select input will be a drop-down list, but when size is set, it will be a box instead.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\nA list of strings, usually of length 1, with the value of the selected items. When\n``multiple=True`` and nothing is selected, this value will be ``None``."
   },
   {
     "objectID": "reference/ui.input_select.html#see-also",
@@ -1516,14 +1439,7 @@
     "href": "reference/ui.input_numeric.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_numeric(id, label, value, min=None, max=None, step=None, width=None)\nCreate an input control for entry of numeric values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nfloat\nInitial value.\nrequired\n\n\nmin\nOptional[float]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[float]\nThe maximum allowed value.\nNone\n\n\nstep\nOptional[float]\nInterval to use when stepping between min and max.\nNone\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
-  },
-  {
-    "objectID": "reference/ui.input_numeric.html#notes",
-    "href": "reference/ui.input_numeric.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA numeric value."
+    "text": "ui.input_numeric(id, label, value, min=None, max=None, step=None, width=None)\nCreate an input control for entry of numeric values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nfloat\nInitial value.\nrequired\n\n\nmin\nOptional[float]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[float]\nThe maximum allowed value.\nNone\n\n\nstep\nOptional[float]\nInterval to use when stepping between min and max.\nNone\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\n.. admonition:: Server value\nA numeric value."
   },
   {
     "objectID": "reference/ui.input_numeric.html#see-also",
@@ -1684,14 +1600,7 @@
     "href": "reference/ui.input_text.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_text(id, label, value='', width=None, placeholder=None, autocomplete='off', spellcheck=None)\nCreate an input control for entry of text values\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nautocomplete\nOptional[str]\nWhether to enable browser autocompletion of the text input (default is None). If None, then it will use the browser’s default behavior. Other possible values include “on”, “off”, “name”, “username”, and “email”. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete for more.\n'off'\n\n\nspellcheck\nOptional[Literal[true, false]]\nWhether to enable browser spell checking of the text input (default is None). If None, then it will use the browser’s default behavior.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
-  },
-  {
-    "objectID": "reference/ui.input_text.html#notes",
-    "href": "reference/ui.input_text.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA string containing the current text input. The default value is ``\"\"`` unless\n``value`` is provided."
+    "text": "ui.input_text(id, label, value='', width=None, placeholder=None, autocomplete='off', spellcheck=None)\nCreate an input control for entry of text values\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nautocomplete\nOptional[str]\nWhether to enable browser autocompletion of the text input (default is None). If None, then it will use the browser’s default behavior. Other possible values include “on”, “off”, “name”, “username”, and “email”. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete for more.\n'off'\n\n\nspellcheck\nOptional[Literal[true, false]]\nWhether to enable browser spell checking of the text input (default is None). If None, then it will use the browser’s default behavior.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n.. admonition:: Server value\nA string containing the current text input. The default value is ``\"\"`` unless\n``value`` is provided."
   },
   {
     "objectID": "reference/ui.input_text.html#see-also",
@@ -1908,14 +1817,7 @@
     "href": "reference/ui.input_text_area.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_text_area(id, label, value='', width=None, height=None, cols=None, rows=None, placeholder=None, resize=None, autocomplete=None, spellcheck=None)\nCreate a textarea input control for entry of unstructured text values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nheight\nOptional[str]\nThe CSS height, e.g. ‘400px’, or ‘100%’\nNone\n\n\ncols\nOptional[int]\nValue of the visible character columns of the input, e.g. 80. This argument will only take effect if there is not a CSS width rule defined for this element; such a rule could come from the width argument of this function or from a containing page layout such as :func:~shiny.ui.page_fluid.\nNone\n\n\nrows\nOptional[int]\nThe value of the visible character rows of the input, e.g. 6. If the height argument is specified, height will take precedence in the browser’s rendering.\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nresize\nOptional[str]\nWhich directions the textarea box can be resized. Can be one of “both”, “none”, “vertical”, and “horizontal”. The default, None, will use the client browser’s default setting for resizing textareas.\nNone\n\n\nautocomplete\nOptional[str]\nWhether to enable browser autocompletion of the text input (default is “off”). If None, then it will use the browser’s default behavior. Other possible values include “on”, “name”, “username”, and “email”. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete for more.\nNone\n\n\nspellcheck\nOptional[Literal[true, false]]\nWhether to enable browser spell checking of the text input (default is None). If None, then it will use the browser’s default behavior.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
-  },
-  {
-    "objectID": "reference/ui.input_text_area.html#notes",
-    "href": "reference/ui.input_text_area.html#notes",
-    "title": "Shiny",
-    "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA string containing the current text input. The default value is ``\"\"`` unless\n``value`` is provided."
+    "text": "ui.input_text_area(id, label, value='', width=None, height=None, cols=None, rows=None, placeholder=None, resize=None, autocomplete=None, spellcheck=None)\nCreate a textarea input control for entry of unstructured text values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChildArg\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nheight\nOptional[str]\nThe CSS height, e.g. ‘400px’, or ‘100%’\nNone\n\n\ncols\nOptional[int]\nValue of the visible character columns of the input, e.g. 80. This argument will only take effect if there is not a CSS width rule defined for this element; such a rule could come from the width argument of this function or from a containing page layout such as :func:~shiny.ui.page_fluid.\nNone\n\n\nrows\nOptional[int]\nThe value of the visible character rows of the input, e.g. 6. If the height argument is specified, height will take precedence in the browser’s rendering.\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nresize\nOptional[str]\nWhich directions the textarea box can be resized. Can be one of “both”, “none”, “vertical”, and “horizontal”. The default, None, will use the client browser’s default setting for resizing textareas.\nNone\n\n\nautocomplete\nOptional[str]\nWhether to enable browser autocompletion of the text input (default is “off”). If None, then it will use the browser’s default behavior. Other possible values include “on”, “name”, “username”, and “email”. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete for more.\nNone\n\n\nspellcheck\nOptional[Literal[true, false]]\nWhether to enable browser spell checking of the text input (default is None). If None, then it will use the browser’s default behavior.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n.. admonition:: Server value\nA string containing the current text input. The default value is ``\"\"`` unless\n``value`` is provided."
   },
   {
     "objectID": "reference/ui.input_text_area.html#see-also",
