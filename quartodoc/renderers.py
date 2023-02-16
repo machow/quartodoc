@@ -269,12 +269,24 @@ class MdRenderer(Renderer):
         annotation = self._render_annotation(el.annotation)
         return el.name, self.render(annotation), el.description
 
+    # warnings ----
+
+    @dispatch
+    def render(self, el: qast.DocstringSectionWarnings):
+        return el.value
+
     # see also ----
 
     @dispatch
     def render(self, el: qast.DocstringSectionSeeAlso):
         # TODO: attempt to parse See Also sections
         return convert_rst_link_to_md(el.value)
+
+    # notes ----
+
+    @dispatch
+    def render(self, el: qast.DocstringSectionNotes):
+        return el.value
 
     # examples ----
 
@@ -289,6 +301,10 @@ class MdRenderer(Renderer):
         return f"""```python
 {el.value}
 ```"""
+
+    @dispatch
+    def render(self, el: qast.ExampleText):
+        return el.value
 
     # returns ----
 
@@ -305,10 +321,6 @@ class MdRenderer(Renderer):
         return (annotation, el.description)
 
     # unsupported parts ----
-
-    @dispatch
-    def render(self, el: qast.ExampleText):
-        return el.value
 
     @dispatch.multi(
         (ds.DocstringAdmonition,),
