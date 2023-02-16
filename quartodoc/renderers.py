@@ -1,63 +1,14 @@
+import quartodoc.ast as qast
 import re
 
-from enum import Enum
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
-from dataclasses import dataclass
 from tabulate import tabulate
 from plum import dispatch
 from typing import Tuple, Union
 
 
-# Docstring rendering =========================================================
-
 # utils -----------------------------------------------------------------------
-# these largely re-format the output of griffe
-
-
-def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
-    """Re-format funky tuple setup in example section to be a class."""
-    assert len(el) == 2
-
-    kind, value = el
-    if kind.value == "examples":
-        return ExampleCode(value)
-    elif kind.value == "text":
-        return ExampleText(value)
-
-    raise ValueError(f"Unsupported first element in tuple: {kind}")
-
-
-def docstring_section_narrow(el: ds.DocstringSection) -> ds.DocstringSection:
-    # attempt to narrow down text sections
-    prefix = "See Also\n---"
-    if isinstance(el, ds.DocstringSectionText) and el.value.startswith(prefix):
-        stripped = el.value.replace(prefix, "", 1).lstrip("-\n")
-        return DocstringSectionSeeAlso(stripped, el.title)
-
-    return el
-
-
-class DocstringSectionKindPatched(Enum):
-    see_also = "see also"
-
-
-class DocstringSectionSeeAlso(ds.DocstringSection):
-    kind = DocstringSectionKindPatched.see_also
-
-    def __init__(self, value: str, title: "str | None"):
-        self.value = value
-        super().__init__(title)
-
-
-@dataclass
-class ExampleCode:
-    value: str
-
-
-@dataclass
-class ExampleText:
-    value: str
 
 
 def escape(val: str):
@@ -230,7 +181,7 @@ class MdRenderer(Renderer):
             pass
         else:
             for section in el.docstring.parsed:
-                new_el = docstring_section_narrow(section)
+                new_el = qast.transform(section)
                 title = new_el.kind.value
                 body = self.render(new_el)
 
@@ -281,7 +232,7 @@ class MdRenderer(Renderer):
     # or a section with a header not included in the numpydoc standard
     @dispatch
     def render(self, el: ds.DocstringSectionText):
-        new_el = docstring_section_narrow(el)
+        new_el = qast.transform(el)
         if isinstance(new_el, ds.DocstringSectionText):
             # ensures we don't recurse forever
             return el.value
@@ -318,26 +269,42 @@ class MdRenderer(Renderer):
         annotation = self._render_annotation(el.annotation)
         return el.name, self.render(annotation), el.description
 
+    # warnings ----
+
+    @dispatch
+    def render(self, el: qast.DocstringSectionWarnings):
+        return el.value
+
     # see also ----
 
     @dispatch
-    def render(self, el: DocstringSectionSeeAlso):
+    def render(self, el: qast.DocstringSectionSeeAlso):
         # TODO: attempt to parse See Also sections
         return convert_rst_link_to_md(el.value)
+
+    # notes ----
+
+    @dispatch
+    def render(self, el: qast.DocstringSectionNotes):
+        return el.value
 
     # examples ----
 
     @dispatch
     def render(self, el: ds.DocstringSectionExamples):
         # its value is a tuple: DocstringSectionKind["text" | "examples"], str
-        data = map(tuple_to_data, el.value)
+        data = map(qast.transform, el.value)
         return "\n\n".join(list(map(self.render, data)))
 
     @dispatch
-    def render(self, el: ExampleCode):
+    def render(self, el: qast.ExampleCode):
         return f"""```python
 {el.value}
 ```"""
+
+    @dispatch
+    def render(self, el: qast.ExampleText):
+        return el.value
 
     # returns ----
 
@@ -354,10 +321,6 @@ class MdRenderer(Renderer):
         return (annotation, el.description)
 
     # unsupported parts ----
-
-    @dispatch
-    def render(self, el: ExampleText):
-        return el.value
 
     @dispatch.multi(
         (ds.DocstringAdmonition,),

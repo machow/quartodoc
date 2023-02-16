@@ -12,3 +12,5 @@ api
 # interlinks
 _inv
 objects.json
+_sidebar.yml
+_extensions
