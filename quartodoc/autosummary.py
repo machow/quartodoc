@@ -103,7 +103,19 @@ def get_object(
     )
     mod = griffe.load_module(module)
 
+    parts = object_name.split(".")
     f_data = mod._modules_collection[f"{module}.{object_name}"]
+
+    # ensure that function methods fetched off of an Alias of a class, have that
+    # class Alias as their parent, not the Class itself.
+    if isinstance(f_data, dc.Function):
+        try:
+            parent_path = ".".join(parts[:-1])
+            parent_alias = mod._modules_collection[f"{module}.{parent_path}"]
+        except KeyError:
+            pass
+        else:
+            f_data = dc.Alias(f_data.name, f_data, parent=parent_alias)
 
     # Alias objects can refer to objects imported from other modules.
     # in this case, we need to import the target's module in order to resolve
