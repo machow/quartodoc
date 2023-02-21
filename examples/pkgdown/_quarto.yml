@@ -24,6 +24,7 @@ format:
 quartodoc:
   style: pkgdown
   dir: reference
+  display_name: relative
   package: quartodoc
   sections:
     - title: Some functions
@@ -31,3 +32,5 @@ quartodoc:
       contents:
         - get_object
         - preview
+        - Builder
+        - Builder.build

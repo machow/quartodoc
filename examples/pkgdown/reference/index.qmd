@@ -8,3 +8,5 @@ These functions inspect and parse docstrings.
 | --- | --- |
 | [get_object](/reference/get_object.qmd) | Fetch a griffe object. |
 | [preview](/reference/preview.qmd) | Print a friendly representation of a griffe object (e.g. function, docstring) |
+| [Builder](/reference/Builder.qmd) | Base class for building API docs. |
+| [Builder.build](/reference/Builder.build.qmd) | Build index page, sphinx inventory, and individual doc pages. |
