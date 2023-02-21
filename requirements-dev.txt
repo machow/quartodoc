@@ -58,7 +58,7 @@ executing==1.2.0
     # via stack-data
 fastjsonschema==2.16.2
     # via nbformat
-griffe==0.24.1
+griffe==0.25.5
     # via quartodoc (setup.cfg)
 idna==3.4
     # via
