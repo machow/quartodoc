@@ -1,53 +1,3 @@
-## get_object { #get_object }
-
-`get_object(module, object_name, parser='numpy', load_aliases=True, modules_collection=None)`
-
-Fetch a griffe object.
-
-### Parameters
-
-| Name                 | Type                      | Description                                                                        | Default   |
-|----------------------|---------------------------|------------------------------------------------------------------------------------|-----------|
-| `module`             | str                       | A module name.                                                                     | required  |
-| `object_name`        | str                       | A function name.                                                                   | required  |
-| `parser`             | str                       | A docstring parser to use.                                                         | `'numpy'` |
-| `load_aliases`       |                           | For aliases that were imported from other modules, should we load that module?     | `True`    |
-| `modules_collection` | None \| ModulesCollection | A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules. | `None`    |
-
-### See Also
-
-get_function: a deprecated function.
-
-### Examples
-
-```python
->>> get_function("quartodoc", "get_function")
-<Function('get_function', ...
-```
-
-## preview { #preview }
-
-`preview(ast, max_depth=999)`
-
-Print a friendly representation of a griffe object (e.g. function, docstring)
-
-### Examples
-
-```python
->>> from quartodoc import get_object
->>> obj = get_object("quartodoc", "get_object")
-```
-
-```python
->>> preview(obj.docstring.parsed)
- ...
-```
-
-```python
->>> preview(obj)
- ...
-```
-
 ## Builder { #Builder }
 
 `Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, use_interlinks=False, display_name='name')`
@@ -67,9 +17,3 @@ Base class for building API docs.
 | `out_index`    | str                     | The output path of the index file, used to list all API functions.                                                                                                                                                                                                                  | `None`                 |
 | `sidebar`      | str \| None             | The output path for a sidebar yaml config (by default no config generated).                                                                                                                                                                                                         | `None`                 |
 | `display_name` | str                     | The default name shown for documented functions. Either "name", "relative", "full", or "canonical". These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__. | `'name'`               |
-
-## build { #build }
-
-`build(self)`
-
-Build index page, sphinx inventory, and individual doc pages.
