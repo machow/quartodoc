@@ -181,6 +181,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#examples-1" id="toc-examples-1" class="nav-link" data-scroll-target="#examples-1">Examples</a></li>
   </ul></li>
+  <li><a href="#Builder" id="toc-Builder" class="nav-link" data-scroll-target="#Builder">Builder</a>
+  <ul class="collapse">
+  <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters</a></li>
+  </ul></li>
+  <li><a href="#build" id="toc-build" class="nav-link" data-scroll-target="#build">build</a></li>
   </ul>
 </nav>
     </div>
@@ -231,9 +236,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td><code>modules_collection</code></td>
-<td>None</td>
-<td>ModulesCollection</td>
+<td>None | ModulesCollection</td>
 <td>A griffe <a href="`~griffe.collections.ModulesCollection`"></a>, used to hold loaded modules.</td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>
@@ -260,9 +265,94 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> preview(obj)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-
 </section>
+</section>
+<section id="Builder" class="level2">
+<h2 class="anchored" data-anchor-id="Builder">Builder</h2>
+<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, use_interlinks=False, display_name='name')</code></p>
+<p>Base class for building API docs.</p>
+<section id="parameters-1" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-1">Parameters</h3>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 80%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>package</code></td>
+<td>str</td>
+<td>The name of the package.</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>sections</code></td>
+<td>list[Any]</td>
+<td>A list of sections, with items to document.</td>
+<td>required</td>
+</tr>
+<tr class="odd">
+<td><code>version</code></td>
+<td>str | None</td>
+<td>The package version. By default this attempts to look up the current package version (TODO).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>dir</code></td>
+<td>str</td>
+<td>Name of API directory.</td>
+<td><code>'reference'</code></td>
+</tr>
+<tr class="odd">
+<td><code>title</code></td>
+<td>str</td>
+<td>Title of the API index page.</td>
+<td><code>'Function reference'</code></td>
+</tr>
+<tr class="even">
+<td><code>renderer</code></td>
+<td>dict | Renderer | str</td>
+<td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
+<td><code>'markdown'</code></td>
+</tr>
+<tr class="odd">
+<td><code>out_index</code></td>
+<td>str</td>
+<td>The output path of the index file, used to list all API functions.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>sidebar</code></td>
+<td>str | None</td>
+<td>The output path for a sidebar yaml config (by default no config generated).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>display_name</code></td>
+<td>str</td>
+<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
+<td><code>'name'</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="build" class="level2">
+<h2 class="anchored" data-anchor-id="build">build</h2>
+<p><code>build(self)</code></p>
+<p>Build index page, sphinx inventory, and individual doc pages.</p>
+
+
 </section>
 
 </main> <!-- /main -->

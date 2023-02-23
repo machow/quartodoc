@@ -235,8 +235,8 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <colgroup>
 <col style="width: 4%">
-<col style="width: 6%">
-<col style="width: 81%">
+<col style="width: 7%">
+<col style="width: 80%">
 <col style="width: 7%">
 </colgroup>
 <thead>
@@ -262,9 +262,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>version</code></td>
-<td>str</td>
-<td>None</td>
+<td>str | None</td>
 <td>The package version. By default this attempts to look up the current package version (TODO).</td>
+<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>dir</code></td>
@@ -280,9 +280,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>renderer</code></td>
-<td>dict</td>
-<td>Renderer</td>
-<td>str</td>
+<td>dict | Renderer | str</td>
+<td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
+<td><code>'markdown'</code></td>
 </tr>
 <tr class="odd">
 <td><code>out_index</code></td>
@@ -292,9 +292,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>sidebar</code></td>
-<td>str</td>
-<td>None</td>
+<td>str | None</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
+<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>display_name</code></td>
