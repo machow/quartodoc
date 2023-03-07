@@ -13,14 +13,12 @@ from pathlib import Path
 
 from .inventory import create_inventory, convert_inventory
 from .renderers import Renderer
+from . import layout
 
-from typing import Any, TYPE_CHECKING
+from typing import Any, Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
     import sphobjinv as soi
-
-    from griffe import dataclasses as dc
-    from griffe.collections import ModulesCollection
 
 
 _log = logging.getLogger(__name__)
@@ -157,7 +155,7 @@ class Builder:
         The default name shown for documented functions. Either "name", "relative",
         "full", or "canonical". These options range from just the function name, to its
         full path relative to its package, to including the package name, to its
-        the its full path relative to its .__module__.
+        the its full path relative to its `.__module__`.
 
     """
 
@@ -202,16 +200,14 @@ class Builder:
         use_interlinks: bool = False,
         display_name: str = "name",
     ):
-        self.validate(sections)
-
-        self.sections = sections
+        self.sections = self.load_sections(sections)
         self.package = package
         self.version = None
         self.dir = dir
         self.title = title
         self.display_name = display_name
 
-        self.items: "dict[str, dc.Object | dc.Alias]" = {}
+        self.items: "list[layout.Item]"
         self.create_items()
 
         self.inventory: "None | soi.Inventory"
@@ -248,9 +244,11 @@ class Builder:
             d_sidebar = self.generate_sidebar()
             yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
-    def validate(self, d):
-        # TODO: validate sections (or config values generally)
-        return True
+    def load_sections(self, sections: dict):
+        # TODO: currently returning the list of sections, to make work with
+        # previous code. We should make Layout a first-class citizen of the
+        # process.
+        return layout.Layout(sections=sections).sections
 
     # introspection ----
 
@@ -261,11 +259,13 @@ class Builder:
         f_get_object = partial(get_object, modules_collection=collection)
 
         _log.info("Creating items")
-        for section in self.sections:
-            for func_name in section["contents"]:
-                _log.info(f"Getting object for `{self.package}.{func_name}`")
-                obj = f_get_object(self.package, func_name)
-                self.items[func_name] = obj
+
+        ic = layout.ItemCollector(
+            f_get_object, self.dir, self.package, self.display_name
+        )
+        ic.visit(self.sections)
+
+        self.items = ic.results
 
     # inventory ----
 
@@ -278,7 +278,7 @@ class Builder:
         self.inventory = create_inventory(
             self.package,
             version,
-            list(self.items.values()),
+            self.items,
             self.fetch_object_uri,
             self.fetch_object_dispname,
         )
@@ -288,22 +288,6 @@ class Builder:
 
         dispname = self.fetch_object_dispname(obj)
         return f"{self.dir}/{dispname}{suffix}"
-
-    def fetch_object_dispname(self, obj):
-        """Define the name that will be displayed for individual api functions."""
-
-        if self.display_name == "name":
-            return obj.name
-        elif self.display_name == "relative":
-            return ".".join(obj.path.split(".")[1:])
-
-        elif self.display_name == "full":
-            return obj.path
-
-        elif self.display_name == "canonical":
-            return obj.canonical_path
-
-        raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
     # rendering ----
 
@@ -323,13 +307,7 @@ class Builder:
     def write_doc_pages(self):
         """Write individual function documentation pages."""
 
-        for item in self.items.values():
-            _log.info(f"Rendering `{item.canonical_path}`")
-            rendered = self.renderer.render(item)
-            html_path = Path(self.fetch_object_uri(item))
-            html_path.parent.mkdir(exist_ok=True, parents=True)
-
-            html_path.with_suffix(self.out_page_suffix).write_text(rendered)
+        raise NotImplementedError()
 
     # sidebar ----
 
@@ -338,10 +316,10 @@ class Builder:
         for section in self.sections:
             links = [
                 self.fetch_object_uri(self.items[k], suffix=self.out_page_suffix)
-                for k in section["contents"]
+                for k in section.contents
             ]
 
-            contents.append({"section": section["title"], "contents": links})
+            contents.append({"section": section.title, "contents": links})
 
         return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
 
@@ -373,26 +351,41 @@ class BuilderPkgdown(Builder):
     style = "pkgdown"
 
     def render_index(self):
-        rendered_sections = list(map(self._render_section, self.sections))
+        rendered_sections = list(map(self.summarize, self.sections))
         str_sections = "\n\n".join(rendered_sections)
 
         return f"# {self.title}\n\n{str_sections}"
 
-    def _render_section(self, section):
-        header = f"## {section['title']}\n\n{section['desc']}"
+    @dispatch
+    def summarize(self, el: layout.Section):
+        header = f"## {el.title}\n\n{el.desc}"
 
         thead = "| | |\n| --- | --- |"
 
         rendered = []
-        for func_name in section["contents"]:
-            # TODO: shouldn't need to collect object again after .create_items()
-            obj = get_object(self.package, func_name)
-            rendered.append(self._render_object(obj))
+        for func_name in el.contents:
+            if isinstance(func_name, str):
+                # TODO: shouldn't need to collect object again after .create_items()
+                # TODO: transform step to handle getting objects
+                obj = get_object(self.package, func_name)
+            else:
+                obj = func_name
+            rendered.append(self.summarize(obj))
 
         str_func_table = "\n".join([thead, *rendered])
         return f"{header}\n\n{str_func_table}"
 
-    def _render_object(self, obj):
+    @dispatch
+    def summarize(self, el: layout.Page):
+        if not el.flatten:
+            # TODO: validate these attributes are set?
+            return f"| [{el.name}]({el.path}) | {el.desc} |"
+
+        else:
+            return list(map(self.summarize, el.contents))
+
+    @dispatch
+    def summarize(self, obj: Union[dc.Object, dc.Alias]):
         # get high-level description
         doc = obj.docstring
         if doc is None:
@@ -412,6 +405,15 @@ class BuilderPkgdown(Builder):
             return f"| {link} | {short} |"
         else:
             return f"| {link} | |"
+
+    def write_doc_pages(self):
+        for item in self.items.values():
+            _log.info(f"Rendering `{item.canonical_path}`")
+            rendered = self.renderer.render(item)
+            html_path = Path(self.fetch_object_uri(item))
+            html_path.parent.mkdir(exist_ok=True, parents=True)
+
+            html_path.with_suffix(self.out_page_suffix).write_text(rendered)
 
     # def fetch_object_dispname(self, obj):
     #    return obj.name

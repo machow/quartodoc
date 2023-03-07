@@ -55,6 +55,19 @@ quartodoc:
         - create_inventory
         - convert_inventory
 
+    - title: Data models
+      desc: |
+        Classes for specifying the exact layout of your docs.
+      contents:
+        - kind: "page"
+          path: "layouts.qmd"
+          flatten: true
+          contents:
+            - layout.Layout
+            - layout.Section
+            - layout.Page
+            - layout.Text
+
 
 website:
   title: "quartodoc"
