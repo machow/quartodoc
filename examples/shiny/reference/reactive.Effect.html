@@ -801,7 +801,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="reactive.Effect" class="level2">
 <h2 class="anchored" data-anchor-id="reactive.Effect">reactive.Effect</h2>
-<p><code>reactive.Effect(fn=None, suspended=False, priority=0, session=MISSING)</code></p>
+<p><code>reactive._reactives.Effect(fn=None, suspended=False, priority=0, session=MISSING)</code></p>
 <p>Mark a function as a reactive side effect.</p>
 <p>A reactive effect is like a reactive calculation (:func:<code>Calc</code>) in that it can read reactive values and call reactive calculations, and will automatically re-execute when those dependencies change. But unlike reactive calculations, it doesn’t return a result and can’t be used as an input to other reactive expressions. Thus, observers are only useful for their side effects (for example, performing I/O).</p>
 <p>Another contrast between reactive calculations and effects is their execution strategy. Reactive calculations use lazy evaluation; that is, when their dependencies change, they don’t re-execute right away but rather wait until they are called by someone else. Indeed, if they are not called then they will never re-execute. In contrast, effects use eager evaluation; as soon as their dependencies change, they schedule themselves to re-execute.</p>

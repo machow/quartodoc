@@ -801,7 +801,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="reactive.file_reader" class="level2">
 <h2 class="anchored" data-anchor-id="reactive.file_reader">reactive.file_reader</h2>
-<p><code>reactive.file_reader(filepath, interval_secs=1, priority=1, session=MISSING)</code></p>
+<p><code>reactive._poll.file_reader(filepath, interval_secs=1, priority=1, session=MISSING)</code></p>
 <p>Create a reactive file reader.</p>
 <p>This is a decorator, meant to be applied to a no-argument function that reads data from a file on disk. Whenever the file changes (or to be precise, the file size or last modified time changes), past readers of the data are reactively invalidated. This makes it incredibly easy to write apps that automatically update all of their outputs as soon as files on disk change.</p>
 <p>Note that <code>file_reader</code> works only on single files, not directories of files.</p>
