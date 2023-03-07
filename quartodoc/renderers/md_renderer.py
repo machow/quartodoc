@@ -77,6 +77,27 @@ class MdRenderer(Renderer):
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
+    # signature method --------------------------------------------------------
+
+    @dispatch
+    def signature(self, el: dc.Alias):
+        return self.signature(el.target)
+
+    @dispatch
+    def signature(self, el: Union[dc.Class, dc.Function]):
+        name = self._fetch_object_dispname(el)
+        pars = self.render(el.parameters)
+
+        return f"`{name}({pars})`"
+
+    @dispatch
+    def signature(self, el: Union[dc.Module, dc.Attribute]):
+        name = self._fetch_object_dispname(el)
+        return f"`{name}`"
+
+        
+    # render method -----------------------------------------------------------
+
     @dispatch
     def render(self, el):
         raise NotImplementedError(f"Unsupported type: {type(el)}")
@@ -85,20 +106,13 @@ class MdRenderer(Renderer):
     def render(self, el: str):
         return el
 
-    # TODO: remove, as this is now handled by _render_annotation
-    # @dispatch
-    # def render(self, el: Union[Expression, Name]):
-    #    # these are used often for annotations, and full returns it as a string
-    #    return el.full
-
     @dispatch
     def render(self, el: Union[dc.Object, dc.Alias]):
-        # TODO: replace hard-coded header level
+        """Render high level objects representing functions, classes, etc.."""
+
+        str_sig = self.signature(el)
 
         _str_dispname = self._fetch_object_dispname(el)
-        _str_pars = self.render(el.parameters)
-        str_sig = f"`{_str_dispname}({_str_pars})`"
-
         _anchor = f"{{ #{_str_dispname} }}"
         str_title = f"{'#' * self.header_level} {_str_dispname} {_anchor}"
 
@@ -123,10 +137,6 @@ class MdRenderer(Renderer):
             parts = [str_title, *str_body]
 
         return "\n\n".join(parts)
-
-    @dispatch
-    def render(self, el: dc.Attribute):
-        raise NotImplementedError()
 
     # signature parts -------------------------------------------------------------
 
