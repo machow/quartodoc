@@ -196,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="get_object" class="level2">
 <h2 class="anchored" data-anchor-id="get_object">get_object</h2>
-<p><code>get_object(module, object_name, parser='numpy', load_aliases=True, modules_collection=None)</code></p>
+<p><code>get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)</code></p>
 <p>Fetch a griffe object.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -235,6 +235,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><code>True</code></td>
 </tr>
 <tr class="odd">
+<td><code>dynamic</code></td>
+<td></td>
+<td>Whether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.</td>
+<td><code>False</code></td>
+</tr>
+<tr class="even">
 <td><code>modules_collection</code></td>
 <td>None</td>
 <td>ModulesCollection</td>
