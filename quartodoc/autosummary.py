@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import yaml
 
@@ -70,6 +72,7 @@ def get_object(
     object_name: str,
     parser: str = "numpy",
     load_aliases=True,
+    dynamic=False,
     modules_collection: "None | ModulesCollection" = None,
 ) -> dc.Object:
     """Fetch a griffe object.
@@ -84,6 +87,9 @@ def get_object(
         A docstring parser to use.
     load_aliases: bool
         For aliases that were imported from other modules, should we load that module?
+    dynamic: bool
+        Whether to dynamically import object. Useful if docstring is not hard-coded,
+        but was set on object by running python code.
     modules_collection: optional
         A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
@@ -125,7 +131,35 @@ def get_object(
         if target_mod != module:
             griffe.load_module(target_mod)
 
+    if dynamic:
+        obj = f_data.target if isinstance(f_data, Alias) else f_data
+        replace_docstring(obj)
+
     return f_data
+
+
+def replace_docstring(obj: dc.Object | dc.Alias, f):
+    import importlib
+
+    mod = importlib.import_module(obj.module.canonical_path)
+
+    # TODO: handle top-level modules. this assumes it's the child of a module.
+    f = getattr(mod, obj.name)
+
+    old = obj.docstring
+    new = dc.Docstring(
+        value=f.__doc__,
+        lineno=old.lineno,
+        endlineno=old.endlineno,
+        parent=old.parent,
+        parser=old.parser,
+        parser_options=old.parser_options,
+    )
+
+    if isinstance(obj, dc.Alias):
+        obj.target.docstring = new
+    else:
+        obj.docstring = new
 
 
 # pkgdown =====================================================================
