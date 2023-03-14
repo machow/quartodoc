@@ -347,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7fdd2c9b8700&gt;</code></pre>
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7fa044a46f40&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -368,6 +368,9 @@ parser: str
     A docstring parser to use.
 load_aliases: bool
     For aliases that were imported from other modules, should we load that module?
+dynamic: bool
+    Whether to dynamically import object. Useful if docstring is not hard-coded,
+    but was set on object by running python code.
 modules_collection: optional
     A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
@@ -388,10 +391,10 @@ Examples
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fdd3405d460&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fdd2c898040&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fdd3405dca0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fdd2c897e20&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fa04495e2e0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fa04495e370&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fa04495e340&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fa0449458e0&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -422,6 +425,9 @@ parser: str
     A docstring parser to use.
 load_aliases: bool
     For aliases that were imported from other modules, should we load that module?
+dynamic: bool
+    Whether to dynamically import object. Useful if docstring is not hard-coded,
+    but was set on object by running python code.
 modules_collection: optional
     A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
@@ -475,7 +481,13 @@ Examples
 │               │     ├─description = 'For aliases that were imported from other modules ...
 │               │     ├─name = 'load_aliases'
 │               │     └─value = 'True'
-│               └─4 = █─DocstringParameter
+│               ├─4 = █─DocstringParameter
+│               │     ├─annotation = None
+│               │     ├─default = 'False'
+│               │     ├─description = 'Whether to dynamically import object. Useful if d ...
+│               │     ├─name = 'dynamic'
+│               │     └─value = 'False'
+│               └─5 = █─DocstringParameter
 │                     ├─annotation = Name(source='None | ModulesCollection', full='None ...
 │                     ├─default = 'None'
 │                     ├─description = 'A griffe [](`~griffe.collections.ModulesCollectio ...
