@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "reference/Builder.build.html",
+    "href": "reference/Builder.build.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "build(self)\nBuild index page, sphinx inventory, and individual doc pages."
+  },
+  {
+    "objectID": "reference/get_object.html",
+    "href": "reference/get_object.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\nmodules_collection\nNone\nModulesCollection\nA griffe , used to hold loaded modules.\n\n\n\n\n\n\nget_function: a deprecated function.\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
+  },
+  {
     "objectID": "reference/Builder.html",
     "href": "reference/Builder.html",
     "title": "pkgdown example",
@@ -14,24 +28,10 @@
     "text": "preview(ast, max_depth=999)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n>>> from quartodoc import get_object\n>>> obj = get_object(\"quartodoc\", \"get_object\")\n>>> preview(obj.docstring.parsed)\n ...\n>>> preview(obj)\n ..."
   },
   {
-    "objectID": "reference/get_object.html",
-    "href": "reference/get_object.html",
-    "title": "pkgdown example",
-    "section": "",
-    "text": "get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\nmodules_collection\nNone\nModulesCollection\nA griffe , used to hold loaded modules.\n\n\n\n\n\n\nget_function: a deprecated function.\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
-  },
-  {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
     "title": "pkgdown example",
     "section": "",
     "text": "These functions inspect and parse docstrings.\n\n\n\nget_object\nFetch a griffe object.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\nBuilder\nBase class for building API docs.\n\n\nBuilder.build\nBuild index page, sphinx inventory, and individual doc pages."
-  },
-  {
-    "objectID": "reference/Builder.build.html",
-    "href": "reference/Builder.build.html",
-    "title": "pkgdown example",
-    "section": "",
-    "text": "build(self)\nBuild index page, sphinx inventory, and individual doc pages."
   }
 ]

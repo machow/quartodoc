@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "api/get_object.html",
+    "href": "api/get_object.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\nmodules_collection\nNone\nModulesCollection\nA griffe ModulesCollection, used to hold loaded modules.\n\n\n\n\n\n\nget_function: a deprecated function.\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
+  },
+  {
     "objectID": "api/Builder.html",
     "href": "api/Builder.html",
     "title": "quartodoc",
@@ -12,34 +26,6 @@
     "title": "quartodoc",
     "section": "",
     "text": "preview(ast, max_depth=999)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n>>> from quartodoc import get_object\n>>> obj = get_object(\"quartodoc\", \"get_object\")\n>>> preview(obj.docstring.parsed)\n ...\n>>> preview(obj)\n ..."
-  },
-  {
-    "objectID": "api/create_inventory.html",
-    "href": "api/create_inventory.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "create_inventory(project, version, items, uri=lambda s: f'{s.canonical_path}.html', dispname='-')\nReturn a sphinx inventory file.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nproject\nstr\nName of the project (often the package name).\nrequired\n\n\nversion\nstr\nVersion of the project (often the package version).\nrequired\n\n\nitems\nlist[dc.Object\ndc.Alias]\nA docstring parser to use.\n\n\nuri\nstr\nCallable[dc.Object, str]\nLink relative to the docs where the items documentation lives.\n\n\ndispname\nstr\nCallable[dc.Object, str]\nName to be shown when a link to the item is made.\n\n\n\n\n\n\n>>> f_obj = get_object(\"quartodoc\", \"create_inventory\")\n>>> inv = create_inventory(\"example\", \"0.0\", [f_obj])\n>>> inv\nInventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)\nTo preview the inventory, we can convert it to a dictionary:\n>>> _to_clean_dict(inv)\n{'project': 'example',\n 'version': '0.0',\n 'count': 1,\n 'items': [{'name': 'quartodoc.create_inventory',\n   'domain': 'py',\n   'role': 'function',\n   'priority': '1',\n   'uri': 'quartodoc.create_inventory.html',\n   'dispname': '-'}]}"
-  },
-  {
-    "objectID": "api/convert_inventory.html",
-    "href": "api/convert_inventory.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "convert_inventory(in_name, out_name=None)\nConvert a sphinx inventory file to json.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nin_name\nUnion[str, soi.Inventory]\nName of inventory file.\nrequired\n\n\nout_name\n\nOutput file name.\nNone"
-  },
-  {
-    "objectID": "api/get_object.html",
-    "href": "api/get_object.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)\nFetch a griffe object.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nobject_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\nmodules_collection\nNone\nModulesCollection\nA griffe ModulesCollection, used to hold loaded modules.\n\n\n\n\n\n\nget_function: a deprecated function.\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
-  },
-  {
-    "objectID": "api/index.html",
-    "href": "api/index.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "Builders are responsible for building documentation. They tie all the pieces of quartodoc together, and can be defined in your _quarto.yml config.\n\n\n\nBuilder\nBase class for building API docs.\n\n\nBuilderPkgdown\nBuild an API in R pkgdown style.\n\n\nBuilderSinglePage\nBuild an API with all docs embedded on a single page.\n\n\n\n\n\n\nRenderers convert parsed docstrings into a target format, like markdown.\n\n\n\nMdRenderer\nRender docstrings to markdown.\n\n\n\n\n\n\nThese functions Fetch and analyze python objects, including parsing docstrings.\n\n\n\nget_object\nFetch a griffe object.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n\n\n\n\nInventory files map a functions name to its corresponding url in your docs. These functions allow you to create and transform inventory files.\n\n\n\ncreate_inventory\nReturn a sphinx inventory file.\n\n\nconvert_inventory\nConvert a sphinx inventory file to json."
   },
   {
     "objectID": "api/BuilderPkgdown.html",
@@ -61,6 +47,76 @@
     "title": "quartodoc",
     "section": "",
     "text": "BuilderSinglePage()\nBuild an API with all docs embedded on a single page."
+  },
+  {
+    "objectID": "api/index.html",
+    "href": "api/index.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "Builders are responsible for building documentation. They tie all the pieces of quartodoc together, and can be defined in your _quarto.yml config.\n\n\n\nBuilder\nBase class for building API docs.\n\n\nBuilderPkgdown\nBuild an API in R pkgdown style.\n\n\nBuilderSinglePage\nBuild an API with all docs embedded on a single page.\n\n\n\n\n\n\nRenderers convert parsed docstrings into a target format, like markdown.\n\n\n\nMdRenderer\nRender docstrings to markdown.\n\n\n\n\n\n\nThese functions Fetch and analyze python objects, including parsing docstrings.\n\n\n\nget_object\nFetch a griffe object.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n\n\n\n\nInventory files map a functions name to its corresponding url in your docs. These functions allow you to create and transform inventory files.\n\n\n\ncreate_inventory\nReturn a sphinx inventory file.\n\n\nconvert_inventory\nConvert a sphinx inventory file to json."
+  },
+  {
+    "objectID": "api/convert_inventory.html",
+    "href": "api/convert_inventory.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "convert_inventory(in_name, out_name=None)\nConvert a sphinx inventory file to json.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nin_name\nUnion[str, soi.Inventory]\nName of inventory file.\nrequired\n\n\nout_name\n\nOutput file name.\nNone"
+  },
+  {
+    "objectID": "api/create_inventory.html",
+    "href": "api/create_inventory.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "create_inventory(project, version, items, uri=lambda s: f'{s.canonical_path}.html', dispname='-')\nReturn a sphinx inventory file.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nproject\nstr\nName of the project (often the package name).\nrequired\n\n\nversion\nstr\nVersion of the project (often the package version).\nrequired\n\n\nitems\nlist[dc.Object\ndc.Alias]\nA docstring parser to use.\n\n\nuri\nstr\nCallable[dc.Object, str]\nLink relative to the docs where the items documentation lives.\n\n\ndispname\nstr\nCallable[dc.Object, str]\nName to be shown when a link to the item is made.\n\n\n\n\n\n\n>>> f_obj = get_object(\"quartodoc\", \"create_inventory\")\n>>> inv = create_inventory(\"example\", \"0.0\", [f_obj])\n>>> inv\nInventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)\nTo preview the inventory, we can convert it to a dictionary:\n>>> _to_clean_dict(inv)\n{'project': 'example',\n 'version': '0.0',\n 'count': 1,\n 'items': [{'name': 'quartodoc.create_inventory',\n   'domain': 'py',\n   'role': 'function',\n   'priority': '1',\n   'uri': 'quartodoc.create_inventory.html',\n   'dispname': '-'}]}"
+  },
+  {
+    "objectID": "examples/index.html",
+    "href": "examples/index.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "style\nsource\nlayout\n\n\n\n\npkgdown\ngithub\nIndex page with a title and short description for functions listed in each section. Each function gets its own documentation page.\n\n\nsingle-page\ngithub\nIndex page has function documentation embedded on it.\n\n\nshiny\ngithub\nThe shiny docs translated to quartodoc, using a custom renderer."
+  },
+  {
+    "objectID": "get-started/docstrings.html",
+    "href": "get-started/docstrings.html",
+    "title": "Inspecting docstrings",
+    "section": "",
+    "text": "quartodoc uses the library griffe to load and parse docstrings."
+  },
+  {
+    "objectID": "get-started/docstrings.html#docstring-structure",
+    "href": "get-started/docstrings.html#docstring-structure",
+    "title": "Inspecting docstrings",
+    "section": "Docstring structure",
+    "text": "Docstring structure\nquartodoc currently expects docstrings to be in the numpydocstring format.\nDocstrings are loaded and parsed using griffe, which uses custom data classes to represent the structure of a program:\n\ngriffe.dataclasses - represent the structure of python objects.\ngriffe.docstrings.dataclasses - represent the structure of parsed docstrings."
+  },
+  {
+    "objectID": "get-started/docstrings.html#reading-docstrings",
+    "href": "get-started/docstrings.html#reading-docstrings",
+    "title": "Inspecting docstrings",
+    "section": "Reading docstrings",
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f7754fa9790>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\ndynamic: bool\n    Whether to dynamically import object. Useful if docstring is not hard-coded,\n    but was set on object by running python code.\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f775c3d5d90>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f775c3d5cd0>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f775c3d5280>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f7754bc1f10>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+  },
+  {
+    "objectID": "get-started/docstrings.html#previewing-docstrings",
+    "href": "get-started/docstrings.html#previewing-docstrings",
+    "title": "Inspecting docstrings",
+    "section": "Previewing docstrings",
+    "text": "Previewing docstrings\nUse the preview function to see the overall structure of a parsed docstring.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\n\nRaw docstring\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\ndynamic: bool\n    Whether to dynamically import object. Useful if docstring is not hard-coded,\n    but was set on object by running python code.\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nPreview\n\npreview(f_obj.docstring.parsed)\n\n█─list\n├─0 = █─DocstringSectionText\n│     ├─kind = <DocstringSectionKind.text: 'text'>\n│     ├─title = None\n│     └─value = 'Fetch a griffe object.'\n├─1 = █─DocstringSectionParameters\n│     ├─kind = <DocstringSectionKind.parameters: 'parameters'>\n│     ├─title = None\n│     └─value = █─list\n│               ├─0 = █─DocstringParameter\n│               │     ├─annotation = Name(source='str', full='str')\n│               │     ├─default = None\n│               │     ├─description = 'A module name.'\n│               │     ├─name = 'module'\n│               │     └─value = None\n│               ├─1 = █─DocstringParameter\n│               │     ├─annotation = Name(source='str', full='str')\n│               │     ├─default = None\n│               │     ├─description = 'A function name.'\n│               │     ├─name = 'object_name'\n│               │     └─value = None\n│               ├─2 = █─DocstringParameter\n│               │     ├─annotation = Name(source='str', full='str')\n│               │     ├─default = \"'numpy'\"\n│               │     ├─description = 'A docstring parser to use.'\n│               │     ├─name = 'parser'\n│               │     └─value = \"'numpy'\"\n│               ├─3 = █─DocstringParameter\n│               │     ├─annotation = None\n│               │     ├─default = 'True'\n│               │     ├─description = 'For aliases that were imported from other modules ...\n│               │     ├─name = 'load_aliases'\n│               │     └─value = 'True'\n│               ├─4 = █─DocstringParameter\n│               │     ├─annotation = None\n│               │     ├─default = 'False'\n│               │     ├─description = 'Whether to dynamically import object. Useful if d ...\n│               │     ├─name = 'dynamic'\n│               │     └─value = 'False'\n│               └─5 = █─DocstringParameter\n│                     ├─annotation = Name(source='None | ModulesCollection', full='None ...\n│                     ├─default = 'None'\n│                     ├─description = 'A griffe [](`~griffe.collections.ModulesCollectio ...\n│                     ├─name = 'modules_collection'\n│                     └─value = 'None'\n├─2 = █─DocstringSectionSeeAlso\n│     ├─kind = <DocstringSectionKindPatched.see_also: 'see also'>\n│     ├─title = None\n│     └─value = 'get_function: a deprecated function.'\n└─3 = █─DocstringSectionExamples\n      ├─kind = <DocstringSectionKind.examples: 'examples'>\n      ├─title = None\n      └─value = █─list\n                └─0 = █─ExampleCode\n                      └─value = '>>> get_function(\"quartodoc\", \"get_function\")\\n<F ..."
+  },
+  {
+    "objectID": "get-started/docstrings.html#parsing-other-docstring-formats",
+    "href": "get-started/docstrings.html#parsing-other-docstring-formats",
+    "title": "Inspecting docstrings",
+    "section": "Parsing other docstring formats",
+    "text": "Parsing other docstring formats\nCurrently, quartodoc expects docstrings in the numpydoc format. However, the tool it uses under the hood (griffe) is easy to customize, and supports multiple formats.\nSee the griffe loading docs for instructions. Specifically, the GriffeLoader takes options for customizing docstring parsing."
+  },
+  {
+    "objectID": "get-started/sidebar.html",
+    "href": "get-started/sidebar.html",
+    "title": "Sidebar navigation",
+    "section": "",
+    "text": "quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.\nIn order to create a sidebar for your docs, add the following options to your _quarto.yml:\n# tell quarto to read the sidebar file\nmetadata-files:\n  - _sidebar.yml\n\n\n# tell quartodoc to generate the sidebar file\nquartodoc:\n  sidebar: \"_sidebar.yml\"\n  # other options ...\nNote that running python -m quartodoc build will now produce a file called _sidebar.yml, with a quarto sidebar configuration. The quarto metadata-files option ensures it’s included with the configuration in _quarto.yml.\nHere is what the sidebar for the quartodoc reference page looks like:\n\n\nwebsite:\n  sidebar:\n    contents:\n    - api/index.qmd\n    - contents:\n      - api/Builder.qmd\n      - api/BuilderPkgdown.qmd\n      - api/BuilderSinglePage.qmd\n      section: API Builders\n    - contents:\n      - api/MdRenderer.qmd\n      section: Docstring Renderers\n    - contents:\n      - api/get_object.qmd\n      - api/preview.qmd\n      section: Inspection\n    - contents:\n      - api/create_inventory.qmd\n      - api/convert_inventory.qmd\n      section: Inventory links\n    id: api"
   },
   {
     "objectID": "get-started/extending.html",
@@ -98,74 +154,39 @@
     "text": "classDiagram\n\n    class BuilderConfig {\n        style: str\n        package: str\n        version: str = None\n        dir: str = \"Reference\"\n        title: str = \"Function reference\"       \n        sections: list[SectionConfig]\n        out_inventory: str = \"objects.json\"\n        out_inder: str = \"index.qmd\"        \n        renderer: Renderer\n    }\n\n    class SectionConfig {\n        title: str\n        desc: str\n        //\n        // list of api functions\n        contents: list[str]\n    }\n\n    \n    class Introspect {\n        // functions for analyzing python objects\n        // and docstrings\n        get_object(module, object_name) -> griffe object\n\n    }\n\n    class Inventory {\n        // functions to work with sphinx inventories,\n        // which are used for cross-references\n        convert_inventory(in_name, out_name)\n        create_inventory(project, version, items, ...)\n\n    }\n    class Renderer {\n        style: str\n        header_level: int = 2\n        show_signature: bool = True\n        hook_pre: Callable = None\n        render(el: griffe object)\n    }\n\n    class Builder {\n        // Includes all BuilderConfig properties\n        ...BuilderConfig\n\n        //\n        // via create_* methods\n        items: dict[str, griffe object]\n        inventory: sphobjinv.Inventory\n\n\n        build()\n        create_items()\n        create_inventory()\n        fetch_object_uri()\n        fetch_object_dispname()\n        render_index()\n        write_doc_pages()\n        from_config() -> Builder\n    }\n\n    class BuilderPkgdown {\n        // write R pkgdown style docs\n        style: \"pkgdown\"\n        render_index()\n        fetch_object_uri()\n        fetch_object_dispname()\n    }\n    \n    class BuilderSinglePage {\n        // writes one big page of docs\n        style: \"single-page\"\n        render_index()\n        fetch_object_uri()\n        write_doc_pages()\n    }\n\n    class MdRenderer {\n        render()\n    }\n\n\n    Builder <|-- BuilderPkgdown\n    Builder <|-- BuilderSinglePage\n    BuilderConfig --> SectionConfig\n    BuilderConfig <-- Builder: from_config\n    Introspect <-- Builder: create_items    \n    Inventory <-- Builder: create_inventory(self.package, ..., self.items, self.fetch_*)\n    Renderer <-- Builder\n    Renderer <|-- MdRenderer"
   },
   {
-    "objectID": "get-started/sidebar.html",
-    "href": "get-started/sidebar.html",
-    "title": "Sidebar navigation",
+    "objectID": "get-started/renderers.html",
+    "href": "get-started/renderers.html",
+    "title": "Rendering docstrings",
     "section": "",
-    "text": "quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.\nIn order to create a sidebar for your docs, add the following options to your _quarto.yml:\n# tell quarto to read the sidebar file\nmetadata-files:\n  - _sidebar.yml\n\n\n# tell quartodoc to generate the sidebar file\nquartodoc:\n  sidebar: \"_sidebar.yml\"\n  # other options ...\nNote that running python -m quartodoc build will now produce a file called _sidebar.yml, with a quarto sidebar configuration. The quarto metadata-files option ensures it’s included with the configuration in _quarto.yml.\nHere is what the sidebar for the quartodoc reference page looks like:\n\n\nwebsite:\n  sidebar:\n    contents:\n    - api/index.qmd\n    - contents:\n      - api/Builder.qmd\n      - api/BuilderPkgdown.qmd\n      - api/BuilderSinglePage.qmd\n      section: API Builders\n    - contents:\n      - api/MdRenderer.qmd\n      section: Docstring Renderers\n    - contents:\n      - api/get_object.qmd\n      - api/preview.qmd\n      section: Inspection\n    - contents:\n      - api/create_inventory.qmd\n      - api/convert_inventory.qmd\n      section: Inventory links\n    id: api"
+    "text": "The previous section covered how to read and preview parsed docstrings. In this section, we’ll look at how to render a parsed docstring into a format that can be used in documentation, like markdown or HTML."
   },
   {
-    "objectID": "get-started/docstrings.html",
-    "href": "get-started/docstrings.html",
-    "title": "Inspecting docstrings",
-    "section": "",
-    "text": "quartodoc uses the library griffe to load and parse docstrings."
+    "objectID": "get-started/renderers.html#setting-up-problem",
+    "href": "get-started/renderers.html#setting-up-problem",
+    "title": "Rendering docstrings",
+    "section": "Setting up problem",
+    "text": "Setting up problem\nSuppose that we wanted to take a function like get_object() and render a summary, with:\n\nThe number of parameters it takes.\nThe number of sections in its parsed docstring.\n\nFor get_object() it might look like the following:\n## get_object\nN PARAMETERS: 3\nSECTIONS: A docstring with 4 pieces"
   },
   {
-    "objectID": "get-started/docstrings.html#docstring-structure",
-    "href": "get-started/docstrings.html#docstring-structure",
-    "title": "Inspecting docstrings",
-    "section": "Docstring structure",
-    "text": "Docstring structure\nquartodoc currently expects docstrings to be in the numpydocstring format.\nDocstrings are loaded and parsed using griffe, which uses custom data classes to represent the structure of a program:\n\ngriffe.dataclasses - represent the structure of python objects.\ngriffe.docstrings.dataclasses - represent the structure of parsed docstrings."
+    "objectID": "get-started/renderers.html#inspecting-a-function",
+    "href": "get-started/renderers.html#inspecting-a-function",
+    "title": "Rendering docstrings",
+    "section": "Inspecting a function",
+    "text": "Inspecting a function\nAs covered in the previous section, we can preview information about get_object().\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\npreview(f_obj, max_depth=3)\n\n█─Alias\n├─name = 'get_object'\n├─annotation = █─Expression\n│              ├─0 = Name(source='dc', full='griffe.dataclasses')\n│              ├─1 = '.'\n│              └─2 = Name(source='Object', full='griffe.dataclasses.Obj ...\n├─parameters = █─Parameters\n│              ├─0 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'module'\n│              │     └─default = None\n│              ├─1 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'object_name'\n│              │     └─default = None\n│              ├─2 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'parser'\n│              │     └─default = \"'numpy'\"\n│              ├─3 = █─Parameter\n│              │     ├─annotation = None\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'load_aliases'\n│              │     └─default = 'True'\n│              ├─4 = █─Parameter\n│              │     ├─annotation = None\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'dynamic'\n│              │     └─default = 'False'\n│              └─5 = █─Parameter\n│                    ├─annotation = Name(source='None | ModulesCollection', full='None ...\n│                    ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│                    ├─name = 'modules_collection'\n│                    └─default = 'None'\n└─docstring = █─Docstring\n              ├─parser = <Parser.numpy: 'numpy'>\n              └─parsed = █─list\n                         ├─0 = █─DocstringSectionText ...\n                         ├─1 = █─DocstringSectionParameters ...\n                         ├─2 = █─DocstringSectionSeeAlso ...\n                         └─3 = █─DocstringSectionExamples ...\n\n\nNote the following pieces:\n\npreview() takes a max_depth argument, that limits how much information it shows.\nget_object() takes 3 parameters.\nget_object() has a docstring with 4 sections.\n\nImportantly, the nodes (█) in the tree mention the name class of the python objects being previewed (e.g. Alias, Expression, Parameters). We’ll need these to specify how to render objects of each class."
   },
   {
-    "objectID": "get-started/docstrings.html#reading-docstrings",
-    "href": "get-started/docstrings.html#reading-docstrings",
-    "title": "Inspecting docstrings",
-    "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7fa198f82f40>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\ndynamic: bool\n    Whether to dynamically import object. Useful if docstring is not hard-coded,\n    but was set on object by running python code.\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7fa1ad508be0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fa198e81b50>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7fa1ad508f40>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fa198e81850>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "objectID": "get-started/renderers.html#generic-dispatch",
+    "href": "get-started/renderers.html#generic-dispatch",
+    "title": "Rendering docstrings",
+    "section": "Generic dispatch",
+    "text": "Generic dispatch\nGeneric dispatch is the main programming technique used by quartodoc renderers. It let’s you define how a function (like render()) should operate on different types of objects.\n\nfrom plum import dispatch\n\nimport griffe.dataclasses as dc\nimport griffe.docstrings.dataclasses as ds\n\n\n@dispatch\ndef render(el: object):\n    print(f\"Default rendering: {type(el)}\")\n\n@dispatch\ndef render(el: dc.Alias):\n    print(\"Alias rendering\")\n    render(el.parameters)\n\n@dispatch\ndef render(el: list):\n    print(\"List rendering\")\n    [render(entry) for entry in el]\n\n\nrender(f_obj)\n\nAlias rendering\nDefault rendering: <class 'griffe.dataclasses.Parameters'>"
   },
   {
-    "objectID": "get-started/docstrings.html#previewing-docstrings",
-    "href": "get-started/docstrings.html#previewing-docstrings",
-    "title": "Inspecting docstrings",
-    "section": "Previewing docstrings",
-    "text": "Previewing docstrings\nUse the preview function to see the overall structure of a parsed docstring.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\n\nRaw docstring\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\ndynamic: bool\n    Whether to dynamically import object. Useful if docstring is not hard-coded,\n    but was set on object by running python code.\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\nget_function: a deprecated function.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nPreview\n\npreview(f_obj.docstring.parsed)\n\n█─list\n├─0 = █─DocstringSectionText\n│     ├─kind = <DocstringSectionKind.text: 'text'>\n│     ├─title = None\n│     └─value = 'Fetch a griffe object.'\n├─1 = █─DocstringSectionParameters\n│     ├─kind = <DocstringSectionKind.parameters: 'parameters'>\n│     ├─title = None\n│     └─value = █─list\n│               ├─0 = █─DocstringParameter\n│               │     ├─annotation = Name(source='str', full='str')\n│               │     ├─default = None\n│               │     ├─description = 'A module name.'\n│               │     ├─name = 'module'\n│               │     └─value = None\n│               ├─1 = █─DocstringParameter\n│               │     ├─annotation = Name(source='str', full='str')\n│               │     ├─default = None\n│               │     ├─description = 'A function name.'\n│               │     ├─name = 'object_name'\n│               │     └─value = None\n│               ├─2 = █─DocstringParameter\n│               │     ├─annotation = Name(source='str', full='str')\n│               │     ├─default = \"'numpy'\"\n│               │     ├─description = 'A docstring parser to use.'\n│               │     ├─name = 'parser'\n│               │     └─value = \"'numpy'\"\n│               ├─3 = █─DocstringParameter\n│               │     ├─annotation = None\n│               │     ├─default = 'True'\n│               │     ├─description = 'For aliases that were imported from other modules ...\n│               │     ├─name = 'load_aliases'\n│               │     └─value = 'True'\n│               ├─4 = █─DocstringParameter\n│               │     ├─annotation = None\n│               │     ├─default = 'False'\n│               │     ├─description = 'Whether to dynamically import object. Useful if d ...\n│               │     ├─name = 'dynamic'\n│               │     └─value = 'False'\n│               └─5 = █─DocstringParameter\n│                     ├─annotation = Name(source='None | ModulesCollection', full='None ...\n│                     ├─default = 'None'\n│                     ├─description = 'A griffe [](`~griffe.collections.ModulesCollectio ...\n│                     ├─name = 'modules_collection'\n│                     └─value = 'None'\n├─2 = █─DocstringSectionSeeAlso\n│     ├─kind = <DocstringSectionKindPatched.see_also: 'see also'>\n│     ├─title = None\n│     └─value = 'get_function: a deprecated function.'\n└─3 = █─DocstringSectionExamples\n      ├─kind = <DocstringSectionKind.examples: 'examples'>\n      ├─title = None\n      └─value = █─list\n                └─0 = █─ExampleCode\n                      └─value = '>>> get_function(\"quartodoc\", \"get_function\")\\n<F ..."
-  },
-  {
-    "objectID": "get-started/docstrings.html#parsing-other-docstring-formats",
-    "href": "get-started/docstrings.html#parsing-other-docstring-formats",
-    "title": "Inspecting docstrings",
-    "section": "Parsing other docstring formats",
-    "text": "Parsing other docstring formats\nCurrently, quartodoc expects docstrings in the numpydoc format. However, the tool it uses under the hood (griffe) is easy to customize, and supports multiple formats.\nSee the griffe loading docs for instructions. Specifically, the GriffeLoader takes options for customizing docstring parsing."
-  },
-  {
-    "objectID": "get-started/crossrefs.html",
-    "href": "get-started/crossrefs.html",
-    "title": "Linking to pages",
-    "section": "",
-    "text": "You can use quarto’s markdown linking syntax to link to function docs, by using the path to the generated documentation file.\nHere are some examples:\n\n\n\ncode\nresult\n\n\n\n\n[get_object](/reference/get_object.qmd)\nget_object\n\n\n[link text](/reference/MdRenderer.qmd)\nlink text"
-  },
-  {
-    "objectID": "get-started/crossrefs.html#linking-by-function-name",
-    "href": "get-started/crossrefs.html#linking-by-function-name",
-    "title": "Linking to pages",
-    "section": "Linking by function name",
-    "text": "Linking by function name\nUse quartodoc’s interlinking filter to link to functions using only their names:\n\n\n\ncode\nresult\n\n\n\n\n[](`quartodoc.get_object`)\nget_object\n\n\n\nNotice that the link above puts the function name in backticks, rather than using the path to its documentation: `quartodoc.get_object`.\nYou can also use this approach to link to other documentation sites. For example, including links to quartodoc, or https://docs.python.org/3 using function names.\nSee the interlinks documentation for set up and usage."
-  },
-  {
-    "objectID": "get-started/crossrefs.html#the-see-also-section",
-    "href": "get-started/crossrefs.html#the-see-also-section",
-    "title": "Linking to pages",
-    "section": "The “See Also” section",
-    "text": "The “See Also” section\nA major goal of quartodoc is to automatically turn text in the “See Also” section of docstrings into links.\nSee this issue for more details on parsing See Also sections, and this issue on turning type annotations into links."
-  },
-  {
-    "objectID": "get-started/crossrefs.html#type-annotations-in-docstrings",
-    "href": "get-started/crossrefs.html#type-annotations-in-docstrings",
-    "title": "Linking to pages",
-    "section": "Type annotations in docstrings",
-    "text": "Type annotations in docstrings\nThis is planned, but currently unimplemented. See this issue on turning type annotations into links."
+    "objectID": "get-started/renderers.html#defining-a-renderer",
+    "href": "get-started/renderers.html#defining-a-renderer",
+    "title": "Rendering docstrings",
+    "section": "Defining a Renderer",
+    "text": "Defining a Renderer\nquartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML. Tree visitors define how each type of object in the parse tree should be handled.\n\nimport griffe.dataclasses as dc\nimport griffe.docstrings.dataclasses as ds\n\nfrom quartodoc import get_object\nfrom plum import dispatch\nfrom typing import Union\n\n\nclass SomeRenderer:\n    def __init__(self, header_level: int = 1):\n        self.header_level = header_level\n\n    @dispatch\n    def render(self, el):\n        raise NotImplementedError(f\"Unsupported type: {type(el)}\")\n\n    @dispatch\n    def render(self, el: Union[dc.Alias, dc.Object]):\n        header = \"#\" * self.header_level\n        str_header = f\"{header} {el.name}\"\n        str_params = f\"N PARAMETERS: {len(el.parameters)}\"\n        str_sections = \"SECTIONS: \" + self.render(el.docstring)\n        \n        # return something pretty\n        return \"\\n\".join([str_header, str_params, str_sections])\n\n    @dispatch\n    def render(self, el: dc.Docstring):\n        return f\"A docstring with {len(el.parsed)} pieces\"\n\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\nprint(SomeRenderer(header_level=2).render(f_obj))\n\n## get_object\nN PARAMETERS: 6\nSECTIONS: A docstring with 4 pieces\n\n\nNote 3 big pieces:\n\nGeneric dispatch: The plum dispatch function decorates each render method. The type annotations specify the types of data each version of render should dispatch on.\nDefault behavior: The first render method ensures a NotImplementedError is raised by default.\nTree walking: render methods often call render again on sub elements."
   },
   {
     "objectID": "get-started/basic-docs.html",
@@ -194,6 +215,41 @@
     "title": "Configuring docs",
     "section": "Looking up functions",
     "text": "Looking up functions\nFinding functions to document involves two pieces of configuration:\n\nthe package name.\na list of functions for content.\n\nquartodoc:\n  package: quartodoc\n  sections:\n    - contents:\n        # top-level function: quartodoc.get_object\n        - get_object\n\n        # top-level class: quartodoc.MdRenderer\n        - MdRenderer\n\n        # submodule function: quartodoc.ast.preview\n        - ast.preview\nThe functions listed in contents are assumed to be imported from the package.\n\nClass methods\nCurrently, quartodoc can’t look up class methods. (Though this would be quick to implement!)."
+  },
+  {
+    "objectID": "get-started/overview.html",
+    "href": "get-started/overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "Warning\n\n\n\nquartodoc is work in progress!\nquartodoc let’s you quickly generate python package documentation, using markdown and quarto. It is designed as an alternative to Sphinx."
+  },
+  {
+    "objectID": "get-started/overview.html#installation",
+    "href": "get-started/overview.html#installation",
+    "title": "Overview",
+    "section": "Installation",
+    "text": "Installation\npython -m pip install quartodoc\n\n# or from github\npython -m pip install git+https://github.com/machow/quartodoc.git"
+  },
+  {
+    "objectID": "get-started/overview.html#basic-use",
+    "href": "get-started/overview.html#basic-use",
+    "title": "Overview",
+    "section": "Basic use",
+    "text": "Basic use\nGetting started with quartodoc takes two steps: configuring a quarto website, and generating documentation pages for your library.\nFirst, create a _quarto.yml file with the following:\nproject:\n  type: website\n  resources:\n    - objects.json\n\nquartodoc:\n  style: single-page\n  dir: reference\n  package: quartodoc\n  sections:\n    - title: Some functions\n      desc: Functions to inspect docstrings.\n      contents:\n        - get_object\n        - preview\nNext, run this command to generate your API pages:\npython -m quartodoc build\nThis should create a reference/ directory with an index.qmd and documentation pages for listed functions, like get_object and preview.\nFinally, preview your website with quarto:\nquarto preview"
+  },
+  {
+    "objectID": "get-started/overview.html#key-features",
+    "href": "get-started/overview.html#key-features",
+    "title": "Overview",
+    "section": "Key Features",
+    "text": "Key Features\n\nLoad docstrings (with griffe)\nRender docstrings (e.g. with MdRenderer)\nEnable cross references to function documentation (with interlinks filter).\n\nLink to functions within a doc.\nLink to functions in other docs.\nGenerate an inventory file for other docs to link to yours.\n\nGenerate high-level summaries (with Builder).\n\nFirst line of docstring used as description.\nClass doc pages have table of class attributes.\nIndex pages list function names and descriptions."
+  },
+  {
+    "objectID": "get-started/overview.html#example-sites",
+    "href": "get-started/overview.html#example-sites",
+    "title": "Overview",
+    "section": "Example sites",
+    "text": "Example sites\n\n\n\n\n\n\n\n\nstyle\nsource\nlayout\n\n\n\n\npkgdown\ngithub\nIndex page with a title and short description for functions listed in each section. Each function gets its own documentation page.\n\n\nsingle-page\ngithub\nIndex page has function documentation embedded on it."
   },
   {
     "objectID": "get-started/interlinks.html",
@@ -252,87 +308,31 @@
     "text": "More information\nUnder the hood, quarto doc generates sphinx inventories for an API e using create_inventory, and then dumps it to JSON using convert_inventory.\nFor an overview of the sphinx inventory format, see the sphobjinv docs.\nThe rough idea is that this plugin will behave similar to jupyterbook linking, which supports both some intersphinx syntax, but also markdown syntax."
   },
   {
-    "objectID": "get-started/renderers.html",
-    "href": "get-started/renderers.html",
-    "title": "Rendering docstrings",
+    "objectID": "get-started/crossrefs.html",
+    "href": "get-started/crossrefs.html",
+    "title": "Linking to pages",
     "section": "",
-    "text": "The previous section covered how to read and preview parsed docstrings. In this section, we’ll look at how to render a parsed docstring into a format that can be used in documentation, like markdown or HTML."
+    "text": "You can use quarto’s markdown linking syntax to link to function docs, by using the path to the generated documentation file.\nHere are some examples:\n\n\n\ncode\nresult\n\n\n\n\n[get_object](/reference/get_object.qmd)\nget_object\n\n\n[link text](/reference/MdRenderer.qmd)\nlink text"
   },
   {
-    "objectID": "get-started/renderers.html#setting-up-problem",
-    "href": "get-started/renderers.html#setting-up-problem",
-    "title": "Rendering docstrings",
-    "section": "Setting up problem",
-    "text": "Setting up problem\nSuppose that we wanted to take a function like get_object() and render a summary, with:\n\nThe number of parameters it takes.\nThe number of sections in its parsed docstring.\n\nFor get_object() it might look like the following:\n## get_object\nN PARAMETERS: 3\nSECTIONS: A docstring with 4 pieces"
+    "objectID": "get-started/crossrefs.html#linking-by-function-name",
+    "href": "get-started/crossrefs.html#linking-by-function-name",
+    "title": "Linking to pages",
+    "section": "Linking by function name",
+    "text": "Linking by function name\nUse quartodoc’s interlinking filter to link to functions using only their names:\n\n\n\ncode\nresult\n\n\n\n\n[](`quartodoc.get_object`)\nget_object\n\n\n\nNotice that the link above puts the function name in backticks, rather than using the path to its documentation: `quartodoc.get_object`.\nYou can also use this approach to link to other documentation sites. For example, including links to quartodoc, or https://docs.python.org/3 using function names.\nSee the interlinks documentation for set up and usage."
   },
   {
-    "objectID": "get-started/renderers.html#inspecting-a-function",
-    "href": "get-started/renderers.html#inspecting-a-function",
-    "title": "Rendering docstrings",
-    "section": "Inspecting a function",
-    "text": "Inspecting a function\nAs covered in the previous section, we can preview information about get_object().\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\npreview(f_obj, max_depth=3)\n\n█─Alias\n├─name = 'get_object'\n├─annotation = █─Expression\n│              ├─0 = Name(source='dc', full='griffe.dataclasses')\n│              ├─1 = '.'\n│              └─2 = Name(source='Object', full='griffe.dataclasses.Obj ...\n├─parameters = █─Parameters\n│              ├─0 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'module'\n│              │     └─default = None\n│              ├─1 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'object_name'\n│              │     └─default = None\n│              ├─2 = █─Parameter\n│              │     ├─annotation = Name(source='str', full='str')\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'parser'\n│              │     └─default = \"'numpy'\"\n│              ├─3 = █─Parameter\n│              │     ├─annotation = None\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'load_aliases'\n│              │     └─default = 'True'\n│              ├─4 = █─Parameter\n│              │     ├─annotation = None\n│              │     ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│              │     ├─name = 'dynamic'\n│              │     └─default = 'False'\n│              └─5 = █─Parameter\n│                    ├─annotation = Name(source='None | ModulesCollection', full='None ...\n│                    ├─kind = <ParameterKind.positional_or_keyword: 'positional  ...\n│                    ├─name = 'modules_collection'\n│                    └─default = 'None'\n└─docstring = █─Docstring\n              ├─parser = <Parser.numpy: 'numpy'>\n              └─parsed = █─list\n                         ├─0 = █─DocstringSectionText ...\n                         ├─1 = █─DocstringSectionParameters ...\n                         ├─2 = █─DocstringSectionSeeAlso ...\n                         └─3 = █─DocstringSectionExamples ...\n\n\nNote the following pieces:\n\npreview() takes a max_depth argument, that limits how much information it shows.\nget_object() takes 3 parameters.\nget_object() has a docstring with 4 sections.\n\nImportantly, the nodes (█) in the tree mention the name class of the python objects being previewed (e.g. Alias, Expression, Parameters). We’ll need these to specify how to render objects of each class."
+    "objectID": "get-started/crossrefs.html#the-see-also-section",
+    "href": "get-started/crossrefs.html#the-see-also-section",
+    "title": "Linking to pages",
+    "section": "The “See Also” section",
+    "text": "The “See Also” section\nA major goal of quartodoc is to automatically turn text in the “See Also” section of docstrings into links.\nSee this issue for more details on parsing See Also sections, and this issue on turning type annotations into links."
   },
   {
-    "objectID": "get-started/renderers.html#generic-dispatch",
-    "href": "get-started/renderers.html#generic-dispatch",
-    "title": "Rendering docstrings",
-    "section": "Generic dispatch",
-    "text": "Generic dispatch\nGeneric dispatch is the main programming technique used by quartodoc renderers. It let’s you define how a function (like render()) should operate on different types of objects.\n\nfrom plum import dispatch\n\nimport griffe.dataclasses as dc\nimport griffe.docstrings.dataclasses as ds\n\n\n@dispatch\ndef render(el: object):\n    print(f\"Default rendering: {type(el)}\")\n\n@dispatch\ndef render(el: dc.Alias):\n    print(\"Alias rendering\")\n    render(el.parameters)\n\n@dispatch\ndef render(el: list):\n    print(\"List rendering\")\n    [render(entry) for entry in el]\n\n\nrender(f_obj)\n\nAlias rendering\nDefault rendering: <class 'griffe.dataclasses.Parameters'>"
-  },
-  {
-    "objectID": "get-started/renderers.html#defining-a-renderer",
-    "href": "get-started/renderers.html#defining-a-renderer",
-    "title": "Rendering docstrings",
-    "section": "Defining a Renderer",
-    "text": "Defining a Renderer\nquartodoc uses tree visitors to render parsed docstrings to formats like markdown and HTML. Tree visitors define how each type of object in the parse tree should be handled.\n\nimport griffe.dataclasses as dc\nimport griffe.docstrings.dataclasses as ds\n\nfrom quartodoc import get_object\nfrom plum import dispatch\nfrom typing import Union\n\n\nclass SomeRenderer:\n    def __init__(self, header_level: int = 1):\n        self.header_level = header_level\n\n    @dispatch\n    def render(self, el):\n        raise NotImplementedError(f\"Unsupported type: {type(el)}\")\n\n    @dispatch\n    def render(self, el: Union[dc.Alias, dc.Object]):\n        header = \"#\" * self.header_level\n        str_header = f\"{header} {el.name}\"\n        str_params = f\"N PARAMETERS: {len(el.parameters)}\"\n        str_sections = \"SECTIONS: \" + self.render(el.docstring)\n        \n        # return something pretty\n        return \"\\n\".join([str_header, str_params, str_sections])\n\n    @dispatch\n    def render(self, el: dc.Docstring):\n        return f\"A docstring with {len(el.parsed)} pieces\"\n\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\n\nprint(SomeRenderer(header_level=2).render(f_obj))\n\n## get_object\nN PARAMETERS: 6\nSECTIONS: A docstring with 4 pieces\n\n\nNote 3 big pieces:\n\nGeneric dispatch: The plum dispatch function decorates each render method. The type annotations specify the types of data each version of render should dispatch on.\nDefault behavior: The first render method ensures a NotImplementedError is raised by default.\nTree walking: render methods often call render again on sub elements."
-  },
-  {
-    "objectID": "get-started/overview.html",
-    "href": "get-started/overview.html",
-    "title": "Overview",
-    "section": "",
-    "text": "Warning\n\n\n\nquartodoc is work in progress!\nquartodoc let’s you quickly generate python package documentation, using markdown and quarto. It is designed as an alternative to Sphinx."
-  },
-  {
-    "objectID": "get-started/overview.html#installation",
-    "href": "get-started/overview.html#installation",
-    "title": "Overview",
-    "section": "Installation",
-    "text": "Installation\npython -m pip install quartodoc\n\n# or from github\npython -m pip install git+https://github.com/machow/quartodoc.git"
-  },
-  {
-    "objectID": "get-started/overview.html#basic-use",
-    "href": "get-started/overview.html#basic-use",
-    "title": "Overview",
-    "section": "Basic use",
-    "text": "Basic use\nGetting started with quartodoc takes two steps: configuring a quarto website, and generating documentation pages for your library.\nFirst, create a _quarto.yml file with the following:\nproject:\n  type: website\n  resources:\n    - objects.json\n\nquartodoc:\n  style: single-page\n  dir: reference\n  package: quartodoc\n  sections:\n    - title: Some functions\n      desc: Functions to inspect docstrings.\n      contents:\n        - get_object\n        - preview\nNext, run this command to generate your API pages:\npython -m quartodoc build\nThis should create a reference/ directory with an index.qmd and documentation pages for listed functions, like get_object and preview.\nFinally, preview your website with quarto:\nquarto preview"
-  },
-  {
-    "objectID": "get-started/overview.html#key-features",
-    "href": "get-started/overview.html#key-features",
-    "title": "Overview",
-    "section": "Key Features",
-    "text": "Key Features\n\nLoad docstrings (with griffe)\nRender docstrings (e.g. with MdRenderer)\nEnable cross references to function documentation (with interlinks filter).\n\nLink to functions within a doc.\nLink to functions in other docs.\nGenerate an inventory file for other docs to link to yours.\n\nGenerate high-level summaries (with Builder).\n\nFirst line of docstring used as description.\nClass doc pages have table of class attributes.\nIndex pages list function names and descriptions."
-  },
-  {
-    "objectID": "get-started/overview.html#example-sites",
-    "href": "get-started/overview.html#example-sites",
-    "title": "Overview",
-    "section": "Example sites",
-    "text": "Example sites\n\n\n\n\n\n\n\n\nstyle\nsource\nlayout\n\n\n\n\npkgdown\ngithub\nIndex page with a title and short description for functions listed in each section. Each function gets its own documentation page.\n\n\nsingle-page\ngithub\nIndex page has function documentation embedded on it."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "examples/index.html",
-    "href": "examples/index.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "style\nsource\nlayout\n\n\n\n\npkgdown\ngithub\nIndex page with a title and short description for functions listed in each section. Each function gets its own documentation page.\n\n\nsingle-page\ngithub\nIndex page has function documentation embedded on it.\n\n\nshiny\ngithub\nThe shiny docs translated to quartodoc, using a custom renderer."
+    "objectID": "get-started/crossrefs.html#type-annotations-in-docstrings",
+    "href": "get-started/crossrefs.html#type-annotations-in-docstrings",
+    "title": "Linking to pages",
+    "section": "Type annotations in docstrings",
+    "text": "Type annotations in docstrings\nThis is planned, but currently unimplemented. See this issue on turning type annotations into links."
   }
 ]
