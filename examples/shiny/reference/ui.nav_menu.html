@@ -803,7 +803,7 @@ ul.task-list li input[type="checkbox"] {
 <colgroup>
 <col style="width: 2%">
 <col style="width: 6%">
-<col style="width: 87%">
+<col style="width: 88%">
 <col style="width: 3%">
 </colgroup>
 <thead>
@@ -817,15 +817,15 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>title</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>A title to display. Can be a character string or UI elements (i.e., tags).</td>
 <td>required</td>
 </tr>
 <tr class="even">
 <td><code>*args</code></td>
-<td>Union[Nav, str]</td>
+<td>Nav</td>
+<td>str</td>
 <td>A collection of nav items (e.g., :func:<code>~shiny.ui.nav</code>) and/or strings. Strings will be rendered as a section header unless the string is a set of two or more hyphens (e.g., <code>---</code>), in which case it will be rendered as a divider.</td>
-<td><code>()</code></td>
 </tr>
 <tr class="odd">
 <td><code>value</code></td>
@@ -835,7 +835,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>icon</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>An icon to appear inline with the button/link.</td>
 <td><code>None</code></td>
 </tr>

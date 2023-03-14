@@ -813,7 +813,7 @@ ul.task-list li input[type="checkbox"] {
 <colgroup>
 <col style="width: 2%">
 <col style="width: 8%">
-<col style="width: 86%">
+<col style="width: 87%">
 <col style="width: 1%">
 </colgroup>
 <thead>
@@ -827,9 +827,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>poll_func</code></td>
-<td>Union[Callable[[], Any], Callable[[], Awaitable[Any]]]</td>
+<td>Callable[[], Any]</td>
+<td>Callable[[], Awaitable[Any]]</td>
 <td>A function to be called frequently to determine whether a data source has changed. The return value should be something that can be compared inexpensively using <code>==</code>. Both regular functions and coroutine functions are allowed. Note that the <code>poll_func</code> should NOT return a bool that indicates whether the data source has changed. Rather, each <code>poll_func</code> return value will be checked for equality with its preceding <code>poll_func</code> return value (using <code>==</code> semantics by default), and if it differs, the data source will be considered changed.</td>
-<td>required</td>
 </tr>
 <tr class="even">
 <td><code>interval_secs</code></td>
@@ -851,9 +851,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>session</code></td>
-<td>Union[MISSING_TYPE, Session, None]</td>
-<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>. If there is no current session (i.e.&nbsp;<code>poll</code> is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.</td>
-<td><code>MISSING</code></td>
+<td>MISSING_TYPE</td>
+<td>Session</td>
+<td>None</td>
 </tr>
 </tbody>
 </table>

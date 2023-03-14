@@ -830,7 +830,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>label</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>An input label.</td>
 <td>required</td>
 </tr>
@@ -842,9 +842,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>selected</code></td>
-<td>Optional[Union[str, List[str]]]</td>
+<td>Optional[str</td>
+<td>list[str]]</td>
 <td>The values that should be initially selected, if any.</td>
-<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>multiple</code></td>
@@ -912,9 +912,9 @@ app_ui = ui.page_fluid(
         "state",
         "Choose a state:",
         {
-            "East Coast": {"NY": "NY", "NJ": "NJ", "CT": "CT"},
-            "West Coast": {"WA": "WA", "OR": "OR", "CA": "CA"},
-            "Midwest": {"MN": "MN", "WI": "WI", "IA": "IA"},
+            "East Coast": {"NY": "New York", "NJ": "New Jersey", "CT": "Connecticut"},
+            "West Coast": {"WA": "Washington", "OR": "Oregon", "CA": "California"},
+            "Midwest": {"MN": "Minnesota", "WI": "Wisconsin", "IA": "Iowa"},
         },
     ),
     ui.output_text("value"),

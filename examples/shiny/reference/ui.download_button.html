@@ -807,8 +807,8 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 27%">
+<col style="width: 11%">
+<col style="width: 28%">
 <col style="width: 46%">
 <col style="width: 13%">
 </colgroup>
@@ -829,13 +829,13 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>label</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>An input label.</td>
 <td>required</td>
 </tr>
 <tr class="odd">
 <td><code>icon</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>An icon to display on the button.</td>
 <td><code>None</code></td>
 </tr>
@@ -847,7 +847,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>kwargs</code></td>
-<td>htmltools.TagAttrArg</td>
+<td>htmltools.TagAttrValue</td>
 <td>Additional attributes for the button.</td>
 <td><code>{}</code></td>
 </tr>
@@ -890,6 +890,7 @@ from shiny import *
 app_ui = ui.page_fluid(
     ui.download_button("downloadData", "Download"),
 )
+
 
 # For more examples of different types of download handlers, see:
 # https://github.com/rstudio/py-shiny/blob/68ffc27/examples/download/app.py#L90

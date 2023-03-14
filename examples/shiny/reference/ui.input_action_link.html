@@ -810,7 +810,7 @@ ul.task-list li input[type="checkbox"] {
 <colgroup>
 <col style="width: 10%">
 <col style="width: 25%">
-<col style="width: 52%">
+<col style="width: 51%">
 <col style="width: 11%">
 </colgroup>
 <thead>
@@ -830,19 +830,19 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>label</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>An input label.</td>
 <td>required</td>
 </tr>
 <tr class="odd">
 <td><code>icon</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>An icon to appear inline with the button/link.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>kwargs</code></td>
-<td>htmltools.TagAttrArg</td>
+<td>htmltools.TagAttrValue</td>
 <td>Attributes to be applied to the link.</td>
 <td><code>{}</code></td>
 </tr>
@@ -897,7 +897,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.plot(alt="A histogram")
     # reactive.event() to invalidate the plot when the button is pressed but not when
     # the slider is changed
-    @reactive.event(lambda: input.go, ignore_none=False)
+    @reactive.event(input.go, ignore_none=False)
     def plot():
         np.random.seed(19680801)
         x = 100 + 15 * np.random.randn(input.n())

@@ -800,9 +800,9 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
-<col style="width: 3%">
-<col style="width: 14%">
-<col style="width: 78%">
+<col style="width: 4%">
+<col style="width: 12%">
+<col style="width: 80%">
 <col style="width: 2%">
 </colgroup>
 <thead>
@@ -816,9 +816,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>ui</code></td>
-<td>Union[Tag, TagList, Callable[[Request], Union[Tag, TagList]]]</td>
-<td>The UI definition for the app (e.g., a call to :func:<code>~shiny.ui.page_fluid</code> or :func:<code>~shiny.ui.page_fixed</code>, with layouts and controls nested inside). You can also pass a function that takes a :class:<code>~starlette.requests.Request</code> and returns a UI definition, if you need the UI definition to be created dynamically for each pageview.</td>
-<td>required</td>
+<td>Tag</td>
+<td>TagList</td>
+<td>Callable[[Request], Tag</td>
 </tr>
 <tr class="even">
 <td><code>server</code></td>
@@ -828,9 +828,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>static_assets</code></td>
-<td>Optional[Union[str, os.PathLike[str]]]</td>
+<td>Optional[str</td>
+<td>os.PathLike[str]]</td>
 <td>An absolute directory containing static files to be served by the app.</td>
-<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>debug</code></td>

@@ -792,6 +792,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="Inputs">Inputs</h2>
 <p><code>session._session.Inputs(self, values, ns=Root)</code></p>
 <p>A class representing Shiny input values.</p>
+<p>This class provides access to a :class:<code>~shiny.session.Session</code>’s input values. The input values are reactive :class:<code>~shiny.reactive.Values</code>, and can be accessed with the <code>[]</code> operator, or with <code>.</code>. For example, if there is an input named <code>x</code>, it can be accessed via <code>input["x"]()</code> or <code>input.x()</code>.</p>
 
 
 </section>

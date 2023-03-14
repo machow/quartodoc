@@ -809,9 +809,9 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <colgroup>
 <col style="width: 4%">
-<col style="width: 9%">
-<col style="width: 83%">
-<col style="width: 3%">
+<col style="width: 14%">
+<col style="width: 78%">
+<col style="width: 2%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -830,7 +830,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>label</code></td>
-<td>htmltools.TagChildArg</td>
+<td>htmltools.TagChild</td>
 <td>An input label.</td>
 <td>required</td>
 </tr>
@@ -872,7 +872,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>resize</code></td>
-<td>Optional[str]</td>
+<td>Optional[Literal[none, both, horizontal, vertical]]</td>
 <td>Which directions the textarea box can be resized. Can be one of “both”, “none”, “vertical”, and “horizontal”. The default, <code>None</code>, will use the client browser’s default setting for resizing textareas.</td>
 <td><code>None</code></td>
 </tr>
@@ -926,7 +926,7 @@ ul.task-list li input[type="checkbox"] {
 from shiny import *
 
 app_ui = ui.page_fluid(
-    ui.input_text("caption", "Caption:", "Data summary"),
+    ui.input_text_area("caption", "Caption:", "Data summary"),
     ui.output_text_verbatim("value"),
 )
 

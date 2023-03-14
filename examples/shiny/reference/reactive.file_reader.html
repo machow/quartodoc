@@ -826,9 +826,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>filepath</code></td>
-<td>Union[str, os.PathLike[str], Callable[[], str], Callable[[], os.PathLike[str]]]</td>
-<td>Either a string indicating the file path to be monitored, or, a no-argument function that returns such a string. The latter is useful if the file to be monitored depends on some user input, the current date/time, etc. The file path provided MUST exist, otherwise Shiny will treat it as an unhandled error and close the session. If a function is used, make sure it is high performance (or is cached, i.e.&nbsp;use a ~shiny.reactive.Calc), as it will be called very frequently.</td>
-<td>required</td>
+<td>str</td>
+<td>os.PathLike[str]</td>
+<td>Callable[[], str]</td>
 </tr>
 <tr class="even">
 <td><code>interval_secs</code></td>
@@ -850,9 +850,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>session</code></td>
-<td>Union[MISSING_TYPE, Session, None]</td>
-<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>. If there is no current session (i.e.&nbsp;<code>poll</code> is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.</td>
-<td><code>MISSING</code></td>
+<td>MISSING_TYPE</td>
+<td>Session</td>
+<td>None</td>
 </tr>
 </tbody>
 </table>
