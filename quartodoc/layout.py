@@ -3,10 +3,10 @@ from __future__ import annotations
 import griffe.dataclasses as dc
 import logging
 
+from enum import Enum
 from pydantic import BaseModel, Field
-from plum import dispatch
 
-from typing import Any, Annotated, Literal, Union
+from typing import Annotated, Literal, Union
 
 
 _log = logging.getLogger(__name__)
@@ -19,7 +19,8 @@ class _Base(BaseModel):
 class Layout(_Base):
     """The layout of an API doc, which may include many pages."""
 
-    sections: list[SubElement | Section]
+    sections: list[SectionElement | Section]
+    package: str | None = None
 
 
 # SubElements -----------------------------------------------------------------
@@ -31,17 +32,37 @@ class Section(_Base):
     kind: Literal["section"] = "section"
     title: str
     desc: str
-    contents: list[SubElement | str]
+    contents: list[ContentElement | Doc | _AutoDefault]
+
+
+class SummaryDetails(_Base):
+    """Details that can be used in a summary table (e.g. on the index page)."""
+
+    name: str
+    desc: str = ""
 
 
 class Page(_Base):
+    """A page of documentation."""
+
     kind: Literal["page"] = "page"
     path: str | None = None
     package: str | None = None
-    name: str | None = None
-    desc: str | None = None
+    summary: SummaryDetails | None = None
     flatten: bool = False
-    contents: list[SubElement | str]
+
+    contents: list[ContentElement | Doc | _AutoDefault]
+
+    @property
+    def obj(self):
+        # TODO: this is for the case where pages are put as members inside
+        # a ClassDoc or ModuleDoc. We should use a different class for this.
+        if len(self.contents) == 1:
+            return self.contents[0].obj
+        raise ValueError(
+            ".obj property assumes contents field is length 1,"
+            f" but it is {len(self.contents)}"
+        )
 
 
 class Text(_Base):
@@ -49,44 +70,97 @@ class Text(_Base):
     contents: str
 
 
-SubElement = Annotated[Union[Section, Page, Text], Field(discriminator="kind")]
+class ChoicesChildren(Enum):
+    embedded = "embedded"
+    flat = "flat"
+    separate = "separate"
 
 
-# Update forwared refs --------------------------------------------------------
-
-Layout.update_forward_refs()
-Section.update_forward_refs()
-Page.update_forward_refs()
-
-
-# Visitor ---------------------------------------------------------------------
-
-
-class Node(BaseModel):
-    value: Any
-    parent: Any = None
-
-    def add(self, new_parent: BaseModel):
-        return self.__class__(value=new_parent, parent=self)
+class Auto(_Base):
+    kind: Literal["auto"] = "auto"
+    name: str
+    members: list[str] | None = None
+    include_private: bool = False
+    include: str | None = None
+    exclude: str | None = None
+    children: ChoicesChildren = ChoicesChildren.embedded
 
 
-class PydanticVisitor:
-    @dispatch
-    def visit(self, el: BaseModel, parent: Node):
-        for field, value in el:
-            self.visit(value, parent.add(el))
+# TODO: rename to Default or something
+class _AutoDefault(_Base):
+    """This hacky class allows creating Auto as a default option in Pages and Sections."""
 
-    @dispatch
-    def visit(self, el: Union[list, tuple], parent: Node):
-        for child in el:
-            self.visit(child, parent.add(el))
+    __root__: str | dict
 
-    @dispatch
-    def visit(self, el: BaseModel, parent: None = None):
-        return self.visit(el, Node(value=None, parent=None))
+    def __new__(cls, __root__: str | dict):
+        if isinstance(__root__, dict):
+            return Auto(**__root__)
+
+        return Auto(name=__root__)
+
+
+class Link(_Base):
+    """A link to an object (e.g. a method that gets documented on a separate page)."""
+
+    name: str
+    obj: dc.Object | dc.Alias
+
+    class Config:
+        arbitrary_types_allowed = True
+
+
+class Doc(_Base):
+    name: str
+    obj: dc.Object | dc.Alias
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    @classmethod
+    def from_griffe(cls, obj: dc.Object | dc.Alias, members=None):
+        if members is None:
+            members = []
+
+        kind = obj.kind.value
+
+        if kind == "function":
+            return DocFunction(name=obj.path, obj=obj)
+        elif kind == "class":
+            return DocClass(name=obj.path, obj=obj, members=members)
+        elif kind == "attribute":
+            return DocAttribute(name=obj.path, obj=obj)
+        elif kind == "module":
+            return DocModule(name=obj.path, obj=obj, members=members)
+
+        raise TypeError(f"Cannot handle auto for object kind: {obj.kind}")
+
+
+class DocFunction(Doc):
+    kind: Literal["function"] = "function"
+
+
+class DocClass(Doc):
+    kind: Literal["class"] = "class"
+    members: list[Page | Link | Doc] = tuple()
+
+
+class DocAttribute(Doc):
+    kind: Literal["attribute"] = "attribute"
+
+
+class DocModule(Doc):
+    kind: Literal["module"] = "module"
+    members: list[Page | Link | Doc] = tuple()
+
+
+SectionElement = Annotated[Union[Section, Page], Field(discriminator="kind")]
+ContentElement = Annotated[Union[Page, Text, Auto], Field(discriminator="kind")]
+
+# Item ----
 
 
 class Item(BaseModel):
+    name: str
     obj: dc.Object | dc.Alias
     uri: str | None = None
     dispname: str | None = None
@@ -95,54 +169,9 @@ class Item(BaseModel):
         arbitrary_types_allowed = True
 
 
-class ItemCollector(PydanticVisitor):
-    def __init__(self, get_object, base_dir: str, package: str, display_name: str):
-        self.get_object = get_object
-        self.base_dir = base_dir
-        self.package = package
-        self.display_name = display_name
-        self.results: list[Item] = []
+# Update forwared refs --------------------------------------------------------
 
-    def fetch_object_dispname(self, obj):
-        """Define the name that will be displayed for individual api functions."""
-
-        if self.display_name == "name":
-            return obj.name
-        elif self.display_name == "relative":
-            return ".".join(obj.path.split(".")[1:])
-
-        elif self.display_name == "full":
-            return obj.path
-
-        elif self.display_name == "canonical":
-            return obj.canonical_path
-
-        raise ValueError(f"Unsupported display_name: `{self.display_name}`")
-
-    def _fetch_object(self, package, func_name):
-        _log.info(f"Getting object for `{self.package}.{func_name}`")
-        return self.get_object(package, func_name)
-
-    @dispatch
-    def visit(self, el: Section, parent: Node):
-        for child in el.contents:
-            if isinstance(child, str):
-                obj = self._fetch_object(self.package, child)
-                self.results.append(Item(obj=obj, uri=None, dispname=None))
-            else:
-                self.visit(child, parent.add(el))
-
-    @dispatch
-    def visit(self, el: Page, parent: Node):
-        for child in el.contents:
-            if isinstance(child, str):
-                obj = self._fetch_object(self.package, child)
-                anchor = self.fetch_object_dispname(obj)
-                uri = f"{self.base_dir}/{el.path}#{anchor}"
-                self.results.append(Item(obj=obj, uri=uri, dispname=None))
-            else:
-                self.visit(child, parent.add(el))
-
-    @dispatch
-    def visit(self, el: Text, parent: Node):
-        pass
+Layout.update_forward_refs()
+Section.update_forward_refs()
+Page.update_forward_refs()
+Auto.update_forward_refs()

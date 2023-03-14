@@ -30,15 +30,23 @@ quartodoc:
         Builders are responsible for building documentation. They tie all the pieces
         of quartodoc together, and can be defined in your _quarto.yml config.
       contents:
-        - Builder
-        - BuilderPkgdown
-        - BuilderSinglePage
+        - kind: auto
+          name: Builder
+          members: []
+        - kind: auto
+          name: BuilderPkgdown
+          members: []
+        - kind: auto
+          name: BuilderSinglePage
+          members: []
 
     - title: Docstring Renderers
       desc: |
         Renderers convert parsed docstrings into a target format, like markdown.
       contents:
-        - MdRenderer
+        - kind: auto
+          name: MdRenderer
+          members: []
 
     - title: Inspection
       desc: |
@@ -60,13 +68,21 @@ quartodoc:
         Classes for specifying the exact layout of your docs.
       contents:
         - kind: "page"
-          path: "layouts.qmd"
+          path: "layouts"
           flatten: true
           contents:
             - layout.Layout
             - layout.Section
             - layout.Page
-            - layout.Text
+            - layout.Auto
+            - name: layout.Doc
+              members: []
+            - layout.DocFunction
+            - layout.DocAttribute
+            - layout.DocModule
+            - layout.DocClass
+            - layout.Link
+            - layout.Item
 
 
 website:

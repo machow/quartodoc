@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import logging
 import yaml
 
-from functools import partial
 from griffe.loader import GriffeLoader
 from griffe.collections import ModulesCollection
 from griffe.dataclasses import Alias
@@ -12,10 +13,10 @@ from plum import dispatch  # noqa
 from pathlib import Path
 
 from .inventory import create_inventory, convert_inventory
-from .renderers import Renderer
 from . import layout
+from .renderers import Renderer
 
-from typing import Any, Union, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 if TYPE_CHECKING:
     import sphobjinv as soi
@@ -87,7 +88,7 @@ def get_object(
 
     See Also
     --------
-    get_function: a deprecated function.
+    preview: print a user-friendly preview of a griffe object.
 
     Examples
     --------
@@ -99,21 +100,18 @@ def get_object(
     griffe = GriffeLoader(
         docstring_parser=Parser(parser), modules_collection=modules_collection
     )
-    mod = griffe.load_module(module)
+    parts = [*module.split("."), *object_name.split(".")]
+    parent_path = ".".join(parts[:-1])
 
-    parts = object_name.split(".")
-    f_data = mod._modules_collection[f"{module}.{object_name}"]
+    f_parent = griffe.modules_collection[parent_path]
+    f_data = griffe.modules_collection[f"{module}.{object_name}"]
 
     # ensure that function methods fetched off of an Alias of a class, have that
     # class Alias as their parent, not the Class itself.
-    if isinstance(f_data, dc.Function):
-        try:
-            parent_path = ".".join(parts[:-1])
-            parent_alias = mod._modules_collection[f"{module}.{parent_path}"]
-        except KeyError:
-            pass
-        else:
-            f_data = dc.Alias(f_data.name, f_data, parent=parent_alias)
+    if isinstance(f_parent, dc.Alias) and isinstance(
+        f_data, (dc.Function, dc.Attribute)
+    ):
+        f_data = dc.Alias(f_data.name, f_data, parent=f_parent)
 
     # Alias objects can refer to objects imported from other modules.
     # in this case, we need to import the target's module in order to resolve
@@ -200,7 +198,9 @@ class Builder:
         use_interlinks: bool = False,
         display_name: str = "name",
     ):
-        self.sections = self.load_sections(sections)
+        self.layout = self.load_layout(sections=sections, package=package)
+        self.sections = self.layout.sections
+
         self.package = package
         self.version = None
         self.dir = dir
@@ -208,10 +208,10 @@ class Builder:
         self.display_name = display_name
 
         self.items: "list[layout.Item]"
-        self.create_items()
+        # self.create_items()
 
         self.inventory: "None | soi.Inventory"
-        self.create_inventory()
+        # self.create_inventory()
 
         self.renderer = Renderer.from_config(renderer)
 
@@ -222,106 +222,150 @@ class Builder:
 
         self.use_interlinks = use_interlinks
 
-    def build(self):
-        """Build index page, sphinx inventory, and individual doc pages."""
-
-        _log.info("Rendering index")
-        content = self.render_index()
-
-        _log.info(f"Writing index to directory: {self.dir}")
-        p_index = Path(self.dir) / self.out_index
-        p_index.parent.mkdir(exist_ok=True, parents=True)
-        p_index.write_text(content)
-
-        _log.info(f"Saving inventory to {self.out_inventory}")
-        convert_inventory(self.inventory, self.out_inventory)
-
-        _log.info("Writing doc pages")
-        self.write_doc_pages()
-
-        if self.sidebar:
-            _log.info(f"Writing sidebar yaml to {self.sidebar}")
-            d_sidebar = self.generate_sidebar()
-            yaml.dump(d_sidebar, open(self.sidebar, "w"))
-
-    def load_sections(self, sections: dict):
+    def load_layout(self, sections: dict, package: str):
         # TODO: currently returning the list of sections, to make work with
         # previous code. We should make Layout a first-class citizen of the
         # process.
-        return layout.Layout(sections=sections).sections
+        return layout.Layout(sections=sections, package=package)
 
-    # introspection ----
+    # building ----------------------------------------------------------------
 
-    def create_items(self):
-        """Collect items for all docstrings."""
+    def build(self):
+        """Build index page, sphinx inventory, and individual doc pages."""
 
-        collection = ModulesCollection()
-        f_get_object = partial(get_object, modules_collection=collection)
+        # shaping and collection ----
 
-        _log.info("Creating items")
+        _log.info("Generating blueprint.")
+        blueprint = self.do_blueprint()
 
-        ic = layout.ItemCollector(
-            f_get_object, self.dir, self.package, self.display_name
-        )
-        ic.visit(self.sections)
+        _log.info("Collecting pages and inventory items.")
+        pages, items = self.do_collect(blueprint)
 
-        self.items = ic.results
+        # strip package name the item name, so that it isn't repeated a ton
+        # in our internal docs links.
+        stripped_items = self._strip_item_dispname(items)
+
+        _log.info("Summarizing docs for index page.")
+        summary = self.do_summarize(blueprint, stripped_items)
+
+        # writing pages ----
+
+        _log.info("Writing index")
+        self.write_index(summary)
+
+        _log.info("Writing docs pages")
+        self.write_doc_pages(pages, stripped_items)
+
+        # inventory ----
+
+        _log.info("Creating inventory file")
+        inv = self.create_inventory(items)
+        convert_inventory(inv, self.out_inventory)
+
+        # sidebar ----
+
+        if self.sidebar:
+            _log.info(f"Writing sidebar yaml to {self.sidebar}")
+            d_sidebar = self.generate_sidebar(blueprint)
+            yaml.dump(d_sidebar, open(self.sidebar, "w"))
+
+    def do_blueprint(self) -> layout.Layout:
+        from quartodoc.builder.blueprint import BlueprintTransformer, strip_package_name
+
+        bt = BlueprintTransformer()
+        blueprint = bt.visit(self.layout)
+
+        # TODO: this piece strips package name from packages
+        # e.g. changes quartodoc.Builder to Builder
+        # but it should probably be optional
+        return strip_package_name(blueprint, self.package)
+
+    def do_collect(self, blueprint) -> tuple[list[layout.Page], list[layout.Item]]:
+        from quartodoc.builder.collect import CollectTransformer
+
+        ct = CollectTransformer(self.dir)
+        ct.visit(blueprint)
+
+        return ct.pages, ct.items
+
+    def do_summarize(self, blueprint, items):
+        from quartodoc.summarize import MdSummarizer
+
+        summarizer = MdSummarizer(use_interlinks=self.use_interlinks, items=items)
+
+        summary = summarizer.summarize(blueprint)
+
+        return summary
+
+    def write_index(self, content: str):
+        """Write API index page."""
+
+        _log.info(f"Writing index to directory: {self.dir}")
+
+        final = f"# {self.title}\n\n{content}"
+
+        p_index = Path(self.dir) / self.out_index
+        p_index.parent.mkdir(exist_ok=True, parents=True)
+        p_index.write_text(final)
+
+        return str(p_index)
+
+    def write_doc_pages(self, pages, items):
+        """Write individual function documentation pages."""
+
+        for page in pages:
+            print(page.path)
+            _log.info(f"Rendering {page.path}")
+            rendered = self.renderer.render(page)
+            html_path = Path(self.dir) / (page.path + self.out_page_suffix)
+            html_path.parent.mkdir(exist_ok=True, parents=True)
+
+            html_path.write_text(rendered)
 
     # inventory ----
 
-    def create_inventory(self):
+    def create_inventory(self, items):
         """Generate sphinx inventory object."""
 
         # TODO: get package version
         _log.info("Creating inventory")
         version = "0.0.9999" if self.version is None else self.version
-        self.inventory = create_inventory(
-            self.package,
-            version,
-            self.items,
-            self.fetch_object_uri,
-            self.fetch_object_dispname,
-        )
+        inventory = create_inventory(self.package, version, items)
 
-    def fetch_object_uri(self, obj, suffix=".html"):
-        """Define the final url that will point to individual doc pages."""
+        return inventory
 
-        dispname = self.fetch_object_dispname(obj)
-        return f"{self.dir}/{dispname}{suffix}"
+    def _strip_item_dispname(self, items):
+        result = []
+        for item in items:
+            new = item.copy()
+            prefix = self.package + "."
+            if new.name.startswith(prefix):
+                new.dispname = new.name.replace(prefix, "", 1)
+            result.append(new)
 
-    # rendering ----
-
-    def render_index(self):
-        """Generate API index page."""
-
-        raise NotImplementedError()
-
-    def render_item_link(self, obj):
-        if self.use_interlinks:
-            return f"[](`{obj.path}`)"
-
-        link = "/" + self.fetch_object_uri(obj, suffix=self.out_page_suffix)
-        name = self.fetch_object_dispname(obj)
-        return f"[{name}]({link})"
-
-    def write_doc_pages(self):
-        """Write individual function documentation pages."""
-
-        raise NotImplementedError()
+        return result
 
     # sidebar ----
 
-    def generate_sidebar(self):
+    def generate_sidebar(self, blueprint: layout.Layout):
         contents = [f"{self.dir}/{self.out_index}"]
-        for section in self.sections:
-            links = [
-                self.fetch_object_uri(self.items[k], suffix=self.out_page_suffix)
-                for k in section.contents
-            ]
+        for section in blueprint.sections:
+            links = []
+            for entry in section.contents:
+                links.extend(self._page_to_links(entry))
 
             contents.append({"section": section.title, "contents": links})
 
         return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
+
+    def _page_to_links(self, el: layout.Page) -> list[str]:
+        # if el.flatten:
+        #     links = []
+        #     for entry in el.contents:
+        #         links.append(f"{self.dir}/{entry.path}{self.out_page_suffix}")
+        #     return links
+
+        return [f"{self.dir}/{el.path}{self.out_page_suffix}"]
 
     # constructors ----
 
@@ -350,73 +394,11 @@ class BuilderPkgdown(Builder):
 
     style = "pkgdown"
 
-    def render_index(self):
-        rendered_sections = list(map(self.summarize, self.sections))
-        str_sections = "\n\n".join(rendered_sections)
+    # def render_index(self):
+    #    rendered_sections = list(map(self.summarize, self.sections))
+    #    str_sections = "\n\n".join(rendered_sections)
 
-        return f"# {self.title}\n\n{str_sections}"
-
-    @dispatch
-    def summarize(self, el: layout.Section):
-        header = f"## {el.title}\n\n{el.desc}"
-
-        thead = "| | |\n| --- | --- |"
-
-        rendered = []
-        for func_name in el.contents:
-            if isinstance(func_name, str):
-                # TODO: shouldn't need to collect object again after .create_items()
-                # TODO: transform step to handle getting objects
-                obj = get_object(self.package, func_name)
-            else:
-                obj = func_name
-            rendered.append(self.summarize(obj))
-
-        str_func_table = "\n".join([thead, *rendered])
-        return f"{header}\n\n{str_func_table}"
-
-    @dispatch
-    def summarize(self, el: layout.Page):
-        if not el.flatten:
-            # TODO: validate these attributes are set?
-            return f"| [{el.name}]({el.path}) | {el.desc} |"
-
-        else:
-            return list(map(self.summarize, el.contents))
-
-    @dispatch
-    def summarize(self, obj: Union[dc.Object, dc.Alias]):
-        # get high-level description
-        doc = obj.docstring
-        if doc is None:
-            # TODO: add a single empty
-            docstring_parts = []
-        else:
-            docstring_parts = doc.parsed
-
-        # TODO: look up from inventory?
-        link = self.render_item_link(obj)
-        if len(docstring_parts) and isinstance(
-            docstring_parts[0], ds.DocstringSectionText
-        ):
-            # TODO: or canonical_path
-            description = docstring_parts[0].value
-            short = description.split("\n")[0]
-            return f"| {link} | {short} |"
-        else:
-            return f"| {link} | |"
-
-    def write_doc_pages(self):
-        for item in self.items.values():
-            _log.info(f"Rendering `{item.canonical_path}`")
-            rendered = self.renderer.render(item)
-            html_path = Path(self.fetch_object_uri(item))
-            html_path.parent.mkdir(exist_ok=True, parents=True)
-
-            html_path.with_suffix(self.out_page_suffix).write_text(rendered)
-
-    # def fetch_object_dispname(self, obj):
-    #    return obj.name
+    #    return f"# {self.title}\n\n{str_sections}"
 
 
 class BuilderSinglePage(Builder):

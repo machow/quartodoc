@@ -5,8 +5,10 @@ from griffe import dataclasses as dc
 from tabulate import tabulate
 from plum import dispatch
 from typing import Tuple, Union
+from quartodoc import layout
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
+
 
 
 class MdRenderer(Renderer):
@@ -47,12 +49,14 @@ class MdRenderer(Renderer):
         show_signature_annotations: bool = False,
         display_name: str = "name",
         hook_pre=None,
+        summarizer=None,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
         self.display_name = display_name
         self.hook_pre = hook_pre
+        self.summarizer=None
 
     def _render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
         if isinstance(el, (type(None), str)):
@@ -85,11 +89,38 @@ class MdRenderer(Renderer):
     def render(self, el: str):
         return el
 
-    # TODO: remove, as this is now handled by _render_annotation
-    # @dispatch
-    # def render(self, el: Union[Expression, Name]):
-    #    # these are used often for annotations, and full returns it as a string
-    #    return el.full
+    # render layouts ==========================================================
+
+    @dispatch
+    def render(self, el: layout.Page):
+        result = map(self.render, el.contents)
+
+        return "\n\n".join(result)
+
+    @dispatch
+    def render(self, el: layout.Doc):
+        raise NotImplementedError(f"Unsupported Doc type: {type(el)}")
+
+    @dispatch
+    def render(self, el: layout.DocClass):
+        # TODO: render table of methods
+        if el.members:
+            raw_attrs = [x for x in el.members if isinstance(x.obj, dc.Attribute)]
+            raw_meths = [x for x in el.members if isinstance(x.obj, dc.Function)]
+
+        body = self.render(el.obj)
+
+        return body
+
+    @dispatch
+    def render(self, el: layout.DocFunction):
+        return self.render(el.obj)
+
+    @dispatch
+    def render(self, el: layout.DocAttribute):
+        return self.render(el.obj)
+
+    # render griffe objects ===================================================
 
     @dispatch
     def render(self, el: Union[dc.Object, dc.Alias]):
@@ -99,7 +130,9 @@ class MdRenderer(Renderer):
         _str_pars = self.render(el.parameters)
         str_sig = f"`{_str_dispname}({_str_pars})`"
 
-        _anchor = f"{{ #{_str_dispname} }}"
+        # TODO: support anchors that are not fully qualified paths?
+        # e.g. get_object, rather than quartodoc.get_object
+        _anchor = f"{{ #{el.path} }}"
         str_title = f"{'#' * self.header_level} {_str_dispname} {_anchor}"
 
         str_body = []
@@ -260,3 +293,4 @@ class MdRenderer(Renderer):
     )
     def render(self, el):
         raise NotImplementedError(f"{type(el)}")
+

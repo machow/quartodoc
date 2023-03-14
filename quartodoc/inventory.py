@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 import sphobjinv as soi
 
 from dataclasses import dataclass
 from griffe import dataclasses as dc
+from plum import dispatch
+from quartodoc import layout
 
 from typing import Union, Callable
 
@@ -129,11 +133,9 @@ def _to_clean_dict(inv: soi.Inventory):
     return out
 
 
+@dispatch
 def _create_inventory_item(
-    item: "dc.Object | dc.Alias",
-    uri: "str | Callable[dc.Object, str]",
-    dispname: "str | Callable[dc.Object, str]" = "-",
-    priority="1",
+    item: Union[dc.Object, dc.Alias], uri, dispname="-", priority="1",
 ) -> soi.DataObjStr:
     target = item
 
@@ -144,6 +146,20 @@ def _create_inventory_item(
         priority=priority,
         uri=_maybe_call(uri, target),
         dispname=_maybe_call(dispname, target),
+    )
+
+
+@dispatch
+def _create_inventory_item(
+    item: layout.Item, *args, priority="1", **kwargs
+) -> soi.DataObjStr:
+    return soi.DataObjStr(
+        name=item.name,
+        domain="py",
+        role=item.obj.kind.value,
+        priority=priority,
+        uri=item.uri,
+        dispname=item.dispname or "-",
     )
 
 
