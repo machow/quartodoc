@@ -158,10 +158,7 @@ class MdRenderer(Renderer):
         """Render high level objects representing functions, classes, etc.."""
 
         str_sig = self.signature(el)
-
         _str_dispname = self._fetch_object_dispname(el)
-        _str_pars = self.render(el.parameters)
-        str_sig = f"`{_str_dispname}({_str_pars})`"
 
         # TODO: support anchors that are not fully qualified paths?
         # e.g. get_object, rather than quartodoc.get_object
