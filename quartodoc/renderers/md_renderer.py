@@ -82,6 +82,27 @@ class MdRenderer(Renderer):
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
+    # signature method --------------------------------------------------------
+
+    @dispatch
+    def signature(self, el: dc.Alias):
+        return self.signature(el.target)
+
+    @dispatch
+    def signature(self, el: Union[dc.Class, dc.Function]):
+        name = self._fetch_object_dispname(el)
+        pars = self.render(el.parameters)
+
+        return f"`{name}({pars})`"
+
+    @dispatch
+    def signature(self, el: Union[dc.Module, dc.Attribute]):
+        name = self._fetch_object_dispname(el)
+        return f"`{name}`"
+
+        
+    # render method -----------------------------------------------------------
+
     @dispatch
     def render(self, el):
         raise NotImplementedError(f"Unsupported type: {type(el)}")
@@ -134,7 +155,9 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: Union[dc.Object, dc.Alias]):
-        # TODO: replace hard-coded header level
+        """Render high level objects representing functions, classes, etc.."""
+
+        str_sig = self.signature(el)
 
         _str_dispname = self._fetch_object_dispname(el)
         _str_pars = self.render(el.parameters)
@@ -166,10 +189,6 @@ class MdRenderer(Renderer):
             parts = [str_title, *str_body]
 
         return "\n\n".join(parts)
-
-    @dispatch
-    def render(self, el: dc.Attribute):
-        raise NotImplementedError()
 
     # signature parts -------------------------------------------------------------
 
