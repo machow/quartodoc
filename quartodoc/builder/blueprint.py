@@ -4,7 +4,16 @@ from functools import partial
 
 from plum import dispatch
 
-from quartodoc.layout import _Base, Doc, Link, Auto, Section, Page, ChoicesChildren
+from quartodoc.layout import (
+    _Base,
+    Doc,
+    Link,
+    Auto,
+    Section,
+    MemberPage,
+    Page,
+    ChoicesChildren,
+)
 from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node
@@ -39,9 +48,10 @@ class BlueprintTransformer(PydanticTransformer):
         # potentially put doc on its own Page ----
         node = ctx_node.get()
 
-        # top-level Lookups are level 4, since previous levels are:
-        # layout, sections list, Section, contents list
-        if node.level == 4 and isinstance(node.parent.parent.value, Section):
+        # if doc is in Section(contents=...), then wrap it in a Page. This allows
+        # functions on the top-level of the config to generate a page of docs.
+        section = getattr(getattr(node, "parent", None), "parent", None)
+        if isinstance(section, Section):
             return Page(contents=[el], path=el.name)
 
         return el
@@ -65,15 +75,15 @@ class BlueprintTransformer(PydanticTransformer):
                 continue
 
             # create element for child ----
-            autodoc = Doc.from_griffe(obj_member)
+            doc = Doc.from_griffe(obj_member)
 
             # Case 1: make each member entry its own page
             if el.children == ChoicesChildren.separate:
-                res = Page(path=obj_member.path, contents=[autodoc])
+                res = MemberPage(path=obj_member.path, contents=[doc])
             # Case2: use just the Doc element, so it gets embedded directly
             # into the class being documented
             elif el.children == ChoicesChildren.embedded:
-                res = autodoc
+                res = doc
             # Case 3: make each member just a link in a summary table.
             # if the page for the member is not created somewhere else, then it
             # won't exist in the documentation (but its summary will still be in

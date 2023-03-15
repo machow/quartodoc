@@ -230,7 +230,7 @@ class Builder:
 
     # building ----------------------------------------------------------------
 
-    def build(self):
+    def build(self, dry_run=False):
         """Build index page, sphinx inventory, and individual doc pages."""
 
         # shaping and collection ----
@@ -251,10 +251,10 @@ class Builder:
         # writing pages ----
 
         _log.info("Writing index")
-        self.write_index(summary)
+        self.write_index(summary, dry_run)
 
         _log.info("Writing docs pages")
-        self.write_doc_pages(pages, stripped_items)
+        self.write_doc_pages(pages, stripped_items, dry_run)
 
         # inventory ----
 
@@ -289,11 +289,11 @@ class Builder:
         return ct.pages, ct.items
 
     def do_summarize(self, blueprint, items):
-        from quartodoc.summarize import MdSummarizer
+        # from quartodoc.summarize import MdSummarizer
 
-        summarizer = MdSummarizer(use_interlinks=self.use_interlinks, items=items)
+        # summarizer = MdSummarizer(use_interlinks=self.use_interlinks, items=items)
 
-        summary = summarizer.summarize(blueprint)
+        summary = self.renderer.summarize(blueprint)
 
         return summary
 

@@ -65,6 +65,12 @@ class Page(_Base):
         )
 
 
+class MemberPage(Page):
+    """A page created as a result of documenting a member on a class or module."""
+
+    contents: list[Doc]
+
+
 class Text(_Base):
     kind: Literal["text"] = "text"
     contents: str
@@ -112,25 +118,29 @@ class Link(_Base):
 class Doc(_Base):
     name: str
     obj: dc.Object | dc.Alias
+    anchor: str
 
     class Config:
         arbitrary_types_allowed = True
 
     @classmethod
-    def from_griffe(cls, obj: dc.Object | dc.Alias, members=None):
+    def from_griffe(cls, obj: dc.Object | dc.Alias, members=None, anchor: str = None):
         if members is None:
             members = []
 
         kind = obj.kind.value
+        anchor = obj.path if anchor is None else anchor
+
+        kwargs = {"obj": obj, "anchor": anchor}
 
         if kind == "function":
-            return DocFunction(name=obj.path, obj=obj)
-        elif kind == "class":
-            return DocClass(name=obj.path, obj=obj, members=members)
+            return DocFunction(name=obj.path, **kwargs)
         elif kind == "attribute":
-            return DocAttribute(name=obj.path, obj=obj)
+            return DocAttribute(name=obj.path, **kwargs)
+        elif kind == "class":
+            return DocClass(name=obj.path, members=members, **kwargs)
         elif kind == "module":
-            return DocModule(name=obj.path, obj=obj, members=members)
+            return DocModule(name=obj.path, members=members, **kwargs)
 
         raise TypeError(f"Cannot handle auto for object kind: {obj.kind}")
 
@@ -141,7 +151,7 @@ class DocFunction(Doc):
 
 class DocClass(Doc):
     kind: Literal["class"] = "class"
-    members: list[Page | Link | Doc] = tuple()
+    members: list[MemberPage | Link | Doc] = tuple()
 
 
 class DocAttribute(Doc):
@@ -150,7 +160,7 @@ class DocAttribute(Doc):
 
 class DocModule(Doc):
     kind: Literal["module"] = "module"
-    members: list[Page | Link | Doc] = tuple()
+    members: list[MemberPage | Link | Doc] = tuple()
 
 
 SectionElement = Annotated[Union[Section, Page], Field(discriminator="kind")]

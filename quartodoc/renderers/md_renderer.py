@@ -49,14 +49,15 @@ class MdRenderer(Renderer):
         show_signature_annotations: bool = False,
         display_name: str = "name",
         hook_pre=None,
-        summarizer=None,
+        use_interlinks = False,
+
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
         self.display_name = display_name
         self.hook_pre = hook_pre
-        self.summarizer=None
+        self.use_interlinks = use_interlinks
 
     def _render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
         if isinstance(el, (type(None), str)):
@@ -294,3 +295,86 @@ class MdRenderer(Renderer):
     def render(self, el):
         raise NotImplementedError(f"{type(el)}")
 
+    
+    # Summarize ===============================================================
+    # this method returns a summary description, such as a table summarizing a
+    # layout.Section, or a row in the table for layout.Page or layout.DocFunction.
+
+    @dispatch
+    def summarize(self, el: layout.Layout):
+        rendered_sections = list(map(self.summarize, el.sections))
+        return "\n\n".join(rendered_sections)
+
+    @dispatch
+    def summarize(self, el: layout.Section):
+        header = f"## {el.title}\n\n{el.desc}"
+
+        thead = "| | |\n| --- | --- |"
+
+        rendered = []
+        for child in el.contents:
+            rendered.append(self.summarize(child))
+
+        str_func_table = "\n".join([thead, *rendered])
+        return f"{header}\n\n{str_func_table}"
+
+    @dispatch
+    def summarize(self, el: layout.Page):
+        if len(el.contents) > 1 and not el.flatten:
+            if el.summary is not None:
+                return self._summary_row(f"[{el.summary.name}]({el.path})", el.summary.desc)
+
+            raise ValueError(
+                "Cannot summarize Page. Either set its `summary` attribute with name "
+                "and description details, or set `flatten` to True."
+            )
+
+        else:
+            rows = [self.summarize(entry, el.path) for entry in el.contents]
+            return "\n".join(rows)
+
+    @dispatch
+    def summarize(self, el: layout.MemberPage):
+        # TODO: model should validate these only have a single entry
+        return self.summarize(el.contents[0], el.path, shorten = True)
+
+    @dispatch
+    def summarize(self, el: layout.Doc, path: str | None = None, shorten: bool = False):
+        if path is None:
+            link = f"[{el.name}](#{el.anchor})]"
+        else:
+            # TODO: assumes that files end with .qmd
+            link = f"[{el.name}](/{path}.qmd#{el.anchor})"
+
+        description = self.summarize(el.obj)
+        return self._summary_row(link, description)
+
+    @dispatch
+    def summarize(self, el: layout.Link):
+         description = self.summarize(el.obj)
+         return self._summary_row(f"[](`{el.name}`)", description)
+
+    @dispatch
+    def summarize(self, obj: Union[dc.Object, dc.Alias]) -> str:
+        # get high-level description
+        doc = obj.docstring
+        if doc is None:
+            # TODO: add a single empty
+            docstring_parts = []
+        else:
+            docstring_parts = doc.parsed
+
+        if len(docstring_parts) and isinstance(
+            docstring_parts[0], ds.DocstringSectionText
+        ):
+            # TODO: or canonical_path
+            description = docstring_parts[0].value
+            short = description.split("\n")[0]
+
+            return short
+
+        return ""
+
+    @staticmethod
+    def _summary_row(link, description):
+        return f"| {link} | {description} |"
