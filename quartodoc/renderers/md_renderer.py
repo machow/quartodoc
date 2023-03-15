@@ -106,12 +106,21 @@ class MdRenderer(Renderer):
     def render(self, el: layout.DocClass):
         # TODO: render table of methods
         if el.members:
+            sub_header = "#" * (self.header_level + 1)
             raw_attrs = [x for x in el.members if isinstance(x.obj, dc.Attribute)]
             raw_meths = [x for x in el.members if isinstance(x.obj, dc.Function)]
 
-        body = self.render(el.obj)
+            _attrs_table = "\n\n".join(map(self.summarize, raw_attrs))
+            _meths_table = "\n\n".join(map(self.summarize, raw_meths))
 
-        return body
+            attrs = f"{sub_header} Attributes\n\n{_attrs_table}"
+            meths = f"{sub_header} Methods\n\n{_meths_table}"
+        else:
+            attrs = ""
+            meths = ""
+
+        body = self.render(el.obj)
+        return body + "\n\n".join([attrs, meths])
 
     @dispatch
     def render(self, el: layout.DocFunction):
@@ -301,6 +310,12 @@ class MdRenderer(Renderer):
     # layout.Section, or a row in the table for layout.Page or layout.DocFunction.
 
     @dispatch
+    def summarize(self, el):
+        """Produce a summary table."""
+
+        raise NotImplementedError("Unsupported type: {type(el)}")
+
+    @dispatch
     def summarize(self, el: layout.Layout):
         rendered_sections = list(map(self.summarize, el.sections))
         return "\n\n".join(rendered_sections)
@@ -344,7 +359,7 @@ class MdRenderer(Renderer):
             link = f"[{el.name}](#{el.anchor})]"
         else:
             # TODO: assumes that files end with .qmd
-            link = f"[{el.name}](/{path}.qmd#{el.anchor})"
+            link = f"[{el.name}]({path}.qmd#{el.anchor})"
 
         description = self.summarize(el.obj)
         return self._summary_row(link, description)
@@ -359,7 +374,6 @@ class MdRenderer(Renderer):
         # get high-level description
         doc = obj.docstring
         if doc is None:
-            # TODO: add a single empty
             docstring_parts = []
         else:
             docstring_parts = doc.parsed
@@ -367,7 +381,6 @@ class MdRenderer(Renderer):
         if len(docstring_parts) and isinstance(
             docstring_parts[0], ds.DocstringSectionText
         ):
-            # TODO: or canonical_path
             description = docstring_parts[0].value
             short = description.split("\n")[0]
 

@@ -16,7 +16,7 @@ from quartodoc.layout import (
 )
 from quartodoc import get_object as _get_object
 
-from .utils import PydanticTransformer, ctx_node
+from .utils import PydanticTransformer
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -44,17 +44,16 @@ class BlueprintTransformer(PydanticTransformer):
             self.crnt_package = old
 
     @dispatch
-    def exit(self, el: Doc):
-        # potentially put doc on its own Page ----
-        node = ctx_node.get()
+    def exit(self, el: Section):
+        new = el.copy()
+        contents = [
+            Page(contents=[el], path=el.name) if isinstance(el, Doc) else el
+            for el in new.contents
+        ]
 
-        # if doc is in Section(contents=...), then wrap it in a Page. This allows
-        # functions on the top-level of the config to generate a page of docs.
-        section = getattr(getattr(node, "parent", None), "parent", None)
-        if isinstance(section, Section):
-            return Page(contents=[el], path=el.name)
+        new.contents = contents
 
-        return el
+        return new
 
     @dispatch
     def enter(self, el: Auto):
@@ -75,7 +74,7 @@ class BlueprintTransformer(PydanticTransformer):
                 continue
 
             # create element for child ----
-            doc = Doc.from_griffe(obj_member)
+            doc = Doc.from_griffe(obj_member.name, obj_member)
 
             # Case 1: make each member entry its own page
             if el.children == ChoicesChildren.separate:
@@ -93,7 +92,7 @@ class BlueprintTransformer(PydanticTransformer):
 
             children.append(res)
 
-        return Doc.from_griffe(obj, members=children)
+        return Doc.from_griffe(el.name, obj, members=children)
 
     @staticmethod
     def _fetch_members(el: Auto, obj: dc.Object | dc.Alias):

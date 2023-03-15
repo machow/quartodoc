@@ -16,7 +16,7 @@ class CollectTransformer(PydanticTransformer):
         self.pages: list[layout.Page] = []
 
     def find_page_node(self):
-        crnt_node = ctx_node.get()
+        crnt_node = orig_node = ctx_node.get()  # noqa
 
         is_parent = False
 

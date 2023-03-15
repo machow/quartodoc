@@ -103,6 +103,8 @@ def get_object(
     parts = [*module.split("."), *object_name.split(".")]
     parent_path = ".".join(parts[:-1])
 
+    griffe.load_module(module)
+
     f_parent = griffe.modules_collection[parent_path]
     f_data = griffe.modules_collection[f"{module}.{object_name}"]
 
@@ -230,7 +232,7 @@ class Builder:
 
     # building ----------------------------------------------------------------
 
-    def build(self, dry_run=False):
+    def build(self):
         """Build index page, sphinx inventory, and individual doc pages."""
 
         # shaping and collection ----
@@ -251,10 +253,10 @@ class Builder:
         # writing pages ----
 
         _log.info("Writing index")
-        self.write_index(summary, dry_run)
+        self.write_index(summary)
 
         _log.info("Writing docs pages")
-        self.write_doc_pages(pages, stripped_items, dry_run)
+        self.write_doc_pages(pages, stripped_items)
 
         # inventory ----
 

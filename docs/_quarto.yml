@@ -83,6 +83,8 @@ quartodoc:
             - layout.DocClass
             - layout.Link
             - layout.Item
+            - layout.SectionElement
+            - layout.ContentElement
 
 
 website:

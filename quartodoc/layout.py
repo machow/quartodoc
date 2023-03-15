@@ -17,7 +17,15 @@ class _Base(BaseModel):
 
 
 class Layout(_Base):
-    """The layout of an API doc, which may include many pages."""
+    """The layout of an API doc, which may include many pages.
+
+    Attributes
+    ----------
+    sections:
+        Top-level sections of the quarto layout config.
+    package:
+        The package being documented.
+    """
 
     sections: list[SectionElement | Section]
     package: str | None = None
@@ -27,7 +35,18 @@ class Layout(_Base):
 
 
 class Section(_Base):
-    """Generic marker for a section of content."""
+    """A section of content on the reference index page.
+
+    Attributes
+    ----------
+    kind:
+    title:
+        Title of the section on the index.
+    desc:
+        Description of the section on the index.
+    contents:
+        Individual objects (e.g. functions, classes, methods) being documented.
+    """
 
     kind: Literal["section"] = "section"
     title: str
@@ -124,23 +143,25 @@ class Doc(_Base):
         arbitrary_types_allowed = True
 
     @classmethod
-    def from_griffe(cls, obj: dc.Object | dc.Alias, members=None, anchor: str = None):
+    def from_griffe(
+        cls, name, obj: dc.Object | dc.Alias, members=None, anchor: str = None
+    ):
         if members is None:
             members = []
 
         kind = obj.kind.value
         anchor = obj.path if anchor is None else anchor
 
-        kwargs = {"obj": obj, "anchor": anchor}
+        kwargs = {"name": name, "obj": obj, "anchor": anchor}
 
         if kind == "function":
-            return DocFunction(name=obj.path, **kwargs)
+            return DocFunction(**kwargs)
         elif kind == "attribute":
-            return DocAttribute(name=obj.path, **kwargs)
+            return DocAttribute(**kwargs)
         elif kind == "class":
-            return DocClass(name=obj.path, members=members, **kwargs)
+            return DocClass(members=members, **kwargs)
         elif kind == "module":
-            return DocModule(name=obj.path, members=members, **kwargs)
+            return DocModule(members=members, **kwargs)
 
         raise TypeError(f"Cannot handle auto for object kind: {obj.kind}")
 
@@ -151,7 +172,7 @@ class DocFunction(Doc):
 
 class DocClass(Doc):
     kind: Literal["class"] = "class"
-    members: list[MemberPage | Link | Doc] = tuple()
+    members: list[MemberPage | Doc | Link] = tuple()
 
 
 class DocAttribute(Doc):
@@ -160,11 +181,14 @@ class DocAttribute(Doc):
 
 class DocModule(Doc):
     kind: Literal["module"] = "module"
-    members: list[MemberPage | Link | Doc] = tuple()
+    members: list[MemberPage | Doc | Link] = tuple()
 
 
 SectionElement = Annotated[Union[Section, Page], Field(discriminator="kind")]
+"""Entry in the sections list."""
+
 ContentElement = Annotated[Union[Page, Text, Auto], Field(discriminator="kind")]
+"""Entry in the contents list."""
 
 # Item ----
 
@@ -185,3 +209,4 @@ Layout.update_forward_refs()
 Section.update_forward_refs()
 Page.update_forward_refs()
 Auto.update_forward_refs()
+MemberPage.update_forward_refs()

@@ -11,7 +11,7 @@ def escape(val: str):
 
 
 def sanitize(val: str):
-    return val.replace("\n", " ")
+    return val.replace("\n", " ").replace("|", "\\|")
 
 
 def convert_rst_link_to_md(rst):
