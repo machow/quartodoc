@@ -6,17 +6,18 @@ from plum import dispatch
 
 from quartodoc.layout import (
     _Base,
-    Doc,
-    Link,
     Auto,
-    Section,
+    ChoicesChildren,
+    Doc,
+    Layout,
+    Link,
     MemberPage,
     Page,
-    ChoicesChildren,
+    Section,
 )
 from quartodoc import get_object as _get_object
 
-from .utils import PydanticTransformer
+from .utils import PydanticTransformer, ctx_node
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -45,6 +46,14 @@ class BlueprintTransformer(PydanticTransformer):
 
     @dispatch
     def exit(self, el: Section):
+        """Transform top-level sections, so their contents are all Pages."""
+
+        # if we're not in a top-level section, then quit
+        node = ctx_node.get()
+        if not isinstance(node.parent.parent.value, Layout):
+            return el
+
+        # otherwise, replace all contents with pages.
         new = el.copy()
         contents = [
             Page(contents=[el], path=el.name) if isinstance(el, Doc) else el
@@ -60,14 +69,19 @@ class BlueprintTransformer(PydanticTransformer):
         self._log("Entering", el)
 
         # TODO: make this less brittle
-        obj = self.get_object(self.crnt_package, el.name)
+        obj = self.get_object(self.crnt_package, el.name, dynamic=el.dynamic)
         raw_members = self._fetch_members(el, obj)
 
         # Three cases for structuring child methods ----
 
         children = []
         for entry in raw_members:
-            obj_member = self.get_object(obj.path, entry)
+            # Note that we could have iterated over obj.members, but currently
+            # if obj is an Alias to a class, then its members are not Aliases,
+            # but the actual objects on the target.
+            # On the other hand, we've wired get_object up to make sure getting
+            # the member of an Alias also returns an Alias.
+            obj_member = self.get_object(obj.path, entry, dynamic=el.dynamic)
 
             # do no document submodules
             if obj_member.kind.value == "module":
@@ -99,7 +113,7 @@ class BlueprintTransformer(PydanticTransformer):
         if el.members is not None:
             return el.members
 
-        candidates = list(obj.members)
+        candidates = sorted(obj.members)
 
         if el.include:
             raise NotImplementedError("include argument currently unsupported.")

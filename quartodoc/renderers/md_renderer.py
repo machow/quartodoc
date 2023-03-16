@@ -1,5 +1,6 @@
 import quartodoc.ast as qast
 
+from contextlib import contextmanager
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from tabulate import tabulate
@@ -8,6 +9,13 @@ from typing import Tuple, Union
 from quartodoc import layout
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
+
+
+def _has_attr_section(el: dc.Docstring | None):
+    if el is None:
+        return False
+
+    return any([isinstance(x, ds.DocstringSectionAttributes) for x in el.parsed])
 
 
 
@@ -47,7 +55,7 @@ class MdRenderer(Renderer):
         header_level: int = 2,
         show_signature: bool = True,
         show_signature_annotations: bool = False,
-        display_name: str = "name",
+        display_name: str = "relative",
         hook_pre=None,
         use_interlinks = False,
 
@@ -59,13 +67,16 @@ class MdRenderer(Renderer):
         self.hook_pre = hook_pre
         self.use_interlinks = use_interlinks
 
-    def _render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
-        if isinstance(el, (type(None), str)):
-            return el
+        self.crnt_header_level = self.header_level
 
-        # TODO: maybe there is a way to get tabulate to handle this?
-        # unescaped pipes screw up table formatting
-        return sanitize(el.full)
+    @contextmanager
+    def _increment_header(self):
+        self.crnt_header_level += 1
+        try:
+            yield
+        finally: 
+            self.crnt_header_level -= 1
+
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
@@ -82,29 +93,61 @@ class MdRenderer(Renderer):
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
+    def render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
+        """Special hook for rendering a type annotation.
+
+        Parameters
+        ----------
+        el:
+            An object representing a type annotation.
+            
+        """
+
+        if isinstance(el, (type(None), str)):
+            return el
+
+        # TODO: maybe there is a way to get tabulate to handle this?
+        # unescaped pipes screw up table formatting
+        return sanitize(el.full)
+
     # signature method --------------------------------------------------------
 
     @dispatch
-    def signature(self, el: dc.Alias):
-        return self.signature(el.target)
+    def signature(self, el: dc.Alias, source: dc.Alias | None = None):
+        """Return a string representation of an object's signature."""
+
+        return self.signature(el.target, el)
 
     @dispatch
-    def signature(self, el: Union[dc.Class, dc.Function]):
-        name = self._fetch_object_dispname(el)
+    def signature(self, el: Union[dc.Class, dc.Function], source: dc.Alias | None = None):
+        name = self._fetch_object_dispname(source or el)
         pars = self.render(el.parameters)
 
         return f"`{name}({pars})`"
 
     @dispatch
-    def signature(self, el: Union[dc.Module, dc.Attribute]):
-        name = self._fetch_object_dispname(el)
+    def signature(self, el: Union[dc.Module, dc.Attribute], source: dc.Alias | None = None):
+        name = self._fetch_object_dispname(source or el)
         return f"`{name}`"
+
+
+    @dispatch
+    def render_header(self, el: layout.Doc):
+        # _str_dispname = self._fetch_object_dispname(el.obj)
+        _str_dispname = el.name
+
+        # TODO: support anchors that are not fully qualified paths?
+        # e.g. get_object, rather than quartodoc.get_object
+        _anchor = f"{{ #{el.obj.path} }}"
+        return f"{'#' * self.crnt_header_level} {_str_dispname} {_anchor}"
 
         
     # render method -----------------------------------------------------------
 
     @dispatch
     def render(self, el):
+        """Return a string representation of an object, or layout element."""
+
         raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
@@ -120,36 +163,64 @@ class MdRenderer(Renderer):
         return "\n\n".join(result)
 
     @dispatch
+    def render(self, el: layout.Section):
+        section_top = f"{'#' * self.crnt_header_level} {el.title}\n\n{el.desc}"
+
+        with self._increment_header():
+            body = list(map(self.render, el.contents))
+
+        return "\n\n".join([section_top, *body])
+
+    @dispatch
     def render(self, el: layout.Doc):
         raise NotImplementedError(f"Unsupported Doc type: {type(el)}")
 
     @dispatch
     def render(self, el: layout.DocClass):
-        # TODO: render table of methods
+        title = self.render_header(el)
+
+        extra_parts = []
+        meth_docs = []
         if el.members:
-            sub_header = "#" * (self.header_level + 1)
-            raw_attrs = [x for x in el.members if isinstance(x.obj, dc.Attribute)]
-            raw_meths = [x for x in el.members if isinstance(x.obj, dc.Function)]
+            sub_header = "#" * (self.crnt_header_level + 1)
+            raw_attrs = [x for x in el.members if x.kind == "attribute"]
+            raw_meths = [x for x in el.members if x.kind == "function"]
 
-            _attrs_table = "\n\n".join(map(self.summarize, raw_attrs))
-            _meths_table = "\n\n".join(map(self.summarize, raw_meths))
 
-            attrs = f"{sub_header} Attributes\n\n{_attrs_table}"
-            meths = f"{sub_header} Methods\n\n{_meths_table}"
-        else:
-            attrs = ""
-            meths = ""
+            header = "| Name | Description |\n| --- | --- |"
+
+            # attribute summary table ----
+            # docstrings can define an attributes section. If that exists,
+            # then we skip summarizing each attribute into a table.
+            # TODO: for now, skip making an attribute table
+            # if raw_attrs and not _has_attr_section(el.obj.docstring):
+            #     _attrs_table = "\n".join(map(self.summarize, raw_attrs))
+            #     attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
+            #     extra_parts.append(attrs)
+
+            # method summary table ----
+            if raw_meths:
+                _meths_table = "\n".join(map(self.summarize, raw_meths))
+                meths = f"{sub_header} Methods\n\n{header}\n{_meths_table}"
+                extra_parts.append(meths)
+
+                # TODO use context manager, or context variable?
+                with self._increment_header():
+                    meth_docs = list(map(self.render, raw_meths))
 
         body = self.render(el.obj)
-        return body + "\n\n".join([attrs, meths])
+        return "\n\n".join([title, body, *extra_parts, *meth_docs])
 
     @dispatch
     def render(self, el: layout.DocFunction):
-        return self.render(el.obj)
+        title = self.render_header(el)
+
+        return "\n\n".join([title, self.render(el.obj)])
 
     @dispatch
     def render(self, el: layout.DocAttribute):
-        return self.render(el.obj)
+        title = self.render_header(el)
+        return "\n\n".join([title, self.render(el.obj)])
 
     # render griffe objects ===================================================
 
@@ -158,12 +229,6 @@ class MdRenderer(Renderer):
         """Render high level objects representing functions, classes, etc.."""
 
         str_sig = self.signature(el)
-        _str_dispname = self._fetch_object_dispname(el)
-
-        # TODO: support anchors that are not fully qualified paths?
-        # e.g. get_object, rather than quartodoc.get_object
-        _anchor = f"{{ #{el.path} }}"
-        str_title = f"{'#' * self.header_level} {_str_dispname} {_anchor}"
 
         str_body = []
         if el.docstring is None:
@@ -175,15 +240,15 @@ class MdRenderer(Renderer):
                 body = self.render(new_el)
 
                 if title != "text":
-                    header = f"{'#' * (self.header_level + 1)} {title.title()}"
+                    header = f"{'#' * (self.crnt_header_level + 1)} {title.title()}"
                     str_body.append("\n\n".join([header, body]))
                 else:
                     str_body.append(body)
 
         if self.show_signature:
-            parts = [str_title, str_sig, *str_body]
+            parts = [str_sig, *str_body]
         else:
-            parts = [str_title, *str_body]
+            parts = [*str_body]
 
         return "\n\n".join(parts)
 
@@ -199,7 +264,7 @@ class MdRenderer(Renderer):
         splats = {dc.ParameterKind.var_keyword, dc.ParameterKind.var_positional}
         has_default = el.default and el.kind not in splats
 
-        annotation = self._render_annotation(el.annotation)
+        annotation = self.render_annotation(el.annotation)
         if self.show_signature_annotations:
             if annotation and has_default:
                 return f"{el.name}: {el.annotation} = {el.default}"
@@ -238,7 +303,7 @@ class MdRenderer(Renderer):
         # TODO: if default is not, should return the word "required" (unescaped)
         default = "required" if el.default is None else escape(el.default)
 
-        annotation = self._render_annotation(el.annotation)
+        annotation = self.render_annotation(el.annotation)
         return (escape(el.name), annotation, sanitize(el.description), default)
 
     # attributes ----
@@ -252,7 +317,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: ds.DocstringAttribute):
-        annotation = self._render_annotation(el.annotation)
+        annotation = self.render_annotation(el.annotation)
         return el.name, self.render(annotation), el.description
 
     # warnings ----
@@ -304,7 +369,7 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
         # similar to DocstringParameter, but no name or default
-        annotation = self._render_annotation(el.annotation)
+        annotation = self.render_annotation(el.annotation)
         return (annotation, el.description)
 
     # unsupported parts ----
@@ -372,7 +437,7 @@ class MdRenderer(Renderer):
     @dispatch
     def summarize(self, el: layout.Doc, path: str | None = None, shorten: bool = False):
         if path is None:
-            link = f"[{el.name}](#{el.anchor})]"
+            link = f"[{el.name}](#{el.anchor})"
         else:
             # TODO: assumes that files end with .qmd
             link = f"[{el.name}]({path}.qmd#{el.anchor})"
@@ -387,6 +452,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(self, obj: Union[dc.Object, dc.Alias]) -> str:
+        """Test"""
         # get high-level description
         doc = obj.docstring
         if doc is None:
@@ -406,4 +472,4 @@ class MdRenderer(Renderer):
 
     @staticmethod
     def _summary_row(link, description):
-        return f"| {link} | {description} |"
+        return f"| {link} | {sanitize(description)} |"

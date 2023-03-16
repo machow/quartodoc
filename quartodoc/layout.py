@@ -102,12 +102,36 @@ class ChoicesChildren(Enum):
 
 
 class Auto(_Base):
+    """Automatically document a an object (e.g. module, class, function, or attribute.)
+
+    Attributes
+    ----------
+    kind:
+    name:
+        Name of the object. This should be the path needed to import it.
+    members:
+        A list of members, such as attributes or methods on a class, to document.
+    include_private:
+        Whether to include members starting with "_"
+    include:
+        (Not implemented). A list of members to include.
+    exclude:
+        (Not implemented). A list of members to exclude.
+    dynamic:
+        Whether to dynamically load docstring. By default docstrings are loaded
+        using static analysis.
+    children:
+        Style for presenting members. Either separate, embedded, or flat.
+
+    """
+
     kind: Literal["auto"] = "auto"
     name: str
     members: list[str] | None = None
     include_private: bool = False
     include: str | None = None
     exclude: str | None = None
+    dynamic: bool = False
     children: ChoicesChildren = ChoicesChildren.embedded
 
 
@@ -187,7 +211,9 @@ class DocModule(Doc):
 SectionElement = Annotated[Union[Section, Page], Field(discriminator="kind")]
 """Entry in the sections list."""
 
-ContentElement = Annotated[Union[Page, Text, Auto], Field(discriminator="kind")]
+ContentElement = Annotated[
+    Union[Page, Section, Text, Auto], Field(discriminator="kind")
+]
 """Entry in the contents list."""
 
 # Item ----

@@ -128,34 +128,68 @@ def get_object(
             griffe.load_module(target_mod)
 
     if dynamic:
-        obj = f_data.target if isinstance(f_data, Alias) else f_data
-        replace_docstring(obj)
+        replace_docstring(f_data)
 
     return f_data
 
 
-def replace_docstring(obj: dc.Object | dc.Alias, f):
+def _resolve_target(obj: dc.Alias):
+    target = obj.target
+
+    count = 0
+    while isinstance(target, dc.Alias):
+        count += 1
+        if count > 100:
+            raise ValueError(
+                "Attempted to resolve target, but may be infinitely recursing?"
+            )
+
+        target = target.target
+
+    return target
+
+
+def replace_docstring(obj: dc.Object | dc.Alias):
     import importlib
+
+    if isinstance(obj, dc.Attribute):
+        # TODO: handle attributes, which can be purely annotations.
+        return
+
+    if isinstance(obj, dc.Alias):
+        obj = _resolve_target(obj)
+
+    # for classes, we dynamically load the docstrings for all their methods.
+    # since griffe reads class docstrings from the .__init__ method, this should
+    # also have the effect of updating the class docstring.
+    if isinstance(obj, dc.Class):
+        for func_obj in obj.functions.values():
+            replace_docstring(func_obj)
 
     mod = importlib.import_module(obj.module.canonical_path)
 
-    # TODO: handle top-level modules. this assumes it's the child of a module.
-    f = getattr(mod, obj.name)
+    if isinstance(obj.parent, dc.Class):
+        f = getattr(getattr(mod, obj.parent.name), obj.name)
+    else:
+        f = getattr(mod, obj.name)
+
+    # if no docstring on the dynamically loaded function, then stop
+    # since there's nothing to update.
+    # TODO: A static docstring could have been detected erroneously
+    if f.__doc__ is None:
+        return
 
     old = obj.docstring
     new = dc.Docstring(
         value=f.__doc__,
-        lineno=old.lineno,
-        endlineno=old.endlineno,
-        parent=old.parent,
-        parser=old.parser,
-        parser_options=old.parser_options,
+        lineno=getattr(old, "lineno", None),
+        endlineno=getattr(old, "endlineno", None),
+        parent=getattr(old, "parent", None),
+        parser=getattr(old, "parser", None),
+        parser_options=getattr(old, "parser_options", None),
     )
 
-    if isinstance(obj, dc.Alias):
-        obj.target.docstring = new
-    else:
-        obj.docstring = new
+    obj.docstring = new
 
 
 # pkgdown =====================================================================
@@ -304,15 +338,12 @@ class Builder:
             yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
     def do_blueprint(self) -> layout.Layout:
-        from quartodoc.builder.blueprint import BlueprintTransformer, strip_package_name
+        from quartodoc.builder.blueprint import BlueprintTransformer
 
         bt = BlueprintTransformer()
         blueprint = bt.visit(self.layout)
 
-        # TODO: this piece strips package name from packages
-        # e.g. changes quartodoc.Builder to Builder
-        # but it should probably be optional
-        return strip_package_name(blueprint, self.package)
+        return blueprint
 
     def do_collect(self, blueprint) -> tuple[list[layout.Page], list[layout.Item]]:
         from quartodoc.builder.collect import CollectTransformer
@@ -428,26 +459,23 @@ class BuilderPkgdown(Builder):
 
     style = "pkgdown"
 
-    # def render_index(self):
-    #    rendered_sections = list(map(self.summarize, self.sections))
-    #    str_sections = "\n\n".join(rendered_sections)
-
-    #    return f"# {self.title}\n\n{str_sections}"
-
 
 class BuilderSinglePage(Builder):
     """Build an API with all docs embedded on a single page."""
 
     style = "single-page"
 
-    def render_index(self):
-        return "\n\n".join([self.renderer.render(item) for item in self.items.values()])
+    def load_layout(self, *args, **kwargs):
+        el = super().load_layout(*args, **kwargs)
 
-    def fetch_object_uri(self, obj):
-        index_name = Path(self.out_index).with_suffix(".html")
-        return f"{self.dir}/{index_name}#{obj.path}"
+        el.sections = [layout.Page(path=self.out_index, contents=el.sections)]
 
-    def write_doc_pages(self):
+        return el
+
+    def do_summarize(self, *args, **kwargs):
+        pass
+
+    def write_index(self, *args, **kwargs):
         pass
 
 
