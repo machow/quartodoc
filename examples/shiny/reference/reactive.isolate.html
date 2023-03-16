@@ -784,7 +784,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#reactive.isolate" id="toc-reactive.isolate" class="nav-link active" data-scroll-target="#reactive.isolate">reactive.isolate</a>
+  <li><a href="#shiny.reactive.isolate" id="toc-shiny.reactive.isolate" class="nav-link active" data-scroll-target="#shiny.reactive.isolate">reactive.isolate</a>
   <ul class="collapse">
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
@@ -798,9 +798,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="reactive.isolate" class="level2">
-<h2 class="anchored" data-anchor-id="reactive.isolate">reactive.isolate</h2>
-<p><code>reactive._core.isolate()</code></p>
+<section id="shiny.reactive.isolate" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.reactive.isolate">reactive.isolate</h2>
+<p><code>reactive.isolate()</code></p>
 <p>Create a non-reactive scope within a reactive scope.</p>
 <p>Ordinarily, the simple act of reading a reactive value causes a relationship to be established between the caller and the reactive value, where a change to the reactive value will cause the caller to re-execute. (The same applies for the act of getting a reactive expression’s value.) <code>with isolate()</code> lets you read a reactive value or expression without establishing this relationship.</p>
 <p><code>with isolate()</code> can also be useful for calling reactive expression at the console, which can be useful for debugging. To do so, wrap the calls to the reactive expression with <code>with isolate()</code>.</p>

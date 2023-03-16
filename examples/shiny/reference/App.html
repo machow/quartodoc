@@ -779,11 +779,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#App" id="toc-App" class="nav-link active" data-scroll-target="#App">App</a>
+  <li><a href="#shiny.App" id="toc-shiny.App" class="nav-link active" data-scroll-target="#shiny.App">App</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   </ul></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
+  <ul class="collapse">
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#shiny.App.call_pyodide" id="toc-shiny.App.call_pyodide" class="nav-link" data-scroll-target="#shiny.App.call_pyodide">call_pyodide</a></li>
+  </ul></li>
+  <li><a href="#warning" id="toc-warning" class="nav-link" data-scroll-target="#warning">Warning</a>
+  <ul class="collapse">
+  <li><a href="#shiny.App.init_starlette_app" id="toc-shiny.App.init_starlette_app" class="nav-link" data-scroll-target="#shiny.App.init_starlette_app">init_starlette_app</a></li>
+  <li><a href="#shiny.App.run" id="toc-shiny.App.run" class="nav-link" data-scroll-target="#shiny.App.run">run</a></li>
+  <li><a href="#shiny.App.stop" id="toc-shiny.App.stop" class="nav-link" data-scroll-target="#shiny.App.stop">stop</a></li>
+  </ul></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul>
 </nav>
     </div>
@@ -792,16 +803,16 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="App" class="level2">
-<h2 class="anchored" data-anchor-id="App">App</h2>
-<p><code>_app.App(self, ui, server, static_assets=None, debug=False)</code></p>
+<section id="shiny.App" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.App">App</h2>
+<p><code>App(self, ui, server, static_assets=None, debug=False)</code></p>
 <p>Create a Shiny app instance.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
 <col style="width: 4%">
-<col style="width: 12%">
+<col style="width: 13%">
 <col style="width: 80%">
 <col style="width: 2%">
 </colgroup>
@@ -816,9 +827,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>ui</code></td>
-<td>Tag</td>
-<td>TagList</td>
-<td>Callable[[Request], Tag</td>
+<td>Tag | TagList | Callable[[Request], Tag | TagList]</td>
+<td>The UI definition for the app (e.g., a call to :func:<code>~shiny.ui.page_fluid</code> or :func:<code>~shiny.ui.page_fixed</code>, with layouts and controls nested inside). You can also pass a function that takes a :class:<code>~starlette.requests.Request</code> and returns a UI definition, if you need the UI definition to be created dynamically for each pageview.</td>
+<td>required</td>
 </tr>
 <tr class="even">
 <td><code>server</code></td>
@@ -828,9 +839,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>static_assets</code></td>
-<td>Optional[str</td>
-<td>os.PathLike[str]]</td>
+<td>Optional[str | os.PathLike[str]]</td>
 <td>An absolute directory containing static files to be served by the app.</td>
+<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>debug</code></td>
@@ -853,6 +864,89 @@ def server(input: Inputs, output: Outputs, session: Session):
     pass
 
 app = App(app_ui, server)</code></pre>
+<section id="methods" class="level3">
+<h3 class="anchored" data-anchor-id="methods">Methods</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#shiny.App.call_pyodide">call_pyodide</a></td>
+<td>Communicate with pyodide.</td>
+</tr>
+<tr class="even">
+<td><a href="#shiny.App.init_starlette_app">init_starlette_app</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#shiny.App.run">run</a></td>
+<td>Run the app.</td>
+</tr>
+<tr class="even">
+<td><a href="#shiny.App.stop">stop</a></td>
+<td>Stop the app (i.e., close all sessions).</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shiny.App.call_pyodide" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.App.call_pyodide">call_pyodide</h3>
+<p><code>App.call_pyodide(self, scope, receive, send)</code></p>
+<p>Communicate with pyodide.</p>
+</section>
+</section>
+<section id="warning" class="level2">
+<h2 class="anchored" data-anchor-id="warning">Warning</h2>
+<p>This method is not intended for public usage. It’s exported for use by shinylive.</p>
+<section id="shiny.App.init_starlette_app" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.App.init_starlette_app">init_starlette_app</h3>
+<p><code>App.init_starlette_app(self)</code></p>
+</section>
+<section id="shiny.App.run" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.App.run">run</h3>
+<p><code>App.run(self, kwargs)</code></p>
+<p>Run the app.</p>
+<section id="parameters-1" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 64%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>kwargs</code></td>
+<td>object</td>
+<td>Keyword arguments passed to :func:<code>~shiny.run_app</code>.</td>
+<td><code>{}</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="shiny.App.stop" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.App.stop">stop</h3>
+<p><code>App.stop(self)</code></p>
+<p>Stop the app (i.e., close all sessions).</p>
+</section>
+</section>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
+<p>~shiny.Session.close</p>
 
 
 </section>

@@ -162,6 +162,26 @@ ul.task-list li input[type="checkbox"] {
   <a href="../api/MdRenderer.html" class="sidebar-item-text sidebar-link">MdRenderer</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.render.html" class="sidebar-item-text sidebar-link">MdRenderer.render</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.render_annotation.html" class="sidebar-item-text sidebar-link">MdRenderer.render_annotation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.signature.html" class="sidebar-item-text sidebar-link">MdRenderer.signature</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.summarize.html" class="sidebar-item-text sidebar-link">MdRenderer.summarize</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -204,6 +224,21 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Data models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/layouts.html" class="sidebar-item-text sidebar-link">layout.Layout</a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -219,6 +254,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#docstring-renderers" id="toc-docstring-renderers" class="nav-link" data-scroll-target="#docstring-renderers">Docstring Renderers</a></li>
   <li><a href="#inspection" id="toc-inspection" class="nav-link" data-scroll-target="#inspection">Inspection</a></li>
   <li><a href="#inventory-links" id="toc-inventory-links" class="nav-link" data-scroll-target="#inventory-links">Inventory links</a></li>
+  <li><a href="#data-models" id="toc-data-models" class="nav-link" data-scroll-target="#data-models">Data models</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -236,15 +272,15 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <tbody>
 <tr class="odd">
-<td><a href="../api/Builder.html">Builder</a></td>
+<td><a href="../api/Builder.html#quartodoc.Builder">Builder</a></td>
 <td>Base class for building API docs.</td>
 </tr>
 <tr class="even">
-<td><a href="../api/BuilderPkgdown.html">BuilderPkgdown</a></td>
+<td><a href="../api/BuilderPkgdown.html#quartodoc.BuilderPkgdown">BuilderPkgdown</a></td>
 <td>Build an API in R pkgdown style.</td>
 </tr>
 <tr class="odd">
-<td><a href="../api/BuilderSinglePage.html">BuilderSinglePage</a></td>
+<td><a href="../api/BuilderSinglePage.html#quartodoc.BuilderSinglePage">BuilderSinglePage</a></td>
 <td>Build an API with all docs embedded on a single page.</td>
 </tr>
 </tbody>
@@ -256,8 +292,24 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <tbody>
 <tr class="odd">
-<td><a href="../api/MdRenderer.html">MdRenderer</a></td>
+<td><a href="../api/MdRenderer.html#quartodoc.MdRenderer">MdRenderer</a></td>
 <td>Render docstrings to markdown.</td>
+</tr>
+<tr class="even">
+<td><a href="../api/MdRenderer.render.html#quartodoc.MdRenderer.render">MdRenderer.render</a></td>
+<td>Return a string representation of an object, or layout element.</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/MdRenderer.render_annotation.html#quartodoc.MdRenderer.render_annotation">MdRenderer.render_annotation</a></td>
+<td>Special hook for rendering a type annotation.</td>
+</tr>
+<tr class="even">
+<td><a href="../api/MdRenderer.signature.html#quartodoc.MdRenderer.signature">MdRenderer.signature</a></td>
+<td>Return a string representation of an object’s signature.</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/MdRenderer.summarize.html#quartodoc.MdRenderer.summarize">MdRenderer.summarize</a></td>
+<td>Produce a summary table.</td>
 </tr>
 </tbody>
 </table>
@@ -268,11 +320,11 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <tbody>
 <tr class="odd">
-<td><a href="../api/get_object.html">get_object</a></td>
+<td><a href="../api/get_object.html#quartodoc.get_object">get_object</a></td>
 <td>Fetch a griffe object.</td>
 </tr>
 <tr class="even">
-<td><a href="../api/preview.html">preview</a></td>
+<td><a href="../api/preview.html#quartodoc.preview">preview</a></td>
 <td>Print a friendly representation of a griffe object (e.g.&nbsp;function, docstring)</td>
 </tr>
 </tbody>
@@ -284,12 +336,72 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <tbody>
 <tr class="odd">
-<td><a href="../api/create_inventory.html">create_inventory</a></td>
+<td><a href="../api/create_inventory.html#quartodoc.create_inventory">create_inventory</a></td>
 <td>Return a sphinx inventory file.</td>
 </tr>
 <tr class="even">
-<td><a href="../api/convert_inventory.html">convert_inventory</a></td>
+<td><a href="../api/convert_inventory.html#quartodoc.convert_inventory">convert_inventory</a></td>
 <td>Convert a sphinx inventory file to json.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-models" class="level2">
+<h2 class="anchored" data-anchor-id="data-models">Data models</h2>
+<p>Classes for specifying the exact layout of your docs.</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td><a href="../api/layouts.html#quartodoc.layout.Layout">layout.Layout</a></td>
+<td>The layout of an API doc, which may include many pages.</td>
+</tr>
+<tr class="even">
+<td><a href="../api/layouts.html#quartodoc.layout.Section">layout.Section</a></td>
+<td>A section of content on the reference index page.</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/layouts.html#quartodoc.layout.Page">layout.Page</a></td>
+<td>A page of documentation.</td>
+</tr>
+<tr class="even">
+<td><a href="../api/layouts.html#quartodoc.layout.Auto">layout.Auto</a></td>
+<td>Automatically document a an object (e.g.&nbsp;module, class, function, or attribute.)</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/layouts.html#quartodoc.layout.Doc">layout.Doc</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="../api/layouts.html#quartodoc.layout.DocFunction">layout.DocFunction</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="../api/layouts.html#quartodoc.layout.DocAttribute">layout.DocAttribute</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="../api/layouts.html#quartodoc.layout.DocModule">layout.DocModule</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="../api/layouts.html#quartodoc.layout.DocClass">layout.DocClass</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="../api/layouts.html#quartodoc.layout.Link">layout.Link</a></td>
+<td>A link to an object (e.g.&nbsp;a method that gets documented on a separate page).</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/layouts.html#quartodoc.layout.Item">layout.Item</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="../api/layouts.html#quartodoc.layout.SectionElement">layout.SectionElement</a></td>
+<td>Entry in the sections list.</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/layouts.html#quartodoc.layout.ContentElement">layout.ContentElement</a></td>
+<td>Entry in the contents list.</td>
 </tr>
 </tbody>
 </table>

@@ -784,7 +784,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ui.modal" id="toc-ui.modal" class="nav-link active" data-scroll-target="#ui.modal">ui.modal</a>
+  <li><a href="#shiny.ui.modal" id="toc-shiny.ui.modal" class="nav-link active" data-scroll-target="#shiny.ui.modal">ui.modal</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
@@ -799,17 +799,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="ui.modal" class="level2">
-<h2 class="anchored" data-anchor-id="ui.modal">ui.modal</h2>
-<p><code>ui._modal.modal(args, title=None, footer=MISSING, size='m', easy_close=False, fade=True, kwargs)</code></p>
+<section id="shiny.ui.modal" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.ui.modal">ui.modal</h2>
+<p><code>ui.modal(args, title=None, footer=MISSING, size='m', easy_close=False, fade=True, kwargs)</code></p>
 <p>Creates the UI for a modal dialog, using Bootstrap’s modal class. Modals are typically used for showing important messages, or for presenting UI that requires input from the user, such as a user name and/or password input.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
 <col style="width: 3%">
-<col style="width: 6%">
-<col style="width: 86%">
+<col style="width: 7%">
+<col style="width: 85%">
 <col style="width: 3%">
 </colgroup>
 <thead>
@@ -823,9 +823,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>args</code></td>
-<td>TagChild</td>
-<td>TagAttrs</td>
+<td>TagChild | TagAttrs</td>
 <td>UI elements for the body of the modal.</td>
+<td><code>()</code></td>
 </tr>
 <tr class="even">
 <td><code>title</code></td>
@@ -835,9 +835,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>footer</code></td>
-<td>TagChild</td>
-<td>MISSING_TYPE</td>
+<td>TagChild | MISSING_TYPE</td>
 <td>UI for footer. Use <code>None</code> for no footer.</td>
+<td><code>MISSING</code></td>
 </tr>
 <tr class="even">
 <td><code>size</code></td>

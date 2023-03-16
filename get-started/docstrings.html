@@ -347,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f7754fa9790&gt;</code></pre>
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7fdfb0b23e50&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -376,7 +376,7 @@ modules_collection: optional
 
 See Also
 --------
-get_function: a deprecated function.
+preview: print a user-friendly preview of a griffe object.
 
 Examples
 --------
@@ -391,10 +391,10 @@ Examples
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f775c3d5d90&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f775c3d5cd0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f775c3d5280&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f7754bc1f10&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fdfb0a16710&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7fdfb0a15c30&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7fdfb0a16590&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7fdfb0a16980&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -433,7 +433,7 @@ modules_collection: optional
 
 See Also
 --------
-get_function: a deprecated function.
+preview: print a user-friendly preview of a griffe object.
 
 Examples
 --------
@@ -496,7 +496,7 @@ Examples
 ├─2 = █─DocstringSectionSeeAlso
 │     ├─kind = &lt;DocstringSectionKindPatched.see_also: 'see also'&gt;
 │     ├─title = None
-│     └─value = 'get_function: a deprecated function.'
+│     └─value = 'preview: print a user-friendly preview of a griff ...
 └─3 = █─DocstringSectionExamples
       ├─kind = &lt;DocstringSectionKind.examples: 'examples'&gt;
       ├─title = None

@@ -784,7 +784,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ui.input_slider" id="toc-ui.input_slider" class="nav-link active" data-scroll-target="#ui.input_slider">ui.input_slider</a>
+  <li><a href="#shiny.ui.input_slider" id="toc-shiny.ui.input_slider" class="nav-link active" data-scroll-target="#shiny.ui.input_slider">ui.input_slider</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
@@ -800,9 +800,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="ui.input_slider" class="level2">
-<h2 class="anchored" data-anchor-id="ui.input_slider">ui.input_slider</h2>
-<p><code>ui._input_slider.input_slider(id, label, min, max, value, step=None, ticks=True, animate=False, width=None, sep=',', pre=None, post=None, time_format=None, timezone=None, drag_range=True)</code></p>
+<section id="shiny.ui.input_slider" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.ui.input_slider">ui.input_slider</h2>
+<p><code>ui.input_slider(id, label, min, max, value, step=None, ticks=True, animate=False, width=None, sep=',', pre=None, post=None, time_format=None, timezone=None, drag_range=True)</code></p>
 <p>Constructs a slider widget to select a number, date, or date-time from a range.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -848,9 +848,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>value</code></td>
-<td>SliderValueArg</td>
-<td>Iterable[SliderValueArg]</td>
+<td>SliderValueArg | Iterable[SliderValueArg]</td>
 <td>Initial value.</td>
+<td>required</td>
 </tr>
 <tr class="even">
 <td><code>step</code></td>
@@ -866,9 +866,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>animate</code></td>
-<td>bool</td>
-<td>AnimationOptions</td>
+<td>bool | AnimationOptions</td>
 <td><code>True</code> to show simple animation controls with default settings; <code>False</code> not to; or a custom settings list, such as those created using :class:<code>AnimationOptions()</code>.</td>
+<td><code>False</code></td>
 </tr>
 <tr class="odd">
 <td><code>width</code></td>

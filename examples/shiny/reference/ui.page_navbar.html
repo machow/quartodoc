@@ -779,7 +779,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ui.page_navbar" id="toc-ui.page_navbar" class="nav-link active" data-scroll-target="#ui.page_navbar">ui.page_navbar</a>
+  <li><a href="#shiny.ui.page_navbar" id="toc-shiny.ui.page_navbar" class="nav-link active" data-scroll-target="#shiny.ui.page_navbar">ui.page_navbar</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
@@ -794,9 +794,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="ui.page_navbar" class="level2">
-<h2 class="anchored" data-anchor-id="ui.page_navbar">ui.page_navbar</h2>
-<p><code>ui._page.page_navbar(args, title=None, id=None, selected=None, position='static-top', header=None, footer=None, bg=None, inverse=False, collapsible=True, fluid=True, window_title=MISSING, lang=None)</code></p>
+<section id="shiny.ui.page_navbar" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.ui.page_navbar">ui.page_navbar</h2>
+<p><code>ui.page_navbar(args, title=None, id=None, selected=None, position='static-top', header=None, footer=None, bg=None, inverse=False, collapsible=True, fluid=True, window_title=MISSING, lang=None)</code></p>
 <p>Create a navbar with a navs bar and a title.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -824,9 +824,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>title</code></td>
-<td>Optional[str</td>
-<td>Tag</td>
-<td>TagList]</td>
+<td>Optional[str | Tag | TagList]</td>
+<td>The browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:<code>~shiny.ui.panel_title</code>.</td>
+<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>id</code></td>
@@ -884,9 +884,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>window_title</code></td>
-<td>str</td>
-<td>MISSING_TYPE</td>
+<td>str | MISSING_TYPE</td>
 <td>The browser’s window title (defaults to the host URL of the page). Can also be set as a side effect via :func:<code>~shiny.ui.panel_title</code>.</td>
+<td><code>MISSING</code></td>
 </tr>
 <tr class="odd">
 <td><code>lang</code></td>
@@ -916,12 +916,12 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="see-also" class="level3">
 <h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p><a href="../reference/ui.nav.html">nav</a> <a href="../reference/ui.nav_menu.html">nav_menu</a> <a href=":func:`~shiny.ui.navset_bar`"></a> <a href="../reference/ui.page_fluid.html">page_fluid</a></p>
+<p><a href="../reference/ui.nav.html#ui.nav">nav</a> <a href="../reference/ui.nav_menu.html#ui.nav_menu">nav_menu</a> <a href=":func:`~shiny.ui.navset_bar`"></a> <a href="../reference/ui.page_fluid.html#ui.page_fluid">page_fluid</a></p>
 </section>
 </section>
 <section id="example" class="level2">
 <h2 class="anchored" data-anchor-id="example">Example</h2>
-<p>See <a href="../reference/ui.nav.html">nav</a>.</p>
+<p>See <a href="../reference/ui.nav.html#ui.nav">nav</a>.</p>
 
 
 </section>

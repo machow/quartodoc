@@ -784,7 +784,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ui.input_date_range" id="toc-ui.input_date_range" class="nav-link active" data-scroll-target="#ui.input_date_range">ui.input_date_range</a>
+  <li><a href="#shiny.ui.input_date_range" id="toc-shiny.ui.input_date_range" class="nav-link active" data-scroll-target="#shiny.ui.input_date_range">ui.input_date_range</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
@@ -801,9 +801,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="ui.input_date_range" class="level2">
-<h2 class="anchored" data-anchor-id="ui.input_date_range">ui.input_date_range</h2>
-<p><code>ui._input_date.input_date_range(id, label, start=None, end=None, min=None, max=None, format='yyyy-mm-dd', startview='month', weekstart=0, language='en', separator=' to ', width=None, autoclose=True)</code></p>
+<section id="shiny.ui.input_date_range" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.ui.input_date_range">ui.input_date_range</h2>
+<p><code>ui.input_date_range(id, label, start=None, end=None, min=None, max=None, format='yyyy-mm-dd', startview='month', weekstart=0, language='en', separator=' to ', width=None, autoclose=True)</code></p>
 <p>Creates a pair of text inputs which, when clicked on, bring up calendars that the user can click on to select dates.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -811,7 +811,7 @@ ul.task-list li input[type="checkbox"] {
 <colgroup>
 <col style="width: 2%">
 <col style="width: 3%">
-<col style="width: 91%">
+<col style="width: 90%">
 <col style="width: 2%">
 </colgroup>
 <thead>
@@ -837,27 +837,27 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>start</code></td>
-<td>Optional[date</td>
-<td>str]</td>
+<td>Optional[date | str]</td>
 <td>The initial start date. Either a :func:<code>~datetime.date</code> object, or a string in yyyy-mm-dd format. If <code>None</code> (the default), will use the current date in the client’s time zone.</td>
+<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>end</code></td>
-<td>Optional[date</td>
-<td>str]</td>
+<td>Optional[date | str]</td>
 <td>The initial end date. Either a :func:<code>~datetime.date</code> object, or a string in yyyy-mm-dd format. If <code>None</code> (the default), will use the current date in the client’s time zone.</td>
+<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>min</code></td>
-<td>Optional[date</td>
-<td>str]</td>
+<td>Optional[date | str]</td>
 <td>The minimum allowed date. Either a :func:<code>~datetime.date</code> object, or a string in yyyy-mm-dd format.</td>
+<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>max</code></td>
-<td>Optional[date</td>
-<td>str]</td>
+<td>Optional[date | str]</td>
 <td>The maximum allowed date. Either a :func:<code>~datetime.date</code> object, or a string in yyyy-mm-dd format.</td>
+<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>format</code></td>

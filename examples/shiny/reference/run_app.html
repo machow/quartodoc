@@ -779,7 +779,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#run_app" id="toc-run_app" class="nav-link active" data-scroll-target="#run_app">run_app</a>
+  <li><a href="#shiny.run_app" id="toc-shiny.run_app" class="nav-link active" data-scroll-target="#shiny.run_app">run_app</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
@@ -792,9 +792,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="run_app" class="level2">
-<h2 class="anchored" data-anchor-id="run_app">run_app</h2>
-<p><code>_main.run_app(app='app:app', host='127.0.0.1', port=8000, autoreload_port=0, reload=False, ws_max_size=16777216, log_level=None, app_dir='.', factory=False, launch_browser=False)</code></p>
+<section id="shiny.run_app" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.run_app">run_app</h2>
+<p><code>run_app(app='app:app', host='127.0.0.1', port=8000, autoreload_port=0, reload=False, ws_max_size=16777216, log_level=None, app_dir='.', factory=False, launch_browser=False)</code></p>
 <p>Starts a Shiny app. Press <code>Ctrl+C</code> (or <code>Ctrl+Break</code> on Windows) to stop.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -816,9 +816,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>app</code></td>
-<td>str</td>
-<td>shiny.App</td>
+<td>str | shiny.App</td>
 <td>The app to run. The default, <code>app:app</code>, represents the “usual” case where the application is named <code>app</code> inside a <code>app.py</code> file within the current working directory. In other cases, the app location can be specified as a <code>&lt;module&gt;:&lt;attribute&gt;</code> string where the <code>:&lt;attribute&gt;</code> is only necessary if the application is named something other than <code>app</code>. Note that <code>&lt;module&gt;</code> can be relative path to a <code>.py</code> file or a directory (with an <code>app.py</code> file inside it); and in this case, the relative path is resolved relative to the <code>app_dir</code> directory.</td>
+<td><code>'app:app'</code></td>
 </tr>
 <tr class="even">
 <td><code>host</code></td>

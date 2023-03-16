@@ -784,11 +784,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ui.Progress" id="toc-ui.Progress" class="nav-link active" data-scroll-target="#ui.Progress">ui.Progress</a>
+  <li><a href="#shiny.ui.Progress" id="toc-shiny.ui.Progress" class="nav-link active" data-scroll-target="#shiny.ui.Progress">ui.Progress</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   </ul></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a>
+  <ul class="collapse">
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#shiny.ui.Progress.close" id="toc-shiny.ui.Progress.close" class="nav-link" data-scroll-target="#shiny.ui.Progress.close">close</a></li>
+  </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
+  <li><a href="#examples-1" id="toc-examples-1" class="nav-link" data-scroll-target="#examples-1">Examples</a>
+  <ul class="collapse">
+  <li><a href="#shiny.ui.Progress.inc" id="toc-shiny.ui.Progress.inc" class="nav-link" data-scroll-target="#shiny.ui.Progress.inc">inc</a></li>
+  <li><a href="#shiny.ui.Progress.set" id="toc-shiny.ui.Progress.set" class="nav-link" data-scroll-target="#shiny.ui.Progress.set">set</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -797,9 +807,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="ui.Progress" class="level2">
-<h2 class="anchored" data-anchor-id="ui.Progress">ui.Progress</h2>
-<p><code>ui._progress.Progress(self, min=0, max=1, session=None)</code></p>
+<section id="shiny.ui.Progress" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.ui.Progress">ui.Progress</h2>
+<p><code>ui.Progress(self, min=0, max=1, session=None)</code></p>
 <p>Initialize a progress bar.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -874,8 +884,198 @@ def server(input: Inputs, output: Outputs, session: Session):
 
 app = App(app_ui, server)
 </code></pre>
+<section id="methods" class="level3">
+<h3 class="anchored" data-anchor-id="methods">Methods</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#shiny.ui.Progress.close">close</a></td>
+<td>Close the progress bar. You can also use the Progress object as a context</td>
+</tr>
+<tr class="even">
+<td><a href="#shiny.ui.Progress.inc">inc</a></td>
+<td>Increment the progress bar.</td>
+</tr>
+<tr class="odd">
+<td><a href="#shiny.ui.Progress.set">set</a></td>
+<td>Updates the progress panel. When called the first time, the progress panel is</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shiny.ui.Progress.close" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.Progress.close">close</h3>
+<p><code>ui.Progress.close(self)</code></p>
+<p>Close the progress bar. You can also use the Progress object as a context manager, which will cause the progress bar to close on exit.</p>
+<section id="parameters-1" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>self</code></td>
+<td></td>
+<td>The object instance</td>
+<td>required</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
+<p>Removes the progress panel. Future calls to set and close will be ignored.</p>
+</section>
+<section id="examples-1" class="level2">
+<h2 class="anchored" data-anchor-id="examples-1">Examples</h2>
+<pre class="shinylive-python"><code>#| standalone: true
+
+from datetime import datetime
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_action_button("close", "Close the session"),
+    ui.p(
+        """If this example is running on the browser (i.e., via shinylive),
+        closing the session will log a message to the JavaScript console
+        (open the browser's developer tools to see it).
+        """
+    ),
+)
 
 
+def server(input: Inputs, output: Outputs, session: Session):
+    def log():
+        print("Session ended at: " + datetime.now().strftime("%H:%M:%S"))
+
+    session.on_ended(log)
+
+    @reactive.Effect
+    @reactive.event(input.close)
+    async def _():
+        await session.close()
+
+
+app = App(app_ui, server)
+</code></pre>
+<section id="shiny.ui.Progress.inc" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.Progress.inc">inc</h3>
+<p><code>ui.Progress.inc(self, amount=0.1, message=None, detail=None)</code></p>
+<p>Increment the progress bar.</p>
+<p>Like <code>set</code>, this updates the progress panel. The difference is that <code>inc</code> increases the progress bar by amount, instead of setting it to a specific value.</p>
+<section id="parameters-2" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-2">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 83%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>self</code></td>
+<td></td>
+<td>The object instance</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>amount</code></td>
+<td>float</td>
+<td>The amount to increment in progress.</td>
+<td><code>0.1</code></td>
+</tr>
+<tr class="odd">
+<td><code>message</code></td>
+<td>Optional[str]</td>
+<td>The message to be displayed to the user or <code>None</code> to hide the current message (if any).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>detail</code></td>
+<td>Optional[str]</td>
+<td>The detail message to be displayed to the user or <code>None</code> to hide the current detail message (if any). The detail message will be shown with a de-emphasized appearance relative to message.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="shiny.ui.Progress.set" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.Progress.set">set</h3>
+<p><code>ui.Progress.set(self, value=None, message=None, detail=None)</code></p>
+<p>Updates the progress panel. When called the first time, the progress panel is displayed.</p>
+<section id="parameters-3" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-3">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 83%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>self</code></td>
+<td></td>
+<td>The object instance</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>value</code></td>
+<td>Optional[float]</td>
+<td>The value at which to set the progress bar, relative to <code>min</code> and <code>max</code>. <code>None</code> hides the progress bar, if it is currently visible.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>message</code></td>
+<td>Optional[str]</td>
+<td>The message to be displayed to the user or <code>None</code> to hide the current message (if any).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>detail</code></td>
+<td>Optional[str]</td>
+<td>The detail message to be displayed to the user or <code>None</code> to hide the current detail message (if any). The detail message will be shown with a de-emphasized appearance relative to message.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

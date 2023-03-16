@@ -784,7 +784,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ui.notification_show" id="toc-ui.notification_show" class="nav-link active" data-scroll-target="#ui.notification_show">ui.notification_show</a>
+  <li><a href="#shiny.ui.notification_show" id="toc-shiny.ui.notification_show" class="nav-link active" data-scroll-target="#shiny.ui.notification_show">ui.notification_show</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
@@ -799,9 +799,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="ui.notification_show" class="level2">
-<h2 class="anchored" data-anchor-id="ui.notification_show">ui.notification_show</h2>
-<p><code>ui._notification.notification_show(ui, action=None, duration=5, close_button=True, id=None, type='default', session=None)</code></p>
+<section id="shiny.ui.notification_show" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.ui.notification_show">ui.notification_show</h2>
+<p><code>ui.notification_show(ui, action=None, duration=5, close_button=True, id=None, type='default', session=None)</code></p>
 <p>Show a notification to the user.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -835,9 +835,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>duration</code></td>
-<td>Optional[int</td>
-<td>float]</td>
+<td>Optional[int | float]</td>
 <td>Number of seconds to display the message before it disappears. Use <code>None</code> to make the message not automatically disappear.</td>
+<td><code>5</code></td>
 </tr>
 <tr class="even">
 <td><code>close_button</code></td>

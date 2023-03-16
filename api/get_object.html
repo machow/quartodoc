@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../api/preview.html" rel="next">
-<link href="../api/MdRenderer.html" rel="prev">
+<link href="../api/MdRenderer.summarize.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -226,6 +226,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../api/MdRenderer.html" class="sidebar-item-text sidebar-link">MdRenderer</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.render.html" class="sidebar-item-text sidebar-link">MdRenderer.render</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.render_annotation.html" class="sidebar-item-text sidebar-link">MdRenderer.render_annotation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.signature.html" class="sidebar-item-text sidebar-link">MdRenderer.signature</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/MdRenderer.summarize.html" class="sidebar-item-text sidebar-link">MdRenderer.summarize</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -268,6 +288,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Data models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/layouts.html" class="sidebar-item-text sidebar-link">layout.Layout</a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -277,7 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get_object" id="toc-get_object" class="nav-link active" data-scroll-target="#get_object">get_object</a>
+  <li><a href="#quartodoc.get_object" id="toc-quartodoc.get_object" class="nav-link active" data-scroll-target="#quartodoc.get_object">get_object</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
@@ -291,8 +326,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="get_object" class="level2">
-<h2 class="anchored" data-anchor-id="get_object">get_object</h2>
+<section id="quartodoc.get_object" class="level2">
+<h2 class="anchored" data-anchor-id="quartodoc.get_object">get_object</h2>
 <p><code>get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)</code></p>
 <p>Fetch a griffe object.</p>
 <section id="parameters" class="level3">
@@ -339,16 +374,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td><code>modules_collection</code></td>
-<td>None</td>
-<td>ModulesCollection</td>
+<td>None | ModulesCollection</td>
 <td>A griffe <a href="https://mkdocstrings.github.io/griffe/reference/griffe/collections/#griffe.collections.ModulesCollection">ModulesCollection</a>, used to hold loaded modules.</td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="see-also" class="level3">
 <h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p>get_function: a deprecated function.</p>
+<p>preview: print a user-friendly preview of a griffe object.</p>
 </section>
 <section id="examples" class="level3">
 <h3 class="anchored" data-anchor-id="examples">Examples</h3>
@@ -495,8 +530,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../api/MdRenderer.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">MdRenderer</span>
+      <a href="../api/MdRenderer.summarize.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">MdRenderer.summarize</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

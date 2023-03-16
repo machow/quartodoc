@@ -779,11 +779,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ui.TagList" id="toc-ui.TagList" class="nav-link active" data-scroll-target="#ui.TagList">ui.TagList</a>
+  <li><a href="#shiny.ui.TagList" id="toc-shiny.ui.TagList" class="nav-link active" data-scroll-target="#shiny.ui.TagList">ui.TagList</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   </ul></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
+  <ul class="collapse">
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#shiny.ui.TagList.append" id="toc-shiny.ui.TagList.append" class="nav-link" data-scroll-target="#shiny.ui.TagList.append">append</a></li>
+  <li><a href="#shiny.ui.TagList.extend" id="toc-shiny.ui.TagList.extend" class="nav-link" data-scroll-target="#shiny.ui.TagList.extend">extend</a></li>
+  <li><a href="#shiny.ui.TagList.get_dependencies" id="toc-shiny.ui.TagList.get_dependencies" class="nav-link" data-scroll-target="#shiny.ui.TagList.get_dependencies">get_dependencies</a></li>
+  <li><a href="#shiny.ui.TagList.get_html_string" id="toc-shiny.ui.TagList.get_html_string" class="nav-link" data-scroll-target="#shiny.ui.TagList.get_html_string">get_html_string</a></li>
+  <li><a href="#shiny.ui.TagList.insert" id="toc-shiny.ui.TagList.insert" class="nav-link" data-scroll-target="#shiny.ui.TagList.insert">insert</a></li>
+  <li><a href="#shiny.ui.TagList.render" id="toc-shiny.ui.TagList.render" class="nav-link" data-scroll-target="#shiny.ui.TagList.render">render</a></li>
+  <li><a href="#shiny.ui.TagList.save_html" id="toc-shiny.ui.TagList.save_html" class="nav-link" data-scroll-target="#shiny.ui.TagList.save_html">save_html</a></li>
+  <li><a href="#shiny.ui.TagList.show" id="toc-shiny.ui.TagList.show" class="nav-link" data-scroll-target="#shiny.ui.TagList.show">show</a></li>
+  <li><a href="#shiny.ui.TagList.tagify" id="toc-shiny.ui.TagList.tagify" class="nav-link" data-scroll-target="#shiny.ui.TagList.tagify">tagify</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -792,9 +804,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="ui.TagList" class="level2">
-<h2 class="anchored" data-anchor-id="ui.TagList">ui.TagList</h2>
-<p><code>_core.TagList(self, args)</code></p>
+<section id="shiny.ui.TagList" class="level2">
+<h2 class="anchored" data-anchor-id="shiny.ui.TagList">ui.TagList</h2>
+<p><code>TagList(self, args)</code></p>
 <p>Create an HTML tag list (i.e., a fragment of HTML)</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -836,8 +848,245 @@ from htmltools import TagList, div TagList(“hello”, div(id=“foo”, class_
 </blockquote>
 </blockquote>
 </blockquote>
+<section id="methods" class="level3">
+<h3 class="anchored" data-anchor-id="methods">Methods</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#shiny.ui.TagList.append">append</a></td>
+<td>Append tag children to the end of the list.</td>
+</tr>
+<tr class="even">
+<td><a href="#shiny.ui.TagList.extend">extend</a></td>
+<td>Extend the children by appending an iterable of children.</td>
+</tr>
+<tr class="odd">
+<td><a href="#shiny.ui.TagList.get_dependencies">get_dependencies</a></td>
+<td>Get any dependencies needed to render the HTML.</td>
+</tr>
+<tr class="even">
+<td><a href="#shiny.ui.TagList.get_html_string">get_html_string</a></td>
+<td>Return the HTML string for this tag list.</td>
+</tr>
+<tr class="odd">
+<td><a href="#shiny.ui.TagList.insert">insert</a></td>
+<td>Insert tag children before a given index.</td>
+</tr>
+<tr class="even">
+<td><a href="#shiny.ui.TagList.render">render</a></td>
+<td>Get string representation as well as it’s HTML dependencies.</td>
+</tr>
+<tr class="odd">
+<td><a href="#shiny.ui.TagList.save_html">save_html</a></td>
+<td>Save to a HTML file.</td>
+</tr>
+<tr class="even">
+<td><a href="#shiny.ui.TagList.show">show</a></td>
+<td>Preview as a complete HTML document.</td>
+</tr>
+<tr class="odd">
+<td><a href="#shiny.ui.TagList.tagify">tagify</a></td>
+<td>Convert any tagifiable children to Tag/TagList objects.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shiny.ui.TagList.append" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.append">append</h3>
+<p><code>ui.TagList.append(self, args)</code></p>
+<p>Append tag children to the end of the list.</p>
+</section>
+<section id="shiny.ui.TagList.extend" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.extend">extend</h3>
+<p><code>ui.TagList.extend(self, x)</code></p>
+<p>Extend the children by appending an iterable of children.</p>
+</section>
+<section id="shiny.ui.TagList.get_dependencies" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.get_dependencies">get_dependencies</h3>
+<p><code>ui.TagList.get_dependencies(self, dedup=True)</code></p>
+<p>Get any dependencies needed to render the HTML.</p>
+<section id="parameters-1" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 60%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>dedup</code></td>
+<td>bool</td>
+<td>Whether to deduplicate the dependencies.</td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="shiny.ui.TagList.get_html_string" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.get_html_string">get_html_string</h3>
+<p><code>ui.TagList.get_html_string(self, indent=0, eol='\n', _escape_strings=True)</code></p>
+<p>Return the HTML string for this tag list.</p>
+<section id="parameters-2" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-2">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 63%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>indent</code></td>
+<td>int</td>
+<td>Number of spaces to indent each line of the HTML.</td>
+<td><code>0</code></td>
+</tr>
+<tr class="even">
+<td><code>eol</code></td>
+<td>str</td>
+<td>End-of-line character(s).</td>
+<td><code>'\n'</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="shiny.ui.TagList.insert" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.insert">insert</h3>
+<p><code>ui.TagList.insert(self, index, x)</code></p>
+<p>Insert tag children before a given index.</p>
+</section>
+<section id="shiny.ui.TagList.render" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.render">render</h3>
+<p><code>ui.TagList.render(self)</code></p>
+<p>Get string representation as well as it’s HTML dependencies.</p>
+</section>
+<section id="shiny.ui.TagList.save_html" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.save_html">save_html</h3>
+<p><code>ui.TagList.save_html(self, file, libdir='lib', include_version=True)</code></p>
+<p>Save to a HTML file.</p>
+<section id="parameters-3" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-3">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 13%">
+<col style="width: 60%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>file</code></td>
+<td>str</td>
+<td>The file to save to.</td>
+<td>required</td>
+</tr>
+<tr class="even">
+<td><code>libdir</code></td>
+<td>Optional[str]</td>
+<td>The directory to save the dependencies to.</td>
+<td><code>'lib'</code></td>
+</tr>
+<tr class="odd">
+<td><code>include_version</code></td>
+<td>bool</td>
+<td>Whether to include the version number in the dependency folder name.</td>
+<td><code>True</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns" class="level4">
+<h4 class="anchored" data-anchor-id="returns">Returns</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>The path to the generated HTML file.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="shiny.ui.TagList.show" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.show">show</h3>
+<p><code>ui.TagList.show(self, renderer='auto')</code></p>
+<p>Preview as a complete HTML document.</p>
+<section id="parameters-4" class="level4">
+<h4 class="anchored" data-anchor-id="parameters-4">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 42%">
+<col style="width: 28%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>renderer</code></td>
+<td>Literal[auto, ipython, browser]</td>
+<td>The renderer to use.</td>
+<td><code>'auto'</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="shiny.ui.TagList.tagify" class="level3">
+<h3 class="anchored" data-anchor-id="shiny.ui.TagList.tagify">tagify</h3>
+<p><code>ui.TagList.tagify(self)</code></p>
+<p>Convert any tagifiable children to Tag/TagList objects.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
