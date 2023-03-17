@@ -256,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="quartodoc.preview" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.preview">preview</h3>
-<p><code>preview(ast, max_depth=999)</code></p>
+<p><code>preview(ast, max_depth=999, compact=False)</code></p>
 <p>Print a friendly representation of a griffe object (e.g.&nbsp;function, docstring)</p>
 <section id="examples-1" class="level4">
 <h4 class="anchored" data-anchor-id="examples-1">Examples</h4>
@@ -367,15 +367,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td><a href="#quartodoc.Builder.do_blueprint">do_blueprint</a></td>
-<td></td>
+<td>Convert a layout with Auto elements to a full-fledged doc specification.</td>
 </tr>
 <tr class="even">
 <td><a href="#quartodoc.Builder.do_collect">do_collect</a></td>
-<td></td>
+<td>Collect the pages and sphinx item information from a layout.</td>
 </tr>
 <tr class="odd">
 <td><a href="#quartodoc.Builder.do_summarize">do_summarize</a></td>
-<td></td>
+<td>Summarize a layout into index tables.</td>
 </tr>
 <tr class="even">
 <td><a href="#quartodoc.Builder.from_quarto_config">from_quarto_config</a></td>
@@ -413,14 +413,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="quartodoc.Builder.do_blueprint" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.do_blueprint">do_blueprint</h4>
 <p><code>Builder.do_blueprint(self)</code></p>
+<p>Convert a layout with Auto elements to a full-fledged doc specification.</p>
 </section>
 <section id="quartodoc.Builder.do_collect" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.do_collect">do_collect</h4>
 <p><code>Builder.do_collect(self, blueprint)</code></p>
+<p>Collect the pages and sphinx item information from a layout.</p>
 </section>
 <section id="quartodoc.Builder.do_summarize" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.do_summarize">do_summarize</h4>
 <p><code>Builder.do_summarize(self, blueprint, items)</code></p>
+<p>Summarize a layout into index tables.</p>
 </section>
 <section id="quartodoc.Builder.from_quarto_config" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.from_quarto_config">from_quarto_config</h4>
