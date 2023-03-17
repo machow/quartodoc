@@ -256,6 +256,7 @@ def visit(el: pf.Link, doc):
             return ref_to_anchor(url.replace("%60", "`"), el.content)
         except InvLookupError as e:
             pf.debug("WARNING: " + str(e))
+            return pf.Code(url.replace("%60", ""))
 
     return el
 
