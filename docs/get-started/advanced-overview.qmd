@@ -1,0 +1,106 @@
+---
+title: Overview
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .qmd
+      format_name: quarto
+      format_version: '1.0'
+      jupytext_version: 1.14.5
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+quartodoc has two main classes:
+
+* Builder: the class responsible for reading a `_quarto.yml`, and generating docs.
+* Layout: a specification of the docs, that the builder enhances to fully specify "what should get rendered and how?".
+* Docstring objects: a representation of parsed docstrings, and the python objects they belong to.
+* Renderer: the class responsible for rendering layouts and doc objects.
+
+```{python}
+from quartodoc import Builder, layout, get_object, MdRenderer, preview
+```
+
+## Builder
+
+```{python}
+config = {"quartodoc":
+    {
+        "package": "quartodoc",
+        "style": "pkgdown",
+        "sections": [
+            {
+                "title": "some section",
+                "desc": "some description",
+                "contents": [
+                    "get_object",
+                    "MdRenderer"
+                ]
+            }
+        ]
+    }
+}
+builder = Builder.from_quarto_config(config)
+```
+
+```{python}
+preview(builder.layout)
+```
+
+```{python}
+blueprint = builder.do_blueprint()
+preview(blueprint, max_depth=6)
+```
+
+## Layout
+
+The layout classes represent documentation to build.
+
+See the [layouts API reference](reference/layout.qmd).
+
+* Section: a section of documentation, with a title and description.
+* Page: represents a page of documentation.
+* Doc: represents a python object and its docstring to render.
+* DocClass, DocModule: has a members field.
+* Auto: an object (e.g. function) to look up, and turn into the appropriate Doc class.
+  This is the default class used in the config, and has options for customizing
+  documentation, such as how to document members of a class.
+
+Note that classes like Doc include docstring objects, that are the result of
+statically analyzing the target library with griffe.
+
+```{python}
+doc_page = blueprint.sections[0].contents[0]
+preview(doc_page, max_depth = 4)
+```
+
+## Docstring objects
+
+```{python}
+obj = get_object("quartodoc", "get_object")
+```
+
+## Renderer
+
+The renderer is responsible for converting layout and docstring objects into a
+string of documentation (e.g. markdown).
+
+```{python}
+renderer = MdRenderer()
+
+print(
+    renderer.render(obj)[:150]
+)
+```
+
+Note that it is also capable of rendering most layout objects, such as a Page.
+
+```{python}
+doc_page = blueprint.sections[0].contents[0]
+
+# not run, since it produces a lot of output!
+# renderer.render(doc_page)
+```

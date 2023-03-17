@@ -25,20 +25,12 @@ quartodoc:
   package: quartodoc
   sidebar: "api/_sidebar.yml"
   sections:
-    - title: API Builders
+    - title: Inspection
       desc: |
-        Builders are responsible for building documentation. They tie all the pieces
-        of quartodoc together, and can be defined in your _quarto.yml config.
+        These functions Fetch and analyze python objects, including parsing docstrings.
       contents:
-        - kind: auto
-          name: Builder
-          members: []
-        - kind: auto
-          name: BuilderPkgdown
-          members: []
-        - kind: auto
-          name: BuilderSinglePage
-          members: []
+        - get_object
+        - preview
 
     - title: Docstring Renderers
       desc: |
@@ -54,12 +46,21 @@ quartodoc:
         - name: MdRenderer.summarize
           dynamic: true
 
-    - title: Inspection
+    - title: API Builders
       desc: |
-        These functions Fetch and analyze python objects, including parsing docstrings.
+        Builders are responsible for building documentation. They tie all the pieces
+        of quartodoc together, and can be defined in your _quarto.yml config.
       contents:
-        - get_object
-        - preview
+        - kind: auto
+          name: Builder
+          members: []
+        - Builder.build
+        - Builder.do_blueprint
+        - Builder.do_collect
+        - Builder.do_summarize
+        - Builder.write_index
+        - Builder.write_doc_pages
+
 
     - title: Inventory links
       desc: |
@@ -124,6 +125,7 @@ website:
             - get-started/extending.qmd
         - section: "Advanced"
           contents:
+            - get-started/advanced-overview.qmd
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
         - section: "Extra Topics"
