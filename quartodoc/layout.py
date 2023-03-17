@@ -51,6 +51,7 @@ class Section(_Base):
     kind: Literal["section"] = "section"
     title: str
     desc: str
+    package: str | None = None
     contents: list[ContentElement | Doc | _AutoDefault]
 
 
@@ -65,7 +66,7 @@ class Page(_Base):
     """A page of documentation."""
 
     kind: Literal["page"] = "page"
-    path: str | None = None
+    path: str
     package: str | None = None
     summary: SummaryDetails | None = None
     flatten: bool = False
