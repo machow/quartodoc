@@ -4,6 +4,7 @@ from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from plum import dispatch
 from typing import Union
+from pydantic import BaseModel  # for previewing
 
 
 # Transform and patched-in classes ============================================
@@ -110,6 +111,13 @@ def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
 
 
 @dispatch
+def fields(el: BaseModel):
+    # return fields whose values were not set to the default
+    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
+    return [k for k, v in el if field_defaults[k] is not v]
+
+
+@dispatch
 def fields(el: dc.Object):
     options = [
         "name",
@@ -196,9 +204,10 @@ class Formatter:
     icon_connector = "│ "
     string_truncate_mark = " ..."
 
-    def __init__(self, string_max_length: int = 50, max_depth=999):
+    def __init__(self, string_max_length: int = 50, max_depth=999, compact=False):
         self.string_max_length = string_max_length
         self.max_depth = max_depth
+        self.compact = compact
 
     def format(self, call, depth=0, pad=0):
         """Return a Symbolic or Call back as a nice tree, with boxes for nodes."""
@@ -224,10 +233,19 @@ class Formatter:
         fields_str = []
         for name in crnt_fields:
             val = self.get_field(call, name)
-            formatted_val = self.format(
-                val, depth + 1, pad=len(str(name)) + self.n_spaces
-            )
-            fields_str.append(f"{name} = {formatted_val}")
+
+            # either align subfields with the end of the name, or put the node
+            # on a newline, so it doesn't have to be so indented.
+            if self.compact:
+                sub_pad = pad
+                linebreak = "\n" if fields(val) else ""
+            else:
+                sub_pad = len(str(name)) + self.n_spaces
+                linebreak = ""
+
+            # do formatting
+            formatted_val = self.format(val, depth + 1, pad=sub_pad)
+            fields_str.append(f"{name} = {linebreak}{formatted_val}")
 
         padded = []
         for ii, entry in enumerate(fields_str):
@@ -259,7 +277,7 @@ class Formatter:
         return prefix + connector.join(x.splitlines())
 
 
-def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999):
+def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999, compact=False):
     """Print a friendly representation of a griffe object (e.g. function, docstring)
 
     Examples
@@ -275,4 +293,4 @@ def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999):
      ...
 
     """
-    print(Formatter(max_depth=max_depth).format(ast))
+    print(Formatter(max_depth=max_depth, compact=compact).format(ast))
