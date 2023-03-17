@@ -46,7 +46,6 @@ class BlueprintTransformer(PydanticTransformer):
 
             old = self.crnt_package
             if package is not None:
-                print(f"setting package to {package}")
                 self.crnt_package = package
             return super().visit(el)
         finally:

@@ -381,7 +381,6 @@ class Builder:
         """Write individual function documentation pages."""
 
         for page in pages:
-            print(page.path)
             _log.info(f"Rendering {page.path}")
             rendered = self.renderer.render(page)
             html_path = Path(self.dir) / (page.path + self.out_page_suffix)
