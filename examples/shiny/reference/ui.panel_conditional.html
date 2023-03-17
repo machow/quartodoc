@@ -863,15 +863,12 @@ ul.task-list li input[type="checkbox"] {
 <section id="note" class="level2">
 <h2 class="anchored" data-anchor-id="note">Note</h2>
 <p>In the JS expression, you can refer to input and output JavaScript objects that contain the current values of input and output. For example, if you have an input with an id of foo, then you can use input.foo to read its value. (Be sure not to modify the input/output objects, as this may cause unpredictable behavior.)</p>
-<p>You are not recommended to use special JavaScript characters such as a period . in the input id’s, but if you do use them anyway, for example, <code>id = "foo.bar"</code>, you will have to use <code>input["foo.bar"]</code> instead of <code>input.foo.bar</code> to read the input value.</p>
+<p>You are not recommended to use special JavaScript characters such as a period . in the input id's, but if you do use them anyway, for example, <code>id = &amp;quot;foo.bar&amp;quot;</code>, you will have to use <code>input[&amp;quot;foo.bar&amp;quot;]</code> instead of <code>input.foo.bar</code> to read the input value.</p>
 <p>Tip</p>
 <table class="table">
-<colgroup>
-<col style="width: 11%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>A more powerful (but slower) way to conditionally show UI content is to use :func:<code>~shiny.render.ui</code>.</th>
+<th>A more powerful (but slower) way to conditionally show UI content is to use <a href="../reference/render.ui.html#render.ui">ui</a>.</th>
 </tr>
 </thead>
 <tbody>

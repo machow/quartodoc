@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../get-started/renderers.html" rel="next">
-<link href="../get-started/extending.html" rel="prev">
+<link href="../get-started/advanced-overview.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -233,6 +233,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../get-started/advanced-overview.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link active">Inspecting docstrings</a>
   </div>
 </li>
@@ -347,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f09686fd2a0&gt;</code></pre>
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f9b60ee12d0&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -391,10 +396,10 @@ Examples
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f097857c430&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f0968686350&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f0968686380&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f0968686590&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f9b60e6a2c0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f9b60e6a350&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f9b60e6a410&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f9b60e6a800&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -651,8 +656,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/extending.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">More Customization</span>
+      <a href="../get-started/advanced-overview.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

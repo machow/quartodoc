@@ -1155,7 +1155,7 @@ app = App(app_ui, server)
 <tr class="even">
 <td><code>handler</code></td>
 <td>shiny.session._session.DynamicRouteHandler</td>
-<td>The function to call when a request is made to the route. This function should take a single argument (a :class:<code>starlette.requests.Request</code> object) and return a :class:<code>starlette.types.ASGIApp</code> object.</td>
+<td>The function to call when a request is made to the route. This function should take a single argument (a <code>:class:starlette.requests.Request</code> object) and return a <code>:class:starlette.types.ASGIApp</code> object.</td>
 <td>required</td>
 </tr>
 </tbody>
@@ -1570,7 +1570,7 @@ app = App(app_ui, server, debug=True)
 <h3 class="anchored" data-anchor-id="shiny.Session.send_input_message">send_input_message</h3>
 <p><code>Session.send_input_message(self, id, message)</code></p>
 <p>Send an input message to the session.</p>
-<p>Sends a message to an input on the session’s client web page; if the input is present and bound on the page at the time the message is received, then the input binding object’s <code>receiveMessage(el, message)</code> method will be called. This method should generally not be called directly from Shiny apps, but through friendlier wrapper functions like <code>ui.update_text()</code>.</p>
+<p>Sends a message to an input on the session's client web page; if the input is present and bound on the page at the time the message is received, then the input binding object's <code>receiveMessage(el, message)</code> method will be called. This method should generally not be called directly from Shiny apps, but through friendlier wrapper functions like <code>ui.update_text()</code>.</p>
 <section id="parameters-6" class="level4">
 <h4 class="anchored" data-anchor-id="parameters-6">Parameters</h4>
 <table class="table">

@@ -819,13 +819,13 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>index</code></td>
 <td>bool</td>
-<td>Whether to print index (row) labels. (Ignored for pandas :class:<code>Styler</code> objects; call <code>style.hide(axis="index")</code> from user code instead.)</td>
+<td>Whether to print index (row) labels. (Ignored for pandas <code>:class:Styler</code> objects; call <code>style.hide(axis="index")</code> from user code instead.)</td>
 <td><code>False</code></td>
 </tr>
 <tr class="even">
 <td><code>classes</code></td>
 <td>str</td>
-<td>CSS classes (space separated) to apply to the resulting table. By default, we use <code>table shiny-table w-auto</code> which is designed to look reasonable with Bootstrap 5. (Ignored for pandas :class:<code>Styler</code> objects; call <code>style.set_table_attributes('class="dataframe table shiny-table w-auto"')</code> from user code instead.)</td>
+<td>CSS classes (space separated) to apply to the resulting table. By default, we use <code>table shiny-table w-auto</code> which is designed to look reasonable with Bootstrap 5. (Ignored for pandas <code>:class:Styler</code> objects; call <code>style.set_table_attributes('class="dataframe table shiny-table w-auto"')</code> from user code instead.)</td>
 <td><code>'table shiny-table w-auto'</code></td>
 </tr>
 <tr class="odd">
@@ -853,19 +853,19 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>A decorator for a function that returns any of the following</td>
-<td>1. A pandas :class:<code>DataFrame</code> object.</td>
+<td>1. A pandas <code>:class:DataFrame</code> object.</td>
 </tr>
 </tbody>
 </table>
 <ol start="2" type="1">
-<li>A pandas :class:<code>Styler</code> object.</li>
+<li>A pandas <code>:class:Styler</code> object.</li>
 <li>Any object that has a <code>.to_pandas()</code> method (e.g., a Polars data frame or Arrow table). |</li>
 </ol>
 </section>
 </section>
 <section id="tip" class="level2">
 <h2 class="anchored" data-anchor-id="tip">Tip</h2>
-<p>This decorator should be applied <strong>before</strong> the <code>@output</code> decorator. Also, the name of the decorated function (or <code>@output(id=...)</code>) should match the <code>id</code> of a :func:<code>~shiny.ui.output_table</code> container (see :func:<code>~shiny.ui.output_table</code> for example usage).</p>
+<p>This decorator should be applied <strong>before</strong> the <code>@output</code> decorator. Also, the name of the decorated function (or <code>@output(id=...)</code>) should match the <code>id</code> of a <a href="../reference/ui.output_table.html#ui.output_table">output_table</a> container (see <a href="../reference/ui.output_table.html#ui.output_table">output_table</a> for example usage).</p>
 </section>
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>

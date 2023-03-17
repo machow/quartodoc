@@ -848,7 +848,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>click</code></td>
 <td>bool | ClickOpts</td>
-<td>This can be a boolean or an object created by :func:<code>~shiny.ui.click_opts</code>. The default is <code>False</code>, but if you use <code>True</code> (or equivalently, <code>click_opts()</code>), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via <code>input.xx_click()</code>, where <code>xx</code> is replaced with the ID of this plot. The input value will be a dictionary with <code>x</code> and <code>y</code> elements indicating the mouse position.</td>
+<td>This can be a boolean or an object created by <code>:func:~shiny.ui.click_opts</code>. The default is <code>False</code>, but if you use <code>True</code> (or equivalently, <code>click_opts()</code>), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via <code>input.xx_click()</code>, where <code>xx</code> is replaced with the ID of this plot. The input value will be a dictionary with <code>x</code> and <code>y</code> elements indicating the mouse position.</td>
 <td><code>False</code></td>
 </tr>
 <tr class="even">
@@ -860,13 +860,13 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>hover</code></td>
 <td>bool | HoverOpts</td>
-<td>Similar to the <code>click</code> argument, this can be a boolean or an object created by :func:<code>~shiny.ui.hover_opts</code>. The default is <code>False</code>, but if you use <code>True</code> (or equivalently, <code>hover_opts()</code>), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via <code>input.xx_hover()</code>, where <code>xx</code> is replaced with the ID of this plot. The input value will be a dictionary with <code>x</code> and <code>y</code> elements indicating the mouse position. To control the hover time or hover delay type, use :func:<code>~shiny.ui.hover_opts</code>.</td>
+<td>Similar to the <code>click</code> argument, this can be a boolean or an object created by <code>:func:~shiny.ui.hover_opts</code>. The default is <code>False</code>, but if you use <code>True</code> (or equivalently, <code>hover_opts()</code>), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via <code>input.xx_hover()</code>, where <code>xx</code> is replaced with the ID of this plot. The input value will be a dictionary with <code>x</code> and <code>y</code> elements indicating the mouse position. To control the hover time or hover delay type, use <code>:func:~shiny.ui.hover_opts</code>.</td>
 <td><code>False</code></td>
 </tr>
 <tr class="even">
 <td><code>brush</code></td>
 <td>bool | BrushOpts</td>
-<td>Similar to the <code>click</code> argument, this can be a boolean or an object created by :func:<code>~shiny.ui.brush_opts</code>. The default is <code>False</code>, but if you use <code>True</code> (or equivalently, <code>brush_opts()</code>), the plot will allow the user to “brush” in the plotting area, and will send information about the brushed area to the server, and the value will be accessible via <code>input.plot_brush()</code>. Brushing means that the user will be able to draw a rectangle in the plotting area and drag it around. The value will be a named list with <code>xmin</code>, <code>xmax</code>, <code>ymin</code>, and <code>ymax</code> elements indicating the brush area. To control the brush behavior, use :func:<code>~shiny.ui.brush_opts</code>. Multiple <code>output_image</code>/<code>output_plot</code> calls may share the same <code>id</code> value; brushing one image or plot will cause any other brushes with the same <code>id</code> to disappear.</td>
+<td>Similar to the <code>click</code> argument, this can be a boolean or an object created by <code>:func:~shiny.ui.brush_opts</code>. The default is <code>False</code>, but if you use <code>True</code> (or equivalently, <code>brush_opts()</code>), the plot will allow the user to “brush” in the plotting area, and will send information about the brushed area to the server, and the value will be accessible via <code>input.plot_brush()</code>. Brushing means that the user will be able to draw a rectangle in the plotting area and drag it around. The value will be a named list with <code>xmin</code>, <code>xmax</code>, <code>ymin</code>, and <code>ymax</code> elements indicating the brush area. To control the brush behavior, use <code>:func:~shiny.ui.brush_opts</code>. Multiple <code>output_image</code>/<code>output_plot</code> calls may share the same <code>id</code> value; brushing one image or plot will cause any other brushes with the same <code>id</code> to disappear.</td>
 <td><code>False</code></td>
 </tr>
 </tbody>

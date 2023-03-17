@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Configuring docs</title>
+<title>quartodoc - Overview</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/crossrefs.html" rel="next">
-<link href="../get-started/overview.html" rel="prev">
+<link href="../get-started/docstrings.html" rel="next">
+<link href="../get-started/extending.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Configuring docs</h1>
+      <h1 class="quarto-secondary-nav-title">Overview</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -198,7 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link active">Configuring docs</a>
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Configuring docs</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -233,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/advanced-overview.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../get-started/advanced-overview.html" class="sidebar-item-text sidebar-link active">Overview</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -272,13 +272,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#adding-configuration" id="toc-adding-configuration" class="nav-link active" data-scroll-target="#adding-configuration">Adding configuration</a></li>
-  <li><a href="#top-level-options" id="toc-top-level-options" class="nav-link" data-scroll-target="#top-level-options">Top-level options</a></li>
-  <li><a href="#section-options" id="toc-section-options" class="nav-link" data-scroll-target="#section-options">Section options</a></li>
-  <li><a href="#looking-up-functions" id="toc-looking-up-functions" class="nav-link" data-scroll-target="#looking-up-functions">Looking up functions</a>
-  <ul class="collapse">
-  <li><a href="#class-methods" id="toc-class-methods" class="nav-link" data-scroll-target="#class-methods">Class methods</a></li>
-  </ul></li>
+  <li><a href="#builder" id="toc-builder" class="nav-link active" data-scroll-target="#builder">Builder</a></li>
+  <li><a href="#layout" id="toc-layout" class="nav-link" data-scroll-target="#layout">Layout</a></li>
+  <li><a href="#docstring-objects" id="toc-docstring-objects" class="nav-link" data-scroll-target="#docstring-objects">Docstring objects</a></li>
+  <li><a href="#renderer" id="toc-renderer" class="nav-link" data-scroll-target="#renderer">Renderer</a></li>
   </ul>
 </nav>
     </div>
@@ -287,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Configuring docs</h1>
+<h1 class="title d-none d-lg-block">Overview</h1>
 </div>
 
 
@@ -302,152 +299,139 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="adding-configuration" class="level2">
-<h2 class="anchored" data-anchor-id="adding-configuration">Adding configuration</h2>
-<p>quartodoc is configured by adding a <code>quartodoc</code> section to your <code>_quarto.yml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">style</span><span class="kw">:</span><span class="at"> single-page</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dir</span><span class="kw">:</span><span class="at"> reference</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> quartodoc</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Some functions</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">desc</span><span class="kw">:</span><span class="at"> Functions to inspect docstrings.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> get_object</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> preview</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="top-level-options" class="level2">
-<h2 class="anchored" data-anchor-id="top-level-options">Top-level options</h2>
-<p>The <code>quartodoc</code> section takes a <code>style</code> field, specifying which <a href="../api/Builder.html#Builder">quartodoc.Builder</a> to use (currently “pkgdown” or “single-page”; see <a href="../examples/">Examples</a>).</p>
-<table class="table">
-<colgroup>
-<col style="width: 4%">
-<col style="width: 7%">
-<col style="width: 81%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>package</code></td>
-<td>str</td>
-<td>The name of the package.</td>
-<td>required</td>
-</tr>
-<tr class="even">
-<td><code>sections</code></td>
-<td>list[Any]</td>
-<td>A list of sections, with items to document.</td>
-<td>required</td>
-</tr>
-<tr class="odd">
-<td><code>version</code></td>
-<td>str | None</td>
-<td>The package version. By default this attempts to look up the current package version (TODO).</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td><code>dir</code></td>
-<td>str</td>
-<td>Name of API directory.</td>
-<td><code>'reference'</code></td>
-</tr>
-<tr class="odd">
-<td><code>title</code></td>
-<td>str</td>
-<td>Title of the API index page.</td>
-<td><code>'Function reference'</code></td>
-</tr>
-<tr class="even">
-<td><code>renderer</code></td>
-<td>dict | Renderer | str</td>
-<td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
-<td><code>'markdown'</code></td>
-</tr>
-<tr class="odd">
-<td><code>out_index</code></td>
-<td>str</td>
-<td>The output path of the index file, used to list all API functions.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td><code>sidebar</code></td>
-<td>str | None</td>
-<td>The output path for a sidebar yaml config (by default no config generated).</td>
-<td><code>None</code></td>
-</tr>
-<tr class="odd">
-<td><code>display_name</code></td>
-<td>str</td>
-<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its <code>.__module__</code>.</td>
-<td><code>'name'</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="section-options" class="level2">
-<h2 class="anchored" data-anchor-id="section-options">Section options</h2>
-<p>The <code>sections</code> field defines which functions to document.</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>title</td>
-<td>str</td>
-<td>A title for the section</td>
-</tr>
-<tr class="even">
-<td>desc</td>
-<td>str</td>
-<td>A description for the section</td>
-</tr>
-<tr class="odd">
-<td>contents</td>
-<td>list[str]</td>
-<td>A list of functions to document</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="looking-up-functions" class="level2">
-<h2 class="anchored" data-anchor-id="looking-up-functions">Looking up functions</h2>
-<p>Finding functions to document involves two pieces of configuration:</p>
+<p>quartodoc has two main classes:</p>
 <ul>
-<li>the package name.</li>
-<li>a list of functions for content.</li>
+<li>Builder: the class responsible for reading a <code>_quarto.yml</code>, and generating docs.</li>
+<li>Layout: a specification of the docs, that the builder enhances to fully specify “what should get rendered and how?”.</li>
+<li>Docstring objects: a representation of parsed docstrings, and the python objects they belong to.</li>
+<li>Renderer: the class responsible for rendering layouts and doc objects.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> quartodoc</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">contents</span><span class="kw">:</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">        # top-level function: quartodoc.get_object</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> get_object</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">        # top-level class: quartodoc.MdRenderer</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> MdRenderer</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        # submodule function: quartodoc.ast.preview</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ast.preview</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The functions listed in <code>contents</code> are assumed to be imported from the package.</p>
-<section id="class-methods" class="level3">
-<h3 class="anchored" data-anchor-id="class-methods">Class methods</h3>
-<p>Currently, quartodoc can’t look up class methods. (Though this would be quick to implement!).</p>
-
-
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> Builder, layout, get_object, MdRenderer, preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="builder" class="level2">
+<h2 class="anchored" data-anchor-id="builder">Builder</h2>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> {<span class="st">"quartodoc"</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"package"</span>: <span class="st">"quartodoc"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"style"</span>: <span class="st">"pkgdown"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sections"</span>: [</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">"title"</span>: <span class="st">"some section"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"desc"</span>: <span class="st">"some description"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"contents"</span>: [</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"get_object"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"MdRenderer"</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                ]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>builder <span class="op">=</span> Builder.from_quarto_config(config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>preview(builder.layout)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─Layout
+├─sections = █─list
+│            └─0 = █─Section
+│                  ├─title = 'some section'
+│                  ├─desc = 'some description'
+│                  └─contents = █─list
+│                               ├─0 = █─Auto
+│                               │     └─name = 'get_object'
+│                               └─1 = █─Auto
+│                                     └─name = 'MdRenderer'
+└─package = 'quartodoc'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="op">=</span> builder.do_blueprint()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>preview(blueprint, max_depth<span class="op">=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─Layout
+├─sections = █─list
+│            └─0 = █─Section
+│                  ├─title = 'some section'
+│                  ├─desc = 'some description'
+│                  └─contents = █─list
+│                               ├─0 = █─Page
+│                               │     ├─path = 'get_object'
+│                               │     └─contents = █─list
+│                               │                  └─0 = █─DocFunction ...
+│                               └─1 = █─Page
+│                                     ├─path = 'MdRenderer'
+│                                     └─contents = █─list
+│                                                  └─0 = █─DocClass ...
+└─package = 'quartodoc'</code></pre>
+</div>
+</div>
 </section>
+<section id="layout" class="level2">
+<h2 class="anchored" data-anchor-id="layout">Layout</h2>
+<p>The layout classes represent documentation to build.</p>
+<p>See the <a href="reference/layout.qmd">layouts API reference</a>.</p>
+<ul>
+<li>Section: a section of documentation, with a title and description.</li>
+<li>Page: represents a page of documentation.</li>
+<li>Doc: represents a python object and its docstring to render.</li>
+<li>DocClass, DocModule: has a members field.</li>
+<li>Auto: an object (e.g.&nbsp;function) to look up, and turn into the appropriate Doc class. This is the default class used in the config, and has options for customizing documentation, such as how to document members of a class.</li>
+</ul>
+<p>Note that classes like Doc include docstring objects, that are the result of statically analyzing the target library with griffe.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>doc_page <span class="op">=</span> blueprint.sections[<span class="dv">0</span>].contents[<span class="dv">0</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>preview(doc_page, max_depth <span class="op">=</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─Page
+├─path = 'get_object'
+└─contents = █─list
+             └─0 = █─DocFunction
+                   ├─name = 'get_object'
+                   ├─obj = █─Alias
+                   │       ├─name = 'get_object'
+                   │       ├─annotation = █─Expression ...
+                   │       ├─parameters = █─Parameters ...
+                   │       └─docstring = █─Docstring ...
+                   └─anchor = 'quartodoc.get_object'</code></pre>
+</div>
+</div>
+</section>
+<section id="docstring-objects" class="level2">
+<h2 class="anchored" data-anchor-id="docstring-objects">Docstring objects</h2>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="renderer" class="level2">
+<h2 class="anchored" data-anchor-id="renderer">Renderer</h2>
+<p>The renderer is responsible for converting layout and docstring objects into a string of documentation (e.g.&nbsp;markdown).</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>renderer <span class="op">=</span> MdRenderer()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    renderer.render(obj)[:<span class="dv">150</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>`get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)`
+
+Fetch a griffe object.
+
+### Parameters
+
+</code></pre>
+</div>
+</div>
+<p>Note that it is also capable of rendering most layout objects, such as a Page.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>doc_page <span class="op">=</span> blueprint.sections[<span class="dv">0</span>].contents[<span class="dv">0</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># not run, since it produces a lot of output!</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># renderer.render(doc_page)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -586,13 +570,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/overview.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
+      <a href="../get-started/extending.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">More Customization</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/crossrefs.html" class="pagination-link">
-        <span class="nav-page-text">Linking to pages</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/docstrings.html" class="pagination-link">
+        <span class="nav-page-text">Inspecting docstrings</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

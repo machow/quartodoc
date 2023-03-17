@@ -806,12 +806,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
-<colgroup>
-<col style="width: 2%">
-<col style="width: 10%">
-<col style="width: 83%">
-<col style="width: 2%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -824,7 +818,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>ui</code></td>
 <td>htmltools.TagChild</td>
-<td>The UI object you want to insert. This can be anything that you usually put inside your apps’s ui function. If you’re inserting multiple elements in one call, make sure to wrap them in either a :func:<code>~shiny.ui.TagList</code> or a :func:<code>~shiny.ui.tags.div</code> (the latter option has the advantage that you can give it an id to make it easier to reference or remove it later on). If you want to insert raw html, use :func:<code>~shiny.ui.HTML</code>.</td>
+<td>The UI object you want to insert. This can be anything that you usually put inside your apps’s ui function. If you’re inserting multiple elements in one call, make sure to wrap them in either a <code>:func:~shiny.ui.TagList</code> or a <code>:func:~shiny.ui.tags.div</code> (the latter option has the advantage that you can give it an id to make it easier to reference or remove it later on). If you want to insert raw html, use <code>:func:~shiny.ui.HTML</code>.</td>
 <td>required</td>
 </tr>
 <tr class="even">
@@ -854,7 +848,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td><code>session</code></td>
 <td>Optional[Session]</td>
-<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>.</td>
+<td>A <a href="../reference/Session.html#Session">Session</a> instance. If not provided, it is inferred via <a href="../reference/session.get_current_session.html#session.get_current_session">get_current_session</a>.</td>
 <td><code>None</code></td>
 </tr>
 </tbody>
@@ -863,7 +857,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="note" class="level2">
 <h2 class="anchored" data-anchor-id="note">Note</h2>
-<p>This function allows you to dynamically add arbitrary UI into your app, whenever you want, as many times as you want. Unlike :func:<code>~shiny.render.ui</code>, the UI generated with <code>insert_ui</code> is persistent: once it’s created, it stays there until removed by :func:<code>remove_ui</code>. Each new call to <code>insert_ui</code> creates more UI objects, in addition to the ones already there (all independent from one another). To update a part of the UI (ex: an input object), you must use the appropriate render function or a customized reactive function.</p>
+<p>This function allows you to dynamically add arbitrary UI into your app, whenever you want, as many times as you want. Unlike <a href="../reference/render.ui.html#render.ui">ui</a>, the UI generated with <code>insert_ui</code> is persistent: once it's created, it stays there until removed by <code>:func:remove_ui</code>. Each new call to <code>insert_ui</code> creates more UI objects, in addition to the ones already there (all independent from one another). To update a part of the UI (ex: an input object), you must use the appropriate render function or a customized reactive function.</p>
 </section>
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>

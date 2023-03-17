@@ -98,6 +98,27 @@
     "text": "layout.ContentElement\nlayout.ContentElement\nEntry in the contents list."
   },
   {
+    "objectID": "api/Builder.do_blueprint.html",
+    "href": "api/Builder.do_blueprint.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "Builder.do_blueprint(self)\nConvert a layout with Auto elements to a full-fledged doc specification."
+  },
+  {
+    "objectID": "api/Builder.write_doc_pages.html",
+    "href": "api/Builder.write_doc_pages.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "Builder.write_doc_pages(self, pages, items)\nWrite individual function documentation pages."
+  },
+  {
+    "objectID": "api/Builder.build.html",
+    "href": "api/Builder.build.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "Builder.build(self)\nBuild index page, sphinx inventory, and individual doc pages."
+  },
+  {
     "objectID": "api/get_object.html",
     "href": "api/get_object.html",
     "title": "quartodoc",
@@ -119,6 +140,13 @@
     "text": "Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, use_interlinks=False, display_name='name')\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\nlist[Any]\nA list of sections, with items to document.\nrequired\n\n\nversion\nstr | None\nThe package version. By default this attempts to look up the current package version (TODO).\nNone\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\ndict | Renderer | str\nThe renderer used to convert docstrings (e.g. to markdown).\n'markdown'\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone\n\n\nsidebar\nstr | None\nThe output path for a sidebar yaml config (by default no config generated).\nNone\n\n\ndisplay_name\nstr\nThe default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.\n'name'"
   },
   {
+    "objectID": "api/Builder.do_collect.html",
+    "href": "api/Builder.do_collect.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "Builder.do_collect(self, blueprint)\nCollect the pages and sphinx item information from a layout."
+  },
+  {
     "objectID": "api/preview.html",
     "href": "api/preview.html",
     "title": "quartodoc",
@@ -126,11 +154,11 @@
     "text": "preview(ast, max_depth=999, compact=False)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n>>> from quartodoc import get_object\n>>> obj = get_object(\"quartodoc\", \"get_object\")\n>>> preview(obj.docstring.parsed)\n ...\n>>> preview(obj)\n ..."
   },
   {
-    "objectID": "api/BuilderPkgdown.html",
-    "href": "api/BuilderPkgdown.html",
+    "objectID": "api/Builder.do_summarize.html",
+    "href": "api/Builder.do_summarize.html",
     "title": "quartodoc",
     "section": "",
-    "text": "BuilderPkgdown()\nBuild an API in R pkgdown style."
+    "text": "Builder.do_summarize(self, blueprint, items)\nSummarize a layout into index tables."
   },
   {
     "objectID": "api/MdRenderer.signature.html",
@@ -138,6 +166,13 @@
     "title": "quartodoc",
     "section": "",
     "text": "MdRenderer.signature(self, el, source=None)\nReturn a string representation of an object’s signature."
+  },
+  {
+    "objectID": "api/Builder.write_index.html",
+    "href": "api/Builder.write_index.html",
+    "title": "quartodoc",
+    "section": "",
+    "text": "Builder.write_index(self, content)\nWrite API index page."
   },
   {
     "objectID": "api/MdRenderer.html",
@@ -161,18 +196,11 @@
     "text": "MdRenderer.render(self, el)\nReturn a string representation of an object, or layout element."
   },
   {
-    "objectID": "api/BuilderSinglePage.html",
-    "href": "api/BuilderSinglePage.html",
-    "title": "quartodoc",
-    "section": "",
-    "text": "BuilderSinglePage()\nBuild an API with all docs embedded on a single page."
-  },
-  {
     "objectID": "api/index.html",
     "href": "api/index.html",
     "title": "quartodoc",
     "section": "",
-    "text": "Builders are responsible for building documentation. They tie all the pieces of quartodoc together, and can be defined in your _quarto.yml config.\n\n\n\nBuilder\nBase class for building API docs.\n\n\nBuilderPkgdown\nBuild an API in R pkgdown style.\n\n\nBuilderSinglePage\nBuild an API with all docs embedded on a single page.\n\n\n\n\n\n\nRenderers convert parsed docstrings into a target format, like markdown.\n\n\n\nMdRenderer\nRender docstrings to markdown.\n\n\nMdRenderer.render\nReturn a string representation of an object, or layout element.\n\n\nMdRenderer.render_annotation\nSpecial hook for rendering a type annotation.\n\n\nMdRenderer.signature\nReturn a string representation of an object’s signature.\n\n\nMdRenderer.summarize\nProduce a summary table.\n\n\n\n\n\n\nThese functions Fetch and analyze python objects, including parsing docstrings.\n\n\n\nget_object\nFetch a griffe object.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n\n\n\n\nInventory files map a functions name to its corresponding url in your docs. These functions allow you to create and transform inventory files.\n\n\n\ncreate_inventory\nReturn a sphinx inventory file.\n\n\nconvert_inventory\nConvert a sphinx inventory file to json.\n\n\n\n\n\n\nClasses for specifying the exact layout of your docs.\n\n\n\nlayout.Layout\nThe layout of an API doc, which may include many pages.\n\n\nlayout.Section\nA section of content on the reference index page.\n\n\nlayout.Page\nA page of documentation.\n\n\nlayout.Auto\nAutomatically document a an object (e.g. module, class, function, or attribute.)\n\n\nlayout.Doc\n\n\n\nlayout.DocFunction\n\n\n\nlayout.DocAttribute\n\n\n\nlayout.DocModule\n\n\n\nlayout.DocClass\n\n\n\nlayout.Link\nA link to an object (e.g. a method that gets documented on a separate page).\n\n\nlayout.Item\n\n\n\nlayout.SectionElement\nEntry in the sections list.\n\n\nlayout.ContentElement\nEntry in the contents list."
+    "text": "These functions Fetch and analyze python objects, including parsing docstrings.\n\n\n\nget_object\nFetch a griffe object.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n\n\n\n\nRenderers convert parsed docstrings into a target format, like markdown.\n\n\n\nMdRenderer\nRender docstrings to markdown.\n\n\nMdRenderer.render\nReturn a string representation of an object, or layout element.\n\n\nMdRenderer.render_annotation\nSpecial hook for rendering a type annotation.\n\n\nMdRenderer.signature\nReturn a string representation of an object’s signature.\n\n\nMdRenderer.summarize\nProduce a summary table.\n\n\n\n\n\n\nBuilders are responsible for building documentation. They tie all the pieces of quartodoc together, and can be defined in your _quarto.yml config.\n\n\n\nBuilder\nBase class for building API docs.\n\n\nBuilder.build\nBuild index page, sphinx inventory, and individual doc pages.\n\n\nBuilder.do_blueprint\nConvert a layout with Auto elements to a full-fledged doc specification.\n\n\nBuilder.do_collect\nCollect the pages and sphinx item information from a layout.\n\n\nBuilder.do_summarize\nSummarize a layout into index tables.\n\n\nBuilder.write_index\nWrite API index page.\n\n\nBuilder.write_doc_pages\nWrite individual function documentation pages.\n\n\n\n\n\n\nInventory files map a functions name to its corresponding url in your docs. These functions allow you to create and transform inventory files.\n\n\n\ncreate_inventory\nReturn a sphinx inventory file.\n\n\nconvert_inventory\nConvert a sphinx inventory file to json.\n\n\n\n\n\n\nClasses for specifying the exact layout of your docs.\n\n\n\nlayout.Layout\nThe layout of an API doc, which may include many pages.\n\n\nlayout.Section\nA section of content on the reference index page.\n\n\nlayout.Page\nA page of documentation.\n\n\nlayout.Auto\nAutomatically document a an object (e.g. module, class, function, or attribute.)\n\n\nlayout.Doc\n\n\n\nlayout.DocFunction\n\n\n\nlayout.DocAttribute\n\n\n\nlayout.DocModule\n\n\n\nlayout.DocClass\n\n\n\nlayout.Link\nA link to an object (e.g. a method that gets documented on a separate page).\n\n\nlayout.Item\n\n\n\nlayout.SectionElement\nEntry in the sections list.\n\n\nlayout.ContentElement\nEntry in the contents list."
   },
   {
     "objectID": "api/convert_inventory.html",
@@ -196,6 +224,41 @@
     "text": "style\nsource\nlayout\n\n\n\n\npkgdown\ngithub\nIndex page with a title and short description for functions listed in each section. Each function gets its own documentation page.\n\n\nsingle-page\ngithub\nIndex page has function documentation embedded on it.\n\n\nshiny\ngithub\nThe shiny docs translated to quartodoc, using a custom renderer."
   },
   {
+    "objectID": "get-started/advanced-overview.html",
+    "href": "get-started/advanced-overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "quartodoc has two main classes:"
+  },
+  {
+    "objectID": "get-started/advanced-overview.html#builder",
+    "href": "get-started/advanced-overview.html#builder",
+    "title": "Overview",
+    "section": "Builder",
+    "text": "Builder\n\nconfig = {\"quartodoc\":\n    {\n        \"package\": \"quartodoc\",\n        \"style\": \"pkgdown\",\n        \"sections\": [\n            {\n                \"title\": \"some section\",\n                \"desc\": \"some description\",\n                \"contents\": [\n                    \"get_object\",\n                    \"MdRenderer\"\n                ]\n            }\n        ]\n    }\n}\nbuilder = Builder.from_quarto_config(config)\n\n\npreview(builder.layout)\n\n█─Layout\n├─sections = █─list\n│            └─0 = █─Section\n│                  ├─title = 'some section'\n│                  ├─desc = 'some description'\n│                  └─contents = █─list\n│                               ├─0 = █─Auto\n│                               │     └─name = 'get_object'\n│                               └─1 = █─Auto\n│                                     └─name = 'MdRenderer'\n└─package = 'quartodoc'\n\n\n\nblueprint = builder.do_blueprint()\npreview(blueprint, max_depth=6)\n\n█─Layout\n├─sections = █─list\n│            └─0 = █─Section\n│                  ├─title = 'some section'\n│                  ├─desc = 'some description'\n│                  └─contents = █─list\n│                               ├─0 = █─Page\n│                               │     ├─path = 'get_object'\n│                               │     └─contents = █─list\n│                               │                  └─0 = █─DocFunction ...\n│                               └─1 = █─Page\n│                                     ├─path = 'MdRenderer'\n│                                     └─contents = █─list\n│                                                  └─0 = █─DocClass ...\n└─package = 'quartodoc'"
+  },
+  {
+    "objectID": "get-started/advanced-overview.html#layout",
+    "href": "get-started/advanced-overview.html#layout",
+    "title": "Overview",
+    "section": "Layout",
+    "text": "Layout\nThe layout classes represent documentation to build.\nSee the layouts API reference.\n\nSection: a section of documentation, with a title and description.\nPage: represents a page of documentation.\nDoc: represents a python object and its docstring to render.\nDocClass, DocModule: has a members field.\nAuto: an object (e.g. function) to look up, and turn into the appropriate Doc class. This is the default class used in the config, and has options for customizing documentation, such as how to document members of a class.\n\nNote that classes like Doc include docstring objects, that are the result of statically analyzing the target library with griffe.\n\ndoc_page = blueprint.sections[0].contents[0]\npreview(doc_page, max_depth = 4)\n\n█─Page\n├─path = 'get_object'\n└─contents = █─list\n             └─0 = █─DocFunction\n                   ├─name = 'get_object'\n                   ├─obj = █─Alias\n                   │       ├─name = 'get_object'\n                   │       ├─annotation = █─Expression ...\n                   │       ├─parameters = █─Parameters ...\n                   │       └─docstring = █─Docstring ...\n                   └─anchor = 'quartodoc.get_object'"
+  },
+  {
+    "objectID": "get-started/advanced-overview.html#docstring-objects",
+    "href": "get-started/advanced-overview.html#docstring-objects",
+    "title": "Overview",
+    "section": "Docstring objects",
+    "text": "Docstring objects\n\nobj = get_object(\"quartodoc\", \"get_object\")"
+  },
+  {
+    "objectID": "get-started/advanced-overview.html#renderer",
+    "href": "get-started/advanced-overview.html#renderer",
+    "title": "Overview",
+    "section": "Renderer",
+    "text": "Renderer\nThe renderer is responsible for converting layout and docstring objects into a string of documentation (e.g. markdown).\n\nrenderer = MdRenderer()\n\nprint(\n    renderer.render(obj)[:150]\n)\n\n`get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)`\n\nFetch a griffe object.\n\n### Parameters\n\n\n\n\nNote that it is also capable of rendering most layout objects, such as a Page.\n\ndoc_page = blueprint.sections[0].contents[0]\n\n# not run, since it produces a lot of output!\n# renderer.render(doc_page)"
+  },
+  {
     "objectID": "get-started/docstrings.html",
     "href": "get-started/docstrings.html",
     "title": "Inspecting docstrings",
@@ -214,7 +277,7 @@
     "href": "get-started/docstrings.html#reading-docstrings",
     "title": "Inspecting docstrings",
     "section": "Reading docstrings",
-    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f09686fd2a0>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\ndynamic: bool\n    Whether to dynamically import object. Useful if docstring is not hard-coded,\n    but was set on object by running python code.\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\npreview: print a user-friendly preview of a griffe object.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f097857c430>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f0968686350>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f0968686380>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f0968686590>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
+    "text": "Reading docstrings\nUse the function get_object to read in a docstring from a module.\n\nfrom quartodoc import get_object, preview\n\nf_obj = get_object(\"quartodoc\", \"get_object\")\nf_obj\n\n<Alias('get_object', 'quartodoc.autosummary.get_object')>\n\n\nThe result above is a griffe object representing the function quartodoc.get_object, which has two important attributes:\n\n.name: the function’s name.\n.parameters: the function’s parameters.\n.docstring.value: the actual docstring\n.docstring.parsed: the docstring parsed into a tree of griffe objects\n\n\nFunction name\n\nf_obj.name\n\n'get_object'\n\n\n\n\nFunction parameters\n\nf_obj.parameters\n\n<griffe.dataclasses.Parameters at 0x7f9b60ee12d0>\n\n\n\n\nRaw docstring value\n\nprint(f_obj.docstring.value)\n\nFetch a griffe object.\n\nParameters\n----------\nmodule: str\n    A module name.\nobject_name: str\n    A function name.\nparser: str\n    A docstring parser to use.\nload_aliases: bool\n    For aliases that were imported from other modules, should we load that module?\ndynamic: bool\n    Whether to dynamically import object. Useful if docstring is not hard-coded,\n    but was set on object by running python code.\nmodules_collection: optional\n    A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.\n\nSee Also\n--------\npreview: print a user-friendly preview of a griffe object.\n\nExamples\n--------\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ...\n\n\n\n\nParsed docstring\n\nf_obj.docstring.parsed\n\n[<griffe.docstrings.dataclasses.DocstringSectionText at 0x7f9b60e6a2c0>,\n <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f9b60e6a350>,\n <griffe.docstrings.dataclasses.DocstringSectionText at 0x7f9b60e6a410>,\n <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f9b60e6a800>]\n\n\nThe docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown."
   },
   {
     "objectID": "get-started/docstrings.html#previewing-docstrings",
@@ -235,7 +298,7 @@
     "href": "get-started/sidebar.html",
     "title": "Sidebar navigation",
     "section": "",
-    "text": "quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.\nIn order to create a sidebar for your docs, add the following options to your _quarto.yml:\n# tell quarto to read the sidebar file\nmetadata-files:\n  - _sidebar.yml\n\n\n# tell quartodoc to generate the sidebar file\nquartodoc:\n  sidebar: \"_sidebar.yml\"\n  # other options ...\nNote that running python -m quartodoc build will now produce a file called _sidebar.yml, with a quarto sidebar configuration. The quarto metadata-files option ensures it’s included with the configuration in _quarto.yml.\nHere is what the sidebar for the quartodoc reference page looks like:\n\n\nwebsite:\n  sidebar:\n    contents:\n    - api/index.qmd\n    - contents:\n      - api/Builder.qmd\n      - api/BuilderPkgdown.qmd\n      - api/BuilderSinglePage.qmd\n      section: API Builders\n    - contents:\n      - api/MdRenderer.qmd\n      - api/MdRenderer.render.qmd\n      - api/MdRenderer.render_annotation.qmd\n      - api/MdRenderer.signature.qmd\n      - api/MdRenderer.summarize.qmd\n      section: Docstring Renderers\n    - contents:\n      - api/get_object.qmd\n      - api/preview.qmd\n      section: Inspection\n    - contents:\n      - api/create_inventory.qmd\n      - api/convert_inventory.qmd\n      section: Inventory links\n    - contents:\n      - api/layouts.qmd\n      section: Data models\n    id: api"
+    "text": "quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.\nIn order to create a sidebar for your docs, add the following options to your _quarto.yml:\n# tell quarto to read the sidebar file\nmetadata-files:\n  - _sidebar.yml\n\n\n# tell quartodoc to generate the sidebar file\nquartodoc:\n  sidebar: \"_sidebar.yml\"\n  # other options ...\nNote that running python -m quartodoc build will now produce a file called _sidebar.yml, with a quarto sidebar configuration. The quarto metadata-files option ensures it’s included with the configuration in _quarto.yml.\nHere is what the sidebar for the quartodoc reference page looks like:\n\n\nwebsite:\n  sidebar:\n    contents:\n    - api/index.qmd\n    - contents:\n      - api/get_object.qmd\n      - api/preview.qmd\n      section: Inspection\n    - contents:\n      - api/MdRenderer.qmd\n      - api/MdRenderer.render.qmd\n      - api/MdRenderer.render_annotation.qmd\n      - api/MdRenderer.signature.qmd\n      - api/MdRenderer.summarize.qmd\n      section: Docstring Renderers\n    - contents:\n      - api/Builder.qmd\n      - api/Builder.build.qmd\n      - api/Builder.do_blueprint.qmd\n      - api/Builder.do_collect.qmd\n      - api/Builder.do_summarize.qmd\n      - api/Builder.write_index.qmd\n      - api/Builder.write_doc_pages.qmd\n      section: API Builders\n    - contents:\n      - api/create_inventory.qmd\n      - api/convert_inventory.qmd\n      section: Inventory links\n    - contents:\n      - api/layouts.qmd\n      section: Data models\n    id: api"
   },
   {
     "objectID": "get-started/extending.html",

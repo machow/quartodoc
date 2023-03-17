@@ -833,7 +833,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="note" class="level2">
 <h2 class="anchored" data-anchor-id="note">Note</h2>
-<p>When called within a reactive function (i.e., :func:<code>Effect</code>, :func:<code>Calc</code>, :func:<code>render.ui</code>, etc.), that reactive context is invalidated (and re-executes) after the interval has passed. The re-execution will reset the invalidation flag, so in a typical use case, the object will keep re-executing and waiting for the specified interval. It’s possible to stop this cycle by adding conditional logic that prevents the <code>invalidate_later</code> from being run.</p>
+<p>When called within a reactive function (i.e., <code>:func:Effect</code>, <code>:func:Calc</code>, <code>:func:render.ui</code>, etc.), that reactive context is invalidated (and re-executes) after the interval has passed. The re-execution will reset the invalidation flag, so in a typical use case, the object will keep re-executing and waiting for the specified interval. It's possible to stop this cycle by adding conditional logic that prevents the <code>invalidate_later</code> from being run.</p>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>

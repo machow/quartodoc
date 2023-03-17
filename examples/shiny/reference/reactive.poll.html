@@ -803,19 +803,13 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="shiny.reactive.poll">reactive.poll</h2>
 <p><code>reactive.poll(poll_func, interval_secs=1, equals=eq, priority=0, session=MISSING)</code></p>
 <p>Create a reactive polling object.</p>
-<p>Polling is a technique that approximates “real-time” or streaming updates, using a data source that does not actually have push notifications but does have a quick way to repeatedly check for changes on demand.</p>
+<p>Polling is a technique that approximates "real-time" or streaming updates, using a data source that does not actually have push notifications but does have a quick way to repeatedly check for changes on demand.</p>
 <p>A reactive polling object is constructed using two functions: a polling function, which is a fast-running, inexpensive function that is used to determine whether some data source has changed (such as the timestamp of a file, or a <code>SELECT MAX(updated) FROM table</code> query); and a slower-running reading function that actually loads and returns the data that is desired. The <code>poll()</code> function is intended to be used as a decorator: the poll function is passed as the <code>poll_func</code> arg to <code>@poll()</code>, while the data reading function is the target of the decorator.</p>
 <p>Reactive consumers can invoke the resulting polling object to get the current data, and will automatically invalidate when the polling function detects a change. Polling objects also cache the results of the read function; for this reason, apps where all sessions depend on the same data source may want to declare the polling object at the top level of app.py (outside of the server function).</p>
 <p>Both <code>poll_func</code> and the decorated (data reading) function can read reactive values and ~shiny.reactive.Calc objects. Any invalidations triggered by reactive dependencies will apply to the reactive polling object immediately (not waiting for the <code>interval_secs</code> delay to expire).</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
-<colgroup>
-<col style="width: 2%">
-<col style="width: 8%">
-<col style="width: 87%">
-<col style="width: 1%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -852,7 +846,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>session</code></td>
 <td>MISSING_TYPE | Session | None</td>
-<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>. If there is no current session (i.e.&nbsp;<code>poll</code> is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.</td>
+<td>A <a href="../reference/Session.html#Session">Session</a> instance. If not provided, it is inferred via <a href="../reference/session.get_current_session.html#session.get_current_session">get_current_session</a>. If there is no current session (i.e.&nbsp;<code>poll</code> is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.</td>
 <td><code>MISSING</code></td>
 </tr>
 </tbody>

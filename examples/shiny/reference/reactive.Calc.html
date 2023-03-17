@@ -801,16 +801,10 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="shiny.reactive.Calc">reactive.Calc</h2>
 <p><code>reactive.Calc(fn=None, session=MISSING)</code></p>
 <p>Mark a function as a reactive calculation.</p>
-<p>A reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., :class:<code>~shiny.Inputs</code>, :class:<code>~shiny.reactive.Value</code>, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are “invalidated” and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.</p>
+<p>A reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., <a href="../reference/Inputs.html#Inputs">Inputs</a>, <a href="../reference/reactive.Value.html#reactive.Value">Value</a>, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are "invalidated" and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 19%">
-<col style="width: 68%">
-<col style="width: 6%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -823,7 +817,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>session</code></td>
 <td>MISSING_TYPE | Session | None</td>
-<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>.</td>
+<td>A <a href="../reference/Session.html#Session">Session</a> instance. If not provided, it is inferred via <a href="../reference/session.get_current_session.html#session.get_current_session">get_current_session</a>.</td>
 <td><code>MISSING</code></td>
 </tr>
 </tbody>
@@ -851,12 +845,9 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <p>Tip</p>
 <table class="table">
-<colgroup>
-<col style="width: 12%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Reactive calculations should not produce any side effects; to reactively produce side effects, use :func:<code>~shiny.reactive.Effect</code> instead.</th>
+<th>Reactive calculations should not produce any side effects; to reactively produce side effects, use <a href="../reference/reactive.Effect.html#reactive.Effect">Effect</a> instead.</th>
 </tr>
 </thead>
 <tbody>

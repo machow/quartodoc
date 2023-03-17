@@ -809,12 +809,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
-<colgroup>
-<col style="width: 2%">
-<col style="width: 13%">
-<col style="width: 81%">
-<col style="width: 1%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -851,7 +845,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>session</code></td>
 <td>MISSING_TYPE | Session | None</td>
-<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>. If there is no current session (i.e.&nbsp;<code>poll</code> is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.</td>
+<td>A <a href="../reference/Session.html#Session">Session</a> instance. If not provided, it is inferred via <a href="../reference/session.get_current_session.html#session.get_current_session">get_current_session</a>. If there is no current session (i.e.&nbsp;<code>poll</code> is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.</td>
 <td><code>MISSING</code></td>
 </tr>
 </tbody>

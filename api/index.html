@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../api/Builder.html" rel="next">
+<link href="../api/get_object.html" rel="next">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -126,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">API Builders</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Inspection</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -134,17 +134,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Builder.html" class="sidebar-item-text sidebar-link">Builder</a>
+  <a href="../api/get_object.html" class="sidebar-item-text sidebar-link">get_object</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/BuilderPkgdown.html" class="sidebar-item-text sidebar-link">BuilderPkgdown</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/BuilderSinglePage.html" class="sidebar-item-text sidebar-link">BuilderSinglePage</a>
+  <a href="../api/preview.html" class="sidebar-item-text sidebar-link">preview</a>
   </div>
 </li>
       </ul>
@@ -186,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Inspection</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">API Builders</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -194,12 +189,37 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/get_object.html" class="sidebar-item-text sidebar-link">get_object</a>
+  <a href="../api/Builder.html" class="sidebar-item-text sidebar-link">Builder</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/preview.html" class="sidebar-item-text sidebar-link">preview</a>
+  <a href="../api/Builder.build.html" class="sidebar-item-text sidebar-link">Builder.build</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/Builder.do_blueprint.html" class="sidebar-item-text sidebar-link">Builder.do_blueprint</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/Builder.do_collect.html" class="sidebar-item-text sidebar-link">Builder.do_collect</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/Builder.do_summarize.html" class="sidebar-item-text sidebar-link">Builder.do_summarize</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/Builder.write_index.html" class="sidebar-item-text sidebar-link">Builder.write_index</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/Builder.write_doc_pages.html" class="sidebar-item-text sidebar-link">Builder.write_doc_pages</a>
   </div>
 </li>
       </ul>
@@ -250,9 +270,9 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
   <ul class="collapse">
-  <li><a href="#api-builders" id="toc-api-builders" class="nav-link" data-scroll-target="#api-builders">API Builders</a></li>
-  <li><a href="#docstring-renderers" id="toc-docstring-renderers" class="nav-link" data-scroll-target="#docstring-renderers">Docstring Renderers</a></li>
   <li><a href="#inspection" id="toc-inspection" class="nav-link" data-scroll-target="#inspection">Inspection</a></li>
+  <li><a href="#docstring-renderers" id="toc-docstring-renderers" class="nav-link" data-scroll-target="#docstring-renderers">Docstring Renderers</a></li>
+  <li><a href="#api-builders" id="toc-api-builders" class="nav-link" data-scroll-target="#api-builders">API Builders</a></li>
   <li><a href="#inventory-links" id="toc-inventory-links" class="nav-link" data-scroll-target="#inventory-links">Inventory links</a></li>
   <li><a href="#data-models" id="toc-data-models" class="nav-link" data-scroll-target="#data-models">Data models</a></li>
   </ul></li>
@@ -266,22 +286,18 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="function-reference" class="level1">
 <h1>Function reference</h1>
-<section id="api-builders" class="level2">
-<h2 class="anchored" data-anchor-id="api-builders">API Builders</h2>
-<p>Builders are responsible for building documentation. They tie all the pieces of quartodoc together, and can be defined in your _quarto.yml config.</p>
+<section id="inspection" class="level2">
+<h2 class="anchored" data-anchor-id="inspection">Inspection</h2>
+<p>These functions Fetch and analyze python objects, including parsing docstrings.</p>
 <table class="table">
 <tbody>
 <tr class="odd">
-<td><a href="../api/Builder.html#quartodoc.Builder">Builder</a></td>
-<td>Base class for building API docs.</td>
+<td><a href="../api/get_object.html#quartodoc.get_object">get_object</a></td>
+<td>Fetch a griffe object.</td>
 </tr>
 <tr class="even">
-<td><a href="../api/BuilderPkgdown.html#quartodoc.BuilderPkgdown">BuilderPkgdown</a></td>
-<td>Build an API in R pkgdown style.</td>
-</tr>
-<tr class="odd">
-<td><a href="../api/BuilderSinglePage.html#quartodoc.BuilderSinglePage">BuilderSinglePage</a></td>
-<td>Build an API with all docs embedded on a single page.</td>
+<td><a href="../api/preview.html#quartodoc.preview">preview</a></td>
+<td>Print a friendly representation of a griffe object (e.g.&nbsp;function, docstring)</td>
 </tr>
 </tbody>
 </table>
@@ -314,18 +330,38 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<section id="inspection" class="level2">
-<h2 class="anchored" data-anchor-id="inspection">Inspection</h2>
-<p>These functions Fetch and analyze python objects, including parsing docstrings.</p>
+<section id="api-builders" class="level2">
+<h2 class="anchored" data-anchor-id="api-builders">API Builders</h2>
+<p>Builders are responsible for building documentation. They tie all the pieces of quartodoc together, and can be defined in your _quarto.yml config.</p>
 <table class="table">
 <tbody>
 <tr class="odd">
-<td><a href="../api/get_object.html#quartodoc.get_object">get_object</a></td>
-<td>Fetch a griffe object.</td>
+<td><a href="../api/Builder.html#quartodoc.Builder">Builder</a></td>
+<td>Base class for building API docs.</td>
 </tr>
 <tr class="even">
-<td><a href="../api/preview.html#quartodoc.preview">preview</a></td>
-<td>Print a friendly representation of a griffe object (e.g.&nbsp;function, docstring)</td>
+<td><a href="../api/Builder.build.html#quartodoc.Builder.build">Builder.build</a></td>
+<td>Build index page, sphinx inventory, and individual doc pages.</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/Builder.do_blueprint.html#quartodoc.Builder.do_blueprint">Builder.do_blueprint</a></td>
+<td>Convert a layout with Auto elements to a full-fledged doc specification.</td>
+</tr>
+<tr class="even">
+<td><a href="../api/Builder.do_collect.html#quartodoc.Builder.do_collect">Builder.do_collect</a></td>
+<td>Collect the pages and sphinx item information from a layout.</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/Builder.do_summarize.html#quartodoc.Builder.do_summarize">Builder.do_summarize</a></td>
+<td>Summarize a layout into index tables.</td>
+</tr>
+<tr class="even">
+<td><a href="../api/Builder.write_index.html#quartodoc.Builder.write_index">Builder.write_index</a></td>
+<td>Write API index page.</td>
+</tr>
+<tr class="odd">
+<td><a href="../api/Builder.write_doc_pages.html#quartodoc.Builder.write_doc_pages">Builder.write_doc_pages</a></td>
+<td>Write individual function documentation pages.</td>
 </tr>
 </tbody>
 </table>
@@ -548,8 +584,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../api/Builder.html" class="pagination-link">
-        <span class="nav-page-text">Builder</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../api/get_object.html" class="pagination-link">
+        <span class="nav-page-text">get_object</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

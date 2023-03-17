@@ -25,7 +25,7 @@
     "href": "reference/ui.update_numeric.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_numeric(id, label=None, value=None, min=None, max=None, step=None, session=None)\nChange the value of a number input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[float]\nA new value.\nNone\n\n\nmin\nOptional[float]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[float]\nThe maximum allowed value.\nNone\n\n\nstep\nOptional[float]\nInterval to use when stepping between min and max.\nNone\n\n\nsession\nOptional[Session]\nThe :class:~shiny.Session object passed to the server function of a :func:~shiny.App.\nNone"
+    "text": "ui.update_numeric(id, label=None, value=None, min=None, max=None, step=None, session=None)\nChange the value of a number input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[float]\nA new value.\nNone\n\n\nmin\nOptional[float]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[float]\nThe maximum allowed value.\nNone\n\n\nstep\nOptional[float]\nInterval to use when stepping between min and max.\nNone\n\n\nsession\nOptional[Session]\nThe Session object passed to the server function of a :func:~shiny.App.\nNone"
   },
   {
     "objectID": "reference/ui.update_numeric.html#note",
@@ -60,7 +60,7 @@
     "href": "reference/ui.TagList.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\n\n\n\nfrom htmltools import TagList, div TagList(“hello”, div(id=“foo”, class_=“bar”)) hello\n\n\n\n\n\n\n\nMethods\n\n\n\nName\nDescription\n\n\n\n\nappend\nAppend tag children to the end of the list.\n\n\nextend\nExtend the children by appending an iterable of children.\n\n\nget_dependencies\nGet any dependencies needed to render the HTML.\n\n\nget_html_string\nReturn the HTML string for this tag list.\n\n\ninsert\nInsert tag children before a given index.\n\n\nrender\nGet string representation as well as it’s HTML dependencies.\n\n\nsave_html\nSave to a HTML file.\n\n\nshow\nPreview as a complete HTML document.\n\n\ntagify\nConvert any tagifiable children to Tag/TagList objects.\n\n\n\n\n\nappend\nui.TagList.append(self, args)\nAppend tag children to the end of the list.\n\n\nextend\nui.TagList.extend(self, x)\nExtend the children by appending an iterable of children.\n\n\nget_dependencies\nui.TagList.get_dependencies(self, dedup=True)\nGet any dependencies needed to render the HTML.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndedup\nbool\nWhether to deduplicate the dependencies.\nTrue\n\n\n\n\n\n\nget_html_string\nui.TagList.get_html_string(self, indent=0, eol='\\n', _escape_strings=True)\nReturn the HTML string for this tag list.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nindent\nint\nNumber of spaces to indent each line of the HTML.\n0\n\n\neol\nstr\nEnd-of-line character(s).\n'\\n'\n\n\n\n\n\n\ninsert\nui.TagList.insert(self, index, x)\nInsert tag children before a given index.\n\n\nrender\nui.TagList.render(self)\nGet string representation as well as it’s HTML dependencies.\n\n\nsave_html\nui.TagList.save_html(self, file, libdir='lib', include_version=True)\nSave to a HTML file.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfile\nstr\nThe file to save to.\nrequired\n\n\nlibdir\nOptional[str]\nThe directory to save the dependencies to.\n'lib'\n\n\ninclude_version\nbool\nWhether to include the version number in the dependency folder name.\nTrue\n\n\n\n\n\nReturns\n\n\n\nType\nDescription\n\n\n\n\nThe path to the generated HTML file.\n\n\n\n\n\n\n\nshow\nui.TagList.show(self, renderer='auto')\nPreview as a complete HTML document.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nrenderer\nLiteral[auto, ipython, browser]\nThe renderer to use.\n'auto'\n\n\n\n\n\n\ntagify\nui.TagList.tagify(self)\nConvert any tagifiable children to Tag/TagList objects."
+    "text": "Example\n>>> from htmltools import TagList, div >>> TagList(\"hello\", div(id=\"foo\", class_=\"bar\")) hello <div id=\"foo\" class=\"bar\"></div>\n\nMethods\n\n\n\nName\nDescription\n\n\n\n\nappend\nAppend tag children to the end of the list.\n\n\nextend\nExtend the children by appending an iterable of children.\n\n\nget_dependencies\nGet any dependencies needed to render the HTML.\n\n\nget_html_string\nReturn the HTML string for this tag list.\n\n\ninsert\nInsert tag children before a given index.\n\n\nrender\nGet string representation as well as it's HTML dependencies.\n\n\nsave_html\nSave to a HTML file.\n\n\nshow\nPreview as a complete HTML document.\n\n\ntagify\nConvert any tagifiable children to Tag/TagList objects.\n\n\n\n\n\nappend\nui.TagList.append(self, args)\nAppend tag children to the end of the list.\n\n\nextend\nui.TagList.extend(self, x)\nExtend the children by appending an iterable of children.\n\n\nget_dependencies\nui.TagList.get_dependencies(self, dedup=True)\nGet any dependencies needed to render the HTML.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndedup\nbool\nWhether to deduplicate the dependencies.\nTrue\n\n\n\n\n\n\nget_html_string\nui.TagList.get_html_string(self, indent=0, eol='\\n', _escape_strings=True)\nReturn the HTML string for this tag list.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nindent\nint\nNumber of spaces to indent each line of the HTML.\n0\n\n\neol\nstr\nEnd-of-line character(s).\n'\\n'\n\n\n\n\n\n\ninsert\nui.TagList.insert(self, index, x)\nInsert tag children before a given index.\n\n\nrender\nui.TagList.render(self)\nGet string representation as well as it's HTML dependencies.\n\n\nsave_html\nui.TagList.save_html(self, file, libdir='lib', include_version=True)\nSave to a HTML file.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfile\nstr\nThe file to save to.\nrequired\n\n\nlibdir\nOptional[str]\nThe directory to save the dependencies to.\n'lib'\n\n\ninclude_version\nbool\nWhether to include the version number in the dependency folder name.\nTrue\n\n\n\n\n\nReturns\n\n\n\nType\nDescription\n\n\n\n\nThe path to the generated HTML file.\n\n\n\n\n\n\n\nshow\nui.TagList.show(self, renderer='auto')\nPreview as a complete HTML document.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nrenderer\nLiteral[auto, ipython, browser]\nThe renderer to use.\n'auto'\n\n\n\n\n\n\ntagify\nui.TagList.tagify(self)\nConvert any tagifiable children to Tag/TagList objects."
   },
   {
     "objectID": "reference/ui.output_image.html",
@@ -81,21 +81,21 @@
     "href": "reference/ui.navset_tab_card.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.navset_tab_card(args, id=None, selected=None, header=None, footer=None)\nRender nav items as a tabset inside a card container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., :func:shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
+    "text": "ui.navset_tab_card(args, id=None, selected=None, header=None, footer=None)\nRender nav items as a tabset inside a card container.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
   },
   {
     "objectID": "reference/ui.navset_tab_card.html#example",
     "href": "reference/ui.navset_tab_card.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee nav"
+    "text": "Example\nSee"
   },
   {
     "objectID": "reference/ui.notification_show.html",
     "href": "reference/ui.notification_show.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.notification_show(ui, action=None, duration=5, close_button=True, id=None, type='default', session=None)\nShow a notification to the user.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nui\nhtmltools.TagChild\nContent of message.\nrequired\n\n\naction\nOptional[TagChild]\nMessage content that represents an action. For example, this could be a link that the user can click on. This is separate from ui so customized layouts can handle the main notification content separately from action content.\nNone\n\n\nduration\nOptional[int | float]\nNumber of seconds to display the message before it disappears. Use None to make the message not automatically disappear.\n5\n\n\nclose_button\nbool\nIf True, display a button which will make the notification disappear when clicked. If False do not display.\nTrue\n\n\nid\nOptional[str]\nAn optional unique identifier for the notification. If supplied, any existing notification with the same id will be replaced with this one (otherwise, a new notification is created).\nNone\n\n\ntype\nLiteral[default, message, warning, error]\nA string which controls the color of the notification. One of “default” (gray), “message” (blue), “warning” (yellow), or “error” (red).\n'default'\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nThe notification’s\n\n\n\n\n\n\n\n~shiny.ui.notification_remove ~shiny.ui.modal"
+    "text": "ui.notification_show(ui, action=None, duration=5, close_button=True, id=None, type='default', session=None)\nShow a notification to the user.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nui\nhtmltools.TagChild\nContent of message.\nrequired\n\n\naction\nOptional[TagChild]\nMessage content that represents an action. For example, this could be a link that the user can click on. This is separate from ui so customized layouts can handle the main notification content separately from action content.\nNone\n\n\nduration\nOptional[int | float]\nNumber of seconds to display the message before it disappears. Use None to make the message not automatically disappear.\n5\n\n\nclose_button\nbool\nIf True, display a button which will make the notification disappear when clicked. If False do not display.\nTrue\n\n\nid\nOptional[str]\nAn optional unique identifier for the notification. If supplied, any existing notification with the same id will be replaced with this one (otherwise, a new notification is created).\nNone\n\n\ntype\nLiteral[default, message, warning, error]\nA string which controls the color of the notification. One of “default” (gray), “message” (blue), “warning” (yellow), or “error” (red).\n'default'\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nThe notification’s\n\n\n\n\n\n\n\n~shiny.ui.notification_remove ~shiny.ui.modal"
   },
   {
     "objectID": "reference/ui.notification_show.html#examples",
@@ -109,14 +109,14 @@
     "href": "reference/ui.nav_control.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.nav_control(args)\nPlace a control in the navigation container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nhtmltools.TagChild\nUI elements to display as the nav item.\n()\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See nav"
+    "text": "ui.nav_control(args)\nPlace a control in the navigation container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nhtmltools.TagChild\nUI elements to display as the nav item.\n()\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See"
   },
   {
     "objectID": "reference/ui.update_select.html",
     "href": "reference/ui.update_select.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_select(id, label=None, choices=None, selected=None, session=None)\nChange the value of a select input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[SelectChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nNone\n\n\nselected\nOptional[str | list[str]]\nThe values that should be initially selected, if any.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_select(id, label=None, choices=None, selected=None, session=None)\nChange the value of a select input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[SelectChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nNone\n\n\nselected\nOptional[str | list[str]]\nThe values that should be initially selected, if any.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_select.html#note",
@@ -144,7 +144,7 @@
     "href": "reference/ui.page_fixed.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.page_fixed(args, title=None, lang=None, kwargs)\nCreate a fixed page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\nkwargs Attributes on the page level container.\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fluid page_bootstrap page_navbar"
+    "text": "ui.page_fixed(args, title=None, lang=None, kwargs)\nCreate a fixed page.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\nkwargs Attributes on the page level container.\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.page_fixed.html#examples",
@@ -158,7 +158,7 @@
     "href": "reference/ui.nav.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.nav(title, args, value=None, icon=None)\nCreate a nav item pointing to some internal content.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nhtmltools.TagChild\nA title to display. Can be a character string or UI elements (i.e., tags).\nrequired\n\n\n*args\nhtmltools.TagChild\nUI elements to display when the item is active.\n()\n\n\nvalue\nOptional[str]\nThe value of the item. This is used to determine whether the item is active (when an id is provided to the nav container), programmatically select the item (e.g., :func:~shiny.ui.update_navs), and/or be provided to the selected argument of the navigation container (e.g., :func:~shiny.ui.navset_tab).\nNone\n\n\nicon\nhtmltools.TagChild\nAn icon to appear inline with the button/link.\nNone\n\n\n\n\n\n\n~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
+    "text": "ui.nav(title, args, value=None, icon=None)\nCreate a nav item pointing to some internal content.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nhtmltools.TagChild\nA title to display. Can be a character string or UI elements (i.e., tags).\nrequired\n\n\n*args\nhtmltools.TagChild\nUI elements to display when the item is active.\n()\n\n\nvalue\nOptional[str]\nThe value of the item. This is used to determine whether the item is active (when an id is provided to the nav container), programmatically select the item (e.g., update_navs), and/or be provided to the selected argument of the navigation container (e.g., navset_tab).\nNone\n\n\nicon\nhtmltools.TagChild\nAn icon to appear inline with the button/link.\nNone\n\n\n\n\n\n\n~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
   },
   {
     "objectID": "reference/ui.nav.html#examples",
@@ -172,7 +172,7 @@
     "href": "reference/ui.page_fluid.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.page_fluid(args, title=None, lang=None, kwargs)\nCreate a fluid page.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\nkwargs\nstr\nAttributes on the page level container.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fixed page_bootstrap page_navbar"
+    "text": "ui.page_fluid(args, title=None, lang=None, kwargs)\nCreate a fluid page.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\nkwargs\nstr\nAttributes on the page level container.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.page_fluid.html#examples",
@@ -186,7 +186,7 @@
     "href": "reference/reactive.poll.html",
     "title": "Shiny",
     "section": "",
-    "text": "reactive.poll(poll_func, interval_secs=1, equals=eq, priority=0, session=MISSING)\nCreate a reactive polling object.\nPolling is a technique that approximates “real-time” or streaming updates, using a data source that does not actually have push notifications but does have a quick way to repeatedly check for changes on demand.\nA reactive polling object is constructed using two functions: a polling function, which is a fast-running, inexpensive function that is used to determine whether some data source has changed (such as the timestamp of a file, or a SELECT MAX(updated) FROM table query); and a slower-running reading function that actually loads and returns the data that is desired. The poll() function is intended to be used as a decorator: the poll function is passed as the poll_func arg to @poll(), while the data reading function is the target of the decorator.\nReactive consumers can invoke the resulting polling object to get the current data, and will automatically invalidate when the polling function detects a change. Polling objects also cache the results of the read function; for this reason, apps where all sessions depend on the same data source may want to declare the polling object at the top level of app.py (outside of the server function).\nBoth poll_func and the decorated (data reading) function can read reactive values and ~shiny.reactive.Calc objects. Any invalidations triggered by reactive dependencies will apply to the reactive polling object immediately (not waiting for the interval_secs delay to expire).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npoll_func\nCallable[[], Any] | Callable[[], Awaitable[Any]]\nA function to be called frequently to determine whether a data source has changed. The return value should be something that can be compared inexpensively using ==. Both regular functions and coroutine functions are allowed. Note that the poll_func should NOT return a bool that indicates whether the data source has changed. Rather, each poll_func return value will be checked for equality with its preceding poll_func return value (using == semantics by default), and if it differs, the data source will be considered changed.\nrequired\n\n\ninterval_secs\nfloat\nThe number of seconds to wait after each poll_func invocation before polling again. Note: depending on what other tasks are executing, the actual wait time may far exceed this value.\n1\n\n\nequals\nCallable[[Any, Any], bool]\nThe function that will be used to compare each poll_func return value with its immediate predecessor.\neq\n\n\npriority\nint\nReactive polling is implemented using an ~shiny.reactive.Effect to call poll_func on a timer; use the priority argument to control the order of this Effect’s execution versus other Effects in your app. See ~shiny.reactive.Effect for more details.\n0\n\n\nsession\nMISSING_TYPE | Session | None\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session. If there is no current session (i.e. poll is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that should be applied to a no-argument function that (expensively)\n\n\n\nreads whatever data is desired. (This function may be a regular function or a\n\n\n\ncoroutine function.) The result of the decorator is a reactive\n\n\n\nthat always returns up-to-date data, and invalidates callers when changes are\n\n\n\ndetected via polling.\n\n\n\n\n\n\n\n~shiny.reactive.file_reader"
+    "text": "reactive.poll(poll_func, interval_secs=1, equals=eq, priority=0, session=MISSING)\nCreate a reactive polling object.\nPolling is a technique that approximates \"real-time\" or streaming updates, using a data source that does not actually have push notifications but does have a quick way to repeatedly check for changes on demand.\nA reactive polling object is constructed using two functions: a polling function, which is a fast-running, inexpensive function that is used to determine whether some data source has changed (such as the timestamp of a file, or a SELECT MAX(updated) FROM table query); and a slower-running reading function that actually loads and returns the data that is desired. The poll() function is intended to be used as a decorator: the poll function is passed as the poll_func arg to @poll(), while the data reading function is the target of the decorator.\nReactive consumers can invoke the resulting polling object to get the current data, and will automatically invalidate when the polling function detects a change. Polling objects also cache the results of the read function; for this reason, apps where all sessions depend on the same data source may want to declare the polling object at the top level of app.py (outside of the server function).\nBoth poll_func and the decorated (data reading) function can read reactive values and ~shiny.reactive.Calc objects. Any invalidations triggered by reactive dependencies will apply to the reactive polling object immediately (not waiting for the interval_secs delay to expire).\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npoll_func\nCallable[[], Any] | Callable[[], Awaitable[Any]]\nA function to be called frequently to determine whether a data source has changed. The return value should be something that can be compared inexpensively using ==. Both regular functions and coroutine functions are allowed. Note that the poll_func should NOT return a bool that indicates whether the data source has changed. Rather, each poll_func return value will be checked for equality with its preceding poll_func return value (using == semantics by default), and if it differs, the data source will be considered changed.\nrequired\n\n\ninterval_secs\nfloat\nThe number of seconds to wait after each poll_func invocation before polling again. Note: depending on what other tasks are executing, the actual wait time may far exceed this value.\n1\n\n\nequals\nCallable[[Any, Any], bool]\nThe function that will be used to compare each poll_func return value with its immediate predecessor.\neq\n\n\npriority\nint\nReactive polling is implemented using an ~shiny.reactive.Effect to call poll_func on a timer; use the priority argument to control the order of this Effect’s execution versus other Effects in your app. See ~shiny.reactive.Effect for more details.\n0\n\n\nsession\nMISSING_TYPE | Session | None\nA Session instance. If not provided, it is inferred via get_current_session. If there is no current session (i.e. poll is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that should be applied to a no-argument function that (expensively)\n\n\n\nreads whatever data is desired. (This function may be a regular function or a\n\n\n\ncoroutine function.) The result of the decorator is a reactive\n\n\n\nthat always returns up-to-date data, and invalidates callers when changes are\n\n\n\ndetected via polling.\n\n\n\n\n\n\n\n~shiny.reactive.file_reader"
   },
   {
     "objectID": "reference/reactive.poll.html#examples",
@@ -270,7 +270,7 @@
     "href": "reference/ui.input_text_area.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.input_text_area(id, label, value='', width=None, height=None, cols=None, rows=None, placeholder=None, resize=None, autocomplete=None, spellcheck=None)\nCreate a textarea input control for entry of unstructured text values.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChild\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nheight\nOptional[str]\nThe CSS height, e.g. ‘400px’, or ‘100%’\nNone\n\n\ncols\nOptional[int]\nValue of the visible character columns of the input, e.g. 80. This argument will only take effect if there is not a CSS width rule defined for this element; such a rule could come from the width argument of this function or from a containing page layout such as :func:~shiny.ui.page_fluid.\nNone\n\n\nrows\nOptional[int]\nThe value of the visible character rows of the input, e.g. 6. If the height argument is specified, height will take precedence in the browser’s rendering.\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nresize\nOptional[Literal[none, both, horizontal, vertical]]\nWhich directions the textarea box can be resized. Can be one of “both”, “none”, “vertical”, and “horizontal”. The default, None, will use the client browser’s default setting for resizing textareas.\nNone\n\n\nautocomplete\nOptional[str]\nWhether to enable browser autocompletion of the text input (default is “off”). If None, then it will use the browser’s default behavior. Other possible values include “on”, “name”, “username”, and “email”. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete for more.\nNone\n\n\nspellcheck\nOptional[Literal[true, false]]\nWhether to enable browser spell checking of the text input (default is None). If None, then it will use the browser’s default behavior.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n.. admonition:: Server value\nA string containing the current text input. The default value is ``\"\"`` unless\n``value`` is provided."
+    "text": "ui.input_text_area(id, label, value='', width=None, height=None, cols=None, rows=None, placeholder=None, resize=None, autocomplete=None, spellcheck=None)\nCreate a textarea input control for entry of unstructured text values.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nhtmltools.TagChild\nAn input label.\nrequired\n\n\nvalue\nstr\nInitial value.\n''\n\n\nwidth\nOptional[str]\nThe CSS width, e.g. ‘400px’, or ‘100%’\nNone\n\n\nheight\nOptional[str]\nThe CSS height, e.g. ‘400px’, or ‘100%’\nNone\n\n\ncols\nOptional[int]\nValue of the visible character columns of the input, e.g. 80. This argument will only take effect if there is not a CSS width rule defined for this element; such a rule could come from the width argument of this function or from a containing page layout such as page_fluid.\nNone\n\n\nrows\nOptional[int]\nThe value of the visible character rows of the input, e.g. 6. If the height argument is specified, height will take precedence in the browser’s rendering.\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nresize\nOptional[Literal[none, both, horizontal, vertical]]\nWhich directions the textarea box can be resized. Can be one of “both”, “none”, “vertical”, and “horizontal”. The default, None, will use the client browser’s default setting for resizing textareas.\nNone\n\n\nautocomplete\nOptional[str]\nWhether to enable browser autocompletion of the text input (default is “off”). If None, then it will use the browser’s default behavior. Other possible values include “on”, “name”, “username”, and “email”. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete for more.\nNone\n\n\nspellcheck\nOptional[Literal[true, false]]\nWhether to enable browser spell checking of the text input (default is None). If None, then it will use the browser’s default behavior.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n.. admonition:: Server value\nA string containing the current text input. The default value is ``\"\"`` unless\n``value`` is provided."
   },
   {
     "objectID": "reference/ui.input_text_area.html#see-also",
@@ -312,7 +312,7 @@
     "href": "reference/reactive.file_reader.html",
     "title": "Shiny",
     "section": "",
-    "text": "reactive.file_reader(filepath, interval_secs=1, priority=1, session=MISSING)\nCreate a reactive file reader.\nThis is a decorator, meant to be applied to a no-argument function that reads data from a file on disk. Whenever the file changes (or to be precise, the file size or last modified time changes), past readers of the data are reactively invalidated. This makes it incredibly easy to write apps that automatically update all of their outputs as soon as files on disk change.\nNote that file_reader works only on single files, not directories of files.\nBoth the filepath function and the decorated (file reading) function can read reactive values and ~shiny.reactive.Calc objects. Any invalidations triggered by reactive dependencies will apply to the reactive file reader object immediately (not waiting for the interval_secs delay to expire).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilepath\nstr | os.PathLike[str] | Callable[[], str] | Callable[[], os.PathLike[str]]\nEither a string indicating the file path to be monitored, or, a no-argument function that returns such a string. The latter is useful if the file to be monitored depends on some user input, the current date/time, etc. The file path provided MUST exist, otherwise Shiny will treat it as an unhandled error and close the session. If a function is used, make sure it is high performance (or is cached, i.e. use a ~shiny.reactive.Calc), as it will be called very frequently.\nrequired\n\n\ninterval_secs\nfloat\nThe number of seconds to wait after each time the file metadata is checked. Note: depending on what other tasks are executing, the actual wait time may far exceed this value.\n1\n\n\nequals\n\nThe function that will be used to compare each poll_func return value with its immediate predecessor.\nrequired\n\n\npriority\nint\nReactive polling is implemented using an ~shiny.reactive.Effect to call poll_func on a timer; use the priority argument to control the order of this Effect’s execution versus other Effects in your app. See ~shiny.reactive.Effect for more details.\n1\n\n\nsession\nMISSING_TYPE | Session | None\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session. If there is no current session (i.e. poll is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that should be applied to a no-argument function that (expensively)\n\n\n\nreads whatever data is desired. (This function may be a regular function or a\n\n\n\ncoroutine function.) The result of the decorator is a reactive\n\n\n\nthat always returns up-to-date data, and invalidates callers when changes are\n\n\n\ndetected via polling.\n\n\n\n\n\n\n\n~shiny.reactive.poll"
+    "text": "reactive.file_reader(filepath, interval_secs=1, priority=1, session=MISSING)\nCreate a reactive file reader.\nThis is a decorator, meant to be applied to a no-argument function that reads data from a file on disk. Whenever the file changes (or to be precise, the file size or last modified time changes), past readers of the data are reactively invalidated. This makes it incredibly easy to write apps that automatically update all of their outputs as soon as files on disk change.\nNote that file_reader works only on single files, not directories of files.\nBoth the filepath function and the decorated (file reading) function can read reactive values and ~shiny.reactive.Calc objects. Any invalidations triggered by reactive dependencies will apply to the reactive file reader object immediately (not waiting for the interval_secs delay to expire).\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilepath\nstr | os.PathLike[str] | Callable[[], str] | Callable[[], os.PathLike[str]]\nEither a string indicating the file path to be monitored, or, a no-argument function that returns such a string. The latter is useful if the file to be monitored depends on some user input, the current date/time, etc. The file path provided MUST exist, otherwise Shiny will treat it as an unhandled error and close the session. If a function is used, make sure it is high performance (or is cached, i.e. use a ~shiny.reactive.Calc), as it will be called very frequently.\nrequired\n\n\ninterval_secs\nfloat\nThe number of seconds to wait after each time the file metadata is checked. Note: depending on what other tasks are executing, the actual wait time may far exceed this value.\n1\n\n\nequals\n\nThe function that will be used to compare each poll_func return value with its immediate predecessor.\nrequired\n\n\npriority\nint\nReactive polling is implemented using an ~shiny.reactive.Effect to call poll_func on a timer; use the priority argument to control the order of this Effect’s execution versus other Effects in your app. See ~shiny.reactive.Effect for more details.\n1\n\n\nsession\nMISSING_TYPE | Session | None\nA Session instance. If not provided, it is inferred via get_current_session. If there is no current session (i.e. poll is being created outside of the server function), the lifetime of this reactive poll object will not be tied to any specific session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that should be applied to a no-argument function that (expensively)\n\n\n\nreads whatever data is desired. (This function may be a regular function or a\n\n\n\ncoroutine function.) The result of the decorator is a reactive\n\n\n\nthat always returns up-to-date data, and invalidates callers when changes are\n\n\n\ndetected via polling.\n\n\n\n\n\n\n\n~shiny.reactive.poll"
   },
   {
     "objectID": "reference/reactive.file_reader.html#examples",
@@ -326,7 +326,7 @@
     "href": "reference/reactive.isolate.html",
     "title": "Shiny",
     "section": "",
-    "text": "reactive.isolate()\nCreate a non-reactive scope within a reactive scope.\nOrdinarily, the simple act of reading a reactive value causes a relationship to be established between the caller and the reactive value, where a change to the reactive value will cause the caller to re-execute. (The same applies for the act of getting a reactive expression’s value.) with isolate() lets you read a reactive value or expression without establishing this relationship.\nwith isolate() can also be useful for calling reactive expression at the console, which can be useful for debugging. To do so, wrap the calls to the reactive expression with with isolate().\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA context manager that executes the given expression in a scope where reactive\n\n\n\nvalues can be read, but do not cause the reactive scope of the caller to be\n\n\n\nre-evaluated when they change.\n\n\n\n\n\n\n\n~shiny.event"
+    "text": "reactive.isolate()\nCreate a non-reactive scope within a reactive scope.\nOrdinarily, the simple act of reading a reactive value causes a relationship to be established between the caller and the reactive value, where a change to the reactive value will cause the caller to re-execute. (The same applies for the act of getting a reactive expression's value.) with isolate() lets you read a reactive value or expression without establishing this relationship.\nwith isolate() can also be useful for calling reactive expression at the console, which can be useful for debugging. To do so, wrap the calls to the reactive expression with with isolate().\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA context manager that executes the given expression in a scope where reactive\n\n\n\nvalues can be read, but do not cause the reactive scope of the caller to be\n\n\n\nre-evaluated when they change.\n\n\n\n\n\n\n\n~shiny.event"
   },
   {
     "objectID": "reference/reactive.isolate.html#examples",
@@ -340,49 +340,49 @@
     "href": "reference/ui.modal_remove.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.modal_remove(session=None)\nRemove a modal dialog.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone\n\n\n\n\n\n\n~shiny.ui.modal_show ~shiny.ui.modal"
+    "text": "ui.modal_remove(session=None)\nRemove a modal dialog.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone\n\n\n\n\n\n\n~shiny.ui.modal_show ~shiny.ui.modal"
   },
   {
     "objectID": "reference/ui.modal_remove.html#example",
     "href": "reference/ui.modal_remove.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:modal."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/ui.page_navbar.html",
     "href": "reference/ui.page_navbar.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.page_navbar(args, title=None, id=None, selected=None, position='static-top', header=None, footer=None, bg=None, inverse=False, collapsible=True, fluid=True, window_title=MISSING, lang=None)\nCreate a navbar with a navs bar and a title.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nshiny.types.NavSetArg\nUI elements.\n()\n\n\ntitle\nOptional[str | Tag | TagList]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nposition\nLiteral[static-top, fixed-top, fixed-bottom]\nDetermines whether the navbar should be displayed at the top of the page with normal scrolling behavior (“static-top”), pinned at the top (“fixed-top”), or pinned at the bottom (“fixed-bottom”). Note that using “fixed-top” or “fixed-bottom” will cause the navbar to overlay your body content, unless you add padding (e.g., tags.style(\"body {padding-top: 70px;}\")).\n'static-top'\n\n\nheader\nOptional[TagChild]\nUI to display above the selected content.\nNone\n\n\nfooter\nOptional[TagChild]\nUI to display below the selected content.\nNone\n\n\nbg\nOptional[str]\nBackground color of the navbar (a CSS color).\nNone\n\n\ninverse\nbool\nEither True for a light text color or False for a dark text color.\nFalse\n\n\ncollapsible\nbool\nTrue to automatically collapse the navigation elements into a menu when the width of the browser is less than 940 pixels (useful for viewing on smaller touchscreen device)\nTrue\n\n\nfluid\nbool\nTrue to use fluid layout; False to use fixed layout.\nTrue\n\n\nwindow_title\nstr | MISSING_TYPE\nThe browser’s window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nMISSING\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\nnav nav_menu :func:~shiny.ui.navset_bar page_fluid"
+    "text": "ui.page_navbar(args, title=None, id=None, selected=None, position='static-top', header=None, footer=None, bg=None, inverse=False, collapsible=True, fluid=True, window_title=MISSING, lang=None)\nCreate a navbar with a navs bar and a title.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nshiny.types.NavSetArg\nUI elements.\n()\n\n\ntitle\nOptional[str | Tag | TagList]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via panel_title.\nNone\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nposition\nLiteral[static-top, fixed-top, fixed-bottom]\nDetermines whether the navbar should be displayed at the top of the page with normal scrolling behavior (“static-top”), pinned at the top (“fixed-top”), or pinned at the bottom (“fixed-bottom”). Note that using “fixed-top” or “fixed-bottom” will cause the navbar to overlay your body content, unless you add padding (e.g., tags.style(\"body {padding-top: 70px;}\")).\n'static-top'\n\n\nheader\nOptional[TagChild]\nUI to display above the selected content.\nNone\n\n\nfooter\nOptional[TagChild]\nUI to display below the selected content.\nNone\n\n\nbg\nOptional[str]\nBackground color of the navbar (a CSS color).\nNone\n\n\ninverse\nbool\nEither True for a light text color or False for a dark text color.\nFalse\n\n\ncollapsible\nbool\nTrue to automatically collapse the navigation elements into a menu when the width of the browser is less than 940 pixels (useful for viewing on smaller touchscreen device)\nTrue\n\n\nfluid\nbool\nTrue to use fluid layout; False to use fixed layout.\nTrue\n\n\nwindow_title\nstr | MISSING_TYPE\nThe browser’s window title (defaults to the host URL of the page). Can also be set as a side effect via panel_title.\nMISSING\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.page_navbar.html#example",
     "href": "reference/ui.page_navbar.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee nav."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/App.html",
     "href": "reference/App.html",
     "title": "Shiny",
     "section": "",
-    "text": "App(self, ui, server, static_assets=None, debug=False)\nCreate a Shiny app instance.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nui\nTag | TagList | Callable[[Request], Tag | TagList]\nThe UI definition for the app (e.g., a call to :func:~shiny.ui.page_fluid or :func:~shiny.ui.page_fixed, with layouts and controls nested inside). You can also pass a function that takes a :class:~starlette.requests.Request and returns a UI definition, if you need the UI definition to be created dynamically for each pageview.\nrequired\n\n\nserver\nOptional[Callable[[Inputs, Outputs, Session], None]]\nA function which is called once for each session, ensuring that each app is independent.\nrequired\n\n\nstatic_assets\nOptional[str | os.PathLike[str]]\nAn absolute directory containing static files to be served by the app.\nNone\n\n\ndebug\nbool\nWhether to enable debug mode.\nFalse"
+    "text": "App(self, ui, server, static_assets=None, debug=False)\nCreate a Shiny app instance.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nui\nTag | TagList | Callable[[Request], Tag | TagList]\nThe UI definition for the app (e.g., a call to page_fluid or page_fixed, with layouts and controls nested inside). You can also pass a function that takes a :class:~starlette.requests.Request and returns a UI definition, if you need the UI definition to be created dynamically for each pageview.\nrequired\n\n\nserver\nOptional[Callable[[Inputs, Outputs, Session], None]]\nA function which is called once for each session, ensuring that each app is independent.\nrequired\n\n\nstatic_assets\nOptional[str | os.PathLike[str]]\nAn absolute directory containing static files to be served by the app.\nNone\n\n\ndebug\nbool\nWhether to enable debug mode.\nFalse"
   },
   {
     "objectID": "reference/App.html#example",
     "href": "reference/App.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\n.. code-block:: python\nfrom shiny import *\n\napp_ui = ui.page_fluid(\"Hello Shiny!\")\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\napp = App(app_ui, server)\n\nMethods\n\n\n\nName\nDescription\n\n\n\n\ncall_pyodide\nCommunicate with pyodide.\n\n\ninit_starlette_app\n\n\n\nrun\nRun the app.\n\n\nstop\nStop the app (i.e., close all sessions).\n\n\n\n\n\ncall_pyodide\nApp.call_pyodide(self, scope, receive, send)\nCommunicate with pyodide."
+    "text": "Example\n.. code-block:: python\nfrom shiny import *\n\napp_ui = ui.page_fluid(&quot;Hello Shiny!&quot;)\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\napp = App(app_ui, server)\n\nMethods\n\n\n\nName\nDescription\n\n\n\n\ncall_pyodide\nCommunicate with pyodide.\n\n\ninit_starlette_app\n\n\n\nrun\nRun the app.\n\n\nstop\nStop the app (i.e., close all sessions).\n\n\n\n\n\ncall_pyodide\nApp.call_pyodide(self, scope, receive, send)\nCommunicate with pyodide."
   },
   {
     "objectID": "reference/App.html#warning",
     "href": "reference/App.html#warning",
     "title": "Shiny",
     "section": "Warning",
-    "text": "Warning\nThis method is not intended for public usage. It’s exported for use by shinylive.\n\ninit_starlette_app\nApp.init_starlette_app(self)\n\n\nrun\nApp.run(self, kwargs)\nRun the app.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nkwargs\nobject\nKeyword arguments passed to :func:~shiny.run_app.\n{}\n\n\n\n\n\n\nstop\nApp.stop(self)\nStop the app (i.e., close all sessions)."
+    "text": "Warning\nThis method is not intended for public usage. It's exported for use by shinylive.\n\ninit_starlette_app\nApp.init_starlette_app(self)\n\n\nrun\nApp.run(self, kwargs)\nRun the app.\n\nParameters\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nkwargs\nobject\nKeyword arguments passed to run_app.\n{}\n\n\n\n\n\n\nstop\nApp.stop(self)\nStop the app (i.e., close all sessions)."
   },
   {
     "objectID": "reference/App.html#see-also",
@@ -424,7 +424,7 @@
     "href": "reference/ui.update_text.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_text(id, label=None, value=None, placeholder=None, session=None)\nChange the value of a text input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[str]\nA new value.\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_text(id, label=None, value=None, placeholder=None, session=None)\nChange the value of a text input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[str]\nA new value.\nNone\n\n\nplaceholder\nOptional[str]\nA hint as to what can be entered into the control.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_text.html#note",
@@ -452,7 +452,7 @@
     "href": "reference/session.session_context.html",
     "title": "Shiny",
     "section": "",
-    "text": "session.session_context(session)\nContext manager for current session.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nrequired"
+    "text": "session.session_context(session)\nContext manager for current session.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nrequired"
   },
   {
     "objectID": "reference/module.server.html",
@@ -466,7 +466,7 @@
     "href": "reference/ui.update_date.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_date(id, label=None, value=None, min=None, max=None, session=None)\nChange the value of a date input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[date | str]\nThe starting date. Either a date() object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone.\nNone\n\n\nmin\nOptional[date | str]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[date | str]\nThe maximum allowed value.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_date(id, label=None, value=None, min=None, max=None, session=None)\nChange the value of a date input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[date | str]\nThe starting date. Either a date() object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone.\nNone\n\n\nmin\nOptional[date | str]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[date | str]\nThe maximum allowed value.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_date.html#note",
@@ -494,7 +494,7 @@
     "href": "reference/ui.modal.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.modal(args, title=None, footer=MISSING, size='m', easy_close=False, fade=True, kwargs)\nCreates the UI for a modal dialog, using Bootstrap’s modal class. Modals are typically used for showing important messages, or for presenting UI that requires input from the user, such as a user name and/or password input.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements for the body of the modal.\n()\n\n\ntitle\nOptional[str]\nAn optional title for the modal dialog.\nNone\n\n\nfooter\nTagChild | MISSING_TYPE\nUI for footer. Use None for no footer.\nMISSING\n\n\nsize\nLiteral[m, s, l, xl]\nOne of “s” for small, “m” (the default) for medium, or “l” for large.\n'm'\n\n\neasy_close\nbool\nIf True, the modal dialog can be dismissed by clicking outside the dialog box, or be pressing the Escape key. If False (the default), the modal dialog can’t be dismissed in those ways; instead it must be dismissed by clicking on a modal_button(), or from a call to modal_remove() on the server.\nFalse\n\n\nfade\nbool\nIf False, the modal dialog will have no fade-in animation (it will simply appear rather than fade in to view).\nTrue\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to be applied to the modal’s body tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.ui.modal_show ~shiny.ui.modal_remove ~shiny.ui.modal_button"
+    "text": "ui.modal(args, title=None, footer=MISSING, size='m', easy_close=False, fade=True, kwargs)\nCreates the UI for a modal dialog, using Bootstrap's modal class. Modals are typically used for showing important messages, or for presenting UI that requires input from the user, such as a user name and/or password input.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements for the body of the modal.\n()\n\n\ntitle\nOptional[str]\nAn optional title for the modal dialog.\nNone\n\n\nfooter\nTagChild | MISSING_TYPE\nUI for footer. Use None for no footer.\nMISSING\n\n\nsize\nLiteral[m, s, l, xl]\nOne of “s” for small, “m” (the default) for medium, or “l” for large.\n'm'\n\n\neasy_close\nbool\nIf True, the modal dialog can be dismissed by clicking outside the dialog box, or be pressing the Escape key. If False (the default), the modal dialog can’t be dismissed in those ways; instead it must be dismissed by clicking on a modal_button(), or from a call to modal_remove() on the server.\nFalse\n\n\nfade\nbool\nIf False, the modal dialog will have no fade-in animation (it will simply appear rather than fade in to view).\nTrue\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to be applied to the modal’s body tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.ui.modal_show ~shiny.ui.modal_remove ~shiny.ui.modal_button"
   },
   {
     "objectID": "reference/ui.modal.html#examples",
@@ -508,14 +508,14 @@
     "href": "reference/ui.insert_ui.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.insert_ui(ui, selector, where='beforeEnd', multiple=False, immediate=False, session=None)\nInsert UI objects\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nui\nhtmltools.TagChild\nThe UI object you want to insert. This can be anything that you usually put inside your apps’s ui function. If you’re inserting multiple elements in one call, make sure to wrap them in either a :func:~shiny.ui.TagList or a :func:~shiny.ui.tags.div (the latter option has the advantage that you can give it an id to make it easier to reference or remove it later on). If you want to insert raw html, use :func:~shiny.ui.HTML.\nrequired\n\n\nselector\nstr\nA string that is accepted by jQuery’s selector (i.e. the string s to be placed in a $(s) jQuery call) which determines the element(s) relative to which you want to insert your UI object.\nrequired\n\n\nwhere\nLiteral[beforeBegin, afterBegin, beforeEnd, afterEnd]\nWhere your UI object should go relative to the selector: - beforeBegin: Before the selector element itself - afterBegin: Just inside the selector element, before its first child - beforeEnd: Just inside the selector element, after its last child (default) - afterEnd: After the selector element itself Adapted from https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML.\n'beforeEnd'\n\n\nmultiple\nbool\nIn case your selector matches more than one element, multiple determines whether Shiny should insert the UI object relative to all matched elements or just relative to the first matched element (default).\nFalse\n\n\nimmediate\nbool\nWhether the UI object should be immediately inserted or removed, or whether Shiny should wait until all outputs have been updated and all effects have been run (default).\nFalse\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.insert_ui(ui, selector, where='beforeEnd', multiple=False, immediate=False, session=None)\nInsert UI objects\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nui\nhtmltools.TagChild\nThe UI object you want to insert. This can be anything that you usually put inside your apps’s ui function. If you’re inserting multiple elements in one call, make sure to wrap them in either a :func:~shiny.ui.TagList or a :func:~shiny.ui.tags.div (the latter option has the advantage that you can give it an id to make it easier to reference or remove it later on). If you want to insert raw html, use :func:~shiny.ui.HTML.\nrequired\n\n\nselector\nstr\nA string that is accepted by jQuery’s selector (i.e. the string s to be placed in a $(s) jQuery call) which determines the element(s) relative to which you want to insert your UI object.\nrequired\n\n\nwhere\nLiteral[beforeBegin, afterBegin, beforeEnd, afterEnd]\nWhere your UI object should go relative to the selector: - beforeBegin: Before the selector element itself - afterBegin: Just inside the selector element, before its first child - beforeEnd: Just inside the selector element, after its last child (default) - afterEnd: After the selector element itself Adapted from https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML.\n'beforeEnd'\n\n\nmultiple\nbool\nIn case your selector matches more than one element, multiple determines whether Shiny should insert the UI object relative to all matched elements or just relative to the first matched element (default).\nFalse\n\n\nimmediate\nbool\nWhether the UI object should be immediately inserted or removed, or whether Shiny should wait until all outputs have been updated and all effects have been run (default).\nFalse\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.insert_ui.html#note",
     "href": "reference/ui.insert_ui.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nThis function allows you to dynamically add arbitrary UI into your app, whenever you want, as many times as you want. Unlike :func:~shiny.render.ui, the UI generated with insert_ui is persistent: once it’s created, it stays there until removed by :func:remove_ui. Each new call to insert_ui creates more UI objects, in addition to the ones already there (all independent from one another). To update a part of the UI (ex: an input object), you must use the appropriate render function or a customized reactive function."
+    "text": "Note\nThis function allows you to dynamically add arbitrary UI into your app, whenever you want, as many times as you want. Unlike ui, the UI generated with insert_ui is persistent: once it's created, it stays there until removed by :func:remove_ui. Each new call to insert_ui creates more UI objects, in addition to the ones already there (all independent from one another). To update a part of the UI (ex: an input object), you must use the appropriate render function or a customized reactive function."
   },
   {
     "objectID": "reference/ui.insert_ui.html#see-also",
@@ -543,7 +543,7 @@
     "href": "reference/ui.panel_conditional.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nIn the JS expression, you can refer to input and output JavaScript objects that contain the current values of input and output. For example, if you have an input with an id of foo, then you can use input.foo to read its value. (Be sure not to modify the input/output objects, as this may cause unpredictable behavior.)\nYou are not recommended to use special JavaScript characters such as a period . in the input id’s, but if you do use them anyway, for example, id = \"foo.bar\", you will have to use input[\"foo.bar\"] instead of input.foo.bar to read the input value.\nTip\n\n\n\n\n\n\nA more powerful (but slower) way to conditionally show UI content is to use :func:~shiny.render.ui.\n\n\n\n\n~shiny.render.ui ~shiny.ui.output_ui\n\n\nExamples\n\n\n\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_checkbox(\"show\", \"Show radio buttons\", False),\n    ui.panel_conditional(\n        \"input.show\", ui.input_radio_buttons(\"radio\", \"Choose \", [\"slider\", \"select\"])\n    ),\n    ui.panel_conditional(\n        \"input.show && input.radio === 'slider'\",\n        ui.input_slider(\"slider\", None, min=0, max=100, value=50),\n    ),\n    ui.panel_conditional(\n        \"input.show && input.radio === 'select'\",\n        ui.input_select(\"slider\", None, [\"A\", \"B\", \"C\"]),\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(app_ui, server)"
+    "text": "Note\nIn the JS expression, you can refer to input and output JavaScript objects that contain the current values of input and output. For example, if you have an input with an id of foo, then you can use input.foo to read its value. (Be sure not to modify the input/output objects, as this may cause unpredictable behavior.)\nYou are not recommended to use special JavaScript characters such as a period . in the input id's, but if you do use them anyway, for example, id = &quot;foo.bar&quot;, you will have to use input[&quot;foo.bar&quot;] instead of input.foo.bar to read the input value.\nTip\n\n\n\nA more powerful (but slower) way to conditionally show UI content is to use ui.\n\n\n\n\n~shiny.render.ui ~shiny.ui.output_ui\n\n\nExamples\n\n\n\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_checkbox(\"show\", \"Show radio buttons\", False),\n    ui.panel_conditional(\n        \"input.show\", ui.input_radio_buttons(\"radio\", \"Choose \", [\"slider\", \"select\"])\n    ),\n    ui.panel_conditional(\n        \"input.show && input.radio === 'slider'\",\n        ui.input_slider(\"slider\", None, min=0, max=100, value=50),\n    ),\n    ui.panel_conditional(\n        \"input.show && input.radio === 'select'\",\n        ui.input_select(\"slider\", None, [\"A\", \"B\", \"C\"]),\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    pass\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/types.SafeException.html",
@@ -578,7 +578,7 @@
     "href": "reference/ui.input_date_range.html#notes",
     "title": "Shiny",
     "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA tuple of :func:`~datetime.date` objects."
+    "text": "Notes\n.. admonition:: Server value\nA tuple of [](:func:`~datetime.date`) objects."
   },
   {
     "objectID": "reference/ui.input_date_range.html#see-also",
@@ -620,7 +620,7 @@
     "href": "reference/types.SilentCancelOutputException.html",
     "title": "Shiny",
     "section": "",
-    "text": "types.SilentCancelOutputException()\nThrow a silent exception and don’t clear output\nSimilar to :class:~SilentException, but if thrown in an output context, existing output isn’t cleared."
+    "text": "types.SilentCancelOutputException()\nThrow a silent exception and don't clear output\nSimilar to :class:~SilentException, but if thrown in an output context, existing output isn't cleared."
   },
   {
     "objectID": "reference/types.SilentCancelOutputException.html#see-also",
@@ -641,7 +641,7 @@
     "href": "reference/ui.layout_sidebar.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.layout_sidebar(sidebar, main, position='left')\nLayout a sidebar and main area\nCreate a layout with a sidebar (:func:~shiny.ui.panel_sidebar) and main area (:func:~shiny.ui.panel_main). The sidebar is displayed with a distinct background color and typically contains input controls. By default, the main area occupies 2/3 of the horizontal width and typically contains outputs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsidebar\nhtmltools.TagChild\nA UI element to place in the sidebar (typically a :func:~shiny.ui.panel_sidebar)\nrequired\n\n\nmain\nhtmltools.TagChild\nA UI element to place in the main area (typically a :func:~shiny.ui.panel_main)\nrequired\n\n\nposition\nLiteral[left, right]\nThe position of the sidebar (left or right)\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\npanel_sidebar panel_main"
+    "text": "ui.layout_sidebar(sidebar, main, position='left')\nLayout a sidebar and main area\nCreate a layout with a sidebar (panel_sidebar) and main area (panel_main). The sidebar is displayed with a distinct background color and typically contains input controls. By default, the main area occupies 2/3 of the horizontal width and typically contains outputs.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsidebar\nhtmltools.TagChild\nA UI element to place in the sidebar (typically a panel_sidebar)\nrequired\n\n\nmain\nhtmltools.TagChild\nA UI element to place in the main area (typically a panel_main)\nrequired\n\n\nposition\nLiteral[left, right]\nThe position of the sidebar (left or right)\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
   },
   {
     "objectID": "reference/ui.layout_sidebar.html#examples",
@@ -655,7 +655,7 @@
     "href": "reference/ui.update_selectize.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_selectize(id, label=None, choices=None, selected=None, server=False, session=None)\nChange the value of a selectize.js powered input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[SelectChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nNone\n\n\nselected\nOptional[str | list[str]]\nThe values that should be initially selected, if any.\nNone\n\n\nserver\nbool\nWhether to store choices on the server side, and load the select options dynamically on searching, instead of writing all choices into the page at once (i.e., only use the client-side version of selectize.js)\nFalse\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_selectize(id, label=None, choices=None, selected=None, server=False, session=None)\nChange the value of a selectize.js powered input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[SelectChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels. A dictionary of dictionaries is also supported, and in that case, the top-level keys are treated as <optgroup> labels.\nNone\n\n\nselected\nOptional[str | list[str]]\nThe values that should be initially selected, if any.\nNone\n\n\nserver\nbool\nWhether to store choices on the server side, and load the select options dynamically on searching, instead of writing all choices into the page at once (i.e., only use the client-side version of selectize.js)\nFalse\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_selectize.html#note",
@@ -697,21 +697,21 @@
     "href": "reference/ui.panel_sidebar.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.panel_sidebar(args, width=4, kwargs)\nCreate a sidebar panel\nSee :func:~shiny.ui.layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the sidebar.\n()\n\n\nwidth\nint\nThe width of the sidebar (an integer between 1 and 12)\n4\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the sidebar tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npanel_sidebar panel_main"
+    "text": "ui.panel_sidebar(args, width=4, kwargs)\nCreate a sidebar panel\nSee layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the sidebar.\n()\n\n\nwidth\nint\nThe width of the sidebar (an integer between 1 and 12)\n4\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the sidebar tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/reactive.Calc.html",
     "href": "reference/reactive.Calc.html",
     "title": "Shiny",
     "section": "",
-    "text": "reactive.Calc(fn=None, session=MISSING)\nMark a function as a reactive calculation.\nA reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., :class:~shiny.Inputs, :class:~shiny.reactive.Value, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are “invalidated” and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nMISSING_TYPE | Session | None\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that marks a function as a reactive calculation.\n\n\n\n\nTip\n\n\n\n\n\n\nReactive calculations should not produce any side effects; to reactively produce side effects, use :func:~shiny.reactive.Effect instead.\n\n\n\n\n~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event\n\n\nExamples\n\n\n\n#| standalone: true\n\nimport random\nimport time\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"first\", \"Invalidate first (slow) computation\"),\n    ui.input_action_button(\"second\", \"Invalidate second (fast) computation\"),\n    ui.br(),\n    ui.output_ui(\"result\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Calc\n    def first():\n        input.first()\n        p = ui.Progress()\n        for i in range(30):\n            p.set(i / 30, message=\"Computing, please wait...\")\n            time.sleep(0.1)\n        p.close()\n        return random.randint(1, 1000)\n\n    @reactive.Calc\n    def second():\n        input.second()\n        return random.randint(1, 1000)\n\n    @output\n    @render.ui\n    def result():\n        return first() + second()\n\n\napp = App(app_ui, server)"
+    "text": "reactive.Calc(fn=None, session=MISSING)\nMark a function as a reactive calculation.\nA reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., Inputs, Value, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are \"invalidated\" and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nMISSING_TYPE | Session | None\nA Session instance. If not provided, it is inferred via get_current_session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that marks a function as a reactive calculation.\n\n\n\n\nTip\n\n\n\nReactive calculations should not produce any side effects; to reactively produce side effects, use Effect instead.\n\n\n\n\n~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event\n\n\nExamples\n\n\n\n#| standalone: true\n\nimport random\nimport time\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"first\", \"Invalidate first (slow) computation\"),\n    ui.input_action_button(\"second\", \"Invalidate second (fast) computation\"),\n    ui.br(),\n    ui.output_ui(\"result\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Calc\n    def first():\n        input.first()\n        p = ui.Progress()\n        for i in range(30):\n            p.set(i / 30, message=\"Computing, please wait...\")\n            time.sleep(0.1)\n        p.close()\n        return random.randint(1, 1000)\n\n    @reactive.Calc\n    def second():\n        input.second()\n        return random.randint(1, 1000)\n\n    @output\n    @render.ui\n    def result():\n        return first() + second()\n\n\napp = App(app_ui, server)"
   },
   {
     "objectID": "reference/ui.column.html",
     "href": "reference/ui.column.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.column(width, args, offset=0, kwargs)\nResponsive row-column based layout\nSee :func:~shiny.ui.row for more information.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nwidth\nint\nThe width of the column (an integer between 1 and 12).\nrequired\n\n\nargs\nTagChild | TagAttrs\nUI elements to place within the column.\n()\n\n\noffset\nint\nThe number of columns to offset this column from the end of the previous column.\n0\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the column tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\nrow"
+    "text": "ui.column(width, args, offset=0, kwargs)\nResponsive row-column based layout\nSee row for more information.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nwidth\nint\nThe width of the column (an integer between 1 and 12).\nrequired\n\n\nargs\nTagChild | TagAttrs\nUI elements to place within the column.\n()\n\n\noffset\nint\nThe number of columns to offset this column from the end of the previous column.\n0\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the column tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.panel_title.html",
@@ -725,7 +725,7 @@
     "href": "reference/ui.panel_title.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nThis result of this function causes a side effect of adding a title tag to the head of the document (this is necessary for the browser to display the title in the browser window). You can also specify a page title explicitly using the title parameter of the top-level page function (e.g., :func:~shiny.ui.page_fluid)."
+    "text": "Note\nThis result of this function causes a side effect of adding a title tag to the head of the document (this is necessary for the browser to display the title in the browser window). You can also specify a page title explicitly using the title parameter of the top-level page function (e.g., page_fluid)."
   },
   {
     "objectID": "reference/ui.panel_title.html#examples",
@@ -739,14 +739,14 @@
     "href": "reference/render.plot.html",
     "title": "Shiny",
     "section": "",
-    "text": "render.plot(fn=None, alt=None, kwargs)\nReactively render a plot object as an HTML image.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nalt\nOptional[str]\nAlternative text for the image if it cannot be displayed or viewed (i.e., the user uses a screen reader).\nNone\n\n\n**kwargs\ntyping.Any\nAdditional keyword arguments passed to the relevant method for saving the image (e.g., for matplotlib, arguments to savefig(); for PIL and plotnine, arguments to save()).\n{}\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator for a function that returns any of the following\n1. A :class:matplotlib.figure.Figure instance.\n\n\n\n\nAn :class:matplotlib.artist.Artist instance.\nA list/tuple of Figure/Artist instances.\nAn object with a ‘figure’ attribute pointing to a :class:matplotlib.figure.Figure instance.\nA :class:PIL.Image.Image instance. |\n\nIt’s also possible to use the matplotlib.pyplot interface; in that case, your function should just call pyplot functions and not return anything. (Note that if the decorated function is async, then it’s not safe to use pyplot. Shiny will detect this case and throw an error asking you to use matplotlib’s object-oriented interface instead.)"
+    "text": "render.plot(fn=None, alt=None, kwargs)\nReactively render a plot object as an HTML image.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nalt\nOptional[str]\nAlternative text for the image if it cannot be displayed or viewed (i.e., the user uses a screen reader).\nNone\n\n\n**kwargs\ntyping.Any\nAdditional keyword arguments passed to the relevant method for saving the image (e.g., for matplotlib, arguments to savefig(); for PIL and plotnine, arguments to save()).\n{}\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator for a function that returns any of the following\n1. A :class:matplotlib.figure.Figure instance.\n\n\n\n\nAn :class:matplotlib.artist.Artist instance.\nA list/tuple of Figure/Artist instances.\nAn object with a ‘figure’ attribute pointing to a :class:matplotlib.figure.Figure instance.\nA :class:PIL.Image.Image instance. |\n\nIt's also possible to use the matplotlib.pyplot interface; in that case, your function should just call pyplot functions and not return anything. (Note that if the decorated function is async, then it's not safe to use pyplot. Shiny will detect this case and throw an error asking you to use matplotlib's object-oriented interface instead.)"
   },
   {
     "objectID": "reference/render.plot.html#tip",
     "href": "reference/render.plot.html#tip",
     "title": "Shiny",
     "section": "Tip",
-    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a :func:~shiny.ui.output_plot container (see :func:~shiny.ui.output_plot for example usage)."
+    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a output_plot container (see output_plot for example usage)."
   },
   {
     "objectID": "reference/render.plot.html#see-also",
@@ -774,21 +774,21 @@
     "href": "reference/ui.navset_pill_list.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.navset_pill_list(args, id=None, selected=None, header=None, footer=None, well=True, widths=(4, 8))\nRender nav items as a vertical pillset.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., :func:shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\nwell\nbool\nTrue to place a well (gray rounded rectangle) around the navigation list.\nTrue\n\n\nfluid\n\nTrue to use fluid layout; False to use fixed layout.\nrequired\n\n\nwidths\ntuple[int, int]\nColumn widths of the navigation list and tabset content areas respectively.\n(4, 8)\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_tab ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden ~shiny.ui.navset_bar ~shiny.ui.navset_hidden"
+    "text": "ui.navset_pill_list(args, id=None, selected=None, header=None, footer=None, well=True, widths=(4, 8))\nRender nav items as a vertical pillset.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\nwell\nbool\nTrue to place a well (gray rounded rectangle) around the navigation list.\nTrue\n\n\nfluid\n\nTrue to use fluid layout; False to use fixed layout.\nrequired\n\n\nwidths\ntuple[int, int]\nColumn widths of the navigation list and tabset content areas respectively.\n(4, 8)\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_tab ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden ~shiny.ui.navset_bar ~shiny.ui.navset_hidden"
   },
   {
     "objectID": "reference/ui.navset_pill_list.html#example",
     "href": "reference/ui.navset_pill_list.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee nav"
+    "text": "Example\nSee"
   },
   {
     "objectID": "reference/ui.output_plot.html",
     "href": "reference/ui.output_plot.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.output_plot(id, width='100%', height='400px', inline=False, click=False, dblclick=False, hover=False, brush=False)\nCreate a output container for a static plot.\nPlace a :func:~shiny.render.plot result in the user interface. See :func:~shiny.render.plot for more details on what types of plots are supported.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nwidth\nstr\nThe CSS width, e.g. ‘400px’, or ‘100%’.\n'100%'\n\n\nheight\nstr\nThe CSS height, e.g. ‘100%’ or ‘600px’.\n'400px'\n\n\ninline\nbool\nIf True, the result is displayed inline.\nFalse\n\n\nclick\nbool | ClickOpts\nThis can be a boolean or an object created by :func:~shiny.ui.click_opts. The default is False, but if you use True (or equivalently, click_opts()), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via input.xx_click(), where xx is replaced with the ID of this plot. The input value will be a dictionary with x and y elements indicating the mouse position.\nFalse\n\n\ndblclick\nbool | DblClickOpts\nThis is just like the click parameter, but for double-click events.\nFalse\n\n\nhover\nbool | HoverOpts\nSimilar to the click argument, this can be a boolean or an object created by :func:~shiny.ui.hover_opts. The default is False, but if you use True (or equivalently, hover_opts()), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via input.xx_hover(), where xx is replaced with the ID of this plot. The input value will be a dictionary with x and y elements indicating the mouse position. To control the hover time or hover delay type, use :func:~shiny.ui.hover_opts.\nFalse\n\n\nbrush\nbool | BrushOpts\nSimilar to the click argument, this can be a boolean or an object created by :func:~shiny.ui.brush_opts. The default is False, but if you use True (or equivalently, brush_opts()), the plot will allow the user to “brush” in the plotting area, and will send information about the brushed area to the server, and the value will be accessible via input.plot_brush(). Brushing means that the user will be able to draw a rectangle in the plotting area and drag it around. The value will be a named list with xmin, xmax, ymin, and ymax elements indicating the brush area. To control the brush behavior, use :func:~shiny.ui.brush_opts. Multiple output_image/output_plot calls may share the same id value; brushing one image or plot will cause any other brushes with the same id to disappear.\nFalse\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.render.plot ~shiny.ui.output_image"
+    "text": "ui.output_plot(id, width='100%', height='400px', inline=False, click=False, dblclick=False, hover=False, brush=False)\nCreate a output container for a static plot.\nPlace a plot result in the user interface. See plot for more details on what types of plots are supported.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nwidth\nstr\nThe CSS width, e.g. ‘400px’, or ‘100%’.\n'100%'\n\n\nheight\nstr\nThe CSS height, e.g. ‘100%’ or ‘600px’.\n'400px'\n\n\ninline\nbool\nIf True, the result is displayed inline.\nFalse\n\n\nclick\nbool | ClickOpts\nThis can be a boolean or an object created by :func:~shiny.ui.click_opts. The default is False, but if you use True (or equivalently, click_opts()), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via input.xx_click(), where xx is replaced with the ID of this plot. The input value will be a dictionary with x and y elements indicating the mouse position.\nFalse\n\n\ndblclick\nbool | DblClickOpts\nThis is just like the click parameter, but for double-click events.\nFalse\n\n\nhover\nbool | HoverOpts\nSimilar to the click argument, this can be a boolean or an object created by :func:~shiny.ui.hover_opts. The default is False, but if you use True (or equivalently, hover_opts()), the plot will send coordinates to the server whenever it is clicked, and the value will be accessible via input.xx_hover(), where xx is replaced with the ID of this plot. The input value will be a dictionary with x and y elements indicating the mouse position. To control the hover time or hover delay type, use :func:~shiny.ui.hover_opts.\nFalse\n\n\nbrush\nbool | BrushOpts\nSimilar to the click argument, this can be a boolean or an object created by :func:~shiny.ui.brush_opts. The default is False, but if you use True (or equivalently, brush_opts()), the plot will allow the user to “brush” in the plotting area, and will send information about the brushed area to the server, and the value will be accessible via input.plot_brush(). Brushing means that the user will be able to draw a rectangle in the plotting area and drag it around. The value will be a named list with xmin, xmax, ymin, and ymax elements indicating the brush area. To control the brush behavior, use :func:~shiny.ui.brush_opts. Multiple output_image/output_plot calls may share the same id value; brushing one image or plot will cause any other brushes with the same id to disappear.\nFalse\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.render.plot ~shiny.ui.output_image"
   },
   {
     "objectID": "reference/ui.output_plot.html#examples",
@@ -823,7 +823,7 @@
     "href": "reference/ui.HTML.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\n\n\n\nfrom htmltools import HTML, div div(“\n\nHello\n\n“)\n\n<p>Hello</p>\n\ndiv(HTML(“\n\nHello\n\n“))\n\n\nHello\n\n\n\n\n\n\nMethods\n\n\n\nName\nDescription\n\n\n\n\nas_string\n\n\n\n\n\n\nas_string\nui.HTML.as_string(self)"
+    "text": "Example\n>>> from htmltools import HTML, div >>> div(\"<p>Hello</p>\") <div>&lt;p&gt;Hello&lt;/p&gt;</div> >>> div(HTML(\"<p>Hello</p>\")) <div><p>Hello</p></div>\n\nMethods\n\n\n\nName\nDescription\n\n\n\n\nas_string\n\n\n\n\n\n\nas_string\nui.HTML.as_string(self)"
   },
   {
     "objectID": "reference/reactive.Value.html",
@@ -837,7 +837,7 @@
     "href": "reference/reactive.Value.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nA reactive value may only be read from within a reactive function (e.g., :func:Calc, :func:Effect, :func:shiny.render.text, etc.) and, when doing so, the function takes a reactive dependency on the value (i.e., when the value changes, the calling reactive function will re-execute)."
+    "text": "Note\nA reactive value may only be read from within a reactive function (e.g., :func:Calc, :func:Effect, shiny.render.text, etc.) and, when doing so, the function takes a reactive dependency on the value (i.e., when the value changes, the calling reactive function will re-execute)."
   },
   {
     "objectID": "reference/reactive.Value.html#see-also",
@@ -858,21 +858,21 @@
     "href": "reference/ui.page_bootstrap.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.page_bootstrap(args, title=None, lang=None)\nCreate a Bootstrap UI page container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via :func:~shiny.ui.panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npage_fluid page_navbar"
+    "text": "ui.page_bootstrap(args, title=None, lang=None)\nCreate a Bootstrap UI page container.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\ntyping.Any\nUI elements.\n()\n\n\ntitle\nOptional[str]\nThe browser window title (defaults to the host URL of the page). Can also be set as a side effect via panel_title.\nNone\n\n\nlang\nOptional[str]\nISO 639-1 language code for the HTML page, such as \"en\" or \"ko\". This will be used as the lang in the <html> tag, as in <html lang=\"en\">. The default, None, results in an empty string.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.panel_absolute.html",
     "href": "reference/ui.panel_absolute.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.panel_absolute(args, top=None, left=None, right=None, bottom=None, width=None, height=None, draggable=False, fixed=False, cursor='auto', kwargs)\nCreate a panel of absolutely positioned content.\nCreates a <div> tag whose CSS position is set to absolute (or fixed if fixed = True). The way absolute positioning works in HTML is that absolute coordinates are specified relative to its nearest parent element whose position is not set to static (which is the default), and if no such parent is found, then relative to the page borders. If you’re not sure what that means, just keep in mind that you may get strange results if you use this function from inside of certain types of panels.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the panel.\n()\n\n\ntop\nOptional[str]\nDistance between the top of the panel, and the top of the page or parent container.\nNone\n\n\nleft\nOptional[str]\nDistance between the left side of the panel, and the left of the page or parent container.\nNone\n\n\nright\nOptional[str]\nDistance between the right side of the panel, and the right of the page or parent container.\nNone\n\n\nbottom\nOptional[str]\nDistance between the bottom of the panel, and the bottom of the page or parent container.\nNone\n\n\nwidth\nOptional[str]\nWidth of the panel.\nNone\n\n\nheight\nOptional[str]\nHeight of the panel.\nNone\n\n\ndraggable\nbool\nIf True, allows the user to move the panel by clicking and dragging.\nFalse\n\n\nfixed\nbool\nPositions the panel relative to the browser window and prevents it from being scrolled with the rest of the page.\nFalse\n\n\ncursor\nLiteral[auto, move, default, inherit]\nThe type of cursor that should appear when the user mouses over the panel. Use \"move\" for a north-east-south-west icon, \"default\" for the usual cursor arrow, or \"inherit\" for the usual cursor behavior (including changing to an I-beam when the cursor is over text). The default is \"auto\", which is equivalent to \"move\" if draggable else \"inherit\".\n'auto'\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes added to the content’s container tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
+    "text": "ui.panel_absolute(args, top=None, left=None, right=None, bottom=None, width=None, height=None, draggable=False, fixed=False, cursor='auto', kwargs)\nCreate a panel of absolutely positioned content.\nCreates a &lt;div&gt; tag whose CSS position is set to absolute (or fixed if fixed = True). The way absolute positioning works in HTML is that absolute coordinates are specified relative to its nearest parent element whose position is not set to static (which is the default), and if no such parent is found, then relative to the page borders. If you're not sure what that means, just keep in mind that you may get strange results if you use this function from inside of certain types of panels.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the panel.\n()\n\n\ntop\nOptional[str]\nDistance between the top of the panel, and the top of the page or parent container.\nNone\n\n\nleft\nOptional[str]\nDistance between the left side of the panel, and the left of the page or parent container.\nNone\n\n\nright\nOptional[str]\nDistance between the right side of the panel, and the right of the page or parent container.\nNone\n\n\nbottom\nOptional[str]\nDistance between the bottom of the panel, and the bottom of the page or parent container.\nNone\n\n\nwidth\nOptional[str]\nWidth of the panel.\nNone\n\n\nheight\nOptional[str]\nHeight of the panel.\nNone\n\n\ndraggable\nbool\nIf True, allows the user to move the panel by clicking and dragging.\nFalse\n\n\nfixed\nbool\nPositions the panel relative to the browser window and prevents it from being scrolled with the rest of the page.\nFalse\n\n\ncursor\nLiteral[auto, move, default, inherit]\nThe type of cursor that should appear when the user mouses over the panel. Use \"move\" for a north-east-south-west icon, \"default\" for the usual cursor arrow, or \"inherit\" for the usual cursor behavior (including changing to an I-beam when the cursor is over text). The default is \"auto\", which is equivalent to \"move\" if draggable else \"inherit\".\n'auto'\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes added to the content’s container tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element"
   },
   {
     "objectID": "reference/ui.panel_absolute.html#tip",
     "href": "reference/ui.panel_absolute.html#tip",
     "title": "Shiny",
     "section": "Tip",
-    "text": "Tip\nThe position (top, left, right, bottom) and size (width, height) parameters are all optional, but you should specify exactly two of top, bottom, and height and exactly two of left, right, and width for predictable results.\nLike most other distance parameters in Shiny, the position and size parameters take a number (interpreted as pixels) or a valid CSS size string, such as \"100px\" (100 pixels) or \"25%\".\nFor arcane HTML reasons, to have the panel fill the page or parent you should specify 0 for top, left, right, and bottom rather than the more obvious width = \"100%\" and height = \"100%\"."
+    "text": "Tip\nThe position (top, left, right, bottom) and size (width, height) parameters are all optional, but you should specify exactly two of top, bottom, and height and exactly two of left, right, and width for predictable results.\nLike most other distance parameters in Shiny, the position and size parameters take a number (interpreted as pixels) or a valid CSS size string, such as &quot;100px&quot; (100 pixels) or &quot;25%&quot;.\nFor arcane HTML reasons, to have the panel fill the page or parent you should specify 0 for top, left, right, and bottom rather than the more obvious width = &quot;100%&quot; and height = &quot;100%&quot;."
   },
   {
     "objectID": "reference/ui.panel_absolute.html#examples",
@@ -886,7 +886,7 @@
     "href": "reference/ui.remove_ui.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.remove_ui(selector, multiple=False, immediate=False, session=None)\nRemove UI objects\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nselector\nstr\nA string that is accepted by jQuery’s selector (i.e. the string x to be placed in a $(x) jQuery call) which determines the element(s) to remove. If you want to remove a Shiny input or output, note that many of these are wrapped in <div>s, so you may need to use a somewhat complex selector — see the Examples below. (Alternatively, you could also wrap the inputs/outputs that you want to be able to remove easily in a <div> with an id.)\nrequired\n\n\nmultiple\nbool\nIn case your selector matches more than one element, multiple determines whether Shiny should insert the UI object relative to all matched elements or just relative to the first matched element (default).\nFalse\n\n\nimmediate\nbool\nWhether the UI object should be immediately inserted or removed, or whether Shiny should wait until all outputs have been updated and all effects have been run (default).\nFalse\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone\n\n\n\n\n\n\n~shiny.ui.insert_ui ~shiny.render.ui"
+    "text": "ui.remove_ui(selector, multiple=False, immediate=False, session=None)\nRemove UI objects\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nselector\nstr\nA string that is accepted by jQuery’s selector (i.e. the string x to be placed in a $(x) jQuery call) which determines the element(s) to remove. If you want to remove a Shiny input or output, note that many of these are wrapped in <div>s, so you may need to use a somewhat complex selector — see the Examples below. (Alternatively, you could also wrap the inputs/outputs that you want to be able to remove easily in a <div> with an id.)\nrequired\n\n\nmultiple\nbool\nIn case your selector matches more than one element, multiple determines whether Shiny should insert the UI object relative to all matched elements or just relative to the first matched element (default).\nFalse\n\n\nimmediate\nbool\nWhether the UI object should be immediately inserted or removed, or whether Shiny should wait until all outputs have been updated and all effects have been run (default).\nFalse\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone\n\n\n\n\n\n\n~shiny.ui.insert_ui ~shiny.render.ui"
   },
   {
     "objectID": "reference/ui.remove_ui.html#examples",
@@ -907,7 +907,7 @@
     "href": "reference/render.text.html#tip",
     "title": "Shiny",
     "section": "Tip",
-    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a :func:~shiny.ui.output_text container (see :func:~shiny.ui.output_text for example usage)."
+    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a output_text container (see output_text for example usage)."
   },
   {
     "objectID": "reference/render.text.html#see-also",
@@ -921,14 +921,14 @@
     "href": "reference/ui.navset_pill_card.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.navset_pill_card(args, id=None, selected=None, header=None, footer=None, placement='above')\nRender nav items as a pillset inside a card container.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., :func:shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\nplacement\nLiteral[above, below]\nPlacement of the nav items relative to the content.\n'above'\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_hidden"
+    "text": "ui.navset_pill_card(args, id=None, selected=None, header=None, footer=None, placement='above')\nRender nav items as a pillset inside a card container.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\nplacement\nLiteral[above, below]\nPlacement of the nav items relative to the content.\n'above'\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_hidden"
   },
   {
     "objectID": "reference/ui.navset_pill_card.html#example",
     "href": "reference/ui.navset_pill_card.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee nav"
+    "text": "Example\nSee"
   },
   {
     "objectID": "reference/ui.input_slider.html",
@@ -963,7 +963,7 @@
     "href": "reference/render.table.html#tip",
     "title": "Shiny",
     "section": "Tip",
-    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a :func:~shiny.ui.output_table container (see :func:~shiny.ui.output_table for example usage)."
+    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a output_table container (see output_table for example usage)."
   },
   {
     "objectID": "reference/render.table.html#see-also",
@@ -977,7 +977,7 @@
     "href": "reference/ui.update_navs.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_navs(id, selected=None, session=None)\nChange the value of a navs container on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nselected\nOptional[str]\nThe values that should be initially selected, if any.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_navs(id, selected=None, session=None)\nChange the value of a navs container on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nselected\nOptional[str]\nThe values that should be initially selected, if any.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_navs.html#note",
@@ -1012,14 +1012,14 @@
     "href": "reference/reactive.flush.html#warning",
     "title": "Shiny",
     "section": "Warning",
-    "text": "Warning\nThis function shouldn’t ever need to be called inside a Shiny app. It’s only useful for testing and running reactive code interactively in the console."
+    "text": "Warning\nThis function shouldn't ever need to be called inside a Shiny app. It's only useful for testing and running reactive code interactively in the console."
   },
   {
     "objectID": "reference/ui.update_slider.html",
     "href": "reference/ui.update_slider.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_slider(id, label=None, value=None, min=None, max=None, step=None, time_format=None, timezone=None, session=None)\nChange the value of a slider input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[SliderValueArg | tuple[SliderValueArg, SliderValueArg]]\nA new value.\nNone\n\n\nmin\nOptional[SliderValueArg]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[SliderValueArg]\nThe maximum allowed value.\nNone\n\n\nstep\nOptional[SliderStepArg]\nSpecifies the interval between each selectable value on the slider. Either None (the default), which uses a heuristic to determine the step size or a single number. If the values are dates, step is in days; if the values are date-times, step is in seconds.\nNone\n\n\ntime_format\nOptional[str]\nOnly used if the slider values are :func:~datetime.date or :func:~datetime.datetime objects. A time format string, to be passed to the Javascript strftime library. See https://github.com/samsonjs/strftime for more details. For Dates, the default is “%F” (like “2015-07-01”), and for Datetimes, the default is “%F %T” (like “2015-07-01 15:32:10”).\nNone\n\n\ntimezone\nOptional[str]\nOnly used if the values are :func:~datetime.datetime objects. A string specifying the time zone offset for the displayed times, in the format “+HHMM” or “-HHMM”. If None (the default), times will be displayed in the browser’s time zone. The value “+0000” will result in UTC time.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_slider(id, label=None, value=None, min=None, max=None, step=None, time_format=None, timezone=None, session=None)\nChange the value of a slider input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[SliderValueArg | tuple[SliderValueArg, SliderValueArg]]\nA new value.\nNone\n\n\nmin\nOptional[SliderValueArg]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[SliderValueArg]\nThe maximum allowed value.\nNone\n\n\nstep\nOptional[SliderStepArg]\nSpecifies the interval between each selectable value on the slider. Either None (the default), which uses a heuristic to determine the step size or a single number. If the values are dates, step is in days; if the values are date-times, step is in seconds.\nNone\n\n\ntime_format\nOptional[str]\nOnly used if the slider values are :func:~datetime.date or :func:~datetime.datetime objects. A time format string, to be passed to the Javascript strftime library. See https://github.com/samsonjs/strftime for more details. For Dates, the default is “%F” (like “2015-07-01”), and for Datetimes, the default is “%F %T” (like “2015-07-01 15:32:10”).\nNone\n\n\ntimezone\nOptional[str]\nOnly used if the values are :func:~datetime.datetime objects. A string specifying the time zone offset for the displayed times, in the format “+HHMM” or “-HHMM”. If None (the default), times will be displayed in the browser’s time zone. The value “+0000” will result in UTC time.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_slider.html#note",
@@ -1075,7 +1075,7 @@
     "href": "reference/ui.update_date_range.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_date_range(id, label=None, start=None, end=None, min=None, max=None, session=None)\nChange the start and end values of a date range input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nstart\nOptional[date | str]\nThe initial start date. Either a :func:~datetime.date object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone.\nNone\n\n\nend\nOptional[date | str]\nThe initial end date. Either a :func:~datetime.date object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone.\nNone\n\n\nmin\nOptional[date | str]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[date | str]\nThe maximum allowed value.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_date_range(id, label=None, start=None, end=None, min=None, max=None, session=None)\nChange the start and end values of a date range input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nstart\nOptional[date | str]\nThe initial start date. Either a :func:~datetime.date object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone.\nNone\n\n\nend\nOptional[date | str]\nThe initial end date. Either a :func:~datetime.date object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone.\nNone\n\n\nmin\nOptional[date | str]\nThe minimum allowed value.\nNone\n\n\nmax\nOptional[date | str]\nThe maximum allowed value.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_date_range.html#note",
@@ -1110,14 +1110,14 @@
     "href": "reference/ui.modal_show.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.modal_show(modal, session=None)\nShow a modal dialog.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodal\nhtmltools.Tag\nTypically a :func:modal instance.\nrequired\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone\n\n\n\n\n\n\n~shiny.ui.modal_remove ~shiny.ui.modal"
+    "text": "ui.modal_show(modal, session=None)\nShow a modal dialog.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodal\nhtmltools.Tag\nTypically a :func:modal instance.\nrequired\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone\n\n\n\n\n\n\n~shiny.ui.modal_remove ~shiny.ui.modal"
   },
   {
     "objectID": "reference/ui.modal_show.html#example",
     "href": "reference/ui.modal_show.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:modal."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/ui.input_action_button.html",
@@ -1152,7 +1152,7 @@
     "href": "reference/render.image.html#tip",
     "title": "Shiny",
     "section": "Tip",
-    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a :func:~shiny.ui.output_image container (see :func:~shiny.ui.output_image for example usage)."
+    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a output_image container (see output_image for example usage)."
   },
   {
     "objectID": "reference/render.image.html#see-also",
@@ -1166,7 +1166,7 @@
     "href": "reference/ui.update_switch.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_switch(id, label=None, value=None, session=None)\nChange the value of a switch input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[bool]\nA new value.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_switch(id, label=None, value=None, session=None)\nChange the value of a switch input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[bool]\nA new value.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_switch.html#note",
@@ -1187,28 +1187,28 @@
     "href": "reference/ui.navset_pill.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.navset_pill(args, id=None, selected=None, header=None, footer=None)\nRender nav items as a pillset.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., :func:shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
+    "text": "ui.navset_pill(args, id=None, selected=None, header=None, footer=None)\nRender nav items as a pillset.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
   },
   {
     "objectID": "reference/ui.navset_pill.html#example",
     "href": "reference/ui.navset_pill.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee nav"
+    "text": "Example\nSee"
   },
   {
     "objectID": "reference/ui.notification_remove.html",
     "href": "reference/ui.notification_remove.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.notification_remove(id, session=None)\nRemove a notification.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nA notification id.\nrequired\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nThe notification’s\n\n\n\n\n\n\n\n~shiny.ui.notification_show ~shiny.ui.modal"
+    "text": "ui.notification_remove(id, session=None)\nRemove a notification.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nA notification id.\nrequired\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nThe notification’s\n\n\n\n\n\n\n\n~shiny.ui.notification_show ~shiny.ui.modal"
   },
   {
     "objectID": "reference/ui.notification_remove.html#example",
     "href": "reference/ui.notification_remove.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:notification_show."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/ui.help_text.html",
@@ -1222,7 +1222,7 @@
     "href": "reference/ui.update_checkbox_group.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_checkbox_group(id, label=None, choices=None, selected=None, inline=False, session=None)\nChange the value of a checkbox group input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[ChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nNone\n\n\nselected\nOptional[str | list[str]]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_checkbox_group(id, label=None, choices=None, selected=None, inline=False, session=None)\nChange the value of a checkbox group input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[ChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nNone\n\n\nselected\nOptional[str | list[str]]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf True, the result is displayed inline\nFalse\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_checkbox_group.html#note",
@@ -1264,7 +1264,7 @@
     "href": "reference/ui.input_date.html#notes",
     "title": "Shiny",
     "section": "Notes",
-    "text": "Notes\n.. admonition:: Server value\nA :func:`~datetime.date` object."
+    "text": "Notes\n.. admonition:: Server value\nA [](:func:`~datetime.date`) object."
   },
   {
     "objectID": "reference/ui.input_date.html#see-also",
@@ -1320,7 +1320,7 @@
     "href": "reference/ui.nav_spacer.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.nav"
+    "text": "Example\nSee nav"
   },
   {
     "objectID": "reference/ui.input_file.html",
@@ -1355,7 +1355,7 @@
     "href": "reference/session.get_current_session.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nShiny apps should not need to call this function directly. Instead, it’s intended to be used by Shiny developing who wish to create new functions that should only be called from within an active Shiny session."
+    "text": "Note\nShiny apps should not need to call this function directly. Instead, it's intended to be used by Shiny developing who wish to create new functions that should only be called from within an active Shiny session."
   },
   {
     "objectID": "reference/session.get_current_session.html#see-also",
@@ -1369,14 +1369,14 @@
     "href": "reference/Inputs.html",
     "title": "Shiny",
     "section": "",
-    "text": "session.Inputs(self, values, ns=Root)\nA class representing Shiny input values.\nThis class provides access to a :class:~shiny.session.Session’s input values. The input values are reactive :class:~shiny.reactive.Values, and can be accessed with the [] operator, or with .. For example, if there is an input named x, it can be accessed via input[\"x\"]() or input.x()."
+    "text": "session.Inputs(self, values, ns=Root)\nA class representing Shiny input values.\nThis class provides access to a :class:~shiny.session.Session's input values. The input values are reactive :class:~shiny.reactive.Values, and can be accessed with the [] operator, or with .. For example, if there is an input named x, it can be accessed via input[&quot;x&quot;]() or input.x()."
   },
   {
     "objectID": "reference/types.ImgData.html",
     "href": "reference/types.ImgData.html",
     "title": "Shiny",
     "section": "",
-    "text": "types.ImgData()\nReturn type for :func:~shiny.render.image."
+    "text": "types.ImgData()\nReturn type for image."
   },
   {
     "objectID": "reference/types.ImgData.html#see-also",
@@ -1390,14 +1390,14 @@
     "href": "reference/types.ImgData.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.render.image."
+    "text": "Example\nSee image."
   },
   {
     "objectID": "reference/types.SilentException.html",
     "href": "reference/types.SilentException.html",
     "title": "Shiny",
     "section": "",
-    "text": "types.SilentException()\nThrow a silent exception.\nNormally, when an exception occurs inside a reactive context, it’s either:\n\nDisplayed to the user (as a big red error message)\n\nThis happens when the exception is raised from an output context (e.g., :func:shiny.render.ui)\n\nCrashes the application\n\nThis happens when the exception is raised from an :func:shiny.reactive.Effect\n\n\nThis exception is used to silently throw inside a reactive context, meaning that execution is paused, and no output is shown to users (or the python console)."
+    "text": "types.SilentException()\nThrow a silent exception.\nNormally, when an exception occurs inside a reactive context, it's either:\n\nDisplayed to the user (as a big red error message)\n\nThis happens when the exception is raised from an output context (e.g., shiny.render.ui)\n\nCrashes the application\n\nThis happens when the exception is raised from an shiny.reactive.Effect\n\n\nThis exception is used to silently throw inside a reactive context, meaning that execution is paused, and no output is shown to users (or the python console)."
   },
   {
     "objectID": "reference/types.SilentException.html#see-also",
@@ -1502,14 +1502,14 @@
     "href": "reference/index.html#display-messages",
     "title": "Shiny",
     "section": "Display messages",
-    "text": "Display messages\n\n\n\nui.help_text\nCreate a help text element\n\n\nui.notification_show\nShow a notification to the user.\n\n\nui.notification_remove\nRemove a notification.\n\n\nui.modal\nCreates the UI for a modal dialog, using Bootstrap’s modal class. Modals are\n\n\nui.modal_show\nShow a modal dialog.\n\n\nui.modal_remove\nRemove a modal dialog.\n\n\nui.modal_button\nCreates a button that will dismiss a :func:modal (useful when customising the\n\n\nui.Progress\nInitialize a progress bar."
+    "text": "Display messages\n\n\n\nui.help_text\nCreate a help text element\n\n\nui.notification_show\nShow a notification to the user.\n\n\nui.notification_remove\nRemove a notification.\n\n\nui.modal\nCreates the UI for a modal dialog, using Bootstrap's modal class. Modals are\n\n\nui.modal_show\nShow a modal dialog.\n\n\nui.modal_remove\nRemove a modal dialog.\n\n\nui.modal_button\nCreates a button that will dismiss a :func:modal (useful when customising the\n\n\nui.Progress\nInitialize a progress bar."
   },
   {
     "objectID": "reference/index.html#error-validation",
     "href": "reference/index.html#error-validation",
     "title": "Shiny",
     "section": "Error validation",
-    "text": "Error validation\n\n\n\ntypes.SilentException\nThrow a silent exception.\n\n\ntypes.SilentCancelOutputException\nThrow a silent exception and don’t clear output\n\n\ntypes.SafeException\nThrow a safe exception."
+    "text": "Error validation\n\n\n\ntypes.SilentException\nThrow a silent exception.\n\n\ntypes.SilentCancelOutputException\nThrow a silent exception and don't clear output\n\n\ntypes.SafeException\nThrow a safe exception."
   },
   {
     "objectID": "reference/index.html#modules",
@@ -1544,7 +1544,7 @@
     "href": "reference/render.ui.html#tip",
     "title": "Shiny",
     "section": "Tip",
-    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a :func:~shiny.ui.output_ui container (see :func:~shiny.ui.output_ui for example usage)."
+    "text": "Tip\nThis decorator should be applied before the @output decorator. Also, the name of the decorated function (or @output(id=...)) should match the id of a output_ui container (see output_ui for example usage)."
   },
   {
     "objectID": "reference/render.ui.html#see-also",
@@ -1586,7 +1586,7 @@
     "href": "reference/reactive.Effect.html",
     "title": "Shiny",
     "section": "",
-    "text": "reactive.Effect(fn=None, suspended=False, priority=0, session=MISSING)\nMark a function as a reactive side effect.\nA reactive effect is like a reactive calculation (:func:Calc) in that it can read reactive values and call reactive calculations, and will automatically re-execute when those dependencies change. But unlike reactive calculations, it doesn’t return a result and can’t be used as an input to other reactive expressions. Thus, observers are only useful for their side effects (for example, performing I/O).\nAnother contrast between reactive calculations and effects is their execution strategy. Reactive calculations use lazy evaluation; that is, when their dependencies change, they don’t re-execute right away but rather wait until they are called by someone else. Indeed, if they are not called then they will never re-execute. In contrast, effects use eager evaluation; as soon as their dependencies change, they schedule themselves to re-execute.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsuspended\nbool\nIf TRUE, start the effect in a suspended state (i.e., it will not execute until resumed and invalidated).\nFalse\n\n\npriority\nint\nThe new priority. A higher value means higher priority: an effect with a higher priority value will execute before all effects with lower priority values. Positive, negative, and zero values are allowed.\n0\n\n\nsession\nMISSING_TYPE | Session | None\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that marks a function as a reactive effect (\n\n\n\n\n\n\n\n~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event"
+    "text": "reactive.Effect(fn=None, suspended=False, priority=0, session=MISSING)\nMark a function as a reactive side effect.\nA reactive effect is like a reactive calculation (:func:Calc) in that it can read reactive values and call reactive calculations, and will automatically re-execute when those dependencies change. But unlike reactive calculations, it doesn't return a result and can't be used as an input to other reactive expressions. Thus, observers are only useful for their side effects (for example, performing I/O).\nAnother contrast between reactive calculations and effects is their execution strategy. Reactive calculations use lazy evaluation; that is, when their dependencies change, they don't re-execute right away but rather wait until they are called by someone else. Indeed, if they are not called then they will never re-execute. In contrast, effects use eager evaluation; as soon as their dependencies change, they schedule themselves to re-execute.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsuspended\nbool\nIf TRUE, start the effect in a suspended state (i.e., it will not execute until resumed and invalidated).\nFalse\n\n\npriority\nint\nThe new priority. A higher value means higher priority: an effect with a higher priority value will execute before all effects with lower priority values. Positive, negative, and zero values are allowed.\n0\n\n\nsession\nMISSING_TYPE | Session | None\nA Session instance. If not provided, it is inferred via get_current_session.\nMISSING\n\n\n\n\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA decorator that marks a function as a reactive effect (\n\n\n\n\n\n\n\n~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event"
   },
   {
     "objectID": "reference/reactive.Effect.html#examples",
@@ -1600,14 +1600,14 @@
     "href": "reference/ui.panel_fixed.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.panel_fixed(args, kwargs)\nCreate a panel of absolutely positioned content.\nThis function is equivalent to calling :func:~shiny.ui.panel_absolute with fixed=True (i.e., the panel does not scroll with the rest of the page). See :func:~shiny.ui.panel_absolute for more information.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrValue\nArguments passed along to :func:~shiny.ui.panel_absolute.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npanel_absolute"
+    "text": "ui.panel_fixed(args, kwargs)\nCreate a panel of absolutely positioned content.\nThis function is equivalent to calling panel_absolute with fixed=True (i.e., the panel does not scroll with the rest of the page). See panel_absolute for more information.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrValue\nArguments passed along to panel_absolute.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.Progress.html",
     "href": "reference/ui.Progress.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.Progress(self, min=0, max=1, session=None)\nInitialize a progress bar.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmin\nint\nThe value that represents the starting point of the progress bar. Must be less than max.\n0\n\n\nmax\nint\nThe value that represents the end of the progress bar. Must be greater than min.\n1\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.Progress(self, min=0, max=1, session=None)\nInitialize a progress bar.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmin\nint\nThe value that represents the starting point of the progress bar. Must be less than max.\n0\n\n\nmax\nint\nThe value that represents the end of the progress bar. Must be greater than min.\n1\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.Progress.html#examples",
@@ -1635,14 +1635,14 @@
     "href": "reference/ui.panel_main.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.panel_main(args, width=8, kwargs)\nCreate an main area panel\nSee :func:~shiny.ui.layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the main area.\n()\n\n\nwidth\nint\nThe width of the main area (an integer between 1 and 12).\n8\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the main area tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npanel_sidebar layout_sidebar"
+    "text": "ui.panel_main(args, width=8, kwargs)\nCreate an main area panel\nSee layout_sidebar for more information and an example.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the main area.\n()\n\n\nwidth\nint\nThe width of the main area (an integer between 1 and 12).\n8\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the main area tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.row.html",
     "href": "reference/ui.row.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.row(args, kwargs)\nResponsive row-column based layout\nLayout UI components using Bootstrap’s grid layout system. Use row() to group elements that should appear on the same line (if the browser has adequate width) and :func:~shiny.ui.column to define how much horizontal space within a 12-unit wide grid each on of these elements should occupy. See the layout guide <https://shiny.rstudio.com/articles/layout-guide.html>_ for more context and examples.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nAny number of child elements.\n()\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the row tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\ncolumn"
+    "text": "ui.row(args, kwargs)\nResponsive row-column based layout\nLayout UI components using Bootstrap's grid layout system. Use row() to group elements that should appear on the same line (if the browser has adequate width) and column to define how much horizontal space within a 12-unit wide grid each on of these elements should occupy. See the layout guide &lt;https://shiny.rstudio.com/articles/layout-guide.html&gt;_ for more context and examples.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nAny number of child elements.\n()\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the row tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.row.html#examples",
@@ -1656,7 +1656,7 @@
     "href": "reference/ui.update_checkbox.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_checkbox(id, label=None, value=None, session=None)\nChange the value of a checkbox input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[bool]\nA new value.\nNone\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nNone"
+    "text": "ui.update_checkbox(id, label=None, value=None, session=None)\nChange the value of a checkbox input on the client.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nvalue\nOptional[bool]\nA new value.\nNone\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nNone"
   },
   {
     "objectID": "reference/ui.update_checkbox.html#note",
@@ -1698,14 +1698,14 @@
     "href": "reference/types.FileInfo.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:~shiny.ui.input_file."
+    "text": "Example\nSee input_file."
   },
   {
     "objectID": "reference/ui.nav_menu.html",
     "href": "reference/ui.nav_menu.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.nav_menu(title, args, value=None, icon=None, align='left')\nCreate a menu of nav items.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nhtmltools.TagChild\nA title to display. Can be a character string or UI elements (i.e., tags).\nrequired\n\n\n*args\nNav | str\nA collection of nav items (e.g., :func:~shiny.ui.nav) and/or strings. Strings will be rendered as a section header unless the string is a set of two or more hyphens (e.g., ---), in which case it will be rendered as a divider.\n()\n\n\nvalue\nOptional[str]\nThe value of the item. This is used to determine whether the item is active (when an id is provided to the nav container), programmatically select the item (e.g., :func:~shiny.ui.update_navs), and/or be provided to the selected argument of the navigation container (e.g., :func:~shiny.ui.navset_tab).\nNone\n\n\nicon\nhtmltools.TagChild\nAn icon to appear inline with the button/link.\nNone\n\n\nalign\nLiteral[left, right]\nHorizontal alignment of the dropdown menu relative to dropdown toggle.\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element representing both the navigation menu.\n\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See nav"
+    "text": "ui.nav_menu(title, args, value=None, icon=None, align='left')\nCreate a menu of nav items.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nhtmltools.TagChild\nA title to display. Can be a character string or UI elements (i.e., tags).\nrequired\n\n\n*args\nNav | str\nA collection of nav items (e.g., nav) and/or strings. Strings will be rendered as a section header unless the string is a set of two or more hyphens (e.g., ---), in which case it will be rendered as a divider.\n()\n\n\nvalue\nOptional[str]\nThe value of the item. This is used to determine whether the item is active (when an id is provided to the nav container), programmatically select the item (e.g., update_navs), and/or be provided to the selected argument of the navigation container (e.g., navset_tab).\nNone\n\n\nicon\nhtmltools.TagChild\nAn icon to appear inline with the button/link.\nNone\n\n\nalign\nLiteral[left, right]\nHorizontal alignment of the dropdown menu relative to dropdown toggle.\n'left'\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element representing both the navigation menu.\n\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See"
   },
   {
     "objectID": "reference/ui.input_password.html",
@@ -1740,14 +1740,14 @@
     "href": "reference/ui.modal_button.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee :func:modal."
+    "text": "Example\nSee ."
   },
   {
     "objectID": "reference/ui.update_radio_buttons.html",
     "href": "reference/ui.update_radio_buttons.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.update_radio_buttons(id, label=None, choices=None, selected=None, inline=False, session=None)\nChange the value of a radio input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[ChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nNone\n\n\nselected\nOptional[str]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf `True```, the result is displayed inline                                                                                                                                                                 |False| |session| Optional[Session]    | A :class:shiny.Sessioninstance. If not provided, it is inferred via :func:shiny.session.get_current_session.                                                                                          |None`"
+    "text": "ui.update_radio_buttons(id, label=None, choices=None, selected=None, inline=False, session=None)\nChange the value of a radio input on the client.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nlabel\nOptional[str]\nAn input label.\nNone\n\n\nchoices\nOptional[ChoicesArg]\nEither a list of choices or a dictionary mapping choice values to labels. Note that if a dictionary is provided, the keys are used as the (input) values so that the dictionary values can hold HTML labels.\nNone\n\n\nselected\nOptional[str]\nThe values that should be initially selected, if any.\nNone\n\n\ninline\nbool\nIf `True```, the result is displayed inline                                                                                                                                                                 |False| |session| Optional[Session]    | A [](:class:shiny.Session) instance. If not provided, it is inferred via [](:func:shiny.session.get_current_session).                                                                                          |None`"
   },
   {
     "objectID": "reference/ui.update_radio_buttons.html#note",
@@ -1775,14 +1775,14 @@
     "href": "reference/ui.output_text_verbatim.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.output_text_verbatim(id, placeholder=False)\nCreate a output container for some text.\nPlace a :func:~shiny.render.text result in the user interface. Differs from :func:~shiny.ui.output_text in that it wraps the text in a fixed-width container with a gray-ish background color and border.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nplaceholder\nbool\nIf the output is empty or None, should an empty rectangle be displayed to serve as a placeholder? (does not affect behavior when the output is nonempty)\nFalse\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.render.text ~shiny.ui.output_text"
+    "text": "ui.output_text_verbatim(id, placeholder=False)\nCreate a output container for some text.\nPlace a text result in the user interface. Differs from output_text in that it wraps the text in a fixed-width container with a gray-ish background color and border.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn input id.\nrequired\n\n\nplaceholder\nbool\nIf the output is empty or None, should an empty rectangle be displayed to serve as a placeholder? (does not affect behavior when the output is nonempty)\nFalse\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element\n\n\n\n\n\n\n\n~shiny.render.text ~shiny.ui.output_text"
   },
   {
     "objectID": "reference/ui.output_text_verbatim.html#example",
     "href": "reference/ui.output_text_verbatim.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee output_text"
+    "text": "Example\nSee"
   },
   {
     "objectID": "reference/Session.html",
@@ -1845,7 +1845,7 @@
     "href": "reference/Session.html#examples-6",
     "title": "Shiny",
     "section": "Examples",
-    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"msg\", \"Enter a message\"),\n    ui.input_action_button(\"submit\", \"Submit the message\"),\n    # It'd be better to use ui.insert_ui() in order to implement this kind of\n    # functionality...this is just a basic demo of how custom message handling works.\n    ui.tags.div(id=\"messages\"),\n    ui.tags.script(\n        \"\"\"\n        $(function() {\n            Shiny.addCustomMessageHandler(\"append_msg\", function(message) {\n                $(\"<p>\").text(message.msg).appendTo(\"#messages\");\n            });\n        });\n        \"\"\"\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    @reactive.event(input.submit)\n    async def _():\n        await session.send_custom_message(\"append_msg\", {\"msg\": input.msg()})\n\n\napp = App(app_ui, server, debug=True)\n\n\nsend_input_message\nSession.send_input_message(self, id, message)\nSend an input message to the session.\nSends a message to an input on the session’s client web page; if the input is present and bound on the page at the time the message is received, then the input binding object’s receiveMessage(el, message) method will be called. This method should generally not be called directly from Shiny apps, but through friendlier wrapper functions like ui.update_text().\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn id matching the id of an input to update.\nrequired\n\n\nmessage\ndict[str, object]\nThe message to send.\nrequired"
+    "text": "Examples\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"msg\", \"Enter a message\"),\n    ui.input_action_button(\"submit\", \"Submit the message\"),\n    # It'd be better to use ui.insert_ui() in order to implement this kind of\n    # functionality...this is just a basic demo of how custom message handling works.\n    ui.tags.div(id=\"messages\"),\n    ui.tags.script(\n        \"\"\"\n        $(function() {\n            Shiny.addCustomMessageHandler(\"append_msg\", function(message) {\n                $(\"<p>\").text(message.msg).appendTo(\"#messages\");\n            });\n        });\n        \"\"\"\n    ),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @reactive.Effect\n    @reactive.event(input.submit)\n    async def _():\n        await session.send_custom_message(\"append_msg\", {\"msg\": input.msg()})\n\n\napp = App(app_ui, server, debug=True)\n\n\nsend_input_message\nSession.send_input_message(self, id, message)\nSend an input message to the session.\nSends a message to an input on the session's client web page; if the input is present and bound on the page at the time the message is received, then the input binding object's receiveMessage(el, message) method will be called. This method should generally not be called directly from Shiny apps, but through friendlier wrapper functions like ui.update_text().\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nid\nstr\nAn id matching the id of an input to update.\nrequired\n\n\nmessage\ndict[str, object]\nThe message to send.\nrequired"
   },
   {
     "objectID": "reference/module.ui.html",
@@ -1866,7 +1866,7 @@
     "href": "reference/reactive.invalidate_later.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nWhen called within a reactive function (i.e., :func:Effect, :func:Calc, :func:render.ui, etc.), that reactive context is invalidated (and re-executes) after the interval has passed. The re-execution will reset the invalidation flag, so in a typical use case, the object will keep re-executing and waiting for the specified interval. It’s possible to stop this cycle by adding conditional logic that prevents the invalidate_later from being run."
+    "text": "Note\nWhen called within a reactive function (i.e., :func:Effect, :func:Calc, :func:render.ui, etc.), that reactive context is invalidated (and re-executes) after the interval has passed. The re-execution will reset the invalidation flag, so in a typical use case, the object will keep re-executing and waiting for the specified interval. It's possible to stop this cycle by adding conditional logic that prevents the invalidate_later from being run."
   },
   {
     "objectID": "reference/reactive.invalidate_later.html#examples",
@@ -1880,21 +1880,21 @@
     "href": "reference/ui.navset_tab.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.navset_tab(args, id=None, selected=None, header=None, footer=None)\nRender nav items as a tabset.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., :func:shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
+    "text": "ui.navset_tab(args, id=None, selected=None, header=None, footer=None)\nRender nav items as a tabset.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*args\nshiny.types.NavSetArg\nA collection of nav items (e.g., shiny.ui.nav).\n()\n\n\nid\nOptional[str]\nIf provided, will create an input value that holds the currently selected nav item.\nNone\n\n\nselected\nOptional[str]\nChoose a particular nav item to select by default value (should match it’s value).\nNone\n\n\nheader\nhtmltools.TagChild\nUI to display above the selected content.\nNone\n\n\nfooter\nhtmltools.TagChild\nUI to display below the selected content.\nNone\n\n\n\n\n\n\n~shiny.ui.nav ~shiny.ui.nav_menu ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden"
   },
   {
     "objectID": "reference/ui.navset_tab.html#example",
     "href": "reference/ui.navset_tab.html#example",
     "title": "Shiny",
     "section": "Example",
-    "text": "Example\nSee nav"
+    "text": "Example\nSee"
   },
   {
     "objectID": "reference/ui.panel_well.html",
     "href": "reference/ui.panel_well.html",
     "title": "Shiny",
     "section": "",
-    "text": "ui.panel_well(args, kwargs)\nCreate a well panel\nCreates a panel with a slightly inset border and grey background. Equivalent to Bootstrap’s well CSS class.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the panel tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element.\n\n\n\n\n\n\n\npanel_sidebar panel_main"
+    "text": "ui.panel_well(args, kwargs)\nCreate a well panel\nCreates a panel with a slightly inset border and grey background. Equivalent to Bootstrap's well CSS class.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nargs\nTagChild | TagAttrs\nUI elements to include inside the panel.\n()\n\n\nkwargs\nhtmltools.TagAttrValue\nAttributes to place on the panel tag.\n{}\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nA UI element."
   },
   {
     "objectID": "reference/ui.input_switch.html",
@@ -1922,14 +1922,14 @@
     "href": "reference/session.require_active_session.html",
     "title": "Shiny",
     "section": "",
-    "text": "session.require_active_session(session)\nRaise an exception if no Shiny session is currently active.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nOptional[Session]\nA :class:~shiny.Session instance. If not provided, it is inferred via :func:~shiny.session.get_current_session.\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nThe session."
+    "text": "session.require_active_session(session)\nRaise an exception if no Shiny session is currently active.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsession\nOptional[Session]\nA Session instance. If not provided, it is inferred via get_current_session.\nrequired\n\n\n\n\n\n\n\n\n\nType\nDescription\n\n\n\n\nThe session."
   },
   {
     "objectID": "reference/session.require_active_session.html#note",
     "href": "reference/session.require_active_session.html#note",
     "title": "Shiny",
     "section": "Note",
-    "text": "Note\nShiny apps should not need to call this function directly. Instead, it’s intended to be used by Shiny developing who wish to create new functions that should only be called from within an active Shiny session.\n\nRaises\n\n\n\nType\nDescription\n\n\n\n\nValueError\nIf session is not active.\n\n\n\n\n\nSee Also\n~get_current_session"
+    "text": "Note\nShiny apps should not need to call this function directly. Instead, it's intended to be used by Shiny developing who wish to create new functions that should only be called from within an active Shiny session.\n\nRaises\n\n\n\nType\nDescription\n\n\n\n\nValueError\nIf session is not active.\n\n\n\n\n\nSee Also\n~get_current_session"
   },
   {
     "objectID": "index.html",

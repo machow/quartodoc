@@ -1,1 +1,5 @@
 /* css styles */
+
+.cell-output pre code {
+  white-space: pre-wrap;
+}

@@ -799,15 +799,15 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="shiny.types.SilentException">types.SilentException</h2>
 <p><code>types.SilentException()</code></p>
 <p>Throw a silent exception.</p>
-<p>Normally, when an exception occurs inside a reactive context, it’s either:</p>
+<p>Normally, when an exception occurs inside a reactive context, it's either:</p>
 <ul>
 <li>Displayed to the user (as a big red error message)
 <ul>
-<li>This happens when the exception is raised from an output context (e.g., :func:<code>shiny.render.ui</code>)</li>
+<li>This happens when the exception is raised from an output context (e.g., <a href="../reference/render.ui.html#render.ui">shiny.render.ui</a>)</li>
 </ul></li>
 <li>Crashes the application
 <ul>
-<li>This happens when the exception is raised from an :func:<code>shiny.reactive.Effect</code></li>
+<li>This happens when the exception is raised from an <a href="../reference/reactive.Effect.html#reactive.Effect">shiny.reactive.Effect</a></li>
 </ul></li>
 </ul>
 <p>This exception is used to silently throw inside a reactive context, meaning that execution is paused, and no output is shown to users (or the python console).</p>
