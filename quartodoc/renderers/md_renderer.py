@@ -158,9 +158,15 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: layout.Page):
+        if el.summary:
+            sum_ = el.summary
+            header = [f"{'#' * self.crnt_header_level} {sum_.name}\n\n{sum_.desc}"]
+        else:
+            header = []
+
         result = map(self.render, el.contents)
 
-        return "\n\n".join(result)
+        return "\n\n".join([*header, *result])
 
     @dispatch
     def render(self, el: layout.Section):
@@ -176,32 +182,42 @@ class MdRenderer(Renderer):
         raise NotImplementedError(f"Unsupported Doc type: {type(el)}")
 
     @dispatch
-    def render(self, el: layout.DocClass):
+    def render(self, el: Union[layout.DocClass, layout.DocModule]):
         title = self.render_header(el)
 
         extra_parts = []
         meth_docs = []
         if el.members:
             sub_header = "#" * (self.crnt_header_level + 1)
-            raw_attrs = [x for x in el.members if x.kind == "attribute"]
-            raw_meths = [x for x in el.members if x.kind == "function"]
+            raw_attrs = [x for x in el.members if x.obj.is_attribute]
+            raw_meths = [x for x in el.members if x.obj.is_function]
 
 
             header = "| Name | Description |\n| --- | --- |"
 
             # attribute summary table ----
-            # docstrings can define an attributes section. If that exists,
+            # docstrings can define an attributes section. If that exists on
             # then we skip summarizing each attribute into a table.
-            # TODO: for now, skip making an attribute table
-            # if raw_attrs and not _has_attr_section(el.obj.docstring):
-            #     _attrs_table = "\n".join(map(self.summarize, raw_attrs))
-            #     attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
-            #     extra_parts.append(attrs)
+            # TODO: for now, we skip making an attribute table on classes, unless
+            # they contain an attributes section in the docstring
+            if (
+                    raw_attrs
+                    and not _has_attr_section(el.obj.docstring)
+                    and not isinstance(el, layout.DocClass)
+                ):
+
+                _attrs_table = "\n".join(map(self.summarize, raw_attrs))
+                attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
+                extra_parts.append(attrs)
 
             # method summary table ----
             if raw_meths:
                 _meths_table = "\n".join(map(self.summarize, raw_meths))
-                meths = f"{sub_header} Methods\n\n{header}\n{_meths_table}"
+                section_name = (
+                    "Methods" if isinstance(el, layout.DocClass)
+                    else "Functions"
+                )
+                meths = f"{sub_header} {section_name}\n\n{header}\n{_meths_table}"
                 extra_parts.append(meths)
 
                 # TODO use context manager, or context variable?
@@ -318,7 +334,7 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: ds.DocstringAttribute):
         annotation = self.render_annotation(el.annotation)
-        return el.name, self.render(annotation), el.description
+        return el.name, self.render_annotation(annotation), el.description
 
     # warnings ----
 
@@ -390,6 +406,10 @@ class MdRenderer(Renderer):
     # this method returns a summary description, such as a table summarizing a
     # layout.Section, or a row in the table for layout.Page or layout.DocFunction.
 
+    @staticmethod
+    def _summary_row(link, description):
+        return f"| {link} | {sanitize(description)} |"
+
     @dispatch
     def summarize(self, el):
         """Produce a summary table."""
@@ -416,10 +436,10 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(self, el: layout.Page):
-        if len(el.contents) > 1 and not el.flatten:
-            if el.summary is not None:
-                return self._summary_row(f"[{el.summary.name}]({el.path})", el.summary.desc)
+        if el.summary is not None:
+            return self._summary_row(f"[{el.summary.name}]({el.path})", el.summary.desc)
 
+        if len(el.contents) > 1 and not el.flatten:
             raise ValueError(
                 "Cannot summarize Page. Either set its `summary` attribute with name "
                 "and description details, or set `flatten` to True."
@@ -469,7 +489,3 @@ class MdRenderer(Renderer):
             return short
 
         return ""
-
-    @staticmethod
-    def _summary_row(link, description):
-        return f"| {link} | {sanitize(description)} |"
