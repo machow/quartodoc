@@ -17,7 +17,7 @@ from quartodoc.layout import (
 )
 from quartodoc import get_object as _get_object
 
-from .utils import PydanticTransformer, ctx_node
+from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -26,8 +26,16 @@ class BlueprintTransformer(PydanticTransformer):
         if get_object is None:
             collection = ModulesCollection()
             self.get_object = partial(_get_object, modules_collection=collection)
+        else:
+            self.get_object = get_object
 
         self.crnt_package = None
+
+    def get_object_fixed(self, *args, **kwargs):
+        try:
+            return self.get_object(*args, **kwargs)
+        except KeyError as e:
+            raise WorkaroundKeyError(e.args[0])
 
     @dispatch
     def visit(self, el):
@@ -48,8 +56,9 @@ class BlueprintTransformer(PydanticTransformer):
     def exit(self, el: Section):
         """Transform top-level sections, so their contents are all Pages."""
 
-        # if we're not in a top-level section, then quit
         node = ctx_node.get()
+
+        # if we're not in a top-level section, then quit
         if not isinstance(node.parent.parent.value, Layout):
             return el
 
@@ -69,7 +78,8 @@ class BlueprintTransformer(PydanticTransformer):
         self._log("Entering", el)
 
         # TODO: make this less brittle
-        obj = self.get_object(self.crnt_package, el.name, dynamic=el.dynamic)
+        pkg = self.crnt_package
+        obj = self.get_object_fixed(pkg, el.name, dynamic=el.dynamic)
         raw_members = self._fetch_members(el, obj)
 
         # Three cases for structuring child methods ----
@@ -113,16 +123,24 @@ class BlueprintTransformer(PydanticTransformer):
         if el.members is not None:
             return el.members
 
-        candidates = sorted(obj.members)
+        options = obj.members
 
         if el.include:
             raise NotImplementedError("include argument currently unsupported.")
-        elif el.exclude:
-            raise NotImplementedError("exclude argument currently unsupported.")
-        elif not el.include_private:
-            return [meth for meth in candidates if not meth.startswith("_")]
 
-        return candidates
+        if el.exclude:
+            raise NotImplementedError("exclude argument currently unsupported.")
+
+        if not el.include_private:
+            options = {k: v for k, v in options.items() if not k.startswith("_")}
+
+        # for modules, remove any Alias objects, since they were imported from
+        # other places. Sphinx has a flag for this behavior, so may be good
+        # to do something similar.
+        if obj.is_module:
+            options = {k: v for k, v in options.items() if not v.is_alias}
+
+        return sorted(options)
 
 
 class _PagePackageStripper(PydanticTransformer):

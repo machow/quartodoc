@@ -11,6 +11,15 @@ from typing import Union, Any
 ctx_node: ContextVar[Node] = ContextVar("node")
 
 
+class WorkaroundKeyError(Exception):
+    """Represents a KeyError.
+
+    Note that this is necessary to work around a bug in plum dispatch, which
+    intercepts KeyErrors, and then causes an infinite recursion by re-calling
+    the dispatcher.
+    """
+
+
 class Node(BaseModel):
     level: int = -1
     value: Any = None
@@ -22,7 +31,7 @@ class PydanticTransformer:
 
     def _log(self, step: str, el):
         if self.LOG:
-            print("{step}: {type(el)} {el}")
+            print(f"{step}: {type(el)} {el}")
 
     @dispatch
     def visit(self, el):
