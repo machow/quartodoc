@@ -50,10 +50,5 @@ def test_render_attribute():
 
     assert (
         MdRenderer().render(a)
-        == """\
-## a { #a }
-
-`a`
-
-I am an attribute docstring"""
+        == "`tests.example_attribute.a`\n\nI am an attribute docstring"
     )

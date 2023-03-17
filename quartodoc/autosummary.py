@@ -149,7 +149,18 @@ def _resolve_target(obj: dc.Alias):
     return target
 
 
-def replace_docstring(obj: dc.Object | dc.Alias):
+def replace_docstring(obj: dc.Object | dc.Alias, f=None):
+    """Replace (in place) a docstring for a griffe object.
+
+    Parameters
+    ----------
+    obj:
+        Object to replace the docstring of.
+    f:
+        The python object whose docstring to use in the replacement. If not
+        specified, then attempt to import obj and use its docstring.
+
+    """
     import importlib
 
     if isinstance(obj, dc.Attribute):
@@ -166,12 +177,13 @@ def replace_docstring(obj: dc.Object | dc.Alias):
         for func_obj in obj.functions.values():
             replace_docstring(func_obj)
 
-    mod = importlib.import_module(obj.module.canonical_path)
+    if f is None:
+        mod = importlib.import_module(obj.module.canonical_path)
 
-    if isinstance(obj.parent, dc.Class):
-        f = getattr(getattr(mod, obj.parent.name), obj.name)
-    else:
-        f = getattr(mod, obj.name)
+        if isinstance(obj.parent, dc.Class):
+            f = getattr(getattr(mod, obj.parent.name), obj.name)
+        else:
+            f = getattr(mod, obj.name)
 
     # if no docstring on the dynamically loaded function, then stop
     # since there's nothing to update.
