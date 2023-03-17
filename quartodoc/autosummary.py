@@ -338,6 +338,8 @@ class Builder:
             yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
     def do_blueprint(self) -> layout.Layout:
+        """Convert a layout with Auto elements to a full-fledged doc specification."""
+
         from quartodoc.builder.blueprint import BlueprintTransformer
 
         bt = BlueprintTransformer()
@@ -346,6 +348,8 @@ class Builder:
         return blueprint
 
     def do_collect(self, blueprint) -> tuple[list[layout.Page], list[layout.Item]]:
+        """Collect the pages and sphinx item information from a layout."""
+
         from quartodoc.builder.collect import CollectTransformer
 
         ct = CollectTransformer(self.dir)
@@ -354,9 +358,7 @@ class Builder:
         return ct.pages, ct.items
 
     def do_summarize(self, blueprint, items):
-        # from quartodoc.summarize import MdSummarizer
-
-        # summarizer = MdSummarizer(use_interlinks=self.use_interlinks, items=items)
+        """Summarize a layout into index tables."""
 
         summary = self.renderer.summarize(blueprint)
 
