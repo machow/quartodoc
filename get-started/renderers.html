@@ -354,10 +354,20 @@ SECTIONS: A docstring with 4 pieces</code></pre>
 │              │     ├─kind = &lt;ParameterKind.positional_or_keyword: 'positional  ...
 │              │     ├─name = 'dynamic'
 │              │     └─default = 'False'
-│              └─5 = █─Parameter
-│                    ├─annotation = Name(source='None | ModulesCollection', full='None ...
+│              ├─5 = █─Parameter
+│              │     ├─annotation = Name(source='None | ModulesCollection', full='None ...
+│              │     ├─kind = &lt;ParameterKind.positional_or_keyword: 'positional  ...
+│              │     ├─name = 'modules_collection'
+│              │     └─default = 'None'
+│              ├─6 = █─Parameter
+│              │     ├─annotation = Name(source='None | LinesCollection', full='None | ...
+│              │     ├─kind = &lt;ParameterKind.positional_or_keyword: 'positional  ...
+│              │     ├─name = 'lines_collection'
+│              │     └─default = 'None'
+│              └─7 = █─Parameter
+│                    ├─annotation = None
 │                    ├─kind = &lt;ParameterKind.positional_or_keyword: 'positional  ...
-│                    ├─name = 'modules_collection'
+│                    ├─name = 'loader'
 │                    └─default = 'None'
 └─docstring = █─Docstring
               ├─parser = &lt;Parser.numpy: 'numpy'&gt;
@@ -448,7 +458,7 @@ Default rendering: &lt;class 'griffe.dataclasses.Parameters'&gt;</code></pre>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(SomeRenderer(header_level<span class="op">=</span><span class="dv">2</span>).render(f_obj))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## get_object
-N PARAMETERS: 6
+N PARAMETERS: 8
 SECTIONS: A docstring with 4 pieces</code></pre>
 </div>
 </div>
