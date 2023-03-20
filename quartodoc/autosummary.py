@@ -4,7 +4,7 @@ import logging
 import yaml
 
 from griffe.loader import GriffeLoader
-from griffe.collections import ModulesCollection
+from griffe.collections import ModulesCollection, LinesCollection
 from griffe.dataclasses import Alias
 from griffe.docstrings.parsers import Parser, parse
 from griffe.docstrings import dataclasses as ds  # noqa
@@ -71,6 +71,8 @@ def get_object(
     load_aliases=True,
     dynamic=False,
     modules_collection: "None | ModulesCollection" = None,
+    lines_collection: "None | LinesCollection" = None,
+    loader=None,
 ) -> dc.Object:
     """Fetch a griffe object.
 
@@ -101,13 +103,27 @@ def get_object(
     <Function('get_function', ...
 
     """
-    griffe = GriffeLoader(
-        docstring_parser=Parser(parser), modules_collection=modules_collection
-    )
+
+    if loader is not None:
+        griffe = loader
+    else:
+        if modules_collection is None:
+            modules_collection = ModulesCollection()
+        if lines_collection is None:
+            lines_collection = LinesCollection()
+        griffe = GriffeLoader(
+            docstring_parser=Parser(parser),
+            modules_collection=modules_collection,
+            lines_collection=lines_collection,
+        )
     parts = [*module.split("."), *object_name.split(".")]
+    mod_name = parts[0]
     parent_path = ".".join(parts[:-1])
 
-    griffe.load_module(module)
+    # only load the module if it hasn't been already
+    # note that this is critical for performance.
+    if mod_name not in griffe.modules_collection:
+        griffe.load_module(module)
 
     f_parent = griffe.modules_collection[parent_path]
     f_data = griffe.modules_collection[f"{module}.{object_name}"]
