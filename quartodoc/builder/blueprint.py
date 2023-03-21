@@ -1,3 +1,5 @@
+import logging
+
 from griffe import dataclasses as dc
 from griffe.collections import ModulesCollection
 from functools import partial
@@ -18,6 +20,8 @@ from quartodoc.layout import (
 from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
+
+_log = logging.getLogger(__name__)
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -78,6 +82,9 @@ class BlueprintTransformer(PydanticTransformer):
 
         # TODO: make this less brittle
         pkg = self.crnt_package
+
+        _log.info(f"Getting object for {pkg}.{el.name}")
+
         obj = self.get_object_fixed(pkg, el.name, dynamic=el.dynamic)
         raw_members = self._fetch_members(el, obj)
 
