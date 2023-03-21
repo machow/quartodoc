@@ -782,19 +782,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#shiny.App" id="toc-shiny.App" class="nav-link active" data-scroll-target="#shiny.App">App</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  </ul></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
-  <ul class="collapse">
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#shiny.App.call_pyodide" id="toc-shiny.App.call_pyodide" class="nav-link" data-scroll-target="#shiny.App.call_pyodide">call_pyodide</a></li>
-  </ul></li>
-  <li><a href="#warning" id="toc-warning" class="nav-link" data-scroll-target="#warning">Warning</a>
-  <ul class="collapse">
   <li><a href="#shiny.App.init_starlette_app" id="toc-shiny.App.init_starlette_app" class="nav-link" data-scroll-target="#shiny.App.init_starlette_app">init_starlette_app</a></li>
   <li><a href="#shiny.App.run" id="toc-shiny.App.run" class="nav-link" data-scroll-target="#shiny.App.run">run</a></li>
   <li><a href="#shiny.App.stop" id="toc-shiny.App.stop" class="nav-link" data-scroll-target="#shiny.App.stop">stop</a></li>
   </ul></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul>
 </nav>
     </div>
@@ -845,10 +838,6 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
 <p>.. code-block:: python</p>
 <pre><code>from shiny import *
 
@@ -858,6 +847,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     pass
 
 app = App(app_ui, server)</code></pre>
+</section>
 <section id="methods" class="level3">
 <h3 class="anchored" data-anchor-id="methods">Methods</h3>
 <table class="table">
@@ -890,12 +880,8 @@ app = App(app_ui, server)</code></pre>
 <section id="shiny.App.call_pyodide" class="level3">
 <h3 class="anchored" data-anchor-id="shiny.App.call_pyodide">call_pyodide</h3>
 <p><code>App.call_pyodide(self, scope, receive, send)</code></p>
-<p>Communicate with pyodide.</p>
-</section>
-</section>
-<section id="warning" class="level2">
-<h2 class="anchored" data-anchor-id="warning">Warning</h2>
 <p>This method is not intended for public usage. It's exported for use by shinylive.</p>
+</section>
 <section id="shiny.App.init_starlette_app" class="level3">
 <h3 class="anchored" data-anchor-id="shiny.App.init_starlette_app">init_starlette_app</h3>
 <p><code>App.init_starlette_app(self)</code></p>
@@ -929,14 +915,13 @@ app = App(app_ui, server)</code></pre>
 <section id="shiny.App.stop" class="level3">
 <h3 class="anchored" data-anchor-id="shiny.App.stop">stop</h3>
 <p><code>App.stop(self)</code></p>
-<p>Stop the app (i.e., close all sessions).</p>
-</section>
-</section>
-<section id="see-also" class="level2">
-<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
+<section id="see-also" class="level4">
+<h4 class="anchored" data-anchor-id="see-also">See Also</h4>
 <p>~shiny.Session.close</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

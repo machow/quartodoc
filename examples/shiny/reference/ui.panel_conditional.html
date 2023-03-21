@@ -788,8 +788,9 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
-  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -858,28 +859,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="note" class="level2">
-<h2 class="anchored" data-anchor-id="note">Note</h2>
 <p>In the JS expression, you can refer to input and output JavaScript objects that contain the current values of input and output. For example, if you have an input with an id of foo, then you can use input.foo to read its value. (Be sure not to modify the input/output objects, as this may cause unpredictable behavior.)</p>
 <p>You are not recommended to use special JavaScript characters such as a period . in the input id's, but if you do use them anyway, for example, <code>id = &amp;quot;foo.bar&amp;quot;</code>, you will have to use <code>input[&amp;quot;foo.bar&amp;quot;]</code> instead of <code>input.foo.bar</code> to read the input value.</p>
-<p>Tip</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>A more powerful (but slower) way to conditionally show UI content is to use <a href="../reference/render.ui.html#render.ui">ui</a>.</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>~shiny.render.ui ~shiny.ui.output_ui</td>
-</tr>
-<tr class="even">
-<td>Examples</td>
-</tr>
-</tbody>
-</table>
+<p>A more powerful (but slower) way to conditionally show UI content is to use <a href="../reference/render.ui.html#render.ui">ui</a>.</p>
+</section>
+<section id="see-also" class="level3">
+<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+<p>~shiny.render.ui ~shiny.ui.output_ui</p>
+</section>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
 <pre class="shinylive-python"><code>#| standalone: true
 
 from shiny import *
