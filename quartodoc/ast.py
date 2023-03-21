@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 from dataclasses import dataclass
 from griffe.docstrings import dataclasses as ds
@@ -21,8 +23,11 @@ def transform(el):
             return tuple_to_data(el)
         except ValueError:
             pass
-    elif isinstance(el, ds.DocstringSection):
-        return _DocstringSectionPatched.transform(el)
+
+    # patch a list of docstring sections. note that this has to happen on the
+    # list, since we replace single nodes on the tree (the list is the node).
+    elif isinstance(el, list) and len(el) and isinstance(el[0], dc.DocstringSection):
+        return _DocstringSectionPatched.transform_all(el)
 
     return el
 
@@ -49,24 +54,64 @@ class _DocstringSectionPatched(ds.DocstringSection):
         if cls.kind.value in cls._registry:
             raise KeyError(f"A section for kind {cls.kind} already exists")
 
-        cls._registry[cls.kind] = cls
+        cls._registry[cls.kind.value] = cls
+
+    @staticmethod
+    def split_sections(text) -> list[tuple[str, str]]:
+        """Return tuples of (title, body) for all numpydoc style sections in the text.
+
+        Note that this function does not check the value of the section header,
+        only that it is a header on one line, with dashed on the next.
+        """
+        import re
+
+        comp = re.compile(r"^([\S \t]+)\n-+$\n?", re.MULTILINE)
+
+        crnt_match = comp.search(text)
+        crnt_pos = 0
+
+        # This loop takes a match, then attempts to look ahead at the next one,
+        # in order to find the body of text between multiple sections.
+        results = []
+        while crnt_match is not None:
+            next_pos = crnt_pos + crnt_match.end()
+            substr = text[next_pos:]
+            next_match = comp.search(substr)
+
+            title = crnt_match.groups()[0]
+            body = substr if next_match is None else substr[: next_match.start()]
+
+            results.append((title, body))
+
+            crnt_match, crnt_pos = next_match, next_pos
+
+        return results
 
     @classmethod
-    def transform(cls, el: ds.DocstringSection) -> ds.DocstringSection:
+    def transform(cls, el: ds.DocstringSection) -> list[ds.DocstringSection]:
         """Attempt to cast DocstringSection element to more specific section type.
 
         Note that this is meant to patch cases where the general DocstringSectionText
         class represents a section like See Also, etc..
         """
 
-        if isinstance(el, ds.DocstringSectionText):
-            for kind, sub_cls in cls._registry.items():
-                prefix = kind.value.title() + "\n---"
-                if el.value.lstrip("\n").startswith(prefix):
-                    stripped = el.value.replace(prefix, "", 1).lstrip("-\n")
-                    return sub_cls(stripped, el.title)
+        if not isinstance(el, ds.DocstringSectionText):
+            return [el]
 
-        return el
+        splits = cls.split_sections(el.value)
+        results = []
+        for title, body in splits:
+            sub_cls = cls._registry.get(title.lower(), ds.DocstringSectionText)
+
+            # note that griffe currently doesn't store the title anywhere,
+            # so we just pass the title attr from the original element.
+            results.append(sub_cls(body, el.title))
+
+        return results or [el]
+
+    @classmethod
+    def transform_all(cls, el: list[ds.DocstringSection]) -> list[ds.DocstringSection]:
+        return sum(map(cls.transform, el), [])
 
 
 class DocstringSectionSeeAlso(_DocstringSectionPatched):

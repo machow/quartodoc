@@ -250,10 +250,10 @@ class MdRenderer(Renderer):
         if el.docstring is None:
             pass
         else:
-            for section in el.docstring.parsed:
-                new_el = qast.transform(section)
-                title = new_el.kind.value
-                body = self.render(new_el)
+            patched_sections = qast.transform(el.docstring.parsed)
+            for section in patched_sections:
+                title = section.kind.value
+                body = self.render(section)
 
                 if title != "text":
                     header = f"{'#' * (self.crnt_header_level + 1)} {title.title()}"
