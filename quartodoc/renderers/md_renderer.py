@@ -52,7 +52,7 @@ class MdRenderer(Renderer):
 
     def __init__(
         self,
-        header_level: int = 2,
+        header_level: int = 1,
         show_signature: bool = True,
         show_signature_annotations: bool = False,
         display_name: str = "relative",
@@ -70,12 +70,12 @@ class MdRenderer(Renderer):
         self.crnt_header_level = self.header_level
 
     @contextmanager
-    def _increment_header(self):
-        self.crnt_header_level += 1
+    def _increment_header(self, n = 1):
+        self.crnt_header_level += n
         try:
             yield
         finally: 
-            self.crnt_header_level -= 1
+            self.crnt_header_level -= n
 
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
@@ -108,6 +108,9 @@ class MdRenderer(Renderer):
 
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
+        if isinstance(el, dc.Name):
+            return sanitize(el.source)
+
         return sanitize(el.full)
 
     # signature method --------------------------------------------------------
@@ -221,8 +224,8 @@ class MdRenderer(Renderer):
                 extra_parts.append(meths)
 
                 # TODO use context manager, or context variable?
-                with self._increment_header():
-                    meth_docs = list(map(self.render, raw_meths))
+                with self._increment_header(2):
+                    meth_docs = [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
 
         body = self.render(el.obj)
         return "\n\n".join([title, body, *extra_parts, *meth_docs])
