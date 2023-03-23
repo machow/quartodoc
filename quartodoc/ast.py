@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 from enum import Enum
 from dataclasses import dataclass
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from plum import dispatch
 from typing import Union
+from pydantic import BaseModel  # for previewing
 
 
 # Transform and patched-in classes ============================================
@@ -20,8 +23,11 @@ def transform(el):
             return tuple_to_data(el)
         except ValueError:
             pass
-    elif isinstance(el, ds.DocstringSection):
-        return _DocstringSectionPatched.transform(el)
+
+    # patch a list of docstring sections. note that this has to happen on the
+    # list, since we replace single nodes on the tree (the list is the node).
+    elif isinstance(el, list) and len(el) and isinstance(el[0], dc.DocstringSection):
+        return _DocstringSectionPatched.transform_all(el)
 
     return el
 
@@ -48,24 +54,65 @@ class _DocstringSectionPatched(ds.DocstringSection):
         if cls.kind.value in cls._registry:
             raise KeyError(f"A section for kind {cls.kind} already exists")
 
-        cls._registry[cls.kind] = cls
+        cls._registry[cls.kind.value] = cls
+
+    @staticmethod
+    def split_sections(text) -> list[tuple[str, str]]:
+        """Return tuples of (title, body) for all numpydoc style sections in the text.
+
+        Note that this function does not check the value of the section header,
+        only that it is a header on one line, with dashed on the next.
+        """
+        import re
+
+        comp = re.compile(r"^([\S \t]+)\n-+$\n?", re.MULTILINE)
+
+        crnt_match = comp.search(text)
+        crnt_pos = 0
+
+        # This loop takes a match, then attempts to look ahead at the next one,
+        # in order to find the body of text between multiple sections.
+        results = []
+        while crnt_match is not None:
+            next_pos = crnt_pos + crnt_match.end()
+            substr = text[next_pos:]
+            next_match = comp.search(substr)
+
+            title = crnt_match.groups()[0]
+            body = substr if next_match is None else substr[: next_match.start()]
+
+            results.append((title, body))
+
+            crnt_match, crnt_pos = next_match, next_pos
+
+        return results
 
     @classmethod
-    def transform(cls, el: ds.DocstringSection) -> ds.DocstringSection:
+    def transform(cls, el: ds.DocstringSection) -> list[ds.DocstringSection]:
         """Attempt to cast DocstringSection element to more specific section type.
 
         Note that this is meant to patch cases where the general DocstringSectionText
         class represents a section like See Also, etc..
         """
 
-        if isinstance(el, ds.DocstringSectionText):
-            for kind, sub_cls in cls._registry.items():
-                prefix = kind.value.title() + "\n---"
-                if el.value.lstrip("\n").startswith(prefix):
-                    stripped = el.value.replace(prefix, "", 1).lstrip("-\n")
-                    return sub_cls(stripped, el.title)
+        if not isinstance(el, ds.DocstringSectionText):
+            return [el]
 
-        return el
+        splits = cls.split_sections(el.value)
+        results = []
+        for title, body in splits:
+            sub_cls = cls._registry.get(title.lower(), ds.DocstringSectionText)
+
+            # note that griffe currently doesn't store the title anywhere,
+            # but we add the exact title here, so we can be flexible about the
+            # sections we parse (e.g. Note instead of Notes) in the future.
+            results.append(sub_cls(body, title))
+
+        return results or [el]
+
+    @classmethod
+    def transform_all(cls, el: list[ds.DocstringSection]) -> list[ds.DocstringSection]:
+        return sum(map(cls.transform, el), [])
 
 
 class DocstringSectionSeeAlso(_DocstringSectionPatched):
@@ -107,6 +154,13 @@ def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
 
 
 # Tree previewer ==============================================================
+
+
+@dispatch
+def fields(el: BaseModel):
+    # return fields whose values were not set to the default
+    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
+    return [k for k, v in el if field_defaults[k] is not v]
 
 
 @dispatch
@@ -196,9 +250,10 @@ class Formatter:
     icon_connector = "│ "
     string_truncate_mark = " ..."
 
-    def __init__(self, string_max_length: int = 50, max_depth=999):
+    def __init__(self, string_max_length: int = 50, max_depth=999, compact=False):
         self.string_max_length = string_max_length
         self.max_depth = max_depth
+        self.compact = compact
 
     def format(self, call, depth=0, pad=0):
         """Return a Symbolic or Call back as a nice tree, with boxes for nodes."""
@@ -224,10 +279,19 @@ class Formatter:
         fields_str = []
         for name in crnt_fields:
             val = self.get_field(call, name)
-            formatted_val = self.format(
-                val, depth + 1, pad=len(str(name)) + self.n_spaces
-            )
-            fields_str.append(f"{name} = {formatted_val}")
+
+            # either align subfields with the end of the name, or put the node
+            # on a newline, so it doesn't have to be so indented.
+            if self.compact:
+                sub_pad = pad
+                linebreak = "\n" if fields(val) else ""
+            else:
+                sub_pad = len(str(name)) + self.n_spaces
+                linebreak = ""
+
+            # do formatting
+            formatted_val = self.format(val, depth + 1, pad=sub_pad)
+            fields_str.append(f"{name} = {linebreak}{formatted_val}")
 
         padded = []
         for ii, entry in enumerate(fields_str):
@@ -259,7 +323,7 @@ class Formatter:
         return prefix + connector.join(x.splitlines())
 
 
-def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999):
+def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999, compact=False):
     """Print a friendly representation of a griffe object (e.g. function, docstring)
 
     Examples
@@ -275,4 +339,4 @@ def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999):
      ...
 
     """
-    print(Formatter(max_depth=max_depth).format(ast))
+    print(Formatter(max_depth=max_depth, compact=compact).format(ast))

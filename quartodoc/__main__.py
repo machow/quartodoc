@@ -51,7 +51,8 @@ def build(config, dry_run, verbose):
     builder = Builder.from_quarto_config(config)
 
     if dry_run:
-        click.echo(builder.render_index())
+        # click.echo(builder.render_index())
+        pass
     else:
         with chdir(Path(config).parent):
             builder.build()

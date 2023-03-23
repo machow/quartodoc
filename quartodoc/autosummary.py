@@ -1,28 +1,27 @@
 from __future__ import annotations
 
 import logging
+import warnings
 import yaml
 
-from functools import partial
 from griffe.loader import GriffeLoader
-from griffe.collections import ModulesCollection
+from griffe.collections import ModulesCollection, LinesCollection
 from griffe.dataclasses import Alias
 from griffe.docstrings.parsers import Parser, parse
 from griffe.docstrings import dataclasses as ds  # noqa
 from griffe import dataclasses as dc
 from plum import dispatch  # noqa
 from pathlib import Path
+from types import ModuleType
 
 from .inventory import create_inventory, convert_inventory
+from . import layout
 from .renderers import Renderer
 
 from typing import Any, TYPE_CHECKING
 
 if TYPE_CHECKING:
     import sphobjinv as soi
-
-    from griffe import dataclasses as dc
-    from griffe.collections import ModulesCollection
 
 
 _log = logging.getLogger(__name__)
@@ -68,21 +67,22 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
 
 
 def get_object(
-    module: str,
-    object_name: str,
+    path: str,
+    object_name: "str | None" = None,
     parser: str = "numpy",
     load_aliases=True,
     dynamic=False,
-    modules_collection: "None | ModulesCollection" = None,
+    loader: None | GriffeLoader = None,
 ) -> dc.Object:
     """Fetch a griffe object.
 
     Parameters
     ----------
-    module: str
-        A module name.
+    path: str
+        An import path to the object. This should have the form `path.to.module:object`.
+        For example, `quartodoc:get_object` or `quartodoc:MdRenderer.render`.
     object_name: str
-        A function name.
+        (Deprecated). A function name.
     parser: str
         A docstring parser to use.
     load_aliases: bool
@@ -95,7 +95,7 @@ def get_object(
 
     See Also
     --------
-    get_function: a deprecated function.
+    preview: print a user-friendly preview of a griffe object.
 
     Examples
     --------
@@ -104,24 +104,52 @@ def get_object(
     <Function('get_function', ...
 
     """
-    griffe = GriffeLoader(
-        docstring_parser=Parser(parser), modules_collection=modules_collection
-    )
-    mod = griffe.load_module(module)
 
-    parts = object_name.split(".")
-    f_data = mod._modules_collection[f"{module}.{object_name}"]
+    if object_name is not None:
+        warnings.warn(
+            "object_name argument is deprecated in get_object", DeprecationWarning
+        )
+
+        path = f"{path}:{object_name}"
+
+    if loader is None:
+        loader = GriffeLoader(
+            docstring_parser=Parser(parser),
+            modules_collection=ModulesCollection(),
+            lines_collection=LinesCollection(),
+        )
+
+    try:
+        module, object_path = path.split(":", 1)
+    except ValueError:
+        module, object_path = path, None
+
+    # load the module if it hasn't been already.
+    # note that it is critical for performance that we only do this when necessary.
+    root_mod = module.split(".", 1)[0]
+    if root_mod not in loader.modules_collection:
+        loader.load_module(module)
+
+    # griffe uses only periods for the path
+    griffe_path = f"{module}.{object_path}" if object_path else module
+
+    # Case 1: dynamic loading ----
+    if dynamic:
+        if isinstance(dynamic, str):
+            return dynamic_alias(path, target=dynamic, loader=loader)
+
+        return dynamic_alias(path, loader=loader)
+
+    # Case 2: static loading an object ----
+    f_parent = loader.modules_collection[griffe_path.rsplit(".", 1)[0]]
+    f_data = loader.modules_collection[griffe_path]
 
     # ensure that function methods fetched off of an Alias of a class, have that
     # class Alias as their parent, not the Class itself.
-    if isinstance(f_data, dc.Function):
-        try:
-            parent_path = ".".join(parts[:-1])
-            parent_alias = mod._modules_collection[f"{module}.{parent_path}"]
-        except KeyError:
-            pass
-        else:
-            f_data = dc.Alias(f_data.name, f_data, parent=parent_alias)
+    if isinstance(f_parent, dc.Alias) and isinstance(
+        f_data, (dc.Function, dc.Attribute)
+    ):
+        f_data = dc.Alias(f_data.name, f_data, parent=f_parent)
 
     # Alias objects can refer to objects imported from other modules.
     # in this case, we need to import the target's module in order to resolve
@@ -129,37 +157,158 @@ def get_object(
     if isinstance(f_data, Alias) and load_aliases:
         target_mod = f_data.target_path.split(".")[0]
         if target_mod != module:
-            griffe.load_module(target_mod)
-
-    if dynamic:
-        obj = f_data.target if isinstance(f_data, Alias) else f_data
-        replace_docstring(obj)
+            loader.load_module(target_mod)
 
     return f_data
 
 
-def replace_docstring(obj: dc.Object | dc.Alias, f):
+def _resolve_target(obj: dc.Alias):
+    target = obj.target
+
+    count = 0
+    while isinstance(target, dc.Alias):
+        count += 1
+        if count > 100:
+            raise ValueError(
+                "Attempted to resolve target, but may be infinitely recursing?"
+            )
+
+        target = target.target
+
+    return target
+
+
+def replace_docstring(obj: dc.Object | dc.Alias, f=None):
+    """Replace (in place) a docstring for a griffe object.
+
+    Parameters
+    ----------
+    obj:
+        Object to replace the docstring of.
+    f:
+        The python object whose docstring to use in the replacement. If not
+        specified, then attempt to import obj and use its docstring.
+
+    """
     import importlib
 
-    mod = importlib.import_module(obj.module.canonical_path)
+    if isinstance(obj, dc.Alias):
+        obj = _resolve_target(obj)
 
-    # TODO: handle top-level modules. this assumes it's the child of a module.
-    f = getattr(mod, obj.name)
+    # for classes, we dynamically load the docstrings for all their methods.
+    # since griffe reads class docstrings from the .__init__ method, this should
+    # also have the effect of updating the class docstring.
+    if isinstance(obj, dc.Class):
+        for func_obj in obj.functions.values():
+            replace_docstring(func_obj)
+
+    if f is None:
+        mod = importlib.import_module(obj.module.canonical_path)
+
+        if isinstance(obj.parent, dc.Class):
+            f = getattr(getattr(mod, obj.parent.name), obj.name)
+        else:
+            f = getattr(mod, obj.name)
+
+    # if no docstring on the dynamically loaded function, then stop
+    # since there's nothing to update.
+    # TODO: A static docstring could have been detected erroneously
+    if f.__doc__ is None:
+        return
 
     old = obj.docstring
     new = dc.Docstring(
         value=f.__doc__,
-        lineno=old.lineno,
-        endlineno=old.endlineno,
-        parent=old.parent,
-        parser=old.parser,
-        parser_options=old.parser_options,
+        lineno=getattr(old, "lineno", None),
+        endlineno=getattr(old, "endlineno", None),
+        parent=getattr(old, "parent", None),
+        parser=getattr(old, "parser", None),
+        parser_options=getattr(old, "parser_options", None),
     )
 
-    if isinstance(obj, dc.Alias):
-        obj.target.docstring = new
+    obj.docstring = new
+
+
+def dynamic_alias(
+    path: str, target: "str | None" = None, loader=None
+) -> dc.Object | dc.Alias:
+    """Return and Alias, using a dynamic import to find the target.
+
+    Parameters
+    ----------
+    path:
+        Full path to the object. E.g. `quartodoc.get_object`.
+    get_object_:
+        Function used to fetch the alias target.
+    target:
+        Optional path to ultimate Alias target. By default, this is inferred
+        using the __module__ attribute of the imported object.
+
+    """
+    import importlib
+
+    # TODO: raise an informative error if no period
+    try:
+        mod_name, object_path = path.split(":", 1)
+    except ValueError:
+        mod_name, object_path = path, None
+
+    mod = importlib.import_module(mod_name)
+
+    # Case 1: path is just to a module
+    if object_path is None:
+        attr = get_object(path)
+        canonical_path = attr.__name__
+
+    # Case 2: path is to a member of a module
     else:
-        obj.docstring = new
+        splits = object_path.split(".")
+
+        canonical_path = None
+        parts = []
+        crnt_part = mod
+        for ii, attr_name in enumerate(splits):
+            try:
+                crnt_part = getattr(crnt_part, attr_name)
+                if not isinstance(crnt_part, ModuleType) and not canonical_path:
+                    canonical_path = crnt_part.__module__ + ":" + ".".join(splits[ii:])
+
+                parts.append(crnt_part)
+            except AttributeError:
+                raise AttributeError(
+                    f"No attribute named `{attr_name}` in the path `{path}`."
+                )
+
+        if canonical_path is None:
+            raise ValueError("Cannot find canonical path for `{path}`")
+
+        attr = crnt_part
+
+    # start loading things with griffe ----
+
+    if target:
+        obj = get_object(target, loader=loader)
+    else:
+        obj = get_object(canonical_path, loader=loader)
+
+    # use dynamically imported object's docstring
+    replace_docstring(obj, attr)
+
+    if obj.canonical_path == path.replace(":", "."):
+        return obj
+    else:
+        # TODO: this logic should live in a MemberPath dataclass or something
+        if object_path:
+            if "." in object_path:
+                prev_member = object_path.rsplit(".", 1)[0]
+                parent_path = f"{mod_name}:{prev_member}"
+            else:
+                parent_path = mod_name
+        else:
+            parent_path = mod_name.rsplit(".", 1)[0]
+
+        parent = get_object(parent_path, loader=loader)
+        return dc.Alias(attr_name, obj, parent=parent)
 
 
 # pkgdown =====================================================================
@@ -191,7 +340,7 @@ class Builder:
         The default name shown for documented functions. Either "name", "relative",
         "full", or "canonical". These options range from just the function name, to its
         full path relative to its package, to including the package name, to its
-        the its full path relative to its .__module__.
+        the its full path relative to its `.__module__`.
 
     """
 
@@ -235,21 +384,22 @@ class Builder:
         sidebar: "str | None" = None,
         use_interlinks: bool = False,
         display_name: str = "name",
+        rewrite_all_pages=True,
     ):
-        self.validate(sections)
+        self.layout = self.load_layout(sections=sections, package=package)
+        self.sections = self.layout.sections
 
-        self.sections = sections
         self.package = package
         self.version = None
         self.dir = dir
         self.title = title
         self.display_name = display_name
 
-        self.items: "dict[str, dc.Object | dc.Alias]" = {}
-        self.create_items()
+        self.items: "list[layout.Item]"
+        # self.create_items()
 
         self.inventory: "None | soi.Inventory"
-        self.create_inventory()
+        # self.create_inventory()
 
         self.renderer = Renderer.from_config(renderer)
 
@@ -259,125 +409,158 @@ class Builder:
             self.out_index = out_index
 
         self.use_interlinks = use_interlinks
+        self.rewrite_all_pages = rewrite_all_pages
+
+    def load_layout(self, sections: dict, package: str):
+        # TODO: currently returning the list of sections, to make work with
+        # previous code. We should make Layout a first-class citizen of the
+        # process.
+        return layout.Layout(sections=sections, package=package)
+
+    # building ----------------------------------------------------------------
 
     def build(self):
         """Build index page, sphinx inventory, and individual doc pages."""
 
-        _log.info("Rendering index")
-        content = self.render_index()
+        # shaping and collection ----
 
-        _log.info(f"Writing index to directory: {self.dir}")
-        p_index = Path(self.dir) / self.out_index
-        p_index.parent.mkdir(exist_ok=True, parents=True)
-        p_index.write_text(content)
+        _log.info("Generating blueprint.")
+        blueprint = self.do_blueprint()
 
-        _log.info(f"Saving inventory to {self.out_inventory}")
-        convert_inventory(self.inventory, self.out_inventory)
+        _log.info("Collecting pages and inventory items.")
+        pages, items = self.do_collect(blueprint)
 
-        _log.info("Writing doc pages")
-        self.write_doc_pages()
+        # strip package name the item name, so that it isn't repeated a ton
+        # in our internal docs links.
+        stripped_items = self._strip_item_dispname(items)
+
+        _log.info("Summarizing docs for index page.")
+        summary = self.do_summarize(blueprint, stripped_items)
+
+        # writing pages ----
+
+        _log.info("Writing index")
+        self.write_index(summary)
+
+        _log.info("Writing docs pages")
+        self.write_doc_pages(pages, stripped_items)
+
+        # inventory ----
+
+        _log.info("Creating inventory file")
+        inv = self.create_inventory(items)
+        convert_inventory(inv, self.out_inventory)
+
+        # sidebar ----
 
         if self.sidebar:
             _log.info(f"Writing sidebar yaml to {self.sidebar}")
-            d_sidebar = self.generate_sidebar()
+            d_sidebar = self.generate_sidebar(blueprint)
             yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
-    def validate(self, d):
-        # TODO: validate sections (or config values generally)
-        return True
+    def do_blueprint(self) -> layout.Layout:
+        """Convert a layout with Auto elements to a full-fledged doc specification."""
 
-    # introspection ----
+        from quartodoc.builder.blueprint import BlueprintTransformer
 
-    def create_items(self):
-        """Collect items for all docstrings."""
+        bt = BlueprintTransformer()
+        blueprint = bt.visit(self.layout)
 
-        collection = ModulesCollection()
-        f_get_object = partial(get_object, modules_collection=collection)
+        return blueprint
 
-        _log.info("Creating items")
-        for section in self.sections:
-            for func_name in section["contents"]:
-                _log.info(f"Getting object for `{self.package}.{func_name}`")
-                obj = f_get_object(self.package, func_name)
-                self.items[func_name] = obj
+    def do_collect(self, blueprint) -> tuple[list[layout.Page], list[layout.Item]]:
+        """Collect the pages and sphinx item information from a layout."""
+
+        from quartodoc.builder.collect import CollectTransformer
+
+        ct = CollectTransformer(self.dir)
+        ct.visit(blueprint)
+
+        return ct.pages, ct.items
+
+    def do_summarize(self, blueprint, items):
+        """Summarize a layout into index tables."""
+
+        summary = self.renderer.summarize(blueprint)
+
+        return summary
+
+    def write_index(self, content: str):
+        """Write API index page."""
+
+        _log.info(f"Writing index to directory: {self.dir}")
+
+        final = f"# {self.title}\n\n{content}"
+
+        p_index = Path(self.dir) / self.out_index
+        p_index.parent.mkdir(exist_ok=True, parents=True)
+        p_index.write_text(final)
+
+        return str(p_index)
+
+    def write_doc_pages(self, pages, items):
+        """Write individual function documentation pages."""
+
+        for page in pages:
+            _log.info(f"Rendering {page.path}")
+            rendered = self.renderer.render(page)
+            html_path = Path(self.dir) / (page.path + self.out_page_suffix)
+            html_path.parent.mkdir(exist_ok=True, parents=True)
+
+            # Only write out page if it has changed, or we've set the
+            # rewrite_all_pages option. This ensures that quarto won't have
+            # to re-render every page of the API all the time.
+            if (
+                self.rewrite_all_pages
+                or (not html_path.exists())
+                or (html_path.read_text() != rendered)
+            ):
+                html_path.write_text(rendered)
 
     # inventory ----
 
-    def create_inventory(self):
+    def create_inventory(self, items):
         """Generate sphinx inventory object."""
 
         # TODO: get package version
         _log.info("Creating inventory")
         version = "0.0.9999" if self.version is None else self.version
-        self.inventory = create_inventory(
-            self.package,
-            version,
-            list(self.items.values()),
-            self.fetch_object_uri,
-            self.fetch_object_dispname,
-        )
+        inventory = create_inventory(self.package, version, items)
 
-    def fetch_object_uri(self, obj, suffix=".html"):
-        """Define the final url that will point to individual doc pages."""
+        return inventory
 
-        dispname = self.fetch_object_dispname(obj)
-        return f"{self.dir}/{dispname}{suffix}"
+    def _strip_item_dispname(self, items):
+        result = []
+        for item in items:
+            new = item.copy()
+            prefix = self.package + "."
+            if new.name.startswith(prefix):
+                new.dispname = new.name.replace(prefix, "", 1)
+            result.append(new)
 
-    def fetch_object_dispname(self, obj):
-        """Define the name that will be displayed for individual api functions."""
-
-        if self.display_name == "name":
-            return obj.name
-        elif self.display_name == "relative":
-            return ".".join(obj.path.split(".")[1:])
-
-        elif self.display_name == "full":
-            return obj.path
-
-        elif self.display_name == "canonical":
-            return obj.canonical_path
-
-        raise ValueError(f"Unsupported display_name: `{self.display_name}`")
-
-    # rendering ----
-
-    def render_index(self):
-        """Generate API index page."""
-
-        raise NotImplementedError()
-
-    def render_item_link(self, obj):
-        if self.use_interlinks:
-            return f"[](`{obj.path}`)"
-
-        link = "/" + self.fetch_object_uri(obj, suffix=self.out_page_suffix)
-        name = self.fetch_object_dispname(obj)
-        return f"[{name}]({link})"
-
-    def write_doc_pages(self):
-        """Write individual function documentation pages."""
-
-        for item in self.items.values():
-            _log.info(f"Rendering `{item.canonical_path}`")
-            rendered = self.renderer.render(item)
-            html_path = Path(self.fetch_object_uri(item))
-            html_path.parent.mkdir(exist_ok=True, parents=True)
-
-            html_path.with_suffix(self.out_page_suffix).write_text(rendered)
+        return result
 
     # sidebar ----
 
-    def generate_sidebar(self):
+    def generate_sidebar(self, blueprint: layout.Layout):
         contents = [f"{self.dir}/{self.out_index}"]
-        for section in self.sections:
-            links = [
-                self.fetch_object_uri(self.items[k], suffix=self.out_page_suffix)
-                for k in section["contents"]
-            ]
+        for section in blueprint.sections:
+            links = []
+            for entry in section.contents:
+                links.extend(self._page_to_links(entry))
 
-            contents.append({"section": section["title"], "contents": links})
+            contents.append({"section": section.title, "contents": links})
 
         return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
+
+    def _page_to_links(self, el: layout.Page) -> list[str]:
+        # if el.flatten:
+        #     links = []
+        #     for entry in el.contents:
+        #         links.append(f"{self.dir}/{entry.path}{self.out_page_suffix}")
+        #     return links
+
+        return [f"{self.dir}/{el.path}{self.out_page_suffix}"]
 
     # constructors ----
 
@@ -406,64 +589,23 @@ class BuilderPkgdown(Builder):
 
     style = "pkgdown"
 
-    def render_index(self):
-        rendered_sections = list(map(self._render_section, self.sections))
-        str_sections = "\n\n".join(rendered_sections)
-
-        return f"# {self.title}\n\n{str_sections}"
-
-    def _render_section(self, section):
-        header = f"## {section['title']}\n\n{section['desc']}"
-
-        thead = "| | |\n| --- | --- |"
-
-        rendered = []
-        for func_name in section["contents"]:
-            # TODO: shouldn't need to collect object again after .create_items()
-            obj = get_object(self.package, func_name)
-            rendered.append(self._render_object(obj))
-
-        str_func_table = "\n".join([thead, *rendered])
-        return f"{header}\n\n{str_func_table}"
-
-    def _render_object(self, obj):
-        # get high-level description
-        doc = obj.docstring
-        if doc is None:
-            # TODO: add a single empty
-            docstring_parts = []
-        else:
-            docstring_parts = doc.parsed
-
-        # TODO: look up from inventory?
-        link = self.render_item_link(obj)
-        if len(docstring_parts) and isinstance(
-            docstring_parts[0], ds.DocstringSectionText
-        ):
-            # TODO: or canonical_path
-            description = docstring_parts[0].value
-            short = description.split("\n")[0]
-            return f"| {link} | {short} |"
-        else:
-            return f"| {link} | |"
-
-    # def fetch_object_dispname(self, obj):
-    #    return obj.name
-
 
 class BuilderSinglePage(Builder):
     """Build an API with all docs embedded on a single page."""
 
     style = "single-page"
 
-    def render_index(self):
-        return "\n\n".join([self.renderer.render(item) for item in self.items.values()])
+    def load_layout(self, *args, **kwargs):
+        el = super().load_layout(*args, **kwargs)
 
-    def fetch_object_uri(self, obj):
-        index_name = Path(self.out_index).with_suffix(".html")
-        return f"{self.dir}/{index_name}#{obj.path}"
+        el.sections = [layout.Page(path=self.out_index, contents=el.sections)]
 
-    def write_doc_pages(self):
+        return el
+
+    def do_summarize(self, *args, **kwargs):
+        pass
+
+    def write_index(self, *args, **kwargs):
         pass
 
 

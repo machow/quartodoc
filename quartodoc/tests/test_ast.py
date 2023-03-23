@@ -23,8 +23,10 @@ def test_transform_docstring_section(el, body):
     src = ds.DocstringSectionText(el, title=None)
     res = qast._DocstringSectionPatched.transform(src)
 
-    assert isinstance(res, qast.DocstringSectionSeeAlso)
-    assert res.value == body
+    assert len(res) == 1
+    assert isinstance(res[0], qast.DocstringSectionSeeAlso)
+    assert res[0].title == "See Also"
+    assert res[0].value == body
 
 
 @pytest.mark.parametrize(
@@ -40,14 +42,16 @@ def test_transform_docstring_section_subtype(el, cls):
     src = ds.DocstringSectionText(el, title=None)
     res = qast._DocstringSectionPatched.transform(src)
 
-    assert isinstance(res, cls)
+    assert len(res) == 1
+    assert isinstance(res[0], cls)
 
     # using transform function ----
     parsed = parse_numpy(dc.Docstring(el))
     assert len(parsed) == 1
 
-    res2 = qast.transform(parsed[0])
-    assert isinstance(res2, cls)
+    res2 = qast.transform(parsed)
+    assert len(res2) == 1
+    assert isinstance(res2[0], cls)
 
 
 @pytest.mark.xfail(reason="TODO: sections get grouped into single element")
@@ -69,3 +73,12 @@ def test_preview_no_fail(capsys):
     res = capsys.readouterr()
 
     assert "get_object" in res.out
+
+
+@pytest.mark.parametrize(
+    "text, dst",
+    [("One\n---\nab\n\nTwo\n---\n\ncd", [("One", "ab\n\n"), ("Two", "\ncd")])],
+)
+def test_transform_split_sections(text, dst):
+    res = qast._DocstringSectionPatched.split_sections(text)
+    assert res == dst

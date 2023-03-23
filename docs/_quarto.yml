@@ -25,27 +25,45 @@ quartodoc:
   package: quartodoc
   sidebar: "api/_sidebar.yml"
   sections:
-    - title: API Builders
-      desc: |
-        Builders are responsible for building documentation. They tie all the pieces
-        of quartodoc together, and can be defined in your _quarto.yml config.
-      contents:
-        - Builder
-        - BuilderPkgdown
-        - BuilderSinglePage
-
-    - title: Docstring Renderers
-      desc: |
-        Renderers convert parsed docstrings into a target format, like markdown.
-      contents:
-        - MdRenderer
-
     - title: Inspection
       desc: |
         These functions Fetch and analyze python objects, including parsing docstrings.
       contents:
         - get_object
         - preview
+
+    - title: Docstring Renderers
+      desc: |
+        Renderers convert parsed docstrings into a target format, like markdown.
+      contents:
+        - name: MdRenderer
+          children: linked
+        - name: MdRenderer.render
+          dynamic: true
+        - name: MdRenderer.render_annotation
+          dynamic: true
+        - name: MdRenderer.render_header
+          dynamic: true
+        - name: MdRenderer.signature
+          dynamic: true
+        - name: MdRenderer.summarize
+          dynamic: true
+
+    - title: API Builders
+      desc: |
+        Builders are responsible for building documentation. They tie all the pieces
+        of quartodoc together, and can be defined in your _quarto.yml config.
+      contents:
+        - kind: auto
+          name: Builder
+          members: []
+        - Builder.build
+        - Builder.do_blueprint
+        - Builder.do_collect
+        - Builder.do_summarize
+        - Builder.write_index
+        - Builder.write_doc_pages
+
 
     - title: Inventory links
       desc: |
@@ -54,6 +72,29 @@ quartodoc:
       contents:
         - create_inventory
         - convert_inventory
+
+    - title: Data models
+      desc: |
+        Classes for specifying the exact layout of your docs.
+      contents:
+        - kind: "page"
+          path: "layouts"
+          flatten: true
+          contents:
+            - layout.Layout
+            - layout.Section
+            - layout.Page
+            - layout.Auto
+            - name: layout.Doc
+              members: []
+            - layout.DocFunction
+            - layout.DocAttribute
+            - layout.DocModule
+            - layout.DocClass
+            - layout.Link
+            - layout.Item
+            - layout.SectionElement
+            - layout.ContentElement
 
 
 website:
@@ -88,6 +129,7 @@ website:
           contents:
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
+            - get-started/building.qmd
         - section: "Extra Topics"
           contents:
             - get-started/architecture.qmd
