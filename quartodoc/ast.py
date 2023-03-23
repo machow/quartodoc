@@ -104,8 +104,9 @@ class _DocstringSectionPatched(ds.DocstringSection):
             sub_cls = cls._registry.get(title.lower(), ds.DocstringSectionText)
 
             # note that griffe currently doesn't store the title anywhere,
-            # so we just pass the title attr from the original element.
-            results.append(sub_cls(body, el.title))
+            # but we add the exact title here, so we can be flexible about the
+            # sections we parse (e.g. Note instead of Notes) in the future.
+            results.append(sub_cls(body, title))
 
         return results or [el]
 

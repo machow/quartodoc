@@ -25,6 +25,7 @@ def test_transform_docstring_section(el, body):
 
     assert len(res) == 1
     assert isinstance(res[0], qast.DocstringSectionSeeAlso)
+    assert res[0].title == "See Also"
     assert res[0].value == body
 
 

@@ -255,7 +255,7 @@ class MdRenderer(Renderer):
         else:
             patched_sections = qast.transform(el.docstring.parsed)
             for section in patched_sections:
-                title = section.kind.value
+                title = section.title or section.kind.value
                 body = self.render(section)
 
                 if title != "text":
