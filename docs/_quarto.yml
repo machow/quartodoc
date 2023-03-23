@@ -36,10 +36,13 @@ quartodoc:
       desc: |
         Renderers convert parsed docstrings into a target format, like markdown.
       contents:
-        - MdRenderer
+        - name: MdRenderer
+          children: linked
         - name: MdRenderer.render
           dynamic: true
         - name: MdRenderer.render_annotation
+          dynamic: true
+        - name: MdRenderer.render_header
           dynamic: true
         - name: MdRenderer.signature
           dynamic: true
@@ -78,8 +81,7 @@ quartodoc:
           path: "layouts"
           flatten: true
           contents:
-            - name: layout.Layout
-              dynamic: true
+            - layout.Layout
             - layout.Section
             - layout.Page
             - layout.Auto
@@ -125,9 +127,9 @@ website:
             - get-started/extending.qmd
         - section: "Advanced"
           contents:
-            - get-started/advanced-overview.qmd
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
+            - get-started/building.qmd
         - section: "Extra Topics"
           contents:
             - get-started/architecture.qmd

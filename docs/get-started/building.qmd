@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: Building layouts
 jupyter:
   jupytext:
     text_representation:
@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-quartodoc has two main classes:
+quartodoc has 4 main pieces:
 
 * Builder: the class responsible for reading a `_quarto.yml`, and generating docs.
 * Layout: a specification of the docs, that the builder enhances to fully specify "what should get rendered and how?".
