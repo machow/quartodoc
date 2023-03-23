@@ -6,7 +6,8 @@ import logging
 from enum import Enum
 from pydantic import BaseModel, Field
 
-from typing import Annotated, Literal, Union, Optional
+from typing_extensions import Annotated
+from typing import Literal, Union, Optional
 
 
 _log = logging.getLogger(__name__)

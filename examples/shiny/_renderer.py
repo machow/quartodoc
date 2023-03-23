@@ -81,6 +81,6 @@ class Renderer(MdRenderer):
         return f"[{el.source}](`{el.full}`)"
 
     @dispatch
-    def summarize(self, el: dc.Object | dc.Alias):
+    def summarize(self, el: Union[dc.Object, dc.Alias]):
         result = super().summarize(el)
         return html.escape(result)

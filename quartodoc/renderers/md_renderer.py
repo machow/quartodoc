@@ -7,7 +7,7 @@ from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from tabulate import tabulate
 from plum import dispatch
-from typing import Tuple, Union
+from typing import Tuple, Union, Optional
 from quartodoc import layout
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
@@ -118,20 +118,20 @@ class MdRenderer(Renderer):
     # signature method --------------------------------------------------------
 
     @dispatch
-    def signature(self, el: dc.Alias, source: dc.Alias | None = None):
+    def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
         """Return a string representation of an object's signature."""
 
         return self.signature(el.target, el)
 
     @dispatch
-    def signature(self, el: Union[dc.Class, dc.Function], source: dc.Alias | None = None):
+    def signature(self, el: Union[dc.Class, dc.Function], source: Optional[dc.Alias] = None):
         name = self._fetch_object_dispname(source or el)
         pars = self.render(el.parameters)
 
         return f"`{name}({pars})`"
 
     @dispatch
-    def signature(self, el: Union[dc.Module, dc.Attribute], source: dc.Alias | None = None):
+    def signature(self, el: Union[dc.Module, dc.Attribute], source: Optional[dc.Alias] = None):
         name = self._fetch_object_dispname(source or el)
         return f"`{name}`"
 
@@ -479,7 +479,7 @@ class MdRenderer(Renderer):
         return self.summarize(el.contents[0], el.path, shorten = True)
 
     @dispatch
-    def summarize(self, el: layout.Doc, path: str | None = None, shorten: bool = False):
+    def summarize(self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False):
         if path is None:
             link = f"[{el.name}](#{el.anchor})"
         else:
