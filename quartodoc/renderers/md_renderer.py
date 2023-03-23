@@ -138,7 +138,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render_header(self, el: layout.Doc):
-        # _str_dispname = self._fetch_object_dispname(el.obj)
+        """Render the header of a docstring, including any anchors."""
         _str_dispname = el.name
 
         # TODO: support anchors that are not fully qualified paths?
