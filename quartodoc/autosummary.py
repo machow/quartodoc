@@ -131,22 +131,18 @@ def get_object(
         loader.load_module(module)
 
     # griffe uses only periods for the path
-    griffe_path = f"{module}.{object_path}"
+    griffe_path = f"{module}.{object_path}" if object_path else module
 
-    # Case 1: only getting a module ----
-    if not object_path:
-        return loader.modules_collection[module]
-
-    # Case 2: dynamic loading ----
+    # Case 1: dynamic loading ----
     if dynamic:
         if isinstance(dynamic, str):
             return dynamic_alias(path, target=dynamic, loader=loader)
 
         return dynamic_alias(path, loader=loader)
 
-    # Case 3: static loading an object ----
+    # Case 2: static loading an object ----
+    f_parent = loader.modules_collection[griffe_path.rsplit(".", 1)[0]]
     f_data = loader.modules_collection[griffe_path]
-    f_parent = f_data.parent
 
     # ensure that function methods fetched off of an Alias of a class, have that
     # class Alias as their parent, not the Class itself.
