@@ -3,7 +3,7 @@ from __future__ import annotations
 import html
 from importlib.resources import files
 from quartodoc import MdRenderer
-from quartodoc.renderers.base import convert_rst_link_to_md
+from quartodoc.renderers.base import convert_rst_link_to_md, sanitize
 from plum import dispatch
 from typing import Union
 
@@ -24,8 +24,7 @@ SHINYLIVE_TMPL = """
 DOCSTRING_TMPL = """\
 {rendered}
 
-Examples
---------
+{header} Examples
 
 {examples}
 """
@@ -43,7 +42,11 @@ class Renderer(MdRenderer):
         p_example = SHINY_PATH / "examples" / el.name / "app.py"
         if p_example.exists():
             example = SHINYLIVE_TMPL.format(p_example.read_text())
-            return DOCSTRING_TMPL.format(rendered=converted, examples=example)
+            return DOCSTRING_TMPL.format(
+                rendered=converted,
+                examples=example,
+                header="#" * (self.crnt_header_level + 1),
+            )
 
         return converted
 
@@ -56,8 +59,26 @@ class Renderer(MdRenderer):
         result = super().render(el)
         return html.escape(result)
 
-    def render_annotation(self, el: dc.Name | dc.Expression | None):
-        return super().render_annotation(el)
+    @dispatch
+    def render_annotation(self, el: str):
+        return sanitize(el)
+
+    @dispatch
+    def render_annotation(self, el: None):
+        return ""
+
+    @dispatch
+    def render_annotation(self, el: dc.Expression):
+        # an expression is essentially a list[dc.Name | str]
+        # e.g. Optional[TagList]
+        #   -> [Name(source="Optional", ...), "[", Name(...), "]"]
+
+        return "".join(map(self.render_annotation, el))
+
+    @dispatch
+    def render_annotation(self, el: dc.Name):
+        # e.g. Name(source="Optional", full="typing.Optional")
+        return f"[{el.source}](`{el.full}`)"
 
     @dispatch
     def summarize(self, el: dc.Object | dc.Alias):
