@@ -1,7 +1,9 @@
 import logging
 
 from griffe import dataclasses as dc
-from griffe.collections import ModulesCollection
+from griffe.loader import GriffeLoader
+from griffe.collections import ModulesCollection, LinesCollection
+from griffe.docstrings.parsers import Parser
 from functools import partial
 
 from plum import dispatch
@@ -26,11 +28,15 @@ _log = logging.getLogger(__name__)
 
 
 class BlueprintTransformer(PydanticTransformer):
-    def __init__(self, get_object=None):
+    def __init__(self, get_object=None, parser="numpy"):
 
         if get_object is None:
-            collection = ModulesCollection()
-            self.get_object = partial(_get_object, modules_collection=collection)
+            loader = GriffeLoader(
+                docstring_parser=Parser(parser),
+                modules_collection=ModulesCollection(),
+                lines_collection=LinesCollection(),
+            )
+            self.get_object = partial(_get_object, loader=loader)
         else:
             self.get_object = get_object
 

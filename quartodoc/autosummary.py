@@ -70,9 +70,7 @@ def get_object(
     parser: str = "numpy",
     load_aliases=True,
     dynamic=False,
-    modules_collection: "None | ModulesCollection" = None,
-    lines_collection: "None | LinesCollection" = None,
-    loader=None,
+    loader: None | GriffeLoader = None,
 ) -> dc.Object:
     """Fetch a griffe object.
 
@@ -104,17 +102,11 @@ def get_object(
 
     """
 
-    if loader is not None:
-        griffe = loader
-    else:
-        if modules_collection is None:
-            modules_collection = ModulesCollection()
-        if lines_collection is None:
-            lines_collection = LinesCollection()
-        griffe = GriffeLoader(
+    if loader is None:
+        loader = GriffeLoader(
             docstring_parser=Parser(parser),
-            modules_collection=modules_collection,
-            lines_collection=lines_collection,
+            modules_collection=ModulesCollection(),
+            lines_collection=LinesCollection(),
         )
 
     if module is None:
@@ -123,15 +115,24 @@ def get_object(
     mod_name = module.split(".", 1)[0]
     # only load the module if it hasn't been already
     # note that this is critical for performance.
-    if mod_name not in griffe.modules_collection:
-        griffe.load_module(module)
+    if mod_name not in loader.modules_collection:
+        loader.load_module(module)
+
+    full_name = f"{module}.{object_name}"
 
     # Case 1: only getting a module ----
     if not object_name:
-        return griffe.modules_collection[module]
+        return loader.modules_collection[module]
+
+    # Case 2: dynamic loading ----
+    if dynamic:
+        if isinstance(dynamic, str):
+            return dynamic_alias(full_name, target=dynamic, loader=loader)
+
+        return dynamic_alias(full_name, loader=loader)
 
     # Case 2: getting an object off of a module ----
-    f_data = griffe.modules_collection[f"{module}.{object_name}"]
+    f_data = loader.modules_collection[full_name]
     f_parent = f_data.parent
 
     # ensure that function methods fetched off of an Alias of a class, have that
@@ -147,10 +148,7 @@ def get_object(
     if isinstance(f_data, Alias) and load_aliases:
         target_mod = f_data.target_path.split(".")[0]
         if target_mod != module:
-            griffe.load_module(target_mod)
-
-    if dynamic:
-        replace_docstring(f_data)
+            loader.load_module(target_mod)
 
     return f_data
 
@@ -184,10 +182,6 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
 
     """
     import importlib
-
-    if isinstance(obj, dc.Attribute):
-        # TODO: handle attributes, which can be purely annotations.
-        return
 
     if isinstance(obj, dc.Alias):
         obj = _resolve_target(obj)
@@ -227,7 +221,7 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
 
 
 def dynamic_alias(
-    path: str, target: "str | None" = None, get_object_=None
+    path: str, target: "str | None" = None, loader=None
 ) -> dc.Object | dc.Alias:
     """Return and Alias, using a dynamic import to find the target.
 
@@ -252,13 +246,11 @@ def dynamic_alias(
 
     # start loading things with griffe ----
 
-    f_get_object = get_object_ or get_object
-
     if target:
-        obj = f_get_object(*target.rsplit(".", 1))
+        obj = get_object(*target.rsplit(".", 1), loader=loader)
     else:
         canonical_mod_name = attr.__module__
-        obj = f_get_object(canonical_mod_name, attr_name)
+        obj = get_object(canonical_mod_name, attr_name, loader=loader)
 
     # use dynamically imported object's docstring
     replace_docstring(obj, attr)
@@ -267,7 +259,7 @@ def dynamic_alias(
         return obj
     else:
         # TODO: make more robust
-        parent = f_get_object(*mod_name.rsplit(".", 1))
+        parent = get_object(*mod_name.rsplit(".", 1), loader=loader)
         return dc.Alias(attr_name, obj, parent=parent)
 
 

@@ -127,7 +127,9 @@ class Auto(_Base):
         (Not implemented). A list of members to exclude.
     dynamic:
         Whether to dynamically load docstring. By default docstrings are loaded
-        using static analysis.
+        using static analysis. dynamic may be a string pointing to another object,
+        to return an alias for that object.
+
     children:
         Style for presenting members. Either separate, embedded, or flat.
 
@@ -139,7 +141,7 @@ class Auto(_Base):
     include_private: bool = False
     include: str | None = None
     exclude: str | None = None
-    dynamic: bool = False
+    dynamic: bool | str = False
     children: ChoicesChildren = ChoicesChildren.embedded
 
 
