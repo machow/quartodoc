@@ -139,6 +139,7 @@ jobs:
           env_url: 'https://${{ steps.deployment.outputs.env }}--quartodoc.netlify.app'
           logs: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
       - uses: peaceiris/actions-gh-pages@v3
+        if: github.event_name == 'release'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build
