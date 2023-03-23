@@ -16,6 +16,13 @@ class _Base(BaseModel):
     ...
 
 
+class MISSING(BaseModel):
+    """Represents a missing value.
+
+    Note that this is used in cases where None is meaningful.
+    """
+
+
 class Layout(_Base):
     """The layout of an API doc, which may include many pages.
 
@@ -28,7 +35,7 @@ class Layout(_Base):
     """
 
     sections: list[SectionElement | Section]
-    package: str | None = None
+    package: str | None | MISSING = MISSING()
 
 
 # SubElements -----------------------------------------------------------------
@@ -51,7 +58,7 @@ class Section(_Base):
     kind: Literal["section"] = "section"
     title: str
     desc: str
-    package: str | None = None
+    package: str | None | MISSING = MISSING()
     contents: list[ContentElement | Doc | _AutoDefault]
 
 
@@ -67,7 +74,7 @@ class Page(_Base):
 
     kind: Literal["page"] = "page"
     path: str
-    package: str | None = None
+    package: str | None | MISSING = MISSING()
     summary: SummaryDetails | None = None
     flatten: bool = False
 

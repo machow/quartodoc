@@ -7,6 +7,7 @@ from functools import partial
 from plum import dispatch
 
 from quartodoc.layout import (
+    MISSING,
     _Base,
     Auto,
     ChoicesChildren,
@@ -45,12 +46,14 @@ class BlueprintTransformer(PydanticTransformer):
     def visit(self, el):
         # TODO: use a context handler
         self._log("VISITING", el)
-        try:
-            package = getattr(el, "package", None)
 
-            old = self.crnt_package
-            if package is not None:
-                self.crnt_package = package
+        package = getattr(el, "package", MISSING())
+        old = self.crnt_package
+
+        if not isinstance(package, MISSING):
+            self.crnt_package = package
+
+        try:
             return super().visit(el)
         finally:
             self.crnt_package = old
