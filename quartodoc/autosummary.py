@@ -66,7 +66,7 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
 
 def get_object(
     module: str,
-    object_name: str,
+    object_name: "str | None" = None,
     parser: str = "numpy",
     load_aliases=True,
     dynamic=False,
@@ -116,17 +116,23 @@ def get_object(
             modules_collection=modules_collection,
             lines_collection=lines_collection,
         )
-    parts = [*module.split("."), *object_name.split(".")]
-    mod_name = parts[0]
-    parent_path = ".".join(parts[:-1])
 
+    if module is None:
+        module, object_name = object_name.split(".", 1)
+
+    mod_name = module.split(".", 1)[0]
     # only load the module if it hasn't been already
     # note that this is critical for performance.
     if mod_name not in griffe.modules_collection:
         griffe.load_module(module)
 
-    f_parent = griffe.modules_collection[parent_path]
+    # Case 1: only getting a module ----
+    if not object_name:
+        return griffe.modules_collection[module]
+
+    # Case 2: getting an object off of a module ----
     f_data = griffe.modules_collection[f"{module}.{object_name}"]
+    f_parent = f_data.parent
 
     # ensure that function methods fetched off of an Alias of a class, have that
     # class Alias as their parent, not the Class itself.
@@ -220,6 +226,51 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
     obj.docstring = new
 
 
+def dynamic_alias(
+    path: str, target: "str | None" = None, get_object_=None
+) -> dc.Object | dc.Alias:
+    """Return and Alias, using a dynamic import to find the target.
+
+    Parameters
+    ----------
+    path:
+        Full path to the object. E.g. `quartodoc.get_object`.
+    get_object_:
+        Function used to fetch the alias target.
+    target:
+        Optional path to ultimate Alias target. By default, this is inferred
+        using the __module__ attribute of the imported object.
+
+    """
+    import importlib
+
+    # TODO: raise an informative error if no period
+    mod_name, attr_name = path.rsplit(".", 1)
+
+    mod = importlib.import_module(mod_name)
+    attr = getattr(mod, attr_name)
+
+    # start loading things with griffe ----
+
+    f_get_object = get_object_ or get_object
+
+    if target:
+        obj = f_get_object(*target.rsplit(".", 1))
+    else:
+        canonical_mod_name = attr.__module__
+        obj = f_get_object(canonical_mod_name, attr_name)
+
+    # use dynamically imported object's docstring
+    replace_docstring(obj, attr)
+
+    if obj.canonical_path == path:
+        return obj
+    else:
+        # TODO: make more robust
+        parent = f_get_object(*mod_name.rsplit(".", 1))
+        return dc.Alias(attr_name, obj, parent=parent)
+
+
 # pkgdown =====================================================================
 
 # TODO: styles -- pkgdown, single-page, many-pages
@@ -293,6 +344,7 @@ class Builder:
         sidebar: "str | None" = None,
         use_interlinks: bool = False,
         display_name: str = "name",
+        rewrite_all_pages=True,
     ):
         self.layout = self.load_layout(sections=sections, package=package)
         self.sections = self.layout.sections
@@ -317,6 +369,7 @@ class Builder:
             self.out_index = out_index
 
         self.use_interlinks = use_interlinks
+        self.rewrite_all_pages = rewrite_all_pages
 
     def load_layout(self, sections: dict, package: str):
         # TODO: currently returning the list of sections, to make work with
@@ -414,7 +467,15 @@ class Builder:
             html_path = Path(self.dir) / (page.path + self.out_page_suffix)
             html_path.parent.mkdir(exist_ok=True, parents=True)
 
-            html_path.write_text(rendered)
+            # Only write out page if it has changed, or we've set the
+            # rewrite_all_pages option. This ensures that quarto won't have
+            # to re-render every page of the API all the time.
+            if (
+                self.rewrite_all_pages
+                or (not html_path.exists())
+                or (html_path.read_text() != rendered)
+            ):
+                html_path.write_text(rendered)
 
     # inventory ----
 
