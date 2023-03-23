@@ -543,7 +543,7 @@ class Builder:
     # sidebar ----
 
     def generate_sidebar(self, blueprint: layout.Layout):
-        contents = [f"{self.dir}/{self.out_index}"]
+        contents = [f"{self.dir}/index{self.out_page_suffix}"]
         for section in blueprint.sections:
             links = []
             for entry in section.contents:
