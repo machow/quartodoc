@@ -3,7 +3,9 @@ from __future__ import annotations
 from contextvars import ContextVar
 from plum import dispatch
 from pydantic import BaseModel
-from typing import Union, Any, Optional
+from typing import Union
+
+from ._node import Node
 
 
 # Transformer -----------------------------------------------------------------
@@ -18,12 +20,6 @@ class WorkaroundKeyError(Exception):
     intercepts KeyErrors, and then causes an infinite recursion by re-calling
     the dispatcher.
     """
-
-
-class Node(BaseModel):
-    level: int = -1
-    value: Any = None
-    parent: Optional[Node] = None
 
 
 class PydanticTransformer:
