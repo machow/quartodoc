@@ -91,10 +91,14 @@ class BlueprintTransformer(PydanticTransformer):
 
         # TODO: make this less brittle
         pkg = self.crnt_package
+        if pkg is None:
+            path = el.name
+        else:
+            path = f"{pkg}.{el.name}" if ":" in el.name else f"{pkg}:{el.name}"
 
-        _log.info(f"Getting object for {pkg}.{el.name}")
+        _log.info(f"Getting object for {path}")
 
-        obj = self.get_object_fixed(pkg, el.name, dynamic=el.dynamic)
+        obj = self.get_object_fixed(path, dynamic=el.dynamic)
         raw_members = self._fetch_members(el, obj)
 
         # Three cases for structuring child methods ----
@@ -106,7 +110,7 @@ class BlueprintTransformer(PydanticTransformer):
             # but the actual objects on the target.
             # On the other hand, we've wired get_object up to make sure getting
             # the member of an Alias also returns an Alias.
-            obj_member = self.get_object(obj.path, entry, dynamic=el.dynamic)
+            obj_member = self.get_object_fixed(f"{path}.{entry}", dynamic=el.dynamic)
 
             # do no document submodules
             if obj_member.kind.value == "module":

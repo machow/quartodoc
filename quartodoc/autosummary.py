@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import warnings
 import yaml
 
 from griffe.loader import GriffeLoader
@@ -11,6 +12,7 @@ from griffe.docstrings import dataclasses as ds  # noqa
 from griffe import dataclasses as dc
 from plum import dispatch  # noqa
 from pathlib import Path
+from types import ModuleType
 
 from .inventory import create_inventory, convert_inventory
 from . import layout
@@ -65,7 +67,7 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
 
 
 def get_object(
-    module: str,
+    path: str,
     object_name: "str | None" = None,
     parser: str = "numpy",
     load_aliases=True,
@@ -76,10 +78,11 @@ def get_object(
 
     Parameters
     ----------
-    module: str
-        A module name.
+    path: str
+        An import path to the object. This should have the form `path.to.module:object`.
+        For example, `quartodoc:get_object` or `quartodoc:MdRenderer.render`.
     object_name: str
-        A function name.
+        (Deprecated). A function name.
     parser: str
         A docstring parser to use.
     load_aliases: bool
@@ -102,6 +105,13 @@ def get_object(
 
     """
 
+    if object_name is not None:
+        warnings.warn(
+            "object_name argument is deprecated in get_object", DeprecationWarning
+        )
+
+        path = f"{path}:{object_name}"
+
     if loader is None:
         loader = GriffeLoader(
             docstring_parser=Parser(parser),
@@ -109,30 +119,33 @@ def get_object(
             lines_collection=LinesCollection(),
         )
 
-    if module is None:
-        module, object_name = object_name.split(".", 1)
+    try:
+        module, object_path = path.split(":", 1)
+    except ValueError:
+        module, object_path = path, None
 
-    mod_name = module.split(".", 1)[0]
-    # only load the module if it hasn't been already
-    # note that this is critical for performance.
-    if mod_name not in loader.modules_collection:
+    # load the module if it hasn't been already.
+    # note that it is critical for performance that we only do this when necessary.
+    root_mod = module.split(".", 1)[0]
+    if root_mod not in loader.modules_collection:
         loader.load_module(module)
 
-    full_name = f"{module}.{object_name}"
+    # griffe uses only periods for the path
+    griffe_path = f"{module}.{object_path}"
 
     # Case 1: only getting a module ----
-    if not object_name:
+    if not object_path:
         return loader.modules_collection[module]
 
     # Case 2: dynamic loading ----
     if dynamic:
         if isinstance(dynamic, str):
-            return dynamic_alias(full_name, target=dynamic, loader=loader)
+            return dynamic_alias(path, target=dynamic, loader=loader)
 
-        return dynamic_alias(full_name, loader=loader)
+        return dynamic_alias(path, loader=loader)
 
-    # Case 2: getting an object off of a module ----
-    f_data = loader.modules_collection[full_name]
+    # Case 3: static loading an object ----
+    f_data = loader.modules_collection[griffe_path]
     f_parent = f_data.parent
 
     # ensure that function methods fetched off of an Alias of a class, have that
@@ -239,27 +252,66 @@ def dynamic_alias(
     import importlib
 
     # TODO: raise an informative error if no period
-    mod_name, attr_name = path.rsplit(".", 1)
+    try:
+        mod_name, object_path = path.split(":", 1)
+    except ValueError:
+        mod_name, object_path = path, None
 
     mod = importlib.import_module(mod_name)
-    attr = getattr(mod, attr_name)
+
+    # Case 1: path is just to a module
+    if object_path is None:
+        attr = get_object(path)
+        canonical_path = attr.__name__
+
+    # Case 2: path is to a member of a module
+    else:
+        splits = object_path.split(".")
+
+        canonical_path = None
+        parts = []
+        crnt_part = mod
+        for ii, attr_name in enumerate(splits):
+            try:
+                crnt_part = getattr(crnt_part, attr_name)
+                if not isinstance(crnt_part, ModuleType) and not canonical_path:
+                    canonical_path = crnt_part.__module__ + ":" + ".".join(splits[ii:])
+
+                parts.append(crnt_part)
+            except AttributeError:
+                raise AttributeError(
+                    f"No attribute named `{attr_name}` in the path `{path}`."
+                )
+
+        if canonical_path is None:
+            raise ValueError("Cannot find canonical path for `{path}`")
+
+        attr = crnt_part
 
     # start loading things with griffe ----
 
     if target:
-        obj = get_object(*target.rsplit(".", 1), loader=loader)
+        obj = get_object(target, loader=loader)
     else:
-        canonical_mod_name = attr.__module__
-        obj = get_object(canonical_mod_name, attr_name, loader=loader)
+        obj = get_object(canonical_path, loader=loader)
 
     # use dynamically imported object's docstring
     replace_docstring(obj, attr)
 
-    if obj.canonical_path == path:
+    if obj.canonical_path == path.replace(":", "."):
         return obj
     else:
-        # TODO: make more robust
-        parent = get_object(*mod_name.rsplit(".", 1), loader=loader)
+        # TODO: this logic should live in a MemberPath dataclass or something
+        if object_path:
+            if "." in object_path:
+                prev_member = object_path.rsplit(".", 1)[0]
+                parent_path = f"{mod_name}:{prev_member}"
+            else:
+                parent_path = mod_name
+        else:
+            parent_path = mod_name.rsplit(".", 1)[0]
+
+        parent = get_object(parent_path, loader=loader)
         return dc.Alias(attr_name, obj, parent=parent)
 
 
