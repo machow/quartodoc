@@ -6,7 +6,7 @@ import logging
 from enum import Enum
 from pydantic import BaseModel, Field
 
-from typing import Annotated, Literal, Union
+from typing import Annotated, Literal, Union, Optional
 
 
 _log = logging.getLogger(__name__)
@@ -34,8 +34,8 @@ class Layout(_Base):
         The package being documented.
     """
 
-    sections: list[SectionElement | Section]
-    package: str | None | MISSING = MISSING()
+    sections: list[Union[SectionElement, Section]]
+    package: Union[str, None, MISSING] = MISSING()
 
 
 # SubElements -----------------------------------------------------------------
@@ -58,8 +58,8 @@ class Section(_Base):
     kind: Literal["section"] = "section"
     title: str
     desc: str
-    package: str | None | MISSING = MISSING()
-    contents: list[ContentElement | Doc | _AutoDefault]
+    package: Union[str, None, MISSING] = MISSING()
+    contents: list[Union[ContentElement, Doc, _AutoDefault]]
 
 
 class SummaryDetails(_Base):
@@ -74,11 +74,11 @@ class Page(_Base):
 
     kind: Literal["page"] = "page"
     path: str
-    package: str | None | MISSING = MISSING()
-    summary: SummaryDetails | None = None
+    package: Union[str, None, MISSING] = MISSING()
+    summary: Optional[SummaryDetails] = None
     flatten: bool = False
 
-    contents: list[ContentElement | Doc | _AutoDefault]
+    contents: list[Union[ContentElement, Doc, _AutoDefault]]
 
     @property
     def obj(self):
@@ -137,11 +137,11 @@ class Auto(_Base):
 
     kind: Literal["auto"] = "auto"
     name: str
-    members: list[str] | None = None
+    members: Optional[list[str]] = None
     include_private: bool = False
-    include: str | None = None
-    exclude: str | None = None
-    dynamic: bool | str = False
+    include: Optional[str] = None
+    exclude: Optional[str] = None
+    dynamic: Union[bool, str] = False
     children: ChoicesChildren = ChoicesChildren.embedded
 
 
@@ -149,9 +149,9 @@ class Auto(_Base):
 class _AutoDefault(_Base):
     """This hacky class allows creating Auto as a default option in Pages and Sections."""
 
-    __root__: str | dict
+    __root__: Union[str, dict]
 
-    def __new__(cls, __root__: str | dict):
+    def __new__(cls, __root__: Union[str, dict]):
         if isinstance(__root__, dict):
             return Auto(**__root__)
 
@@ -162,7 +162,7 @@ class Link(_Base):
     """A link to an object (e.g. a method that gets documented on a separate page)."""
 
     name: str
-    obj: dc.Object | dc.Alias
+    obj: Union[dc.Object, dc.Alias]
 
     class Config:
         arbitrary_types_allowed = True
@@ -170,7 +170,7 @@ class Link(_Base):
 
 class Doc(_Base):
     name: str
-    obj: dc.Object | dc.Alias
+    obj: Union[dc.Object, dc.Alias]
     anchor: str
 
     class Config:
@@ -178,7 +178,7 @@ class Doc(_Base):
 
     @classmethod
     def from_griffe(
-        cls, name, obj: dc.Object | dc.Alias, members=None, anchor: str = None
+        cls, name, obj: Union[dc.Object, dc.Alias], members=None, anchor: str = None
     ):
         if members is None:
             members = []
@@ -206,7 +206,7 @@ class DocFunction(Doc):
 
 class DocClass(Doc):
     kind: Literal["class"] = "class"
-    members: list[MemberPage | Doc | Link] = tuple()
+    members: list[Union[MemberPage, Doc, Link]] = tuple()
 
 
 class DocAttribute(Doc):
@@ -215,7 +215,7 @@ class DocAttribute(Doc):
 
 class DocModule(Doc):
     kind: Literal["module"] = "module"
-    members: list[MemberPage | Doc | Link] = tuple()
+    members: list[Union[MemberPage, Doc, Link]] = tuple()
 
 
 SectionElement = Annotated[Union[Section, Page], Field(discriminator="kind")]
@@ -231,9 +231,9 @@ ContentElement = Annotated[
 
 class Item(BaseModel):
     name: str
-    obj: dc.Object | dc.Alias
-    uri: str | None = None
-    dispname: str | None = None
+    obj: Union[dc.Object, dc.Alias]
+    uri: Optional[str] = None
+    dispname: Optional[str] = None
 
     class Config:
         arbitrary_types_allowed = True

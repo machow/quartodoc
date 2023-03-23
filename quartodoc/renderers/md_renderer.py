@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
