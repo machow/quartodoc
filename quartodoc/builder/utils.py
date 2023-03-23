@@ -3,7 +3,7 @@ from __future__ import annotations
 from contextvars import ContextVar
 from plum import dispatch
 from pydantic import BaseModel
-from typing import Union, Any
+from typing import Union, Any, Optional
 
 
 # Transformer -----------------------------------------------------------------
@@ -23,7 +23,7 @@ class WorkaroundKeyError(Exception):
 class Node(BaseModel):
     level: int = -1
     value: Any = None
-    parent: None | Node = None
+    parent: Optional[Node] = None
 
 
 class PydanticTransformer:
