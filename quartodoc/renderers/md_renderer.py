@@ -277,7 +277,17 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: dc.Parameters):
-        return ", ".join(map(self.render, el))
+        try:
+            kw_only = [par.kind for par in el].index(dc.ParameterKind.keyword_only)
+        except ValueError:
+            kw_only = None
+        
+        pars = list(map(self.render, el))
+
+        if kw_only is not None:
+            pars.insert(kw_only, sanitize("*"))
+
+        return ", ".join(pars)
 
     @dispatch
     def render(self, el: dc.Parameter):
@@ -285,16 +295,25 @@ class MdRenderer(Renderer):
         splats = {dc.ParameterKind.var_keyword, dc.ParameterKind.var_positional}
         has_default = el.default and el.kind not in splats
 
+        if el.kind == dc.ParameterKind.var_keyword:
+            glob = "**"
+        elif el.kind == dc.ParameterKind.var_positional:
+            glob = "*"
+        else:
+            glob = ""
+
         annotation = self.render_annotation(el.annotation)
         if self.show_signature_annotations:
             if annotation and has_default:
-                return f"{el.name}: {el.annotation} = {el.default}"
+                res = f"{glob}{el.name}: {el.annotation} = {el.default}"
             elif annotation:
-                return f"{el.name}: {el.annotation}"
+                res = f"{glob}{el.name}: {el.annotation}"
         elif has_default:
-            return f"{el.name}={el.default}"
+            res = f"{glob}{el.name}={el.default}"
+        else:
+            res = el.name
 
-        return el.name
+        return sanitize(res)
 
     # docstring parts -------------------------------------------------------------
 
