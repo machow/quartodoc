@@ -130,8 +130,10 @@ class BlueprintTransformer(PydanticTransformer):
             # if the page for the member is not created somewhere else, then it
             # won't exist in the documentation (but its summary will still be in
             # the table).
-            else:
+            elif el.children == ChoicesChildren.linked:
                 res = Link(name=obj_member.path, obj=obj_member)
+            else:
+                raise ValueError(f"Unsupported value of children: {el.children}")
 
             children.append(res)
 

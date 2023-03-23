@@ -107,6 +107,7 @@ class ChoicesChildren(Enum):
     embedded = "embedded"
     flat = "flat"
     separate = "separate"
+    linked = "linked"
 
 
 class Auto(_Base):
