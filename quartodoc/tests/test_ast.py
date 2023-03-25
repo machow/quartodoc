@@ -75,6 +75,17 @@ def test_preview_no_fail(capsys):
     assert "get_object" in res.out
 
 
+def test_preview_warn_alias_no_load():
+    # fetch an alias to pydantic.BaseModel, without loading pydantic
+    # attempting to get alias.target will fail, but preview should still work.
+    obj = get_object("quartodoc.ast.BaseModel", load_aliases=False)
+    with pytest.warns(UserWarning) as record:
+        qast.preview(obj)
+
+    msg = record[0].message.args[0]
+    assert "Could not resolve Alias target `pydantic.BaseModel`" in msg
+
+
 @pytest.mark.parametrize(
     "text, dst",
     [("One\n---\nab\n\nTwo\n---\n\ncd", [("One", "ab\n\n"), ("Two", "\ncd")])],

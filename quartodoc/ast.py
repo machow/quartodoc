@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import warnings
+
 from enum import Enum
 from dataclasses import dataclass
 from griffe.docstrings import dataclasses as ds
@@ -179,7 +181,15 @@ def fields(el: dc.Object):
 
 @dispatch
 def fields(el: dc.ObjectAliasMixin):
-    return fields(el.target)
+    try:
+        return fields(el.target)
+    except dc.AliasResolutionError:
+        warnings.warn(
+            f"Could not resolve Alias target `{el.target_path}`."
+            " This often occurs because the module was not loaded (e.g. it is a"
+            " package outside of your package)."
+        )
+        return ["name", "target_path"]
 
 
 @dispatch
