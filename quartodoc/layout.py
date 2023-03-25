@@ -180,7 +180,12 @@ class Doc(_Base):
 
     @classmethod
     def from_griffe(
-        cls, name, obj: Union[dc.Object, dc.Alias], members=None, anchor: str = None
+        cls,
+        name,
+        obj: Union[dc.Object, dc.Alias],
+        members=None,
+        anchor: str = None,
+        flat: bool = False,
     ):
         if members is None:
             members = []
@@ -195,9 +200,9 @@ class Doc(_Base):
         elif kind == "attribute":
             return DocAttribute(**kwargs)
         elif kind == "class":
-            return DocClass(members=members, **kwargs)
+            return DocClass(members=members, flat=flat, **kwargs)
         elif kind == "module":
-            return DocModule(members=members, **kwargs)
+            return DocModule(members=members, flat=flat, **kwargs)
 
         raise TypeError(f"Cannot handle auto for object kind: {obj.kind}")
 
@@ -209,6 +214,7 @@ class DocFunction(Doc):
 class DocClass(Doc):
     kind: Literal["class"] = "class"
     members: list[Union[MemberPage, Doc, Link]] = tuple()
+    flat: bool
 
 
 class DocAttribute(Doc):

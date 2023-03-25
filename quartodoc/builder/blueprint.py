@@ -44,6 +44,13 @@ class BlueprintTransformer(PydanticTransformer):
 
         self.crnt_package = None
 
+    @staticmethod
+    def _append_member_path(path: str, new: str):
+        if ":" in path:
+            return f"{path}.{new}"
+
+        return f"{path}:{new}"
+
     def get_object_fixed(self, *args, **kwargs):
         try:
             return self.get_object(*args, **kwargs)
@@ -79,7 +86,7 @@ class BlueprintTransformer(PydanticTransformer):
         # otherwise, replace all contents with pages.
         new = el.copy()
         contents = [
-            Page(contents=[el], path=el.name) if isinstance(el, Doc) else el
+            Page(contents=[el], path=el.name) if not isinstance(el, Page) else el
             for el in new.contents
         ]
 
@@ -112,7 +119,8 @@ class BlueprintTransformer(PydanticTransformer):
             # but the actual objects on the target.
             # On the other hand, we've wired get_object up to make sure getting
             # the member of an Alias also returns an Alias.
-            obj_member = self.get_object_fixed(f"{path}.{entry}", dynamic=el.dynamic)
+            member_path = self._append_member_path(path, entry)
+            obj_member = self.get_object_fixed(member_path, dynamic=el.dynamic)
 
             # do no document submodules
             if obj_member.kind.value == "module":
@@ -126,7 +134,7 @@ class BlueprintTransformer(PydanticTransformer):
                 res = MemberPage(path=obj_member.path, contents=[doc])
             # Case2: use just the Doc element, so it gets embedded directly
             # into the class being documented
-            elif el.children == ChoicesChildren.embedded:
+            elif el.children in {ChoicesChildren.embedded, ChoicesChildren.flat}:
                 res = doc
             # Case 3: make each member just a link in a summary table.
             # if the page for the member is not created somewhere else, then it
@@ -139,7 +147,8 @@ class BlueprintTransformer(PydanticTransformer):
 
             children.append(res)
 
-        return Doc.from_griffe(el.name, obj, members=children)
+        is_flat = el.children == ChoicesChildren.flat
+        return Doc.from_griffe(el.name, obj, members=children, flat=is_flat)
 
     @staticmethod
     def _fetch_members(el: Auto, obj: dc.Object | dc.Alias):
@@ -180,6 +189,17 @@ class _PagePackageStripper(PydanticTransformer):
             return new_el
 
         return el
+
+
+def blueprint(el: _Base, package: str = None):
+    """Create a blueprint of a layout element, that is ready to render."""
+
+    trans = BlueprintTransformer()
+
+    if package is not None:
+        trans.crnt_package = package
+
+    return trans.visit(el)
 
 
 def strip_package_name(el: _Base, package: str):
