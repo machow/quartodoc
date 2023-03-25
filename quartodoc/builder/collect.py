@@ -38,8 +38,7 @@ class CollectTransformer(PydanticTransformer):
         page_node = self.find_page_node()
         p_el = page_node.value
 
-        anchor = el.name
-        uri = f"{self.base_dir}/{p_el.path}.html#{anchor}"
+        uri = f"{self.base_dir}/{p_el.path}.html#{el.anchor}"
         self.items.append(
             layout.Item(name=el.obj.path, obj=el.obj, uri=uri, dispname=None)
         )
