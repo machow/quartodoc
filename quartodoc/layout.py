@@ -60,7 +60,7 @@ class Section(_Base):
     title: str
     desc: str
     package: Union[str, None, MISSING] = MISSING()
-    contents: list[Union[ContentElement, Doc, _AutoDefault]]
+    contents: ContentList
 
 
 class SummaryDetails(_Base):
@@ -79,7 +79,7 @@ class Page(_Base):
     summary: Optional[SummaryDetails] = None
     flatten: bool = False
 
-    contents: list[Union[ContentElement, Doc, _AutoDefault]]
+    contents: ContentList
 
     @property
     def obj(self):
@@ -97,6 +97,32 @@ class MemberPage(Page):
     """A page created as a result of documenting a member on a class or module."""
 
     contents: list[Doc]
+
+
+class Interlaced(BaseModel):
+    """A group of objects, whose documentation will be interlaced.
+
+    Rather than list each object's documentation in sequence, this element indicates
+    that each piece of documentation (e.g. signatures, examples) should be grouped
+    together.
+    """
+
+    kind: Literal["interlaced"] = "interlaced"
+    package: Union[str, None, MISSING] = MISSING()
+
+    # note that this is similar to a ContentList, except it cannot include
+    # elements like Pages, etc..
+    contents: list[Union[Auto, Doc, _AutoDefault]]
+
+    @property
+    def name(self):
+        if not self.contents:
+            raise AttributeError(
+                f"Cannot get property name for object of type {type(self)}."
+                " There are no content elements."
+            )
+
+        return self.contents[0].name
 
 
 class Text(_Base):
@@ -224,15 +250,18 @@ class DocAttribute(Doc):
 class DocModule(Doc):
     kind: Literal["module"] = "module"
     members: list[Union[MemberPage, Doc, Link]] = tuple()
+    flat: bool
 
 
 SectionElement = Annotated[Union[Section, Page], Field(discriminator="kind")]
 """Entry in the sections list."""
 
 ContentElement = Annotated[
-    Union[Page, Section, Text, Auto], Field(discriminator="kind")
+    Union[Page, Section, Interlaced, Text, Auto], Field(discriminator="kind")
 ]
 """Entry in the contents list."""
+
+ContentList = list[Union[ContentElement, Doc, _AutoDefault]]
 
 # Item ----
 
@@ -254,3 +283,4 @@ Section.update_forward_refs()
 Page.update_forward_refs()
 Auto.update_forward_refs()
 MemberPage.update_forward_refs()
+Interlaced.update_forward_refs()
