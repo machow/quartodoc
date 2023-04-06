@@ -39,8 +39,8 @@ class _DocstringSectionPatched(ds.DocstringSection):
     _registry: "dict[Enum, _DocstringSectionPatched]" = {}
 
     def __init__(self, value: str, title: "str | None" = None):
-        self.value = value
         super().__init__(title)
+        self.value = value
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
