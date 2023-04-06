@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,22 +784,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.reactive.Value" id="toc-shiny.reactive.Value" class="nav-link active" data-scroll-target="#shiny.reactive.Value">reactive.Value</a>
+  <li><a href="#reactive.Value" id="toc-reactive.Value" class="nav-link active" data-scroll-target="#reactive.Value">reactive.Value</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#raises" id="toc-raises" class="nav-link" data-scroll-target="#raises">Raises</a></li>
+  </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
-  </ul></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a>
-  <ul class="collapse">
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#shiny.reactive.Value.freeze" id="toc-shiny.reactive.Value.freeze" class="nav-link" data-scroll-target="#shiny.reactive.Value.freeze">freeze</a></li>
-  <li><a href="#shiny.reactive.Value.get" id="toc-shiny.reactive.Value.get" class="nav-link" data-scroll-target="#shiny.reactive.Value.get">get</a></li>
-  <li><a href="#shiny.reactive.Value.is_set" id="toc-shiny.reactive.Value.is_set" class="nav-link" data-scroll-target="#shiny.reactive.Value.is_set">is_set</a></li>
-  <li><a href="#shiny.reactive.Value.set" id="toc-shiny.reactive.Value.set" class="nav-link" data-scroll-target="#shiny.reactive.Value.set">set</a></li>
-  <li><a href="#shiny.reactive.Value.unset" id="toc-shiny.reactive.Value.unset" class="nav-link" data-scroll-target="#shiny.reactive.Value.unset">unset</a></li>
-  </ul></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -808,17 +801,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.reactive.Value" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.reactive.Value">reactive.Value</h2>
-<p><code>reactive.Value(self, value=MISSING, read_only=False)</code></p>
+<section id="reactive.Value" class="level2">
+<h2 class="anchored" data-anchor-id="reactive.Value">reactive.Value</h2>
+<p><code>reactive._reactives.Value(self, value=MISSING, read_only=False)</code></p>
 <p>Create a reactive value</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
 <col style="width: 13%">
-<col style="width: 19%">
-<col style="width: 56%">
+<col style="width: 18%">
+<col style="width: 57%">
 <col style="width: 11%">
 </colgroup>
 <thead>
@@ -832,9 +825,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>value</code></td>
-<td>T | MISSING_TYPE</td>
+<td>T</td>
+<td>MISSING_TYPE</td>
 <td>An optional initial value.</td>
-<td><code>MISSING</code></td>
 </tr>
 <tr class="even">
 <td><code>read_only</code></td>
@@ -878,16 +871,19 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>~shiny.types.SilentException</td>
-<td>If <code>:func:~Value.get</code> is called before a value is provided/set.</td>
+<td>If :func:<code>~Value.get</code> is called before a value is provided/set.</td>
 </tr>
 </tbody>
 </table>
-<p>A reactive value may only be read from within a reactive function (e.g., <code>:func:Calc</code>, <code>:func:Effect</code>, <a href="../reference/render.text.html#render.text">shiny.render.text</a>, etc.) and, when doing so, the function takes a reactive dependency on the value (i.e., when the value changes, the calling reactive function will re-execute).</p>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
+<p>A reactive value may only be read from within a reactive function (e.g., :func:<code>Calc</code>, :func:<code>Effect</code>, :func:<code>shiny.render.text</code>, etc.) and, when doing so, the function takes a reactive dependency on the value (i.e., when the value changes, the calling reactive function will re-execute).</p>
+</section>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <p>~shiny.Inputs Calc Effect</p>
-</section>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>
@@ -897,6 +893,7 @@ from shiny import *
 
 app_ui = ui.page_fluid(
     ui.input_action_button("minus", "-1"),
+    " ",
     ui.input_action_button("plus", "+1"),
     ui.br(),
     ui.output_text("value"),
@@ -926,198 +923,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
 app = App(app_ui, server)
 </code></pre>
-<section id="methods" class="level3">
-<h3 class="anchored" data-anchor-id="methods">Methods</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#shiny.reactive.Value.freeze">freeze</a></td>
-<td>Freeze the reactive value.</td>
-</tr>
-<tr class="even">
-<td><a href="#shiny.reactive.Value.get">get</a></td>
-<td>Read the reactive value.</td>
-</tr>
-<tr class="odd">
-<td><a href="#shiny.reactive.Value.is_set">is_set</a></td>
-<td>Check if the reactive value is set.</td>
-</tr>
-<tr class="even">
-<td><a href="#shiny.reactive.Value.set">set</a></td>
-<td>Set the reactive value to a new value.</td>
-</tr>
-<tr class="odd">
-<td><a href="#shiny.reactive.Value.unset">unset</a></td>
-<td>Unset the reactive value.</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="shiny.reactive.Value.freeze" class="level3">
-<h3 class="anchored" data-anchor-id="shiny.reactive.Value.freeze">freeze</h3>
-<p><code>reactive.Value.freeze(self)</code></p>
-<p>Freeze the reactive value.</p>
-<p>Freezing is equivalent to unsetting the value, but it does not invalidate dependents.</p>
-</section>
-<section id="shiny.reactive.Value.get" class="level3">
-<h3 class="anchored" data-anchor-id="shiny.reactive.Value.get">get</h3>
-<p><code>reactive.Value.get(self)</code></p>
-<p>Read the reactive value.</p>
-<section id="returns-1" class="level4">
-<h4 class="anchored" data-anchor-id="returns-1">Returns</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>The reactive value.</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="raises-1" class="level4">
-<h4 class="anchored" data-anchor-id="raises-1">Raises</h4>
-<table class="table">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 60%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>~shiny.types.SilentException</td>
-<td>If the value is not set.</td>
-</tr>
-<tr class="even">
-<td>RuntimeError</td>
-<td>If called from outside a reactive function.</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="shiny.reactive.Value.is_set" class="level3">
-<h3 class="anchored" data-anchor-id="shiny.reactive.Value.is_set">is_set</h3>
-<p><code>reactive.Value.is_set(self)</code></p>
-<p>Check if the reactive value is set.</p>
-<section id="returns-2" class="level4">
-<h4 class="anchored" data-anchor-id="returns-2">Returns</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>bool</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="shiny.reactive.Value.set" class="level3">
-<h3 class="anchored" data-anchor-id="shiny.reactive.Value.set">set</h3>
-<p><code>reactive.Value.set(self, value)</code></p>
-<p>Set the reactive value to a new value.</p>
-<section id="parameters-1" class="level4">
-<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>value</code></td>
-<td>shiny.reactive._reactives.T</td>
-<td>A value.</td>
-<td>required</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="returns-3" class="level4">
-<h4 class="anchored" data-anchor-id="returns-3">Returns</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>bool</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="raises-2" class="level4">
-<h4 class="anchored" data-anchor-id="raises-2">Raises</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>RuntimeError</td>
-<td>If called on a read-only reactive value.</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="shiny.reactive.Value.unset" class="level3">
-<h3 class="anchored" data-anchor-id="shiny.reactive.Value.unset">unset</h3>
-<p><code>reactive.Value.unset(self)</code></p>
-<p>Unset the reactive value.</p>
-<section id="returns-4" class="level4">
-<h4 class="anchored" data-anchor-id="returns-4">Returns</h4>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>None</td>
-<td></td>
-</tr>
-</tbody>
-</table>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->

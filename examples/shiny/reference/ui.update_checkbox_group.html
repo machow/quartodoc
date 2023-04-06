@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,11 +784,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.update_checkbox_group" id="toc-shiny.ui.update_checkbox_group" class="nav-link active" data-scroll-target="#shiny.ui.update_checkbox_group">ui.update_checkbox_group</a>
+  <li><a href="#ui.update_checkbox_group" id="toc-ui.update_checkbox_group" class="nav-link active" data-scroll-target="#ui.update_checkbox_group">ui.update_checkbox_group</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -798,13 +799,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.update_checkbox_group" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.update_checkbox_group">ui.update_checkbox_group</h2>
-<p><code>ui.update_checkbox_group(id, label=None, choices=None, selected=None, inline=False, session=None)</code></p>
+<section id="ui.update_checkbox_group" class="level2">
+<h2 class="anchored" data-anchor-id="ui.update_checkbox_group">ui.update_checkbox_group</h2>
+<p><code>ui._input_update.update_checkbox_group(id, label=None, choices=None, selected=None, inline=False, session=None)</code></p>
 <p>Change the value of a checkbox group input on the client.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 16%">
+<col style="width: 75%">
+<col style="width: 4%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -834,9 +841,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>selected</code></td>
-<td>Optional[str | list[str]]</td>
-<td>The values that should be initially selected, if any.</td>
-<td><code>None</code></td>
+<td>Optional[str</td>
+<td>list[str]</td>
+<td>tuple[str, …]]</td>
 </tr>
 <tr class="odd">
 <td><code>inline</code></td>
@@ -847,17 +854,20 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td><code>session</code></td>
 <td>Optional[Session]</td>
-<td>A <a href="../reference/Session.html#Session">Session</a> instance. If not provided, it is inferred via <a href="../reference/session.get_current_session.html#session.get_current_session">get_current_session</a>.</td>
+<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>.</td>
 <td><code>None</code></td>
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
 <p>{note}</p>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <p>~shiny.ui.input_checkbox_group</p>
-</section>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>
@@ -880,11 +890,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     def _():
         x = input.inCheckboxGroup()
-
-        if x is None:
-            x = []
-        elif isinstance(x, str):
-            x = [x]
 
         # Can also set the label and select items
         ui.update_checkbox_group(

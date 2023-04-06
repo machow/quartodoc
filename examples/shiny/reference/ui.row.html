@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,7 +784,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.row" id="toc-shiny.ui.row" class="nav-link active" data-scroll-target="#shiny.ui.row">ui.row</a>
+  <li><a href="#ui.row" id="toc-ui.row" class="nav-link active" data-scroll-target="#ui.row">ui.row</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
@@ -799,11 +799,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.row" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.row">ui.row</h2>
-<p><code>ui.row(args, kwargs)</code></p>
+<section id="ui.row" class="level2">
+<h2 class="anchored" data-anchor-id="ui.row">ui.row</h2>
+<p><code>ui._bootstrap.row(args, kwargs)</code></p>
 <p>Responsive row-column based layout</p>
-<p>Layout UI components using Bootstrap's grid layout system. Use <code>row()</code> to group elements that should appear on the same line (if the browser has adequate width) and <a href="../reference/ui.column.html#ui.column">column</a> to define how much horizontal space within a 12-unit wide grid each on of these elements should occupy. See the <code>layout guide &amp;lt;https://shiny.rstudio.com/articles/layout-guide.html&amp;gt;</code>_ for more context and examples.</p>
+<p>Layout UI components using Bootstrap’s grid layout system. Use <code>row()</code> to group elements that should appear on the same line (if the browser has adequate width) and :func:<code>~shiny.ui.column</code> to define how much horizontal space within a 12-unit wide grid each on of these elements should occupy. See the <code>layout guide &lt;https://shiny.rstudio.com/articles/layout-guide.html&gt;</code>_ for more context and examples.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
@@ -824,9 +824,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>args</code></td>
-<td>TagChild | TagAttrs</td>
+<td>TagChild</td>
+<td>TagAttrs</td>
 <td>Any number of child elements.</td>
-<td><code>()</code></td>
 </tr>
 <tr class="even">
 <td><code>kwargs</code></td>
@@ -856,7 +856,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="see-also" class="level3">
 <h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p><a href="[](:func:`~shiny.ui.column`)"></a></p>
+<p><a href="../reference/ui.column.html">column</a></p>
 </section>
 </section>
 <section id="examples" class="level2">

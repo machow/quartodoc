@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,13 +784,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.reactive.Calc" id="toc-shiny.reactive.Calc" class="nav-link active" data-scroll-target="#shiny.reactive.Calc">reactive.Calc</a>
+  <li><a href="#reactive.Calc" id="toc-reactive.Calc" class="nav-link active" data-scroll-target="#reactive.Calc">reactive.Calc</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
     </div>
@@ -799,14 +797,20 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.reactive.Calc" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.reactive.Calc">reactive.Calc</h2>
-<p><code>reactive.Calc(fn=None, session=MISSING)</code></p>
+<section id="reactive.Calc" class="level2">
+<h2 class="anchored" data-anchor-id="reactive.Calc">reactive.Calc</h2>
+<p><code>reactive._reactives.Calc(fn=None, session=MISSING)</code></p>
 <p>Mark a function as a reactive calculation.</p>
-<p>A reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., <a href="../reference/Inputs.html#Inputs">Inputs</a>, <a href="../reference/reactive.Value.html#reactive.Value">Value</a>, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are "invalidated" and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.</p>
+<p>A reactive calculation is a function whose return value depends solely on other reactive value(s) (i.e., :class:<code>~shiny.Inputs</code>, :class:<code>~shiny.reactive.Value</code>, and other reactive calculations). Whenever a reactive value changes, any reactive calculations that depend on it are “invalidated” and automatically re-execute when necessary. If a reactive calculation is marked as invalidated, any other reactive calculations that recently called it are also marked as invalidated. In this way, invalidations ripple through reactive calculations that depend on each other.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 18%">
+<col style="width: 68%">
+<col style="width: 6%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -818,9 +822,9 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>session</code></td>
-<td>MISSING_TYPE | Session | None</td>
-<td>A <a href="../reference/Session.html#Session">Session</a> instance. If not provided, it is inferred via <a href="../reference/session.get_current_session.html#session.get_current_session">get_current_session</a>.</td>
-<td><code>MISSING</code></td>
+<td>MISSING_TYPE</td>
+<td>Session</td>
+<td>None</td>
 </tr>
 </tbody>
 </table>
@@ -845,15 +849,25 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Reactive calculations should not produce any side effects; to reactively produce side effects, use <a href="../reference/reactive.Effect.html#reactive.Effect">Effect</a> instead.</p>
-</section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p>~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event</p>
-</section>
-</section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<p>Tip</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Reactive calculations should not produce any side effects; to reactively produce side effects, use :func:<code>~shiny.reactive.Effect</code> instead.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>~shiny.Inputs ~shiny.reactive.Value ~shiny.reactive.Effect ~shiny.reactive.invalidate_later ~shiny.event</td>
+</tr>
+<tr class="even">
+<td>Examples</td>
+</tr>
+</tbody>
+</table>
 <pre class="shinylive-python"><code>#| standalone: true
 
 import random
@@ -863,6 +877,7 @@ from shiny import *
 
 app_ui = ui.page_fluid(
     ui.input_action_button("first", "Invalidate first (slow) computation"),
+    " ",
     ui.input_action_button("second", "Invalidate second (fast) computation"),
     ui.br(),
     ui.output_ui("result"),
@@ -895,6 +910,7 @@ app = App(app_ui, server)
 </code></pre>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

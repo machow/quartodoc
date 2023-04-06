@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,11 +784,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.panel_title" id="toc-shiny.ui.panel_title" class="nav-link active" data-scroll-target="#shiny.ui.panel_title">ui.panel_title</a>
+  <li><a href="#ui.panel_title" id="toc-ui.panel_title" class="nav-link active" data-scroll-target="#ui.panel_title">ui.panel_title</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -798,17 +799,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.panel_title" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.panel_title">ui.panel_title</h2>
-<p><code>ui.panel_title(title, window_title=MISSING)</code></p>
+<section id="ui.panel_title" class="level2">
+<h2 class="anchored" data-anchor-id="ui.panel_title">ui.panel_title</h2>
+<p><code>ui._bootstrap.panel_title(title, window_title=MISSING)</code></p>
 <p>Create title(s) for the application.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
 <colgroup>
-<col style="width: 17%">
-<col style="width: 25%">
-<col style="width: 44%">
+<col style="width: 18%">
+<col style="width: 23%">
+<col style="width: 45%">
 <col style="width: 12%">
 </colgroup>
 <thead>
@@ -822,15 +823,15 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>title</code></td>
-<td>str | Tag | TagList</td>
-<td>A title to display in the app’s UI.</td>
-<td>required</td>
+<td>str</td>
+<td>Tag</td>
+<td>TagList</td>
 </tr>
 <tr class="even">
 <td><code>window_title</code></td>
-<td>str | MISSING_TYPE</td>
+<td>str</td>
+<td>MISSING_TYPE</td>
 <td>A title to display on the browser tab.</td>
-<td><code>MISSING</code></td>
 </tr>
 </tbody>
 </table>
@@ -851,8 +852,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>This result of this function causes a side effect of adding a title tag to the head of the document (this is necessary for the browser to display the title in the browser window). You can also specify a page title explicitly using the title parameter of the top-level page function (e.g., <a href="../reference/ui.page_fluid.html#ui.page_fluid">page_fluid</a>).</p>
 </section>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
+<p>This result of this function causes a side effect of adding a title tag to the head of the document (this is necessary for the browser to display the title in the browser window). You can also specify a page title explicitly using the title parameter of the top-level page function (e.g., :func:<code>~shiny.ui.page_fluid</code>).</p>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>

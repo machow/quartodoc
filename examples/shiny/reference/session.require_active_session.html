@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -779,10 +779,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.session.require_active_session" id="toc-shiny.session.require_active_session" class="nav-link active" data-scroll-target="#shiny.session.require_active_session">session.require_active_session</a>
+  <li><a href="#session.require_active_session" id="toc-session.require_active_session" class="nav-link active" data-scroll-target="#session.require_active_session">session.require_active_session</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a>
+  <ul class="collapse">
   <li><a href="#raises" id="toc-raises" class="nav-link" data-scroll-target="#raises">Raises</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
@@ -794,13 +797,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.session.require_active_session" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.session.require_active_session">session.require_active_session</h2>
-<p><code>session.require_active_session(session)</code></p>
+<section id="session.require_active_session" class="level2">
+<h2 class="anchored" data-anchor-id="session.require_active_session">session.require_active_session</h2>
+<p><code>session._utils.require_active_session(session)</code></p>
 <p>Raise an exception if no Shiny session is currently active.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 74%">
+<col style="width: 6%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -813,7 +822,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>session</code></td>
 <td>Optional[Session]</td>
-<td>A <a href="../reference/Session.html#Session">Session</a> instance. If not provided, it is inferred via <a href="../reference/session.get_current_session.html#session.get_current_session">get_current_session</a>.</td>
+<td>A :class:<code>~shiny.Session</code> instance. If not provided, it is inferred via :func:<code>~shiny.session.get_current_session</code>.</td>
 <td>required</td>
 </tr>
 </tbody>
@@ -835,8 +844,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Shiny apps should not need to call this function directly. Instead, it's intended to be used by Shiny developing who wish to create new functions that should only be called from within an active Shiny session.</p>
 </section>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
+<p>Shiny apps should not need to call this function directly. Instead, it’s intended to be used by Shiny developing who wish to create new functions that should only be called from within an active Shiny session.</p>
 <section id="raises" class="level3">
 <h3 class="anchored" data-anchor-id="raises">Raises</h3>
 <table class="table">

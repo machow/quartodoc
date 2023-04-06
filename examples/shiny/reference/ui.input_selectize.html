@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,13 +784,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.input_selectize" id="toc-shiny.ui.input_selectize" class="nav-link active" data-scroll-target="#shiny.ui.input_selectize">ui.input_selectize</a>
+  <li><a href="#ui.input_selectize" id="toc-ui.input_selectize" class="nav-link active" data-scroll-target="#ui.input_selectize">ui.input_selectize</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -800,9 +800,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.input_selectize" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.input_selectize">ui.input_selectize</h2>
-<p><code>ui.input_selectize(id, label, choices, selected=None, multiple=False, width=None)</code></p>
+<section id="ui.input_selectize" class="level2">
+<h2 class="anchored" data-anchor-id="ui.input_selectize">ui.input_selectize</h2>
+<p><code>ui._input_select.input_selectize(id, label, choices, selected=None, multiple=False, width=None)</code></p>
 <p>Create a select list that can be used to choose a single or multiple items from a list of values.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -842,9 +842,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>selected</code></td>
-<td>Optional[str | list[str]]</td>
+<td>Optional[str</td>
+<td>list[str]]</td>
 <td>The values that should be initially selected, if any.</td>
-<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>multiple</code></td>
@@ -884,10 +884,10 @@ ul.task-list li input[type="checkbox"] {
 <pre><code>A list of strings, usually of length 1, with the value of the selected items. When
 ``multiple=True`` and nothing is selected, this value will be ``None``.</code></pre>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p>~shiny.ui.input_select ~shiny.ui.input_radio_buttons ~shiny.ui.input_checkbox_group</p>
 </section>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
+<p>~shiny.ui.input_select ~shiny.ui.input_radio_buttons ~shiny.ui.input_checkbox_group</p>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>

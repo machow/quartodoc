@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -108,20 +108,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quartodoc.Builder" id="toc-quartodoc.Builder" class="nav-link active" data-scroll-target="#quartodoc.Builder">Builder</a>
+  <li><a href="#Builder" id="toc-Builder" class="nav-link active" data-scroll-target="#Builder">Builder</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#quartodoc.Builder.build" id="toc-quartodoc.Builder.build" class="nav-link" data-scroll-target="#quartodoc.Builder.build">build</a></li>
-  <li><a href="#quartodoc.Builder.create_inventory" id="toc-quartodoc.Builder.create_inventory" class="nav-link" data-scroll-target="#quartodoc.Builder.create_inventory">create_inventory</a></li>
-  <li><a href="#quartodoc.Builder.do_blueprint" id="toc-quartodoc.Builder.do_blueprint" class="nav-link" data-scroll-target="#quartodoc.Builder.do_blueprint">do_blueprint</a></li>
-  <li><a href="#quartodoc.Builder.do_collect" id="toc-quartodoc.Builder.do_collect" class="nav-link" data-scroll-target="#quartodoc.Builder.do_collect">do_collect</a></li>
-  <li><a href="#quartodoc.Builder.do_summarize" id="toc-quartodoc.Builder.do_summarize" class="nav-link" data-scroll-target="#quartodoc.Builder.do_summarize">do_summarize</a></li>
-  <li><a href="#quartodoc.Builder.from_quarto_config" id="toc-quartodoc.Builder.from_quarto_config" class="nav-link" data-scroll-target="#quartodoc.Builder.from_quarto_config">from_quarto_config</a></li>
-  <li><a href="#quartodoc.Builder.generate_sidebar" id="toc-quartodoc.Builder.generate_sidebar" class="nav-link" data-scroll-target="#quartodoc.Builder.generate_sidebar">generate_sidebar</a></li>
-  <li><a href="#quartodoc.Builder.load_layout" id="toc-quartodoc.Builder.load_layout" class="nav-link" data-scroll-target="#quartodoc.Builder.load_layout">load_layout</a></li>
-  <li><a href="#quartodoc.Builder.write_doc_pages" id="toc-quartodoc.Builder.write_doc_pages" class="nav-link" data-scroll-target="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></li>
-  <li><a href="#quartodoc.Builder.write_index" id="toc-quartodoc.Builder.write_index" class="nav-link" data-scroll-target="#quartodoc.Builder.write_index">write_index</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -131,8 +120,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="quartodoc.Builder" class="level2">
-<h2 class="anchored" data-anchor-id="quartodoc.Builder">Builder</h2>
+<section id="Builder" class="level2">
+<h2 class="anchored" data-anchor-id="Builder">Builder</h2>
 <p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, use_interlinks=False, display_name='name')</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters" class="level3">
@@ -140,9 +129,9 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <colgroup>
 <col style="width: 4%">
-<col style="width: 7%">
-<col style="width: 81%">
 <col style="width: 6%">
+<col style="width: 81%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -167,9 +156,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>version</code></td>
-<td>str | None</td>
+<td>str</td>
+<td>None</td>
 <td>The package version. By default this attempts to look up the current package version (TODO).</td>
-<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>dir</code></td>
@@ -185,9 +174,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>renderer</code></td>
-<td>dict | Renderer | str</td>
-<td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
-<td><code>'markdown'</code></td>
+<td>dict</td>
+<td>Renderer</td>
+<td>str</td>
 </tr>
 <tr class="odd">
 <td><code>out_index</code></td>
@@ -197,119 +186,18 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>sidebar</code></td>
-<td>str | None</td>
+<td>str</td>
+<td>None</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
-<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>display_name</code></td>
 <td>str</td>
-<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its <code>.__module__</code>.</td>
+<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
 <td><code>'name'</code></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="methods" class="level3">
-<h3 class="anchored" data-anchor-id="methods">Methods</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.build">build</a></td>
-<td>Build index page, sphinx inventory, and individual doc pages.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.create_inventory">create_inventory</a></td>
-<td>Generate sphinx inventory object.</td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.do_blueprint">do_blueprint</a></td>
-<td>Convert a layout with Auto elements to a full-fledged doc specification.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.do_collect">do_collect</a></td>
-<td>Collect the pages and sphinx item information from a layout.</td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.do_summarize">do_summarize</a></td>
-<td>Summarize a layout into index tables.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.from_quarto_config">from_quarto_config</a></td>
-<td>Construct a Builder from a configuration object (or yaml file).</td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.generate_sidebar">generate_sidebar</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.load_layout">load_layout</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></td>
-<td>Write individual function documentation pages.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.write_index">write_index</a></td>
-<td>Write API index page.</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="quartodoc.Builder.build" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.build">build</h3>
-<p><code>Builder.build(self)</code></p>
-<p>Build index page, sphinx inventory, and individual doc pages.</p>
-</section>
-<section id="quartodoc.Builder.create_inventory" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.create_inventory">create_inventory</h3>
-<p><code>Builder.create_inventory(self, items)</code></p>
-<p>Generate sphinx inventory object.</p>
-</section>
-<section id="quartodoc.Builder.do_blueprint" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.do_blueprint">do_blueprint</h3>
-<p><code>Builder.do_blueprint(self)</code></p>
-<p>Convert a layout with Auto elements to a full-fledged doc specification.</p>
-</section>
-<section id="quartodoc.Builder.do_collect" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.do_collect">do_collect</h3>
-<p><code>Builder.do_collect(self, blueprint)</code></p>
-<p>Collect the pages and sphinx item information from a layout.</p>
-</section>
-<section id="quartodoc.Builder.do_summarize" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.do_summarize">do_summarize</h3>
-<p><code>Builder.do_summarize(self, blueprint, items)</code></p>
-<p>Summarize a layout into index tables.</p>
-</section>
-<section id="quartodoc.Builder.from_quarto_config" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.from_quarto_config">from_quarto_config</h3>
-<p><code>Builder.from_quarto_config(cls, quarto_cfg)</code></p>
-<p>Construct a Builder from a configuration object (or yaml file).</p>
-</section>
-<section id="quartodoc.Builder.generate_sidebar" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.generate_sidebar">generate_sidebar</h3>
-<p><code>Builder.generate_sidebar(self, blueprint)</code></p>
-</section>
-<section id="quartodoc.Builder.load_layout" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.load_layout">load_layout</h3>
-<p><code>Builder.load_layout(self, sections, package)</code></p>
-</section>
-<section id="quartodoc.Builder.write_doc_pages" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.write_doc_pages">write_doc_pages</h3>
-<p><code>Builder.write_doc_pages(self, pages, items)</code></p>
-<p>Write individual function documentation pages.</p>
-</section>
-<section id="quartodoc.Builder.write_index" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.write_index">write_index</h3>
-<p><code>Builder.write_index(self, content)</code></p>
-<p>Write API index page.</p>
 
 
 </section>

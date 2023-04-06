@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -779,7 +779,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.nav_menu" id="toc-shiny.ui.nav_menu" class="nav-link active" data-scroll-target="#shiny.ui.nav_menu">ui.nav_menu</a>
+  <li><a href="#ui.nav_menu" id="toc-ui.nav_menu" class="nav-link active" data-scroll-target="#ui.nav_menu">ui.nav_menu</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
@@ -793,13 +793,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.nav_menu" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.nav_menu">ui.nav_menu</h2>
-<p><code>ui.nav_menu(title, args, value=None, icon=None, align='left')</code></p>
+<section id="ui.nav_menu" class="level2">
+<h2 class="anchored" data-anchor-id="ui.nav_menu">ui.nav_menu</h2>
+<p><code>ui._navs.nav_menu(title, args, value=None, icon=None, align='left')</code></p>
 <p>Create a menu of nav items.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 88%">
+<col style="width: 3%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -817,14 +823,14 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>*args</code></td>
-<td>Nav | str</td>
-<td>A collection of nav items (e.g., <a href="../reference/ui.nav.html#ui.nav">nav</a>) and/or strings. Strings will be rendered as a section header unless the string is a set of two or more hyphens (e.g., <code>---</code>), in which case it will be rendered as a divider.</td>
-<td><code>()</code></td>
+<td>Nav</td>
+<td>str</td>
+<td>A collection of nav items (e.g., :func:<code>~shiny.ui.nav</code>) and/or strings. Strings will be rendered as a section header unless the string is a set of two or more hyphens (e.g., <code>---</code>), in which case it will be rendered as a divider.</td>
 </tr>
 <tr class="odd">
 <td><code>value</code></td>
 <td>Optional[str]</td>
-<td>The value of the item. This is used to determine whether the item is active (when an <code>id</code> is provided to the nav container), programmatically select the item (e.g., <a href="../reference/ui.update_navs.html#ui.update_navs">update_navs</a>), and/or be provided to the <code>selected</code> argument of the navigation container (e.g., <a href="../reference/ui.navset_tab.html#ui.navset_tab">navset_tab</a>).</td>
+<td>The value of the item. This is used to determine whether the item is active (when an <code>id</code> is provided to the nav container), programmatically select the item (e.g., :func:<code>~shiny.ui.update_navs</code>), and/or be provided to the <code>selected</code> argument of the navigation container (e.g., :func:<code>~shiny.ui.navset_tab</code>).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
@@ -861,8 +867,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="see-also" class="level3">
 <h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p>~shiny.ui.nav ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden</p>
-<p>See <a href="../reference/ui.nav.html#ui.nav">nav</a></p>
+<p>~shiny.ui.nav ~shiny.ui.nav_control ~shiny.ui.nav_spacer ~shiny.ui.navset_bar ~shiny.ui.navset_tab ~shiny.ui.navset_pill ~shiny.ui.navset_tab_card ~shiny.ui.navset_pill_card ~shiny.ui.navset_hidden Example ——- See <a href="../reference/ui.nav.html">nav</a></p>
 
 
 </section>

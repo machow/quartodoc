@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,13 +784,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.input_date" id="toc-shiny.ui.input_date" class="nav-link active" data-scroll-target="#shiny.ui.input_date">ui.input_date</a>
+  <li><a href="#ui.input_date" id="toc-ui.input_date" class="nav-link active" data-scroll-target="#ui.input_date">ui.input_date</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
-  </ul></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -800,9 +801,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.input_date" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.input_date">ui.input_date</h2>
-<p><code>ui.input_date(id, label, value=None, min=None, max=None, format='yyyy-mm-dd', startview='month', weekstart=0, language='en', width=None, autoclose=True, datesdisabled=None, daysofweekdisabled=None)</code></p>
+<section id="ui.input_date" class="level2">
+<h2 class="anchored" data-anchor-id="ui.input_date">ui.input_date</h2>
+<p><code>ui._input_date.input_date(id, label, value=None, min=None, max=None, format='yyyy-mm-dd', startview='month', weekstart=0, language='en', width=None, autoclose=True, datesdisabled=None, daysofweekdisabled=None)</code></p>
 <p>Creates a text input which, when clicked on, brings up a calendar that the user can click on to select dates.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -836,21 +837,21 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>value</code></td>
-<td>Optional[date | str]</td>
-<td>The starting date. Either a <code>:func:~datetime.date</code> object, or a string in <code>yyyy-mm-dd</code> format. If None (the default), will use the current date in the client’s time zone.</td>
-<td><code>None</code></td>
+<td>Optional[date</td>
+<td>str]</td>
+<td>The starting date. Either a :func:<code>~datetime.date</code> object, or a string in <code>yyyy-mm-dd</code> format. If None (the default), will use the current date in the client’s time zone.</td>
 </tr>
 <tr class="even">
 <td><code>min</code></td>
-<td>Optional[date | str]</td>
-<td>The minimum allowed date. Either a <code>:func:~datetime.date</code> object, or a string in yyyy-mm-dd format.</td>
-<td><code>None</code></td>
+<td>Optional[date</td>
+<td>str]</td>
+<td>The minimum allowed date. Either a :func:<code>~datetime.date</code> object, or a string in yyyy-mm-dd format.</td>
 </tr>
 <tr class="odd">
 <td><code>max</code></td>
-<td>Optional[date | str]</td>
-<td>The maximum allowed date. Either a <code>:func:~datetime.date</code> object, or a string in yyyy-mm-dd format.</td>
-<td><code>None</code></td>
+<td>Optional[date</td>
+<td>str]</td>
+<td>The maximum allowed date. Either a :func:<code>~datetime.date</code> object, or a string in yyyy-mm-dd format.</td>
 </tr>
 <tr class="even">
 <td><code>format</code></td>
@@ -919,6 +920,10 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
 <p>The date <code>format</code> string specifies how the date will be displayed in the browser. It allows the following values:</p>
 <ul>
 <li><code>yy</code>: Year without century (12)</li>
@@ -933,15 +938,14 @@ ul.task-list li input[type="checkbox"] {
 <li><code>DD</code>: Full weekday name</li>
 </ul>
 </section>
-<section id="notes" class="level3">
-<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
 <p>.. admonition:: Server value</p>
-<pre><code>A [](:func:`~datetime.date`) object.</code></pre>
+<pre><code>A :func:`~datetime.date` object.</code></pre>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <p>~shiny.ui.update_date ~shiny.ui.input_date_range</p>
-</section>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>

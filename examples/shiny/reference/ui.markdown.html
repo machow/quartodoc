@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,12 +784,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.markdown" id="toc-shiny.ui.markdown" class="nav-link active" data-scroll-target="#shiny.ui.markdown">ui.markdown</a>
+  <li><a href="#ui.markdown" id="toc-ui.markdown" class="nav-link active" data-scroll-target="#ui.markdown">ui.markdown</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -799,10 +800,10 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.markdown" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.markdown">ui.markdown</h2>
-<p><code>ui.markdown(text, render_func=None, kwargs)</code></p>
-<p>Convert a string of markdown to <code>:func:ui.HTML</code>.</p>
+<section id="ui.markdown" class="level2">
+<h2 class="anchored" data-anchor-id="ui.markdown">ui.markdown</h2>
+<p><code>ui._markdown.markdown(text, render_func=None, kwargs)</code></p>
+<p>Convert a string of markdown to :func:<code>ui.HTML</code>.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
@@ -830,7 +831,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td><code>render_func</code></td>
 <td>Optional[Callable[[str], str]]</td>
-<td>A function (with at least 1 argument) which accepts a string of markdown and returns a string of HTML. By default, a customized instance of the <code>:class:MarkdownIt</code> class (which supports Github-flavored markdown) from the <code>markdown-it</code> package is used.</td>
+<td>A function (with at least 1 argument) which accepts a string of markdown and returns a string of HTML. By default, a customized instance of the :class:<code>MarkdownIt</code> class (which supports Github-flavored markdown) from the <code>markdown-it</code> package is used.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
@@ -858,12 +859,15 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Use <code>:func:ui.include_markdown</code> instead if you want to include local images (or other files) in the markdown.</p>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p><a href="[](:func:`ui.include_markdown`)"></a></p>
 </section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
+<p>Use :func:<code>ui.include_markdown</code> instead if you want to include local images (or other files) in the markdown.</p>
+</section>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
+<p>:func:<code>ui.include_markdown</code></p>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>

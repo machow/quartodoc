@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,13 +784,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.input_file" id="toc-shiny.ui.input_file" class="nav-link active" data-scroll-target="#shiny.ui.input_file">ui.input_file</a>
+  <li><a href="#ui.input_file" id="toc-ui.input_file" class="nav-link active" data-scroll-target="#ui.input_file">ui.input_file</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -800,9 +800,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.input_file" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.input_file">ui.input_file</h2>
-<p><code>ui.input_file(id, label, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)</code></p>
+<section id="ui.input_file" class="level2">
+<h2 class="anchored" data-anchor-id="ui.input_file">ui.input_file</h2>
+<p><code>ui._input_file.input_file(id, label, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)</code></p>
 <p>Create a file upload control that can be used to upload one or more files.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -842,9 +842,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>accept</code></td>
-<td>Optional[str | list[str]]</td>
+<td>Optional[str</td>
+<td>list[str]]</td>
 <td>Unique file type specifier(s) which give the browser a hint as to the type of file the server expects. Many browsers use this to prevent the user from selecting an invalid file. Examples of valid values include: * A case insensitive extension like <code>.csv</code> or <code>.rds</code>. * A valid MIME type, like <code>text/plain</code> or <code>application/pdf</code> * One of <code>audio/*</code>, <code>video/*</code>, or <code>image/*</code> meaning any audio, video, or image type, respectively.</td>
-<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>width</code></td>
@@ -903,10 +903,10 @@ ul.task-list li input[type="checkbox"] {
 * datapath: The path to a temp file that contains the data that was uploaded.
   This file may be deleted if the user performs another upload operation.</code></pre>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p>~shiny.ui.download_button</p>
 </section>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
+<p>~shiny.ui.download_button</p>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>

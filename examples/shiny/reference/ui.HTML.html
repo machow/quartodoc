@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -779,11 +779,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.HTML" id="toc-shiny.ui.HTML" class="nav-link active" data-scroll-target="#shiny.ui.HTML">ui.HTML</a>
-  <ul class="collapse">
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#shiny.ui.HTML.as_string" id="toc-shiny.ui.HTML.as_string" class="nav-link" data-scroll-target="#shiny.ui.HTML.as_string">as_string</a></li>
-  </ul></li>
+  <li><a href="#ui.HTML" id="toc-ui.HTML" class="nav-link active" data-scroll-target="#ui.HTML">ui.HTML</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
   </ul>
 </nav>
     </div>
@@ -792,33 +789,39 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.HTML" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.HTML">ui.HTML</h2>
-<p><code>HTML()</code></p>
-<p>&gt;&gt;&gt; from htmltools import HTML, div &gt;&gt;&gt; div("&lt;p&gt;Hello&lt;/p&gt;") &lt;div&gt;&amp;lt;p&amp;gt;Hello&amp;lt;/p&amp;gt;&lt;/div&gt; &gt;&gt;&gt; div(HTML("&lt;p&gt;Hello&lt;/p&gt;")) &lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/div&gt;</p>
-<section id="methods" class="level3">
-<h3 class="anchored" data-anchor-id="methods">Methods</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#shiny.ui.HTML.as_string">as_string</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<section id="ui.HTML" class="level2">
+<h2 class="anchored" data-anchor-id="ui.HTML">ui.HTML</h2>
+<p><code>_core.HTML()</code></p>
+<p>Mark a string as raw HTML. This will prevent the string from being escaped when rendered inside an HTML tag.</p>
 </section>
-<section id="shiny.ui.HTML.as_string" class="level3">
-<h3 class="anchored" data-anchor-id="shiny.ui.HTML.as_string">as_string</h3>
-<p><code>ui.HTML.as_string(self)</code></p>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+from htmltools import HTML, div div(“
+<p>
+Hello
+</p>
+“)
+<div>
+&lt;p&gt;Hello&lt;/p&gt;
+</div>
+div(HTML(“
+<p>
+Hello
+</p>
+“))
+<div>
+<p>
+Hello
+</p>
+</div>
+</blockquote>
+</blockquote>
+</blockquote>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

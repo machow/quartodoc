@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,11 +784,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.ui.update_numeric" id="toc-shiny.ui.update_numeric" class="nav-link active" data-scroll-target="#shiny.ui.update_numeric">ui.update_numeric</a>
+  <li><a href="#ui.update_numeric" id="toc-ui.update_numeric" class="nav-link active" data-scroll-target="#ui.update_numeric">ui.update_numeric</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -798,13 +799,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.ui.update_numeric" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.ui.update_numeric">ui.update_numeric</h2>
-<p><code>ui.update_numeric(id, label=None, value=None, min=None, max=None, step=None, session=None)</code></p>
+<section id="ui.update_numeric" class="level2">
+<h2 class="anchored" data-anchor-id="ui.update_numeric">ui.update_numeric</h2>
+<p><code>ui._input_update.update_numeric(id, label=None, value=None, min=None, max=None, step=None, session=None)</code></p>
 <p>Change the value of a number input on the client.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 14%">
+<col style="width: 68%">
+<col style="width: 8%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -853,17 +860,20 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td><code>session</code></td>
 <td>Optional[Session]</td>
-<td>The <a href="../reference/Session.html#Session">Session</a> object passed to the server function of a <code>:func:~shiny.App</code>.</td>
+<td>The :class:<code>~shiny.Session</code> object passed to the server function of a :func:<code>~shiny.App</code>.</td>
 <td><code>None</code></td>
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
 <p>{note}</p>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <p>~shiny.ui.input_numeric</p>
-</section>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>

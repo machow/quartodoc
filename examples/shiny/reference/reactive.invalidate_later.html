@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -784,10 +784,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#shiny.reactive.invalidate_later" id="toc-shiny.reactive.invalidate_later" class="nav-link active" data-scroll-target="#shiny.reactive.invalidate_later">reactive.invalidate_later</a>
+  <li><a href="#reactive.invalidate_later" id="toc-reactive.invalidate_later" class="nav-link active" data-scroll-target="#reactive.invalidate_later">reactive.invalidate_later</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   </ul></li>
+  <li><a href="#note" id="toc-note" class="nav-link" data-scroll-target="#note">Note</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </nav>
@@ -797,9 +798,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="shiny.reactive.invalidate_later" class="level2">
-<h2 class="anchored" data-anchor-id="shiny.reactive.invalidate_later">reactive.invalidate_later</h2>
-<p><code>reactive.invalidate_later(delay, session=MISSING)</code></p>
+<section id="reactive.invalidate_later" class="level2">
+<h2 class="anchored" data-anchor-id="reactive.invalidate_later">reactive.invalidate_later</h2>
+<p><code>reactive._core.invalidate_later(delay, session=MISSING)</code></p>
 <p>Scheduled Invalidation</p>
 <p>Schedules the current reactive context to be invalidated in the given number of seconds.</p>
 <section id="parameters" class="level3">
@@ -828,8 +829,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>When called within a reactive function (i.e., <code>:func:Effect</code>, <code>:func:Calc</code>, <code>:func:render.ui</code>, etc.), that reactive context is invalidated (and re-executes) after the interval has passed. The re-execution will reset the invalidation flag, so in a typical use case, the object will keep re-executing and waiting for the specified interval. It's possible to stop this cycle by adding conditional logic that prevents the <code>invalidate_later</code> from being run.</p>
 </section>
+</section>
+<section id="note" class="level2">
+<h2 class="anchored" data-anchor-id="note">Note</h2>
+<p>When called within a reactive function (i.e., :func:<code>Effect</code>, :func:<code>Calc</code>, :func:<code>render.ui</code>, etc.), that reactive context is invalidated (and re-executes) after the interval has passed. The re-execution will reset the invalidation flag, so in a typical use case, the object will keep re-executing and waiting for the specified interval. It’s possible to stop this cycle by adding conditional logic that prevents the <code>invalidate_later</code> from being run.</p>
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>
