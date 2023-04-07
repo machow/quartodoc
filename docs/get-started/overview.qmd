@@ -9,13 +9,28 @@ jupyter:
     name: python3
 ---
 
-::: {.callout-warning} 
-quartodoc is work in progress!
-:::
-
 quartodoc let's you quickly generate python package documentation,
 using markdown and [quarto](https://quarto.org).
 It is designed as an alternative to Sphinx.
+
+::: {.callout-warning} 
+quartodoc is work in progress! Currently, it supports building sites like 
+[vetiver-python](https://rstudio.github.io/vetiver-python/latest/).
+
+However, v0.3.0 is coming out soon and will support documenting all the child
+members of classes, allow module-level docstrings, and more complex site layouts.
+It is currently being used to generate [siuba.org/api](https://siuba.org/api).
+
+Currently, we are migrating the [py-shiny reference docs](https://shiny.rstudio.com/py/api/).
+Once that's complete, we'll clean up and release v0.3.0!
+
+In the meantime, we are looking for more documentation examples.
+If you are interested moving your current docs to quartodoc, please open a
+[github issue](https://github.com/machow/quartodoc/issues).
+We'll make sure quartodoc handles your situation!
+
+:::
+
 
 ## Installation
 
