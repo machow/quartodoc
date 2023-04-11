@@ -515,6 +515,7 @@ class Builder:
                 or (not html_path.exists())
                 or (html_path.read_text() != rendered)
             ):
+                _log.info(f"Writing {page.path}")
                 html_path.write_text(rendered)
 
     # inventory ----
