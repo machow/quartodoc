@@ -311,7 +311,7 @@ class MdRenderer(Renderer):
         elif has_default:
             res = f"{glob}{el.name}={el.default}"
         else:
-            res = el.name
+            res = f"{glob}{el.name}"
 
         return sanitize(res)
 
