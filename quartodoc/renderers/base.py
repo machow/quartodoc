@@ -74,10 +74,22 @@ class Renderer:
             raise TypeError(type(cfg))
 
         if style.endswith(".py"):
+            import os
+            import sys
             import importlib
 
-            mod = importlib.import_module(style.rsplit(".", 1)[0])
-            return mod.Renderer(**cfg)
+            # temporarily add the current directory to sys path and import
+            # this ensures that even if we're executing the quartodoc cli,
+            # we can import a custom _renderer.py file.
+            # it probably isn't ideal, but seems like a more convenient
+            # option than requiring users to register entrypoints.
+            sys.path.append(os.getcwd())
+
+            try:
+                mod = importlib.import_module(style.rsplit(".", 1)[0])
+                return mod.Renderer(**cfg)
+            finally:
+                sys.path.pop()
 
         subclass = cls._registry[style]
         return subclass(**cfg)
