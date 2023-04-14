@@ -199,8 +199,8 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
     # since griffe reads class docstrings from the .__init__ method, this should
     # also have the effect of updating the class docstring.
     if isinstance(obj, dc.Class):
-        for func_obj in obj.functions.values():
-            replace_docstring(func_obj)
+        for child_obj in obj.members.values():
+            replace_docstring(child_obj)
 
     if f is None:
         mod = importlib.import_module(obj.module.canonical_path)
@@ -253,12 +253,14 @@ def dynamic_alias(
     except ValueError:
         mod_name, object_path = path, None
 
+    # get underlying object dynamically ----
+
     mod = importlib.import_module(mod_name)
 
     # Case 1: path is just to a module
     if object_path is None:
-        attr = get_object(path)
-        canonical_path = attr.__name__
+        attr = mod
+        canonical_path = mod.__name__
 
     # Case 2: path is to a member of a module
     else:
@@ -284,7 +286,7 @@ def dynamic_alias(
 
         attr = crnt_part
 
-    # start loading things with griffe ----
+    # start loading object with griffe ----
 
     if target:
         obj = get_object(target, loader=loader)

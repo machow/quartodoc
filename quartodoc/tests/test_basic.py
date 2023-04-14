@@ -1,5 +1,6 @@
 from quartodoc import get_object, get_function, MdRenderer
 from griffe.docstrings import dataclasses as ds
+from griffe import dataclasses as dc
 
 
 def test_get_function():
@@ -52,3 +53,34 @@ def test_render_attribute():
         MdRenderer().render(a)
         == "`tests.example_attribute.a`\n\nI am an attribute docstring"
     )
+
+
+def test_get_object_dynamic_module_root():
+    obj = get_object("quartodoc", dynamic=True)
+    assert isinstance(obj, dc.Module)
+    assert obj.path == "quartodoc"
+
+
+def test_get_object_dynamic_module():
+    obj = get_object("quartodoc.renderers", dynamic=True)
+    assert isinstance(obj, dc.Module)
+    assert obj.path == "quartodoc.renderers"
+
+
+def test_get_object_dynamic_function():
+    obj = get_object("quartodoc.tests.example_dynamic:f", dynamic=True)
+    assert obj.docstring.value.endswith("I am a note")
+
+
+def test_get_object_dynamic_class_method_doc():
+    obj = get_object("quartodoc.tests.example_dynamic:AClass", dynamic=True)
+
+    meth = obj.members["dynamic_doc"]
+    assert meth.docstring.value == "A dynamic method"
+
+
+def test_get_object_dynamic_class_method_doc():
+    obj = get_object("quartodoc.tests.example_dynamic:AClass", dynamic=True)
+
+    meth = obj.members["dynamic_create"]
+    assert meth.docstring.value == "A dynamic method"

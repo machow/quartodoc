@@ -181,6 +181,53 @@ class MdRenderer(Renderer):
             body = list(map(self.render, el.contents))
 
         return "\n\n".join([section_top, *body])
+    
+    @dispatch
+    def render(self, el: layout.Interlaced):
+        # render a sequence of objects with like-sections together.
+        # restrict its behavior to documenting functions for now ----
+        for doc in el.contents:
+            if not isinstance(doc, (layout.DocFunction, layout.DocAttribute)):
+                raise NotImplementedError(
+                    "Can only render Interlaced elements if all content elements"
+                    " are function or attribute docs."
+                    f" Found an element of type {type(doc)}, with name {doc.name}"
+                )
+
+        # render ----
+        # currently, we use everything from the first function, and just render
+        # the signatures together
+        first_doc = el.contents[0]
+        objs = [doc.obj for doc in el.contents]
+
+        if first_doc.obj.docstring is None:
+            raise ValueError("The first element of Interlaced must have a docstring.")
+
+        
+        str_title = self.render_header(first_doc)
+        str_sig = "\n\n".join(map(self.signature, objs))
+        str_body = []
+
+        # TODO: we should also interlace parameters and examples
+        # parsed = map(qast.transform, [x.docstring.parsed for x in objs if x.docstring])
+
+        # TODO: this is copied from the render method for dc.Object
+        for section in qast.transform(first_doc.obj.docstring.parsed):
+            title = section.title or section.kind.value
+            body = self.render(section)
+
+            if title != "text":
+                header = f"{'#' * (self.crnt_header_level + 1)} {title.title()}"
+                str_body.append("\n\n".join([header, body]))
+            else:
+                str_body.append(body)
+
+        if self.show_signature:
+            parts = [str_title, str_sig, *str_body]
+        else:
+            parts = [str_title, *str_body]
+
+        return "\n\n".join(parts)
 
     @dispatch
     def render(self, el: layout.Doc):
@@ -226,7 +273,8 @@ class MdRenderer(Renderer):
                 extra_parts.append(meths)
 
                 # TODO use context manager, or context variable?
-                with self._increment_header(2):
+                n_incr = 1 if el.flat else 2
+                with self._increment_header(n_incr):
                     meth_docs = [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
 
         body = self.render(el.obj)
@@ -477,6 +525,12 @@ class MdRenderer(Renderer):
     def summarize(self, el: layout.MemberPage):
         # TODO: model should validate these only have a single entry
         return self.summarize(el.contents[0], el.path, shorten = True)
+    
+    @dispatch
+    def summarize(self, el: layout.Interlaced, *args, **kwargs):
+        rows = [self.summarize(doc, *args, **kwargs) for doc in el.contents]
+
+        return "\n".join(rows)
 
     @dispatch
     def summarize(self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False):
