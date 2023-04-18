@@ -325,15 +325,35 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: dc.Parameters):
+        # index for switch from positional to kw args (via an unnamed *)
         try:
             kw_only = [par.kind for par in el].index(dc.ParameterKind.keyword_only)
         except ValueError:
             kw_only = None
+
+        # index for final positionly only args (via /)
+        try:
+            pos_only = max([ii for ii, el in enumerate(el) if el.kind == dc.ParameterKind.positional_only])
+        except ValueError:
+            pos_only = None
+
         
         pars = list(map(self.render, el))
 
-        if kw_only is not None:
+        # insert a single `*,` argument to represent the shift to kw only arguments,
+        # only if the shift to kw_only was not triggered by *args (var_positional)
+        if (
+            kw_only is not None
+            and kw_only > 0
+            and el[kw_only-1].kind != dc.ParameterKind.var_positional
+        ):
             pars.insert(kw_only, sanitize("*"))
+
+        # insert a single `/, ` argument to represent shift from positional only arguments
+        # note that this must come before a single *, so it's okay that both this
+        # and block above insert into pars
+        if pos_only is not None:
+            pars.insert(pos_only + 1, sanitize("/"))
 
         return ", ".join(pars)
 
