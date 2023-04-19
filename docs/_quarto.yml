@@ -19,84 +19,6 @@ interlinks:
     griffe:
       url: https://mkdocstrings.github.io/griffe/
 
-quartodoc:
-  style: pkgdown
-  dir: api
-  package: quartodoc
-  sidebar: "api/_sidebar.yml"
-  sections:
-    - title: Inspection
-      desc: |
-        These functions Fetch and analyze python objects, including parsing docstrings.
-      contents:
-        - get_object
-        - preview
-
-    - title: Docstring Renderers
-      desc: |
-        Renderers convert parsed docstrings into a target format, like markdown.
-      contents:
-        - name: MdRenderer
-          children: linked
-        - name: MdRenderer.render
-          dynamic: true
-        - name: MdRenderer.render_annotation
-          dynamic: true
-        - name: MdRenderer.render_header
-          dynamic: true
-        - name: MdRenderer.signature
-          dynamic: true
-        - name: MdRenderer.summarize
-          dynamic: true
-
-    - title: API Builders
-      desc: |
-        Builders are responsible for building documentation. They tie all the pieces
-        of quartodoc together, and can be defined in your _quarto.yml config.
-      contents:
-        - kind: auto
-          name: Builder
-          members: []
-        - Builder.build
-        - Builder.do_blueprint
-        - Builder.do_collect
-        - Builder.do_summarize
-        - Builder.write_index
-        - Builder.write_doc_pages
-
-
-    - title: Inventory links
-      desc: |
-        Inventory files map a functions name to its corresponding url in your docs.
-        These functions allow you to create and transform inventory files.
-      contents:
-        - create_inventory
-        - convert_inventory
-
-    - title: Data models
-      desc: |
-        Classes for specifying the exact layout of your docs.
-      contents:
-        - kind: "page"
-          path: "layouts"
-          flatten: true
-          contents:
-            - layout.Layout
-            - layout.Section
-            - layout.Page
-            - layout.Auto
-            - name: layout.Doc
-              members: []
-            - layout.DocFunction
-            - layout.DocAttribute
-            - layout.DocModule
-            - layout.DocClass
-            - layout.Link
-            - layout.Item
-            - layout.SectionElement
-            - layout.ContentElement
-
-
 website:
   title: "quartodoc"
   page-navigation: true
@@ -130,6 +52,7 @@ website:
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
             - get-started/building.qmd
+            - get-started/dev-blueprints.qmd
         - section: "Extra Topics"
           contents:
             - get-started/architecture.qmd
@@ -140,3 +63,105 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
+
+
+quartodoc:
+  style: pkgdown
+  dir: api
+  package: quartodoc
+  sidebar: "api/_sidebar.yml"
+  sections:
+    - title: Preperation Functions
+      desc: |
+        These functions fetch and analyze python objects, including parsing docstrings.
+        They prepare a basic representation of your doc site that can be rendered and built.
+      contents:
+        - Auto
+        - blueprint
+        - collect
+        - get_object
+        - preview
+
+    - title: Docstring Renderers
+      desc: |
+        Renderers convert parsed docstrings into a target format, like markdown.
+      contents:
+        - name: MdRenderer
+          children: linked
+        - name: MdRenderer.render
+          dynamic: true
+        - name: MdRenderer.render_annotation
+          dynamic: true
+        - name: MdRenderer.render_header
+          dynamic: true
+        - name: MdRenderer.signature
+          dynamic: true
+        - name: MdRenderer.summarize
+          dynamic: true
+
+    - title: API Builders
+      desc: |
+        Builders are responsible for building documentation. They tie all the pieces
+        of quartodoc together, and can be defined in your _quarto.yml config.
+      contents:
+        - kind: auto
+          name: Builder
+          members: []
+        - Builder.from_quarto_config
+        - Builder.build
+        - Builder.write_index
+        - Builder.write_doc_pages
+        - Builder.write_sidebar
+        - Builder.create_inventory
+
+
+    - title: Inventory links
+      desc: |
+        Inventory files map a functions name to its corresponding url in your docs.
+        These functions allow you to create and transform inventory files.
+      contents:
+        - create_inventory
+        - convert_inventory
+
+    - title: "Data models: structural"
+      desc: |
+        Classes for specifying the broad structure your docs.
+      contents:
+        - kind: "page"
+          path: "layouts-structure"
+          flatten: true
+          contents:
+            - layout.Layout
+            - layout.Section
+            - layout.Page
+            - layout.SectionElement
+            - layout.ContentElement
+
+    - title: "Data models: docable"
+      desc: |
+        Classes representing python objects to be rendered.
+      contents:
+        - kind: "page"
+          path: "layouts-docable"
+          flatten: true
+          contents:
+            - name: layout.Doc
+              members: []
+            - layout.DocFunction
+            - layout.DocAttribute
+            - layout.DocModule
+            - layout.DocClass
+            - layout.Link
+            - layout.Item
+    - title: "Data models: AST patches"
+      desc: |
+        Most of the classes for representing python objects live
+        in [](`griffe.dataclasses`) or [](`griffe.docstrings.dataclasses`).
+        However, the `quartodoc.ast` module has a number of custom classes to fill
+        in support for some important docstring sections.
+      contents:
+         - ast.DocstringSectionSeeAlso
+         - ast.DocstringSectionNotes
+         - ast.DocstringSectionWarnings
+         - ast.ExampleCode
+         - ast.ExampleText

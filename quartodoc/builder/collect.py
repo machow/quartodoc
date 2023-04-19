@@ -50,3 +50,22 @@ class CollectTransformer(PydanticTransformer):
         self.pages.append(el)
 
         return el
+
+
+def collect(el: layout._Base, base_dir: str):
+    """Return all pages and items in a layout.
+
+    Parameters
+    ----------
+    el:
+        An element, like layout.Section or layout.Page, to collect pages and items from.
+    base_dir:
+        The directory where API pages will live.
+
+
+    """
+
+    trans = CollectTransformer(base_dir=base_dir)
+    trans.visit(el)
+
+    return trans.pages, trans.items
