@@ -4,7 +4,6 @@ project:
   resources:
     - examples/single-page
     - examples/pkgdown
-    - examples/shiny
 
 metadata-files:
   - api/_sidebar.yml
@@ -47,6 +46,8 @@ website:
             - get-started/interlinks.qmd
             - get-started/sidebar.qmd
             - get-started/extending.qmd
+            - get-started/advanced-layouts.qmd
+
         - section: "Advanced"
           contents:
             - get-started/docstrings.qmd
