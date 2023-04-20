@@ -24,7 +24,6 @@ format:
 quartodoc:
   style: pkgdown
   dir: reference
-  display_name: relative
   package: quartodoc
   sections:
     - title: Some functions
