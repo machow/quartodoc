@@ -1,0 +1,87 @@
+---
+title: "The big picture: Builder"
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+* The Builder class loads your quarto config as a layout
+* The ABCs
+  - It contains a bunch of Auto elements, that eventually end up as Page objects.
+* A Renderer handles the output of blueprint into a string
+* Builder methods like `.write_doc_pages()`, or `.write_sidebar()` make the actual site.
+
+## The Builder
+
+```{python}
+import yaml
+
+from pprint import pprint
+from quartodoc import Builder, preview, blueprint, collect, MdRenderer
+
+cfg = yaml.safe_load("""
+quartodoc:
+  package: quartodoc
+  style: pkgdown
+  sections:
+    - title: "Some section"
+      desc: "Some description"
+      contents:
+        - name: MdRenderer
+          members: ["render", "summarize"]
+          children: separate
+""")
+
+builder = Builder.from_quarto_config(cfg)
+builder
+```
+
+Note that .from_quarto_config used the `style:` field to decide which Builder to create
+(in this case, PkgdownBuilder).
+
+```{python}
+preview(builder.layout)
+```
+
+```{python}
+content = builder.layout.sections[0].contents
+preview(content)
+```
+
+## From config to blueprint
+
+```{python}
+bp = blueprint(builder.layout)
+bp_contents = bp.sections[0].contents
+preview(bp_contents[0], max_depth=3)
+```
+
+
+## Collecting pages and items
+
+```{python}
+pages, items = collect(bp, builder.dir)
+preview(pages, max_depth=3)
+```
+
+## Rendering and writing
+
+```{python}
+builder.renderer
+```
+
+```{python}
+print(builder.renderer.render(pages[0]))
+
+```
+
+TODO: note about static analysis, dynamic option.
+
+```{python}
+#| eval: false
+builder.write_doc_pages(pages)
+```
+
+

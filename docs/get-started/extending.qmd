@@ -1,5 +1,5 @@
 ---
-title: More Customization
+title: More customization
 ---
 
 This page details 3 common aspects of quartodoc you can extend:

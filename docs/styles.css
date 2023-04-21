@@ -1,5 +1,45 @@
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', sans-serif; }
+}
+
+:root {
+  --bs-body-font-family: inter;
+  --bs-body-font-size: 16px;
+}
+
 /* css styles */
 
 .cell-output pre code {
   white-space: pre-wrap;
+}
+
+
+/* sidebar formatting */
+
+.sidebar a.nav-link {
+  font-size: 14.4px;
+  font-weight: 400;
+}
+
+
+.sidebar-item-container .text-start {
+  font-weight: 600;
+  font-size: 14.4px !important;
+}
+
+.sidebar-item-text {
+  /*color: rgba(60, 60, 60, 0.7);*/
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.sidebar-item-section {
+  padding-top: 16px;
+}
+
+.sidebar-section {
+  padding-left: 0px !important;
 }

@@ -39,24 +39,25 @@ website:
       align: left
       contents:
         - get-started/overview.qmd
-        - section: "Basics"
+        - section: "Basic Use"
           contents:
             - get-started/basic-docs.qmd
+            - get-started/basic-building.qmd
             - get-started/crossrefs.qmd
             - get-started/interlinks.qmd
             - get-started/sidebar.qmd
-            - get-started/extending.qmd
             - get-started/advanced-layouts.qmd
+            - get-started/extending.qmd
 
-        - section: "Advanced"
+        - section: "Programming"
           contents:
+            - get-started/dev-big-picture.qmd
+            - get-started/dev-prepare.qmd
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
-            - get-started/building.qmd
-            - get-started/dev-blueprints.qmd
         - section: "Extra Topics"
           contents:
-            - get-started/architecture.qmd
+            - get-started/extra-build-sequence.qmd
 
 
 format:
@@ -154,6 +155,7 @@ quartodoc:
             - layout.DocClass
             - layout.Link
             - layout.Item
+            - layout.ChoicesChildren
     - title: "Data models: AST patches"
       desc: |
         Most of the classes for representing python objects live
