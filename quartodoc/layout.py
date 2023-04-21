@@ -161,6 +161,20 @@ class Text(_Docable):
 
 
 class ChoicesChildren(Enum):
+    """Options for how child members of a class or module should be documented.
+
+    Attributes
+    ----------
+    embedded:
+        Embed documentation inside the parent object's documentation.
+    flat:
+        Include documentation after the parent object's documentation.
+    separate:
+        Put documentation for members on their own, separate pages.
+    linked:
+        Include only a table of links to members (which may not be documented).
+    """
+
     embedded = "embedded"
     flat = "flat"
     separate = "separate"
