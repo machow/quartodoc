@@ -87,8 +87,6 @@ def get_object(
     dynamic: bool
         Whether to dynamically import object. Useful if docstring is not hard-coded,
         but was set on object by running python code.
-    modules_collection: optional
-        A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
     See Also
     --------
@@ -521,7 +519,7 @@ class Builder:
             quarto_cfg = yaml.safe_load(open(quarto_cfg))
 
         cfg = quarto_cfg["quartodoc"]
-        style = cfg["style"]
+        style = cfg.get("style", "pkgdown")
 
         cls_builder = cls._registry[style]
 
