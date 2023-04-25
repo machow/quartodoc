@@ -42,6 +42,7 @@ website:
         - section: "Basic Use"
           contents:
             - get-started/basic-docs.qmd
+            - get-started/basic-content.qmd
             - get-started/basic-building.qmd
             - get-started/crossrefs.qmd
             - get-started/interlinks.qmd
@@ -55,6 +56,7 @@ website:
             - get-started/dev-prepare.qmd
             - get-started/docstrings.qmd
             - get-started/renderers.qmd
+            - get-started/dev-dataclasses.qmd
         - section: "Extra Topics"
           contents:
             - get-started/extra-build-sequence.qmd
@@ -156,7 +158,7 @@ quartodoc:
             - layout.Link
             - layout.Item
             - layout.ChoicesChildren
-    - title: "Data models: AST patches"
+    - title: "Data models: docstring patches"
       desc: |
         Most of the classes for representing python objects live
         in [](`griffe.dataclasses`) or [](`griffe.docstrings.dataclasses`).

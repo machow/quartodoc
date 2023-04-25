@@ -82,21 +82,22 @@ preview(bp_layout, max_depth=5, compact=True)
 ### Class members
 
 ```{python}
-auto_renderer = layout.Auto(name = "quartodoc.MdRenderer", children = "separate")
+auto_separate = layout.Auto(name = "quartodoc.MdRenderer", children = "separate")
+auto_embedded = layout.Auto(name = "quartodoc.MdRenderer", children = "embedded")
 ```
 
 :::::: {.columns}
 
 ::: {.column}
 ```{python}
-# raw auto
-preview(auto_renderer)
+bp_embedded = blueprint(auto_embedded)
+preview(bp_embedded, max_depth=2)
 ```
 :::
 ::: {.column}
 ```{python}
-bp_renderer = blueprint(auto_renderer)
-preview(bp_renderer, max_depth=2)
+bp_separate = blueprint(auto_separate)
+preview(bp_separate, max_depth=2)
 ```
 :::
 
@@ -109,7 +110,6 @@ preview(bp_renderer, max_depth=2)
 ```{python}
 some_page = layout.Page(path = "some_doc_page", contents = [doc])
 pages, items = collect(some_page, "reference")
+pages
 ```
 
-
-* collect should error if it hits an Auto element ("hey be sure to use blueprint")

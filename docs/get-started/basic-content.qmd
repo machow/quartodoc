@@ -1,0 +1,173 @@
+---
+title: Configuring content
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+Individual content entries (e.g. a function to be documented) can also be customized.
+For example, if you are documenting a python class, you may want to include or exclude
+documentation on specific methods on that class.
+
+Specify content options by setting `name: <content name>`, along with any additional options.
+
+For example, below is a piece of content, MdRenderer, specified without options.
+
+```yaml
+contents:
+  - MdRenderer
+```
+
+We set it to only document its render method, by setting `name: MdRenderer` followed by the
+`members` option.
+
+```yaml
+contents:
+  - name: MdRenderer
+    members:
+      - render
+```
+
+Behind the scenes, quartodoc represents each content entry as a [](`quartodoc.Auto`) element, since it specifies how to automatically document some object.
+
+## Looking up objects
+
+Finding python objects to document involves two pieces of configuration:
+
+* the package name.
+* a list of objects for content.
+
+Note that quartodoc can look up anything---whether functions, modules, classes, attributes, or methods.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+      desc: ""
+      contents:
+        - get_object        # function: quartodoc.get_object
+        - ast.preview       # submodule func: quartodoc.ast.preview
+        - MdRenderer        # class: quartodoc.MdRenderer
+        - MdRenderer.render # method: quartodoc.MDRenderer.render
+        - renderers         # module: quartodoc.renderers
+```
+
+The functions listed in `contents` are assumed to be imported from the package.
+
+## Module and class members
+
+Documentation for modules and classes can automatically include their members (e.g. class methods and attributes; everything defined inside a module).
+
+There are four styles for presenting child members:
+
+```{python}
+#| echo: false
+#| output: asis
+
+# print out the attributes table of ChoicesChildren 
+# this is overkill, but maybe a nice case of dogfooding
+from quartodoc import get_object, MdRenderer
+from quartodoc.builder.utils import extract_type
+from griffe.docstrings.dataclasses import DocstringSectionAttributes
+
+renderer = MdRenderer()
+choices = get_object("quartodoc.layout.ChoicesChildren")
+res = extract_type(DocstringSectionAttributes, choices.docstring.parsed)[0]
+
+print(renderer.render(res))
+```
+
+You can specify a style by setting the `children` option in the config:
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+      desc: ""
+      contents:
+
+        # set the children option, so that methods get documented
+        # on separate pages. MdRenderer's docs will include a summary
+        # table that links to each page.
+        - name: quartodoc.MdRenderer
+          children: separate
+```
+
+## Grouping on a page
+
+By default, content in each section gets included in the same index table,
+with each piece of content documented on its own page.
+
+For example, consider the config below.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Cool functions
+      desc: ""
+      contents:
+        - get_object
+        - name: MdRenderer
+          members: ["render"]
+```
+
+Both `get_object` and `MdRenderer` will be:
+
+* summarized and linked to in the "Cool functions" section of the index.
+* documented on their own, separate pages.
+
+### Page layout element
+
+Use a custom page element to group object documentation on the same page.
+
+Custom page elements are specified by including a `kind: <element name>` field.
+
+:::::: {.columns}
+
+
+::: {.column}
+
+**Separate**
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Cool functions
+      desc: ""
+
+      # normal contents setup ----
+      contents:
+        - get_object
+        - name: MdRenderer
+          members: ["render"]
+```
+
+:::
+::: {.column}
+
+**Grouped on same page**
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Cool functions
+      desc: ""
+
+      # contents with a page grouping ----
+      contents:
+        - kind: page
+          contents:
+            - get_object
+            - name: MdRenderer
+              members: ["render"]
+```
+
+:::
+::::::

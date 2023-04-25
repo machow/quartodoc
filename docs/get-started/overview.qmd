@@ -66,6 +66,50 @@ Finally, preview your website with quarto:
 quarto preview
 ```
 
+## Rebuilding site
+
+As mentioned in the previous section, you can preview your quartodoc site using these commands:
+
+```bash
+python -m quartodoc build
+quarto preview
+```
+
+In order to rebuild your API documentation pages during a quarto preview, re-run
+the quartodoc build command:
+
+```bash
+# with quarto preview running, you only need to re-run quartodoc build,
+# which will re-create the pages of your API documentation.
+python -m quartodoc build
+```
+
+## Looking up objects
+
+Finding python objects to document involves two pieces of configuration:
+
+* the package name.
+* a list of objects for content.
+
+Note that quartodoc can look up anything---whether functions, modules, classes, attributes, or methods.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+      desc: ""
+      contents:
+        - get_object        # function: quartodoc.get_object
+        - ast.preview       # submodule func: quartodoc.ast.preview
+        - MdRenderer        # class: quartodoc.MdRenderer
+        - MdRenderer.render # method: quartodoc.MDRenderer.render
+        - renderers         # module: quartodoc.renderers
+```
+
+The functions listed in `contents` are assumed to be imported from the package.
+
+
 ## Key Features
 
 * Load docstrings (with [griffe](https://github.com/mkdocstrings/griffe))
@@ -81,10 +125,21 @@ quarto preview
 
 ## Example sites
 
+### Demo sites
+
 | style | source | layout |
 | ----- | ------ | ------ |
 | [pkgdown] | [github][pkgdown-code] | Index page with a title and short description for functions listed in each section. Each function gets its own documentation page. |
 | [single-page] | [github][sp-code] | Index page has function documentation embedded on it. |
+
+### Packages using quartodoc
+
+
+| package | source | about |
+| ----- | ------ | ------ |
+| [siuba] | [github][sb-code] | Data analysis library. |
+| [shiny][shiny] |  | Dashboarding framework. |
+| [vetiver][vetiver] | [github][vt-code] | A tool to version, share, deploy and monitor ML models. |
 
 : {tbl-colwidths="[20, 20, 60]"}
 
@@ -92,3 +147,8 @@ quarto preview
 [pkgdown-code]: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
 [single-page]: /examples/single-page/reference
 [sp-code]: https://github.com/machow/quartodoc/tree/main/examples/single-page
+[shiny]: https://shiny.rstudio.com/py/api/
+[vetiver]: https://rstudio.github.io/vetiver-python/stable/reference/
+[vt-code]: https://github.com/rstudio/vetiver-python
+[siuba]: https://siuba.org/api/
+[sb-code]: https://github.com/machow/siuba.org
