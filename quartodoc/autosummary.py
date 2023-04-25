@@ -333,6 +333,8 @@ class Builder:
         The output path of the index file, used to list all API functions.
     sidebar:
         The output path for a sidebar yaml config (by default no config generated).
+    rewrite_all_pages:
+        Whether to rewrite all rendered doc pages, or only those with changes.
 
     """
 
