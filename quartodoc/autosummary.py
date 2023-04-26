@@ -4,6 +4,7 @@ import logging
 import warnings
 import yaml
 
+from fnmatch import fnmatchcase
 from griffe.loader import GriffeLoader
 from griffe.collections import ModulesCollection, LinesCollection
 from griffe.dataclasses import Alias
@@ -375,7 +376,7 @@ class Builder:
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
         sidebar: "str | None" = None,
-        rewrite_all_pages=True,
+        rewrite_all_pages=False,
     ):
         self.layout = self.load_layout(sections=sections, package=package)
 
@@ -400,8 +401,16 @@ class Builder:
 
     # building ----------------------------------------------------------------
 
-    def build(self):
-        """Build index page, sphinx inventory, and individual doc pages."""
+    def build(self, filter: str = "*"):
+        """Build index page, sphinx inventory, and individual doc pages.
+
+        Parameters
+        ----------
+        filter:
+            A simple pattern, that may include * as a wildcard. If specified,
+            only doc paths for objects with matching names will be written.
+            Path is the file's base name in the API dir (e.g. MdRenderer.render)
+        """
 
         from quartodoc import blueprint, collect
 
@@ -419,7 +428,7 @@ class Builder:
         self.write_index(blueprint)
 
         _log.info("Writing docs pages")
-        self.write_doc_pages(pages)
+        self.write_doc_pages(pages, filter)
 
         # inventory ----
 
@@ -448,7 +457,7 @@ class Builder:
 
         return str(p_index)
 
-    def write_doc_pages(self, pages):
+    def write_doc_pages(self, pages, filter: str):
         """Write individual function documentation pages."""
 
         for page in pages:
@@ -460,13 +469,24 @@ class Builder:
             # Only write out page if it has changed, or we've set the
             # rewrite_all_pages option. This ensures that quarto won't have
             # to re-render every page of the API all the time.
+            if filter != "*":
+                is_match = fnmatchcase(page.path, filter)
+
+                if is_match:
+                    _log.info("Matched filter")
+                else:
+                    _log.info("Skipping write (no filter match)")
+                    continue
+
             if (
                 self.rewrite_all_pages
                 or (not html_path.exists())
                 or (html_path.read_text() != rendered)
             ):
-                _log.info(f"Writing {page.path}")
+                _log.info(f"Writing: {page.path}")
                 html_path.write_text(rendered)
+            else:
+                _log.info("Skipping write (content unchanged)")
 
     # inventory ----
 
