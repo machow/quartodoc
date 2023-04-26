@@ -1,0 +1,41 @@
+---
+title: 🚧 Examples
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+```{python}
+from quartodoc import MdRenderer, preview
+
+renderer = MdRenderer()
+```
+
+## Returns: using type annotation
+
+In order to use the return type annotation of a function, use the following syntax.
+
+```
+Returns
+--------
+:
+    Some description of result
+```
+
+Below is a full example.
+
+```{python}
+def f() -> int:
+    """Some func
+
+    Returns
+    -------
+    :
+        A number
+    """"
+
+```
+
+TODO: need to load as a griffe object somehow.

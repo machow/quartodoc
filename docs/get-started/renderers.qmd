@@ -129,3 +129,29 @@ Note 3 big pieces:
 * **Tree walking**: `render` methods often call `render` again on sub elements.
 
 
+## Completing the Renderer
+
+While the above example showed a simple example with a `.render` method, a complete renderer will often do two more things:
+
+* Subclass an existing renderer.
+* Also override other methods like `.summarize()`
+
+```{python}
+from quartodoc import MdRenderer
+
+class NewRenderer(MdRenderer):
+    style = "new_renderer"
+
+    @dispatch
+    def render(self, el):
+        print("calling parent method for render")
+        return super().render(el)
+    
+    @dispatch
+    def summarize(self, el):
+        print("calling parent method for summarize")
+        return super().summarize(el)
+```
+
+For a list of methods, see the [](`~quartodoc.MdRenderer`) docs.
+

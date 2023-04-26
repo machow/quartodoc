@@ -47,8 +47,12 @@ website:
             - get-started/crossrefs.qmd
             - get-started/interlinks.qmd
             - get-started/sidebar.qmd
-            - get-started/advanced-layouts.qmd
             - get-started/extending.qmd
+
+        - section: "Docstrings"
+          contents:
+            - get-started/docstring-style.qmd
+            - get-started/docstring-examples.qmd
 
         - section: "Programming"
           contents:

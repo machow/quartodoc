@@ -1,0 +1,13 @@
+---
+title: numpydoc style
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+quartodoc expects numpydoc style for docstrings.
+See the [numpydoc sections guide][numpydoc] for more information and examples.
+
+[numpydoc]: https://numpydoc.readthedocs.io/en/latest/format.html#sections

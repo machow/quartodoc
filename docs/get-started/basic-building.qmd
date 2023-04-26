@@ -29,3 +29,34 @@ quarto preview
 ```bash
 quartodoc build --verbose
 ```
+
+## Speeding up preview
+
+### Rewriting doc files
+
+By default, the `quartodoc build` only re-writes doc pages when it detects
+a change to their content. This helps prevent `quarto preview` from trying
+to re-render every doc page--including those that haven't changed.
+
+###  Selectively building doc pages
+
+Use the filter option with `quartodoc build` to generate a subset of doc pages.
+This is useful when you have a many (e.g. several hundred) doc pages, and want
+to test a change on a single page.
+
+```bash
+quartodoc build --filter 'get_object'
+```
+
+This option also accepts a wildcard pattern, which causes it to build docs for all matching objects.
+
+```bash
+# write the docs for the MdRenderer class, and any of its methods
+# (e.g. MdRenderer.renderer)
+quartodoc build --filter 'MdRenderer*'
+```
+
+:::{.callout-note}
+When using a name with a wildcard, be sure to put it in single quotes!
+Otherwise, your shell may try to "expand it" to match file names.
+:::

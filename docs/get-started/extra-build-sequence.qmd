@@ -7,6 +7,9 @@ jupyter:
     name: python3
 ---
 
+This sequence diagram shows the process behind `quartodoc build`.
+See the API docs for [](`~quartodoc.Builder`), [](`~quartodoc.MdRenderer`), and the preperation functions ([](`~quartodoc.Auto`), [](`~quartodoc.blueprint`), [](`~quartodoc.collect`))
+
 ```{mermaid}
 %%| fig-width: 100%
 sequenceDiagram
