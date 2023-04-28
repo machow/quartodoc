@@ -86,7 +86,7 @@ python -m quartodoc build
 
 ## Looking up objects
 
-Finding python objects to document involves two pieces of configuration:
+Finding Python objects to document involves two pieces of configuration:
 
 * the package name.
 * a list of objects for content.
