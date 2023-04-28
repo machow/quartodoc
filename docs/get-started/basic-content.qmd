@@ -8,7 +8,7 @@ jupyter:
 ---
 
 Individual content entries (e.g. a function to be documented) can also be customized.
-For example, if you are documenting a python class, you may want to include or exclude
+For example, if you are documenting a Python class, you may want to include or exclude
 documentation on specific methods on that class.
 
 Specify content options by setting `name: <content name>`, along with any additional options.
@@ -34,7 +34,7 @@ Behind the scenes, quartodoc represents each content entry as a [](`quartodoc.Au
 
 ## Looking up objects
 
-Finding python objects to document involves two pieces of configuration:
+Finding Python objects to document involves two pieces of configuration:
 
 * the package name.
 * a list of objects for content.
