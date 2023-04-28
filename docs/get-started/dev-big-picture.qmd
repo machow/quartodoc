@@ -7,7 +7,7 @@ jupyter:
     name: python3
 ---
 
-While the "Basic Use" section covered how to configure and build a site with quartodoc, this section focuses on using quartodoc as a python program.
+While the "Basic Use" section covered how to configure and build a site with quartodoc, this section focuses on using quartodoc as a Python program.
 
 Programming with quartodoc will help with debugging, tinkering, and extending things.
 
@@ -23,7 +23,7 @@ This page will cover the basics of the Builder and this process.
 
 ## The Builder
 
-The code below shows a Builder object being loaded from a `_quarto.yml` config (loaded as a python dictionary).
+The code below shows a Builder object being loaded from a `_quarto.yml` config (loaded as a Python dictionary).
 
 ```{python}
 import yaml
@@ -67,7 +67,7 @@ Notice the following:
 * `preview` represents calls like `Layout()` with a box to the left, and then
 a pipe connecting it to each of its arguments.
 * The content entry `MdRenderer` is represented by an [Auto](`quartodoc.Auto`) class.
-  This specifies a python object to look up and document.
+  This specifies a Python object to look up and document.
 
 We can follow the path in the preview above, to pull out just the contents piece:
 
