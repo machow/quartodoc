@@ -72,7 +72,7 @@ a pipe connecting it to each of its arguments.
 We can follow the path in the preview above, to pull out just the contents piece:
 
 ```{python}
-content = builder.layout.sections[0].contents
+content = builder.layout.sections[0].contents[0]
 preview(content)
 ```
 
@@ -84,13 +84,13 @@ The code below shows how `blueprint()` transforms the `Auto` entry for `MdRender
 
 ```{python}
 bp = blueprint(builder.layout)
-bp_contents = bp.sections[0].contents
-preview(bp_contents[0], max_depth=3)
+bp_contents = bp.sections[0].contents[0]
+preview(bp_contents, max_depth=3)
 ```
 
 Notice two key pieces:
 
-* The outermost element is now a [layout.Page](`quartodoc.layout.Page`).
+* The `Auto` element is now a [layout.Page](`quartodoc.layout.Page`).
   The `.path` indicates that the documentation will be on a page called `"MdRenderer"`.
 * The content of the page is a [layout.DocClass](`quartodoc.layout.DocClass).
   This element holds everything needed to render this doc, including the class signature
@@ -99,7 +99,7 @@ Notice two key pieces:
 Importantly, the `.members` attribute specifies how to render the class methods we specified (`.render()` and `.summarize()`).
 
 ```{python}
-preview(bp_contents[0].contents[0].members, max_depth=2)
+preview(bp_contents.contents[0].members, max_depth=2)
 ```
 
 Note that they are also a instances of `Page` (`MemberPage` to be exact).

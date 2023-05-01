@@ -9,11 +9,15 @@ jupyter:
     name: python3
 ---
 
-::: {.callout-warning} 
-quartodoc is work in progress!
+::: {.callout-note} 
+quartodoc is used to create the API documentation for [shiny], [siuba], and [vetiver].
+
+It's full-featured and relatively stable, but may see some small changes in the the name of making API documentation a real delight.
+
+If you're interested in using quartodoc for your package's documentation, please open an issue, so we can make sure it does exactly what you want.
 :::
 
-quartodoc let's you quickly generate python package documentation,
+quartodoc lets you quickly generate python package documentation,
 using markdown and [quarto](https://quarto.org).
 It is designed as an alternative to Sphinx.
 
@@ -36,17 +40,16 @@ First, create a `_quarto.yml` file with the following:
 ```yaml
 project:
   type: website
-  resources:
-    - objects.json
 
 quartodoc:
-  style: single-page
-  dir: reference
+  # the name used to import the package
   package: quartodoc
   sections:
     - title: Some functions
       desc: Functions to inspect docstrings.
       contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
         - get_object
         - preview
 ```
@@ -86,7 +89,7 @@ python -m quartodoc build
 
 ## Looking up objects
 
-Finding Python objects to document involves two pieces of configuration:
+Finding python objects to document involves two pieces of configuration:
 
 * the package name.
 * a list of objects for content.
@@ -109,19 +112,6 @@ quartodoc:
 
 The functions listed in `contents` are assumed to be imported from the package.
 
-
-## Key Features
-
-* Load docstrings (with [griffe](https://github.com/mkdocstrings/griffe))
-* Render docstrings (e.g. with [MdRenderer](/api/#sec-MdRenderer))
-* Enable cross references to function documentation (with interlinks filter).
-  - Link to functions within a doc.
-  - Link to functions in other docs.
-  - Generate an inventory file for other docs to link to yours.
-* Generate high-level summaries (with [Builder](/api/#api-builders)).
-  - First line of docstring used as description.
-  - Class doc pages have table of class attributes.
-  - Index pages list function names and descriptions.
 
 ## Example sites
 

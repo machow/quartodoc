@@ -61,6 +61,8 @@ The functions listed in `contents` are assumed to be imported from the package.
 
 Documentation for modules and classes can automatically include their members (e.g. class methods and attributes; everything defined inside a module).
 
+By default, all attributes and functions (including methods on a class) are documented by embedding them inside the module or class documentation.
+
 There are four styles for presenting child members:
 
 ```{python}
@@ -171,3 +173,19 @@ quartodoc:
 
 :::
 ::::::
+
+
+## Dynamic lookup
+
+By default, quartodoc uses static analysis to look up objects.
+This means it gets information about your docstring without actually running your package's code.
+
+This usually works well, but may get the docstring wrong for those created in an extremely dynamic way (e.g. you manually set the `__doc__` attribute on an object).
+
+In this case, you can set the dynamic option on a piece of content.
+
+```yaml
+contents:
+  - name: get_object
+    dynamic: true
+```
