@@ -26,6 +26,8 @@ quarto preview
 
 ## Rebuilding doc pages
 
+While using `quarto preview`, you can preview updates to your docstrings by regenerating their documentation pages:
+
 ```bash
 quartodoc build --verbose
 ```
