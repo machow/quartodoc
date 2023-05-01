@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Sidebar navigation</title>
+<title>quartodoc - Prep: Auto, blueprint, collect</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/extending.html" rel="next">
-<link href="../get-started/interlinks.html" rel="prev">
+<link href="../get-started/dev-docstrings.html" rel="next">
+<link href="../get-started/dev-big-picture.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Sidebar navigation</h1>
+      <h1 class="quarto-secondary-nav-title">Prep: Auto, blueprint, collect</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link active">Sidebar navigation</a>
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -268,7 +268,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/dev-prepare.html" class="sidebar-item-text sidebar-link">Prep: Auto, blueprint, collect</a>
+  <a href="../get-started/dev-prepare.html" class="sidebar-item-text sidebar-link active">Prep: Auto, blueprint, collect</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -303,14 +303,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#auto-discovery-of-functions-classes-and-more" id="toc-auto-discovery-of-functions-classes-and-more" class="nav-link active" data-scroll-target="#auto-discovery-of-functions-classes-and-more">Auto discovery of functions, classes, and more</a></li>
+  <li><a href="#blueprint-create-a-renderable-doc-recipe" id="toc-blueprint-create-a-renderable-doc-recipe" class="nav-link" data-scroll-target="#blueprint-create-a-renderable-doc-recipe">Blueprint: create a renderable doc recipe</a>
+  <ul class="collapse">
+  <li><a href="#from-auto" id="toc-from-auto" class="nav-link" data-scroll-target="#from-auto">From Auto</a></li>
+  <li><a href="#layout-and-section" id="toc-layout-and-section" class="nav-link" data-scroll-target="#layout-and-section">Layout and Section</a></li>
+  <li><a href="#grouping-docs-on-single-page" id="toc-grouping-docs-on-single-page" class="nav-link" data-scroll-target="#grouping-docs-on-single-page">Grouping docs on single Page</a></li>
+  <li><a href="#class-members" id="toc-class-members" class="nav-link" data-scroll-target="#class-members">Class members</a></li>
+  </ul></li>
+  <li><a href="#collect-fetch-all-pages-and-items" id="toc-collect-fetch-all-pages-and-items" class="nav-link" data-scroll-target="#collect-fetch-all-pages-and-items">Collect: fetch all pages and items</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Sidebar navigation</h1>
+<h1 class="title d-none d-lg-block">Prep: Auto, blueprint, collect</h1>
 </div>
 
 
@@ -325,73 +339,201 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.</p>
-<p>In order to create a sidebar for your docs, add the following options to your <code>_quarto.yml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quarto to read the sidebar file</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata-files</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> _sidebar.yml</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quartodoc to generate the sidebar file</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span><span class="at"> </span><span class="st">"_sidebar.yml"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  # other options ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that running <code>python -m quartodoc build</code> will now produce a file called <code>_sidebar.yml</code>, with a <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">quarto sidebar configuration</a>. The quarto <a href="https://quarto.org/docs/projects/quarto-projects.html#metadata-includes"><code>metadata-files</code> option</a> ensures it’s included with the configuration in <code>_quarto.yml</code>.</p>
-<p>Here is what the sidebar for the <a href="../api">quartodoc reference page</a> looks like:</p>
-<div class="sourceCode">
-<pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml">
-website:
-  sidebar:
-    contents:
-    - api/index.qmd
-    - contents:
-      - api/Auto.qmd
-      - api/blueprint.qmd
-      - api/collect.qmd
-      - api/get_object.qmd
-      - api/preview.qmd
-      section: Preperation Functions
-    - contents:
-      - api/MdRenderer.qmd
-      - api/MdRenderer.render.qmd
-      - api/MdRenderer.render_annotation.qmd
-      - api/MdRenderer.render_header.qmd
-      - api/MdRenderer.signature.qmd
-      - api/MdRenderer.summarize.qmd
-      section: Docstring Renderers
-    - contents:
-      - api/Builder.qmd
-      - api/Builder.from_quarto_config.qmd
-      - api/Builder.build.qmd
-      - api/Builder.write_index.qmd
-      - api/Builder.write_doc_pages.qmd
-      - api/Builder.write_sidebar.qmd
-      - api/Builder.create_inventory.qmd
-      section: API Builders
-    - contents:
-      - api/create_inventory.qmd
-      - api/convert_inventory.qmd
-      section: Inventory links
-    - contents:
-      - api/layouts-structure.qmd
-      section: 'Data models: structural'
-    - contents:
-      - api/layouts-docable.qmd
-      section: 'Data models: docable'
-    - contents:
-      - api/ast.DocstringSectionSeeAlso.qmd
-      - api/ast.DocstringSectionNotes.qmd
-      - api/ast.DocstringSectionWarnings.qmd
-      - api/ast.ExampleCode.qmd
-      - api/ast.ExampleText.qmd
-      section: 'Data models: docstring patches'
-    id: api
-
-
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> Auto, blueprint, collect, preview</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> MdRenderer</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> layout</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="auto-discovery-of-functions-classes-and-more" class="level3">
+<h3 class="anchored" data-anchor-id="auto-discovery-of-functions-classes-and-more">Auto discovery of functions, classes, and more</h3>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> Auto(name <span class="op">=</span> <span class="st">"quartodoc.get_object"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>auto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>Auto(kind='auto', name='quartodoc.get_object', members=None, include_private=False, include=None, exclude=None, dynamic=False, children=&lt;ChoicesChildren.embedded: 'embedded'&gt;)</code></pre>
+</div>
+</div>
+<ul>
+<li>auto just represents what we want to do, blueprint has all the logic.</li>
+<li>explain options like dynamic, show them in blueprint section</li>
+</ul>
+</section>
+<section id="blueprint-create-a-renderable-doc-recipe" class="level2">
+<h2 class="anchored" data-anchor-id="blueprint-create-a-renderable-doc-recipe">Blueprint: create a renderable doc recipe</h2>
+<section id="from-auto" class="level3">
+<h3 class="anchored" data-anchor-id="from-auto">From Auto</h3>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> blueprint(auto)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>doc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>DocFunction(name='quartodoc.get_object', obj=&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;, anchor='quartodoc.get_object', kind='function')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>preview(doc.obj.docstring, max_depth<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─Docstring
+├─parser = &lt;Parser.numpy: 'numpy'&gt;
+└─parsed = █─list
+           ├─0 = █─DocstringSectionText ...
+           ├─1 = █─DocstringSectionParameters ...
+           ├─2 = █─DocstringSectionSeeAlso ...
+           └─3 = █─DocstringSectionExamples ...</code></pre>
+</div>
+</div>
+</section>
+<section id="layout-and-section" class="level3">
+<h3 class="anchored" data-anchor-id="layout-and-section">Layout and Section</h3>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lay <span class="op">=</span> layout.Layout(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    sections <span class="op">=</span> [</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      layout.Section(title <span class="op">=</span> <span class="st">"A section"</span>, desc <span class="op">=</span> <span class="st">"A description"</span>, contents <span class="op">=</span> [auto])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column">
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># raw layout</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>preview(lay, compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─Layout
+├─sections = 
+│ █─list
+│ └─0 = 
+│   █─Section
+│   ├─title = 'A section'
+│   ├─desc = 'A description'
+│   ├─package = █─MISSING
+│   └─contents = 
+│     █─list
+│     └─0 = 
+│       █─Auto
+│       └─name = 'quartodoc.get_object'
+└─package = █─MISSING</code></pre>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bp_layout <span class="op">=</span> blueprint(lay)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>preview(bp_layout, max_depth<span class="op">=</span><span class="dv">5</span>, compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─Layout
+├─sections = 
+│ █─list
+│ └─0 = 
+│   █─Section
+│   ├─title = 'A section'
+│   ├─desc = 'A description'
+│   ├─package = █─MISSING
+│   └─contents = 
+│     █─list
+│     └─0 = 
+│       █─Page
+│       ├─path = 'quartodoc.get_object'
+│       ├─package = █─MISSING ...
+│       └─contents = 
+│         █─list ...
+└─package = █─MISSING</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="grouping-docs-on-single-page" class="level3">
+<h3 class="anchored" data-anchor-id="grouping-docs-on-single-page">Grouping docs on single Page</h3>
+</section>
+<section id="class-members" class="level3">
+<h3 class="anchored" data-anchor-id="class-members">Class members</h3>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>auto_separate <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, children <span class="op">=</span> <span class="st">"separate"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>auto_embedded <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, children <span class="op">=</span> <span class="st">"embedded"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column">
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bp_embedded <span class="op">=</span> blueprint(auto_embedded)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>preview(bp_embedded, max_depth<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─DocClass
+├─name = 'quartodoc.MdRenderer'
+├─obj = █─Alias
+│       ├─name = 'MdRenderer'
+│       ├─canonical_path = 'quartodoc.renderers.md_renderer.MdRenderer'
+│       ├─classes = █─dict ...
+│       ├─parameters = █─Parameters ...
+│       ├─members = █─dict ...
+│       ├─functions = █─dict ...
+│       └─docstring = █─Docstring ...
+├─anchor = 'quartodoc.MdRenderer'
+├─members = █─list
+│           ├─0 = █─DocAttribute ...
+│           ├─1 = █─DocAttribute ...
+│           ├─2 = █─DocAttribute ...
+│           ├─3 = █─DocAttribute ...
+│           ├─4 = █─DocFunction ...
+│           ├─5 = █─DocFunction ...
+│           ├─6 = █─DocFunction ...
+│           ├─7 = █─DocAttribute ...
+│           ├─8 = █─DocAttribute ...
+│           ├─9 = █─DocFunction ...
+│           ├─10 = █─DocAttribute ...
+│           ├─11 = █─DocFunction ...
+│           └─12 = █─DocAttribute ...
+└─flat = False</code></pre>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bp_separate <span class="op">=</span> blueprint(auto_separate)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>preview(bp_separate, max_depth<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─DocClass
+├─name = 'quartodoc.MdRenderer'
+├─obj = █─Alias
+│       ├─name = 'MdRenderer'
+│       ├─canonical_path = 'quartodoc.renderers.md_renderer.MdRenderer'
+│       ├─classes = █─dict ...
+│       ├─parameters = █─Parameters ...
+│       ├─members = █─dict ...
+│       ├─functions = █─dict ...
+│       └─docstring = █─Docstring ...
+├─anchor = 'quartodoc.MdRenderer'
+├─members = █─list
+│           ├─0 = █─MemberPage ...
+│           ├─1 = █─MemberPage ...
+│           ├─2 = █─MemberPage ...
+│           ├─3 = █─MemberPage ...
+│           ├─4 = █─MemberPage ...
+│           ├─5 = █─MemberPage ...
+│           ├─6 = █─MemberPage ...
+│           ├─7 = █─MemberPage ...
+│           ├─8 = █─MemberPage ...
+│           ├─9 = █─MemberPage ...
+│           ├─10 = █─MemberPage ...
+│           ├─11 = █─MemberPage ...
+│           └─12 = █─MemberPage ...
+└─flat = False</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="collect-fetch-all-pages-and-items" class="level2">
+<h2 class="anchored" data-anchor-id="collect-fetch-all-pages-and-items">Collect: fetch all pages and items</h2>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>some_page <span class="op">=</span> layout.Page(path <span class="op">=</span> <span class="st">"some_doc_page"</span>, contents <span class="op">=</span> [doc])</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pages, items <span class="op">=</span> collect(some_page, <span class="st">"reference"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>pages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>[Page(kind='page', path='some_doc_page', package=MISSING(), summary=None, flatten=False, contents=[DocFunction(name='quartodoc.get_object', obj=&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;, anchor='quartodoc.get_object', kind='function')])]</code></pre>
+</div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -529,13 +671,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/interlinks.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interlinks filter</span>
+      <a href="../get-started/dev-big-picture.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">The big picture: Builder</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/extending.html" class="pagination-link">
-        <span class="nav-page-text">More customization</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/dev-docstrings.html" class="pagination-link">
+        <span class="nav-page-text">Inspecting docstrings</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

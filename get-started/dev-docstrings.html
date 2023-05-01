@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Sidebar navigation</title>
+<title>quartodoc - Inspecting docstrings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/extending.html" rel="next">
-<link href="../get-started/interlinks.html" rel="prev">
+<link href="../get-started/dev-renderers.html" rel="next">
+<link href="../get-started/dev-prepare.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Sidebar navigation</h1>
+      <h1 class="quarto-secondary-nav-title">Inspecting docstrings</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link active">Sidebar navigation</a>
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -273,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/dev-docstrings.html" class="sidebar-item-text sidebar-link">Inspecting docstrings</a>
+  <a href="../get-started/dev-docstrings.html" class="sidebar-item-text sidebar-link active">Inspecting docstrings</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -303,14 +303,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#docstring-structure" id="toc-docstring-structure" class="nav-link active" data-scroll-target="#docstring-structure">Docstring structure</a></li>
+  <li><a href="#reading-docstrings" id="toc-reading-docstrings" class="nav-link" data-scroll-target="#reading-docstrings">Reading docstrings</a>
+  <ul class="collapse">
+  <li><a href="#function-name" id="toc-function-name" class="nav-link" data-scroll-target="#function-name">Function name</a></li>
+  <li><a href="#function-parameters" id="toc-function-parameters" class="nav-link" data-scroll-target="#function-parameters">Function parameters</a></li>
+  <li><a href="#raw-docstring-value" id="toc-raw-docstring-value" class="nav-link" data-scroll-target="#raw-docstring-value">Raw docstring value</a></li>
+  <li><a href="#parsed-docstring" id="toc-parsed-docstring" class="nav-link" data-scroll-target="#parsed-docstring">Parsed docstring</a></li>
+  </ul></li>
+  <li><a href="#previewing-docstrings" id="toc-previewing-docstrings" class="nav-link" data-scroll-target="#previewing-docstrings">Previewing docstrings</a>
+  <ul class="collapse">
+  <li><a href="#raw-docstring" id="toc-raw-docstring" class="nav-link" data-scroll-target="#raw-docstring">Raw docstring</a></li>
+  <li><a href="#preview" id="toc-preview" class="nav-link" data-scroll-target="#preview">Preview</a></li>
+  </ul></li>
+  <li><a href="#parsing-other-docstring-formats" id="toc-parsing-other-docstring-formats" class="nav-link" data-scroll-target="#parsing-other-docstring-formats">Parsing other docstring formats</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Sidebar navigation</h1>
+<h1 class="title d-none d-lg-block">Inspecting docstrings</h1>
 </div>
 
 
@@ -325,73 +344,208 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.</p>
-<p>In order to create a sidebar for your docs, add the following options to your <code>_quarto.yml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quarto to read the sidebar file</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata-files</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> _sidebar.yml</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quartodoc to generate the sidebar file</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span><span class="at"> </span><span class="st">"_sidebar.yml"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  # other options ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that running <code>python -m quartodoc build</code> will now produce a file called <code>_sidebar.yml</code>, with a <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">quarto sidebar configuration</a>. The quarto <a href="https://quarto.org/docs/projects/quarto-projects.html#metadata-includes"><code>metadata-files</code> option</a> ensures it’s included with the configuration in <code>_quarto.yml</code>.</p>
-<p>Here is what the sidebar for the <a href="../api">quartodoc reference page</a> looks like:</p>
-<div class="sourceCode">
-<pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml">
-website:
-  sidebar:
-    contents:
-    - api/index.qmd
-    - contents:
-      - api/Auto.qmd
-      - api/blueprint.qmd
-      - api/collect.qmd
-      - api/get_object.qmd
-      - api/preview.qmd
-      section: Preperation Functions
-    - contents:
-      - api/MdRenderer.qmd
-      - api/MdRenderer.render.qmd
-      - api/MdRenderer.render_annotation.qmd
-      - api/MdRenderer.render_header.qmd
-      - api/MdRenderer.signature.qmd
-      - api/MdRenderer.summarize.qmd
-      section: Docstring Renderers
-    - contents:
-      - api/Builder.qmd
-      - api/Builder.from_quarto_config.qmd
-      - api/Builder.build.qmd
-      - api/Builder.write_index.qmd
-      - api/Builder.write_doc_pages.qmd
-      - api/Builder.write_sidebar.qmd
-      - api/Builder.create_inventory.qmd
-      section: API Builders
-    - contents:
-      - api/create_inventory.qmd
-      - api/convert_inventory.qmd
-      section: Inventory links
-    - contents:
-      - api/layouts-structure.qmd
-      section: 'Data models: structural'
-    - contents:
-      - api/layouts-docable.qmd
-      section: 'Data models: docable'
-    - contents:
-      - api/ast.DocstringSectionSeeAlso.qmd
-      - api/ast.DocstringSectionNotes.qmd
-      - api/ast.DocstringSectionWarnings.qmd
-      - api/ast.ExampleCode.qmd
-      - api/ast.ExampleText.qmd
-      section: 'Data models: docstring patches'
-    id: api
-
-
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
+<p>quartodoc uses the library <a href="https://github.com/mkdocstrings/griffe">griffe</a> to load and parse docstrings.</p>
+<section id="docstring-structure" class="level2">
+<h2 class="anchored" data-anchor-id="docstring-structure">Docstring structure</h2>
+<p>quartodoc currently expects docstrings to be in the <a href="https://numpydoc.readthedocs.io/en/latest/format.html">numpydocstring</a> format.</p>
+<p>Docstrings are loaded and parsed using <a href="https://mkdocstrings.github.io/griffe">griffe</a>, which uses custom data classes to represent the structure of a program:</p>
+<ul>
+<li><a href="https://mkdocstrings.github.io/griffe/reference/griffe/dataclasses/#griffe.dataclasses">griffe.dataclasses</a> - represent the structure of python objects.</li>
+<li><a href="https://mkdocstrings.github.io/griffe/reference/griffe/docstrings/dataclasses/#griffe.docstrings.dataclasses">griffe.docstrings.dataclasses</a> - represent the structure of parsed docstrings.</li>
+</ul>
+</section>
+<section id="reading-docstrings" class="level2">
+<h2 class="anchored" data-anchor-id="reading-docstrings">Reading docstrings</h2>
+<p>Use the function <a href="../api/#get_object">get_object</a> to read in a docstring from a module.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> get_object, preview</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f_obj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;</code></pre>
 </div>
+</div>
+<p>The result above is a griffe object representing the function <code>quartodoc.get_object</code>, which has two important attributes:</p>
+<ul>
+<li><code>.name</code>: the function’s name.</li>
+<li><code>.parameters</code>: the function’s parameters.</li>
+<li><code>.docstring.value</code>: the actual docstring</li>
+<li><code>.docstring.parsed</code>: the docstring parsed into a tree of griffe objects</li>
+</ul>
+<section id="function-name" class="level3">
+<h3 class="anchored" data-anchor-id="function-name">Function name</h3>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f_obj.name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>'get_object'</code></pre>
+</div>
+</div>
+</section>
+<section id="function-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="function-parameters">Function parameters</h3>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;griffe.dataclasses.Parameters at 0x7f2914db9000&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="raw-docstring-value" class="level3">
+<h3 class="anchored" data-anchor-id="raw-docstring-value">Raw docstring value</h3>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f_obj.docstring.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fetch a griffe object.
+
+Parameters
+----------
+path: str
+    An import path to the object. This should have the form `path.to.module:object`.
+    For example, `quartodoc:get_object` or `quartodoc:MdRenderer.render`.
+object_name: str
+    (Deprecated). A function name.
+parser: str
+    A docstring parser to use.
+load_aliases: bool
+    For aliases that were imported from other modules, should we load that module?
+dynamic: bool
+    Whether to dynamically import object. Useful if docstring is not hard-coded,
+    but was set on object by running python code.
+
+See Also
+--------
+preview: print a user-friendly preview of a griffe object.
+
+Examples
+--------
+
+&gt;&gt;&gt; get_function("quartodoc", "get_function")
+&lt;Function('get_function', ...</code></pre>
+</div>
+</div>
+</section>
+<section id="parsed-docstring" class="level3">
+<h3 class="anchored" data-anchor-id="parsed-docstring">Parsed docstring</h3>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f2914cc1c60&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f2914cc3610&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f2914cc1b10&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f2914cc2530&gt;]</code></pre>
+</div>
+</div>
+<p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
+</section>
+</section>
+<section id="previewing-docstrings" class="level2">
+<h2 class="anchored" data-anchor-id="previewing-docstrings">Previewing docstrings</h2>
+<p>Use the preview function to see the overall structure of a parsed docstring.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> get_object, preview</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="raw-docstring" class="level3">
+<h3 class="anchored" data-anchor-id="raw-docstring">Raw docstring</h3>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f_obj.docstring.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fetch a griffe object.
+
+Parameters
+----------
+path: str
+    An import path to the object. This should have the form `path.to.module:object`.
+    For example, `quartodoc:get_object` or `quartodoc:MdRenderer.render`.
+object_name: str
+    (Deprecated). A function name.
+parser: str
+    A docstring parser to use.
+load_aliases: bool
+    For aliases that were imported from other modules, should we load that module?
+dynamic: bool
+    Whether to dynamically import object. Useful if docstring is not hard-coded,
+    but was set on object by running python code.
+
+See Also
+--------
+preview: print a user-friendly preview of a griffe object.
+
+Examples
+--------
+
+&gt;&gt;&gt; get_function("quartodoc", "get_function")
+&lt;Function('get_function', ...</code></pre>
+</div>
+</div>
+</section>
+<section id="preview" class="level3">
+<h3 class="anchored" data-anchor-id="preview">Preview</h3>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>preview(f_obj.docstring.parsed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─list
+├─0 = █─DocstringSectionText
+│     ├─kind = &lt;DocstringSectionKind.text: 'text'&gt;
+│     ├─title = None
+│     └─value = 'Fetch a griffe object.'
+├─1 = █─DocstringSectionParameters
+│     ├─kind = &lt;DocstringSectionKind.parameters: 'parameters'&gt;
+│     ├─title = None
+│     └─value = █─list
+│               ├─0 = █─DocstringParameter
+│               │     ├─annotation = Name(source='str', full='str')
+│               │     ├─default = None
+│               │     ├─description = 'An import path to the object. This should have th ...
+│               │     ├─name = 'path'
+│               │     └─value = None
+│               ├─1 = █─DocstringParameter
+│               │     ├─annotation = Name(source='str | None', full='str | None')
+│               │     ├─default = 'None'
+│               │     ├─description = '(Deprecated). A function name.'
+│               │     ├─name = 'object_name'
+│               │     └─value = 'None'
+│               ├─2 = █─DocstringParameter
+│               │     ├─annotation = Name(source='str', full='str')
+│               │     ├─default = "'numpy'"
+│               │     ├─description = 'A docstring parser to use.'
+│               │     ├─name = 'parser'
+│               │     └─value = "'numpy'"
+│               ├─3 = █─DocstringParameter
+│               │     ├─annotation = None
+│               │     ├─default = 'True'
+│               │     ├─description = 'For aliases that were imported from other modules ...
+│               │     ├─name = 'load_aliases'
+│               │     └─value = 'True'
+│               └─4 = █─DocstringParameter
+│                     ├─annotation = None
+│                     ├─default = 'False'
+│                     ├─description = 'Whether to dynamically import object. Useful if d ...
+│                     ├─name = 'dynamic'
+│                     └─value = 'False'
+├─2 = █─DocstringSectionSeeAlso
+│     ├─kind = &lt;DocstringSectionKindPatched.see_also: 'see also'&gt;
+│     ├─title = 'See Also'
+│     └─value = 'preview: print a user-friendly preview of a griff ...
+└─3 = █─DocstringSectionExamples
+      ├─kind = &lt;DocstringSectionKind.examples: 'examples'&gt;
+      ├─title = None
+      └─value = █─list
+                └─0 = █─ExampleCode
+                      └─value = '&gt;&gt;&gt; get_function("quartodoc", "get_function")\n&lt;F ...</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="parsing-other-docstring-formats" class="level2">
+<h2 class="anchored" data-anchor-id="parsing-other-docstring-formats">Parsing other docstring formats</h2>
+<p>Currently, quartodoc expects docstrings in the numpydoc format. However, the tool it uses under the hood (griffe) is easy to customize, and supports multiple formats.</p>
+<p>See the griffe <a href="https://mkdocstrings.github.io/griffe/loading/">loading docs</a> for instructions. Specifically, the <a href="https://mkdocstrings.github.io/griffe/reference/griffe/loader/#griffe.loader.GriffeLoader">GriffeLoader</a> takes options for customizing docstring parsing.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -529,13 +683,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/interlinks.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interlinks filter</span>
+      <a href="../get-started/dev-prepare.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Prep: Auto, blueprint, collect</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/extending.html" class="pagination-link">
-        <span class="nav-page-text">More customization</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/dev-renderers.html" class="pagination-link">
+        <span class="nav-page-text">Rendering docstrings</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

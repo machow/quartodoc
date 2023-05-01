@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Sidebar navigation</title>
+<title>quartodoc - Common issues and examples</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/extending.html" rel="next">
-<link href="../get-started/interlinks.html" rel="prev">
+<link href="../get-started/dev-big-picture.html" rel="next">
+<link href="../get-started/docstring-style.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Sidebar navigation</h1>
+      <h1 class="quarto-secondary-nav-title">Common issues and examples</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link active">Sidebar navigation</a>
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -248,7 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/docstring-examples.html" class="sidebar-item-text sidebar-link">Common issues and examples</a>
+  <a href="../get-started/docstring-examples.html" class="sidebar-item-text sidebar-link active">Common issues and examples</a>
   </div>
 </li>
       </ul>
@@ -303,14 +303,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#examples-using-code-blocks" id="toc-examples-using-code-blocks" class="nav-link active" data-scroll-target="#examples-using-code-blocks">Examples: using code blocks</a></li>
+  <li><a href="#examples-etc..-the-s-matters" id="toc-examples-etc..-the-s-matters" class="nav-link" data-scroll-target="#examples-etc..-the-s-matters">Examples, etc..: the “s” matters</a></li>
+  <li><a href="#returns-using-type-annotation" id="toc-returns-using-type-annotation" class="nav-link" data-scroll-target="#returns-using-type-annotation">Returns: using type annotation</a></li>
+  <li><a href="#using-interlinks-in-docstrings" id="toc-using-interlinks-in-docstrings" class="nav-link" data-scroll-target="#using-interlinks-in-docstrings">Using interlinks in docstrings</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Sidebar navigation</h1>
+<h1 class="title d-none d-lg-block">Common issues and examples</h1>
 </div>
 
 
@@ -325,73 +334,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.</p>
-<p>In order to create a sidebar for your docs, add the following options to your <code>_quarto.yml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quarto to read the sidebar file</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata-files</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> _sidebar.yml</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quartodoc to generate the sidebar file</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span><span class="at"> </span><span class="st">"_sidebar.yml"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  # other options ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that running <code>python -m quartodoc build</code> will now produce a file called <code>_sidebar.yml</code>, with a <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">quarto sidebar configuration</a>. The quarto <a href="https://quarto.org/docs/projects/quarto-projects.html#metadata-includes"><code>metadata-files</code> option</a> ensures it’s included with the configuration in <code>_quarto.yml</code>.</p>
-<p>Here is what the sidebar for the <a href="../api">quartodoc reference page</a> looks like:</p>
-<div class="sourceCode">
-<pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml">
-website:
-  sidebar:
-    contents:
-    - api/index.qmd
-    - contents:
-      - api/Auto.qmd
-      - api/blueprint.qmd
-      - api/collect.qmd
-      - api/get_object.qmd
-      - api/preview.qmd
-      section: Preperation Functions
-    - contents:
-      - api/MdRenderer.qmd
-      - api/MdRenderer.render.qmd
-      - api/MdRenderer.render_annotation.qmd
-      - api/MdRenderer.render_header.qmd
-      - api/MdRenderer.signature.qmd
-      - api/MdRenderer.summarize.qmd
-      section: Docstring Renderers
-    - contents:
-      - api/Builder.qmd
-      - api/Builder.from_quarto_config.qmd
-      - api/Builder.build.qmd
-      - api/Builder.write_index.qmd
-      - api/Builder.write_doc_pages.qmd
-      - api/Builder.write_sidebar.qmd
-      - api/Builder.create_inventory.qmd
-      section: API Builders
-    - contents:
-      - api/create_inventory.qmd
-      - api/convert_inventory.qmd
-      section: Inventory links
-    - contents:
-      - api/layouts-structure.qmd
-      section: 'Data models: structural'
-    - contents:
-      - api/layouts-docable.qmd
-      section: 'Data models: docable'
-    - contents:
-      - api/ast.DocstringSectionSeeAlso.qmd
-      - api/ast.DocstringSectionNotes.qmd
-      - api/ast.DocstringSectionWarnings.qmd
-      - api/ast.ExampleCode.qmd
-      - api/ast.ExampleText.qmd
-      section: 'Data models: docstring patches'
-    id: api
+<p>This page provides examples for commonly encountered situations (and some funky ones).</p>
+<p>See the <a href="https://numpydoc.readthedocs.io/en/latest/format.html#sections">numpydoc sections guide</a> for more information and examples.</p>
+<section id="examples-using-code-blocks" class="level2">
+<h2 class="anchored" data-anchor-id="examples-using-code-blocks">Examples: using code blocks</h2>
+<p>Often, the Examples section of docstrings contain code examples.</p>
+<p>The Examples section supports two formats for code examples:</p>
+<ul>
+<li><strong>doctest syntax</strong> - code starts with <code>&gt;&gt;&gt;</code>.</li>
+<li><strong>markdown syntax</strong> - surrounding code with three backticks (<code>```</code>)</li>
+<li><strong>quarto syntax</strong> - similar to markdown syntax (e.g.&nbsp;<code>```{python}</code>), but will execute code in the docs.</li>
+</ul>
+<p>Below is an example including each.</p>
+<pre><code>    Examples
+    --------
+    
+    doctest syntax:
+    
+    &gt;&gt;&gt; 1 + 1
+    2
+    
+    markdown syntax:
+    
+    ```python
+    1 + 1
+    ```
+    
+    quarto syntax:
+    note that the "\" should be removed.
+    
+    ```\{python}
+    1 + 1
+    ```</code></pre>
+</section>
+<section id="examples-etc..-the-s-matters" class="level2">
+<h2 class="anchored" data-anchor-id="examples-etc..-the-s-matters">Examples, etc..: the “s” matters</h2>
+<p>The numpydoc spec pluralizes section most names. If you leave off the “s”, then they may be misparsed.</p>
+<p>For example, the docstring below erroneously has a “Return” section:</p>
+<pre><code>Return
+------
 
-
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
+some_name: int
+    a description of the return result</code></pre>
+<p>In this case, the section won’t be parsed, but written directly into the doc page. This means that “Return” would show up as a level 2 header.</p>
+<p>Here is a list of pluralized section names:</p>
+<ul>
+<li>Parameters</li>
+<li>Returns</li>
+<li>Yields</li>
+<li>Receives</li>
+<li>Other Parameters</li>
+<li>Raises</li>
+<li>Warns</li>
+<li>Warnings</li>
+<li>Notes</li>
+<li>References</li>
+<li>Examples</li>
+</ul>
+</section>
+<section id="returns-using-type-annotation" class="level2">
+<h2 class="anchored" data-anchor-id="returns-using-type-annotation">Returns: using type annotation</h2>
+<p>In order to use the return type annotation of a function, use the following syntax.</p>
+<pre><code>Returns
+--------
+:
+    Some description of result</code></pre>
+<p>Below is a full example.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f() <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Some func</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    :</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">        A number</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>See the <a href="https://numpydoc.readthedocs.io/en/latest/format.html#returns">numpydoc Returns specification</a> for more on the general form of the Returns section.</p>
+</section>
+<section id="using-interlinks-in-docstrings" class="level2">
+<h2 class="anchored" data-anchor-id="using-interlinks-in-docstrings">Using interlinks in docstrings</h2>
+<p>quartodoc supports linking to functions using the <a href="../get-started/interlinks.html">interlinks quarto filter</a> (and linking in general using <a href="../get-started/crossrefs.html">quarto link syntax</a>).</p>
+<p>The code below shows an interlink, along with a regular quarto link.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f():</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A function.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Interlinks filter:</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    See [](`quartodoc.get_object`)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Regular quarto link (to a page in your docs):</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">    See the [reference](/reference/index.qmd) page.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Linking to functions documented outside your package must be configured in the <a href="../get-started/interlinks.html">interlinks filter</a>.</p>
+</div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -529,13 +580,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/interlinks.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interlinks filter</span>
+      <a href="../get-started/docstring-style.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">numpydoc style</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/extending.html" class="pagination-link">
-        <span class="nav-page-text">More customization</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/dev-big-picture.html" class="pagination-link">
+        <span class="nav-page-text">The big picture: Builder</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc – convert_inventory</title>
+<title>quartodoc – blueprint</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -30,8 +93,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../api/layouts-structure.html" rel="next">
-<link href="../api/create_inventory.html" rel="prev">
+<link href="../api/collect.html" rel="next">
+<link href="../api/Auto.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -140,7 +203,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/blueprint.html" class="sidebar-item-text sidebar-link">blueprint</a>
+  <a href="../api/blueprint.html" class="sidebar-item-text sidebar-link active">blueprint</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -260,7 +323,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link active">convert_inventory</a>
+  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link">convert_inventory</a>
   </div>
 </li>
       </ul>
@@ -339,9 +402,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quartodoc.convert_inventory" id="toc-quartodoc.convert_inventory" class="nav-link active" data-scroll-target="#quartodoc.convert_inventory">convert_inventory</a>
+  <li><a href="#quartodoc.blueprint" id="toc-quartodoc.blueprint" class="nav-link active" data-scroll-target="#quartodoc.blueprint">blueprint</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -351,18 +415,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="quartodoc.convert_inventory" class="level1">
-<h1>convert_inventory</h1>
-<p><code>convert_inventory(in_name, out_name=None)</code></p>
-<p>Convert a sphinx inventory file to json.</p>
+<section id="quartodoc.blueprint" class="level1">
+<h1>blueprint</h1>
+<p><code>blueprint(el, package=None)</code></p>
+<p>Convert a configuration element to something that is ready to render.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 37%">
-<col style="width: 32%">
-<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 73%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -374,19 +438,28 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>in_name</code></td>
-<td>Union[str, soi.Inventory]</td>
-<td>Name of inventory file.</td>
+<td><code>el</code></td>
+<td>_Base</td>
+<td>An element, like layout.Auto, to transform.</td>
 <td>required</td>
 </tr>
 <tr class="even">
-<td><code>out_name</code></td>
-<td></td>
-<td>Output file name.</td>
+<td><code>package</code></td>
+<td>str</td>
+<td>A base package name. If specified, this is prepended to the names of any objects.</td>
 <td><code>None</code></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> blueprint</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc.layout <span class="im">import</span> Auto</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> blueprint(Auto(name <span class="op">=</span> <span class="st">"quartodoc.get_object"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>DocFunction(name<span class="op">=</span><span class="st">'quartodoc.get_object'</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> blueprint(Auto(name <span class="op">=</span> <span class="st">"get_object"</span>), package <span class="op">=</span> <span class="st">"quartodoc"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DocFunction(name<span class="op">=</span><span class="st">'get_object'</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -528,13 +601,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../api/create_inventory.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">create_inventory</span>
+      <a href="../api/Auto.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Auto</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../api/layouts-structure.html" class="pagination-link">
-        <span class="nav-page-text">layout.Layout</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../api/collect.html" class="pagination-link">
+        <span class="nav-page-text">collect</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

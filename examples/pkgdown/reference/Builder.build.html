@@ -108,7 +108,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#build" id="toc-build" class="nav-link active" data-scroll-target="#build">build</a></li>
+  <li><a href="#quartodoc.Builder.build" id="toc-quartodoc.Builder.build" class="nav-link active" data-scroll-target="#quartodoc.Builder.build">Builder.build</a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -117,12 +120,39 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="build" class="level2">
-<h2 class="anchored" data-anchor-id="build">build</h2>
-<p><code>build(self)</code></p>
+<section id="quartodoc.Builder.build" class="level1">
+<h1>Builder.build</h1>
+<p><code>Builder.build(self, filter='*')</code></p>
 <p>Build index page, sphinx inventory, and individual doc pages.</p>
+<section id="parameters" class="level2">
+<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 87%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>filter</code></td>
+<td>str</td>
+<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
+<td><code>'*'</code></td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

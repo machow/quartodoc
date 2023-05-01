@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Sidebar navigation</title>
+<title>quartodoc - Building and debugging docs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/extending.html" rel="next">
-<link href="../get-started/interlinks.html" rel="prev">
+<link href="../get-started/crossrefs.html" rel="next">
+<link href="../get-started/basic-content.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Sidebar navigation</h1>
+      <h1 class="quarto-secondary-nav-title">Building and debugging docs</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/basic-building.html" class="sidebar-item-text sidebar-link">Building and debugging docs</a>
+  <a href="../get-started/basic-building.html" class="sidebar-item-text sidebar-link active">Building and debugging docs</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link active">Sidebar navigation</a>
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -303,14 +303,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rebuilding-doc-pages" id="toc-rebuilding-doc-pages" class="nav-link active" data-scroll-target="#rebuilding-doc-pages">Rebuilding doc pages</a></li>
+  <li><a href="#speeding-up-preview" id="toc-speeding-up-preview" class="nav-link" data-scroll-target="#speeding-up-preview">Speeding up preview</a>
+  <ul class="collapse">
+  <li><a href="#rewriting-doc-files" id="toc-rewriting-doc-files" class="nav-link" data-scroll-target="#rewriting-doc-files">Rewriting doc files</a></li>
+  <li><a href="#selectively-building-doc-pages" id="toc-selectively-building-doc-pages" class="nav-link" data-scroll-target="#selectively-building-doc-pages">Selectively building doc pages</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Sidebar navigation</h1>
+<h1 class="title d-none d-lg-block">Building and debugging docs</h1>
 </div>
 
 
@@ -325,73 +336,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>quartodoc can generate a sidebar on the lefthand side of the page, with a list of your functions.</p>
-<p>In order to create a sidebar for your docs, add the following options to your <code>_quarto.yml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quarto to read the sidebar file</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata-files</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> _sidebar.yml</span></span>
+<p><strong>tl;dr</strong>: Once you’ve configured quartodoc in your <code>_quarto.yml</code> file, use the following commands to build and preview a documentation site.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the documentation files. These are written </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># by default to the reference/ folder in your docs.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--verbose</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tell quartodoc to generate the sidebar file</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span><span class="at"> </span><span class="st">"_sidebar.yml"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  # other options ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that running <code>python -m quartodoc build</code> will now produce a file called <code>_sidebar.yml</code>, with a <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">quarto sidebar configuration</a>. The quarto <a href="https://quarto.org/docs/projects/quarto-projects.html#metadata-includes"><code>metadata-files</code> option</a> ensures it’s included with the configuration in <code>_quarto.yml</code>.</p>
-<p>Here is what the sidebar for the <a href="../api">quartodoc reference page</a> looks like:</p>
-<div class="sourceCode">
-<pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml">
-website:
-  sidebar:
-    contents:
-    - api/index.qmd
-    - contents:
-      - api/Auto.qmd
-      - api/blueprint.qmd
-      - api/collect.qmd
-      - api/get_object.qmd
-      - api/preview.qmd
-      section: Preperation Functions
-    - contents:
-      - api/MdRenderer.qmd
-      - api/MdRenderer.render.qmd
-      - api/MdRenderer.render_annotation.qmd
-      - api/MdRenderer.render_header.qmd
-      - api/MdRenderer.signature.qmd
-      - api/MdRenderer.summarize.qmd
-      section: Docstring Renderers
-    - contents:
-      - api/Builder.qmd
-      - api/Builder.from_quarto_config.qmd
-      - api/Builder.build.qmd
-      - api/Builder.write_index.qmd
-      - api/Builder.write_doc_pages.qmd
-      - api/Builder.write_sidebar.qmd
-      - api/Builder.create_inventory.qmd
-      section: API Builders
-    - contents:
-      - api/create_inventory.qmd
-      - api/convert_inventory.qmd
-      section: Inventory links
-    - contents:
-      - api/layouts-structure.qmd
-      section: 'Data models: structural'
-    - contents:
-      - api/layouts-docable.qmd
-      section: 'Data models: docable'
-    - contents:
-      - api/ast.DocstringSectionSeeAlso.qmd
-      - api/ast.DocstringSectionNotes.qmd
-      - api/ast.DocstringSectionWarnings.qmd
-      - api/ast.ExampleCode.qmd
-      - api/ast.ExampleText.qmd
-      section: 'Data models: docstring patches'
-    id: api
-
-
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create optional inventory files, which allow you to</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># link to API doc pages within and across documentation</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># sites. These are put in the _inv folder in your docs.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> interlinks</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the documentation site.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Use quarto render to generate the final site.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="rebuilding-doc-pages" class="level2">
+<h2 class="anchored" data-anchor-id="rebuilding-doc-pages">Rebuilding doc pages</h2>
+<p>While using <code>quarto preview</code>, you can preview updates to your docstrings by regenerating their documentation pages:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--verbose</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="speeding-up-preview" class="level2">
+<h2 class="anchored" data-anchor-id="speeding-up-preview">Speeding up preview</h2>
+<section id="rewriting-doc-files" class="level3">
+<h3 class="anchored" data-anchor-id="rewriting-doc-files">Rewriting doc files</h3>
+<p>By default, the <code>quartodoc build</code> only re-writes doc pages when it detects a change to their content. This helps prevent <code>quarto preview</code> from trying to re-render every doc page–including those that haven’t changed.</p>
+</section>
+<section id="selectively-building-doc-pages" class="level3">
+<h3 class="anchored" data-anchor-id="selectively-building-doc-pages">Selectively building doc pages</h3>
+<p>Use the filter option with <code>quartodoc build</code> to generate a subset of doc pages. This is useful when you have a many (e.g.&nbsp;several hundred) doc pages, and want to test a change on a single page.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--filter</span> <span class="st">'get_object'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This option also accepts a wildcard pattern, which causes it to build docs for all matching objects.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write the docs for the MdRenderer class, and any of its methods</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (e.g. MdRenderer.renderer)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--filter</span> <span class="st">'MdRenderer*'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When using a name with a wildcard, be sure to put it in single quotes! Otherwise, your shell may try to “expand it” to match file names.</p>
+</div>
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -529,13 +522,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../get-started/interlinks.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interlinks filter</span>
+      <a href="../get-started/basic-content.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Configuring content</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/extending.html" class="pagination-link">
-        <span class="nav-page-text">More customization</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/crossrefs.html" class="pagination-link">
+        <span class="nav-page-text">Linking to pages</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

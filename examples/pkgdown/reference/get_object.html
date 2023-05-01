@@ -171,7 +171,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get_object" id="toc-get_object" class="nav-link active" data-scroll-target="#get_object">get_object</a>
+  <li><a href="#quartodoc.get_object" id="toc-quartodoc.get_object" class="nav-link active" data-scroll-target="#quartodoc.get_object">get_object</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
@@ -185,13 +185,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="get_object" class="level2">
-<h2 class="anchored" data-anchor-id="get_object">get_object</h2>
-<p><code>get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)</code></p>
+<section id="quartodoc.get_object" class="level1">
+<h1>get_object</h1>
+<p><code>get_object(path, object_name=None, parser='numpy', load_aliases=True, dynamic=False, loader=None)</code></p>
 <p>Fetch a griffe object.</p>
-<section id="parameters" class="level3">
-<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
+<section id="parameters" class="level2">
+<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 79%">
+<col style="width: 5%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -202,16 +208,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>module</code></td>
+<td><code>path</code></td>
 <td>str</td>
-<td>A module name.</td>
+<td>An import path to the object. This should have the form <code>path.to.module:object</code>. For example, <code>quartodoc:get_object</code> or <code>quartodoc:MdRenderer.render</code>.</td>
 <td>required</td>
 </tr>
 <tr class="even">
 <td><code>object_name</code></td>
-<td>str</td>
-<td>A function name.</td>
-<td>required</td>
+<td>str | None</td>
+<td>(Deprecated). A function name.</td>
+<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>parser</code></td>
@@ -231,21 +237,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Whether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.</td>
 <td><code>False</code></td>
 </tr>
-<tr class="even">
-<td><code>modules_collection</code></td>
-<td>None</td>
-<td>ModulesCollection</td>
-<td>A griffe <a href="`~griffe.collections.ModulesCollection`"></a>, used to hold loaded modules.</td>
-</tr>
 </tbody>
 </table>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
-<p>get_function: a deprecated function.</p>
+<section id="see-also" class="level2">
+<h2 class="anchored" data-anchor-id="see-also">See Also</h2>
+<p>preview: print a user-friendly preview of a griffe object.</p>
 </section>
-<section id="examples" class="level3">
-<h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> get_function(<span class="st">"quartodoc"</span>, <span class="st">"get_function"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Function(<span class="st">'get_function'</span>, ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 

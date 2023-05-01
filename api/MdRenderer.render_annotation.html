@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc – convert_inventory</title>
+<title>quartodoc – mdrenderer.render_annotation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../api/layouts-structure.html" rel="next">
-<link href="../api/create_inventory.html" rel="prev">
+<link href="../api/MdRenderer.render_header.html" rel="next">
+<link href="../api/MdRenderer.render.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -180,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/MdRenderer.render_annotation.html" class="sidebar-item-text sidebar-link">MdRenderer.render_annotation</a>
+  <a href="../api/MdRenderer.render_annotation.html" class="sidebar-item-text sidebar-link active">MdRenderer.render_annotation</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -260,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link active">convert_inventory</a>
+  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link">convert_inventory</a>
   </div>
 </li>
       </ul>
@@ -339,7 +339,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quartodoc.convert_inventory" id="toc-quartodoc.convert_inventory" class="nav-link active" data-scroll-target="#quartodoc.convert_inventory">convert_inventory</a>
+  <li><a href="#quartodoc.MdRenderer.render_annotation" id="toc-quartodoc.MdRenderer.render_annotation" class="nav-link active" data-scroll-target="#quartodoc.MdRenderer.render_annotation">MdRenderer.render_annotation</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
   </ul></li>
@@ -351,18 +351,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="quartodoc.convert_inventory" class="level1">
-<h1>convert_inventory</h1>
-<p><code>convert_inventory(in_name, out_name=None)</code></p>
-<p>Convert a sphinx inventory file to json.</p>
+<section id="quartodoc.MdRenderer.render_annotation" class="level1">
+<h1>MdRenderer.render_annotation</h1>
+<p><code>MdRenderer.render_annotation(self, el)</code></p>
+<p>Special hook for rendering a type annotation.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 37%">
-<col style="width: 32%">
-<col style="width: 14%">
+<col style="width: 7%">
+<col style="width: 39%">
+<col style="width: 41%">
+<col style="width: 10%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -374,16 +374,10 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>in_name</code></td>
-<td>Union[str, soi.Inventory]</td>
-<td>Name of inventory file.</td>
+<td><code>el</code></td>
+<td>str | dc.Name | dc.Expression | None</td>
+<td>An object representing a type annotation.</td>
 <td>required</td>
-</tr>
-<tr class="even">
-<td><code>out_name</code></td>
-<td></td>
-<td>Output file name.</td>
-<td><code>None</code></td>
 </tr>
 </tbody>
 </table>
@@ -528,13 +522,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../api/create_inventory.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">create_inventory</span>
+      <a href="../api/MdRenderer.render.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">MdRenderer.render</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../api/layouts-structure.html" class="pagination-link">
-        <span class="nav-page-text">layout.Layout</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../api/MdRenderer.render_header.html" class="pagination-link">
+        <span class="nav-page-text">MdRenderer.render_header</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc - Configuring docs</title>
+<title>quartodoc - Configuring site</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,7 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../get-started/crossrefs.html" rel="next">
+<link href="../get-started/basic-content.html" rel="next">
 <link href="../get-started/overview.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Configuring docs</h1>
+      <h1 class="quarto-secondary-nav-title">Configuring site</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -190,7 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basics</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic Use</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -198,7 +198,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link active">Configuring docs</a>
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link active">Configuring site</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/basic-content.html" class="sidebar-item-text sidebar-link">Configuring content</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/basic-building.html" class="sidebar-item-text sidebar-link">Building and debugging docs</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -218,14 +228,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/extending.html" class="sidebar-item-text sidebar-link">More Customization</a>
+  <a href="../get-started/extending.html" class="sidebar-item-text sidebar-link">More customization</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Advanced</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Docstrings</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -233,19 +243,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/docstrings.html" class="sidebar-item-text sidebar-link">Inspecting docstrings</a>
+  <a href="../get-started/docstring-style.html" class="sidebar-item-text sidebar-link">numpydoc style</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/renderers.html" class="sidebar-item-text sidebar-link">Rendering docstrings</a>
+  <a href="../get-started/docstring-examples.html" class="sidebar-item-text sidebar-link">Common issues and examples</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Extra Topics</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Programming</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -253,7 +263,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/architecture.html" class="sidebar-item-text sidebar-link">Architecture</a>
+  <a href="../get-started/dev-big-picture.html" class="sidebar-item-text sidebar-link">The big picture: Builder</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/dev-prepare.html" class="sidebar-item-text sidebar-link">Prep: Auto, blueprint, collect</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/dev-docstrings.html" class="sidebar-item-text sidebar-link">Inspecting docstrings</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/dev-renderers.html" class="sidebar-item-text sidebar-link">Rendering docstrings</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Extra Topics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/extra-build-sequence.html" class="sidebar-item-text sidebar-link">Build sequence diagram</a>
   </div>
 </li>
       </ul>
@@ -267,12 +307,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#adding-configuration" id="toc-adding-configuration" class="nav-link active" data-scroll-target="#adding-configuration">Adding configuration</a></li>
+  <li><a href="#site-configuration" id="toc-site-configuration" class="nav-link active" data-scroll-target="#site-configuration">Site configuration</a>
+  <ul class="collapse">
   <li><a href="#top-level-options" id="toc-top-level-options" class="nav-link" data-scroll-target="#top-level-options">Top-level options</a></li>
   <li><a href="#section-options" id="toc-section-options" class="nav-link" data-scroll-target="#section-options">Section options</a></li>
-  <li><a href="#looking-up-functions" id="toc-looking-up-functions" class="nav-link" data-scroll-target="#looking-up-functions">Looking up functions</a>
-  <ul class="collapse">
-  <li><a href="#class-methods" id="toc-class-methods" class="nav-link" data-scroll-target="#class-methods">Class methods</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -282,7 +320,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Configuring docs</h1>
+<h1 class="title d-none d-lg-block">Configuring site</h1>
 </div>
 
 
@@ -297,11 +335,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="adding-configuration" class="level2">
-<h2 class="anchored" data-anchor-id="adding-configuration">Adding configuration</h2>
+<section id="site-configuration" class="level2">
+<h2 class="anchored" data-anchor-id="site-configuration">Site configuration</h2>
 <p>quartodoc is configured by adding a <code>quartodoc</code> section to your <code>_quarto.yml</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">style</span><span class="kw">:</span><span class="at"> single-page</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">style</span><span class="kw">:</span><span class="at"> pkgdown</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dir</span><span class="kw">:</span><span class="at"> reference</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> quartodoc</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
@@ -310,16 +348,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> get_object</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> preview</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="top-level-options" class="level2">
-<h2 class="anchored" data-anchor-id="top-level-options">Top-level options</h2>
-<p>The <code>quartodoc</code> section takes a <code>style</code> field, specifying which <a href="../api/Builder.html">Builder</a> to use (currently “pkgdown” or “single-page”; see <a href="../examples/">Examples</a>).</p>
+<section id="top-level-options" class="level3">
+<h3 class="anchored" data-anchor-id="top-level-options">Top-level options</h3>
+<p>The <code>quartodoc</code> section takes a <code>style</code> field, specifying which <a href="../api/Builder.html#quartodoc.Builder">quartodoc.Builder</a> to use (currently “pkgdown” or “single-page”; see <a href="../examples/">Examples</a>).</p>
 <table class="table">
 <colgroup>
-<col style="width: 4%">
-<col style="width: 6%">
-<col style="width: 81%">
-<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 15%">
+<col style="width: 57%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -344,9 +381,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td><code>version</code></td>
-<td>str</td>
-<td>None</td>
+<td>str | None</td>
 <td>The package version. By default this attempts to look up the current package version (TODO).</td>
+<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>dir</code></td>
@@ -362,9 +399,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td><code>renderer</code></td>
-<td>dict</td>
-<td>Renderer</td>
-<td>str</td>
+<td>dict | Renderer | str</td>
+<td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
+<td><code>'markdown'</code></td>
 </tr>
 <tr class="odd">
 <td><code>out_index</code></td>
@@ -374,72 +411,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td><code>sidebar</code></td>
-<td>str</td>
-<td>None</td>
+<td>str | None</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
+<td><code>None</code></td>
 </tr>
 <tr class="odd">
-<td><code>display_name</code></td>
-<td>str</td>
-<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
-<td><code>'name'</code></td>
+<td><code>rewrite_all_pages</code></td>
+<td></td>
+<td>Whether to rewrite all rendered doc pages, or only those with changes.</td>
+<td><code>False</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="section-options" class="level2">
-<h2 class="anchored" data-anchor-id="section-options">Section options</h2>
+<section id="section-options" class="level3">
+<h3 class="anchored" data-anchor-id="section-options">Section options</h3>
 <p>The <code>sections</code> field defines which functions to document.</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>title</td>
-<td>str</td>
-<td>A title for the section</td>
-</tr>
-<tr class="even">
-<td>desc</td>
-<td>str</td>
-<td>A description for the section</td>
-</tr>
-<tr class="odd">
-<td>contents</td>
-<td>list[str]</td>
-<td>A list of functions to document</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="looking-up-functions" class="level2">
-<h2 class="anchored" data-anchor-id="looking-up-functions">Looking up functions</h2>
-<p>Finding functions to document involves two pieces of configuration:</p>
+<p>It requires three pieces of configuration:</p>
 <ul>
-<li>the package name.</li>
-<li>a list of functions for content.</li>
+<li><code>title</code>: a title for the section</li>
+<li><code>desc</code>: a description for the section</li>
+<li><code>contents</code>: a list of functions to document</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> quartodoc</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">contents</span><span class="kw">:</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">        # top-level function: quartodoc.get_object</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> get_object</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">        # top-level class: quartodoc.MdRenderer</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> MdRenderer</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        # submodule function: quartodoc.ast.preview</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> ast.preview</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The functions listed in <code>contents</code> are assumed to be imported from the package.</p>
-<section id="class-methods" class="level3">
-<h3 class="anchored" data-anchor-id="class-methods">Class methods</h3>
-<p>Currently, quartodoc can’t look up class methods. (Though this would be quick to implement!).</p>
 
 
 </section>
@@ -586,8 +579,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../get-started/crossrefs.html" class="pagination-link">
-        <span class="nav-page-text">Linking to pages</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../get-started/basic-content.html" class="pagination-link">
+        <span class="nav-page-text">Configuring content</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

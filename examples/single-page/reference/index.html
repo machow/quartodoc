@@ -196,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="get_object" class="level2">
 <h2 class="anchored" data-anchor-id="get_object">get_object</h2>
-<p><code>get_object(module, object_name, parser='numpy', load_aliases=True, dynamic=False, modules_collection=None)</code></p>
+<p><code>get_object(module, object_name, parser='numpy', load_aliases=True, modules_collection=None)</code></p>
 <p>Fetch a griffe object.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
@@ -235,16 +235,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><code>True</code></td>
 </tr>
 <tr class="odd">
-<td><code>dynamic</code></td>
-<td></td>
-<td>Whether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.</td>
-<td><code>False</code></td>
-</tr>
-<tr class="even">
 <td><code>modules_collection</code></td>
-<td>None</td>
-<td>ModulesCollection</td>
+<td>None | ModulesCollection</td>
 <td>A griffe <a href="`~griffe.collections.ModulesCollection`"></a>, used to hold loaded modules.</td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>
@@ -282,8 +276,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <table class="table">
 <colgroup>
 <col style="width: 4%">
-<col style="width: 6%">
-<col style="width: 81%">
+<col style="width: 7%">
+<col style="width: 80%">
 <col style="width: 7%">
 </colgroup>
 <thead>
@@ -309,9 +303,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td><code>version</code></td>
-<td>str</td>
-<td>None</td>
+<td>str | None</td>
 <td>The package version. By default this attempts to look up the current package version (TODO).</td>
+<td><code>None</code></td>
 </tr>
 <tr class="even">
 <td><code>dir</code></td>
@@ -327,9 +321,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td><code>renderer</code></td>
-<td>dict</td>
-<td>Renderer</td>
-<td>str</td>
+<td>dict | Renderer | str</td>
+<td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
+<td><code>'markdown'</code></td>
 </tr>
 <tr class="odd">
 <td><code>out_index</code></td>
@@ -339,9 +333,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td><code>sidebar</code></td>
-<td>str</td>
-<td>None</td>
+<td>str | None</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
+<td><code>None</code></td>
 </tr>
 <tr class="odd">
 <td><code>display_name</code></td>

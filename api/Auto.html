@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc – convert_inventory</title>
+<title>quartodoc – auto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../api/layouts-structure.html" rel="next">
-<link href="../api/create_inventory.html" rel="prev">
+<link href="../api/blueprint.html" rel="next">
+<link href="../api/index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -135,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Auto.html" class="sidebar-item-text sidebar-link">Auto</a>
+  <a href="../api/Auto.html" class="sidebar-item-text sidebar-link active">Auto</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -260,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link active">convert_inventory</a>
+  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link">convert_inventory</a>
   </div>
 </li>
       </ul>
@@ -339,9 +339,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quartodoc.convert_inventory" id="toc-quartodoc.convert_inventory" class="nav-link active" data-scroll-target="#quartodoc.convert_inventory">convert_inventory</a>
+  <li><a href="#quartodoc.Auto" id="toc-quartodoc.Auto" class="nav-link active" data-scroll-target="#quartodoc.Auto">Auto</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -351,42 +351,64 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="quartodoc.convert_inventory" class="level1">
-<h1>convert_inventory</h1>
-<p><code>convert_inventory(in_name, out_name=None)</code></p>
-<p>Convert a sphinx inventory file to json.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<section id="quartodoc.Auto" class="level1">
+<h1>Auto</h1>
+<p><code>Auto()</code></p>
+<p>Configure a python object to document (e.g.&nbsp;module, class, function, attribute).</p>
+<section id="attributes" class="level2">
+<h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 37%">
-<col style="width: 32%">
 <col style="width: 14%">
+<col style="width: 21%">
+<col style="width: 64%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
 <th>Type</th>
 <th>Description</th>
-<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>in_name</code></td>
-<td>Union[str, soi.Inventory]</td>
-<td>Name of inventory file.</td>
-<td>required</td>
+<td>kind</td>
+<td>Literal[‘auto’]</td>
+<td></td>
 </tr>
 <tr class="even">
-<td><code>out_name</code></td>
-<td></td>
-<td>Output file name.</td>
-<td><code>None</code></td>
+<td>name</td>
+<td>str</td>
+<td>Name of the object. This should be the path needed to import it.</td>
+</tr>
+<tr class="odd">
+<td>members</td>
+<td>Optional[list[str]]</td>
+<td>A list of members, such as attributes or methods on a class, to document.</td>
+</tr>
+<tr class="even">
+<td>include_private</td>
+<td>bool</td>
+<td>Whether to include members starting with “_”</td>
+</tr>
+<tr class="odd">
+<td>include</td>
+<td>Optional[str]</td>
+<td>(Not implemented). A list of members to include.</td>
+</tr>
+<tr class="even">
+<td>exclude</td>
+<td>Optional[str]</td>
+<td>(Not implemented). A list of members to exclude.</td>
+</tr>
+<tr class="odd">
+<td>dynamic</td>
+<td>Union[bool, str]</td>
+<td>Whether to dynamically load docstring. By default docstrings are loaded</td>
 </tr>
 </tbody>
 </table>
+<p>using static analysis. dynamic may be a string pointing to another object, to return an alias for that object. | | children | ChoicesChildren | Style for presenting members. Either separate, embedded, or flat. |</p>
 
 
 </section>
@@ -528,13 +550,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../api/create_inventory.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">create_inventory</span>
+      <a href="../api/index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Function reference</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../api/layouts-structure.html" class="pagination-link">
-        <span class="nav-page-text">layout.Layout</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../api/blueprint.html" class="pagination-link">
+        <span class="nav-page-text">blueprint</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

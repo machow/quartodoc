@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc – convert_inventory</title>
+<title>quartodoc – builder.from_quarto_config</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../api/layouts-structure.html" rel="next">
-<link href="../api/create_inventory.html" rel="prev">
+<link href="../api/Builder.build.html" rel="next">
+<link href="../api/Builder.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -215,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Builder.from_quarto_config.html" class="sidebar-item-text sidebar-link">Builder.from_quarto_config</a>
+  <a href="../api/Builder.from_quarto_config.html" class="sidebar-item-text sidebar-link active">Builder.from_quarto_config</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -260,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link active">convert_inventory</a>
+  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link">convert_inventory</a>
   </div>
 </li>
       </ul>
@@ -339,10 +339,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quartodoc.convert_inventory" id="toc-quartodoc.convert_inventory" class="nav-link active" data-scroll-target="#quartodoc.convert_inventory">convert_inventory</a>
-  <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  </ul></li>
+  <li><a href="#quartodoc.Builder.from_quarto_config" id="toc-quartodoc.Builder.from_quarto_config" class="nav-link active" data-scroll-target="#quartodoc.Builder.from_quarto_config">Builder.from_quarto_config</a></li>
   </ul>
 </nav>
     </div>
@@ -351,45 +348,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="quartodoc.convert_inventory" class="level1">
-<h1>convert_inventory</h1>
-<p><code>convert_inventory(in_name, out_name=None)</code></p>
-<p>Convert a sphinx inventory file to json.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 37%">
-<col style="width: 32%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>in_name</code></td>
-<td>Union[str, soi.Inventory]</td>
-<td>Name of inventory file.</td>
-<td>required</td>
-</tr>
-<tr class="even">
-<td><code>out_name</code></td>
-<td></td>
-<td>Output file name.</td>
-<td><code>None</code></td>
-</tr>
-</tbody>
-</table>
+<section id="quartodoc.Builder.from_quarto_config" class="level1">
+<h1>Builder.from_quarto_config</h1>
+<p><code>Builder.from_quarto_config(cls, quarto_cfg)</code></p>
+<p>Construct a Builder from a configuration object (or yaml file).</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -528,13 +492,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../api/create_inventory.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">create_inventory</span>
+      <a href="../api/Builder.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Builder</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../api/layouts-structure.html" class="pagination-link">
-        <span class="nav-page-text">layout.Layout</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../api/Builder.build.html" class="pagination-link">
+        <span class="nav-page-text">Builder.build</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

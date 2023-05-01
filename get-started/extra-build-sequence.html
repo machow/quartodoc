@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quartodoc – convert_inventory</title>
+<title>quartodoc - Build sequence diagram</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../api/layouts-structure.html" rel="next">
-<link href="../api/create_inventory.html" rel="prev">
+<link href="../get-started/dev-renderers.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -60,6 +59,9 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -82,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../get-started/overview.html">
+    <a class="nav-link active" href="../get-started/overview.html" aria-current="page">
  <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -107,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"></h1>
+      <h1 class="quarto-secondary-nav-title">Build sequence diagram</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -122,12 +124,12 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/index.html" class="sidebar-item-text sidebar-link">Function reference</a>
+  <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link">Overview</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Preperation Functions</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic Use</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -135,34 +137,44 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Auto.html" class="sidebar-item-text sidebar-link">Auto</a>
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">Configuring site</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/blueprint.html" class="sidebar-item-text sidebar-link">blueprint</a>
+  <a href="../get-started/basic-content.html" class="sidebar-item-text sidebar-link">Configuring content</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/collect.html" class="sidebar-item-text sidebar-link">collect</a>
+  <a href="../get-started/basic-building.html" class="sidebar-item-text sidebar-link">Building and debugging docs</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/get_object.html" class="sidebar-item-text sidebar-link">get_object</a>
+  <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link">Linking to pages</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/preview.html" class="sidebar-item-text sidebar-link">preview</a>
+  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link">Interlinks filter</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">Sidebar navigation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/extending.html" class="sidebar-item-text sidebar-link">More customization</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Docstring Renderers</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Docstrings</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -170,39 +182,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/MdRenderer.html" class="sidebar-item-text sidebar-link">MdRenderer</a>
+  <a href="../get-started/docstring-style.html" class="sidebar-item-text sidebar-link">numpydoc style</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/MdRenderer.render.html" class="sidebar-item-text sidebar-link">MdRenderer.render</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/MdRenderer.render_annotation.html" class="sidebar-item-text sidebar-link">MdRenderer.render_annotation</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/MdRenderer.render_header.html" class="sidebar-item-text sidebar-link">MdRenderer.render_header</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/MdRenderer.signature.html" class="sidebar-item-text sidebar-link">MdRenderer.signature</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/MdRenderer.summarize.html" class="sidebar-item-text sidebar-link">MdRenderer.summarize</a>
+  <a href="../get-started/docstring-examples.html" class="sidebar-item-text sidebar-link">Common issues and examples</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">API Builders</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Programming</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -210,44 +202,29 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Builder.html" class="sidebar-item-text sidebar-link">Builder</a>
+  <a href="../get-started/dev-big-picture.html" class="sidebar-item-text sidebar-link">The big picture: Builder</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Builder.from_quarto_config.html" class="sidebar-item-text sidebar-link">Builder.from_quarto_config</a>
+  <a href="../get-started/dev-prepare.html" class="sidebar-item-text sidebar-link">Prep: Auto, blueprint, collect</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Builder.build.html" class="sidebar-item-text sidebar-link">Builder.build</a>
+  <a href="../get-started/dev-docstrings.html" class="sidebar-item-text sidebar-link">Inspecting docstrings</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/Builder.write_index.html" class="sidebar-item-text sidebar-link">Builder.write_index</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/Builder.write_doc_pages.html" class="sidebar-item-text sidebar-link">Builder.write_doc_pages</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/Builder.write_sidebar.html" class="sidebar-item-text sidebar-link">Builder.write_sidebar</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/Builder.create_inventory.html" class="sidebar-item-text sidebar-link">Builder.create_inventory</a>
+  <a href="../get-started/dev-renderers.html" class="sidebar-item-text sidebar-link">Rendering docstrings</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Inventory links</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Extra Topics</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -255,77 +232,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../api/create_inventory.html" class="sidebar-item-text sidebar-link">create_inventory</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/convert_inventory.html" class="sidebar-item-text sidebar-link active">convert_inventory</a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Data models: structural</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/layouts-structure.html" class="sidebar-item-text sidebar-link">layout.Layout</a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Data models: docable</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/layouts-docable.html" class="sidebar-item-text sidebar-link">layout.Doc</a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">Data models: docstring patches</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/ast.DocstringSectionSeeAlso.html" class="sidebar-item-text sidebar-link">ast.DocstringSectionSeeAlso</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/ast.DocstringSectionNotes.html" class="sidebar-item-text sidebar-link">ast.DocstringSectionNotes</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/ast.DocstringSectionWarnings.html" class="sidebar-item-text sidebar-link">ast.DocstringSectionWarnings</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/ast.ExampleCode.html" class="sidebar-item-text sidebar-link">ast.ExampleCode</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../api/ast.ExampleText.html" class="sidebar-item-text sidebar-link">ast.ExampleText</a>
+  <a href="../get-started/extra-build-sequence.html" class="sidebar-item-text sidebar-link active">Build sequence diagram</a>
   </div>
 </li>
       </ul>
@@ -335,62 +242,86 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#quartodoc.convert_inventory" id="toc-quartodoc.convert_inventory" class="nav-link active" data-scroll-target="#quartodoc.convert_inventory">convert_inventory</a>
-  <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Build sequence diagram</h1>
+</div>
 
 
-<section id="quartodoc.convert_inventory" class="level1">
-<h1>convert_inventory</h1>
-<p><code>convert_inventory(in_name, out_name=None)</code></p>
-<p>Convert a sphinx inventory file to json.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 37%">
-<col style="width: 32%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>in_name</code></td>
-<td>Union[str, soi.Inventory]</td>
-<td>Name of inventory file.</td>
-<td>required</td>
-</tr>
-<tr class="even">
-<td><code>out_name</code></td>
-<td></td>
-<td>Output file name.</td>
-<td><code>None</code></td>
-</tr>
-</tbody>
-</table>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>This sequence diagram shows the process behind <code>quartodoc build</code>. See the API docs for <a href="../api/Builder.html#quartodoc.Builder">Builder</a>, <a href="../api/MdRenderer.html#quartodoc.MdRenderer">MdRenderer</a>, and the preperation functions (<a href="../api/Auto.html#quartodoc.Auto">Auto</a>, <a href="../api/blueprint.html#quartodoc.blueprint">blueprint</a>, <a href="../api/collect.html#quartodoc.collect">collect</a>)</p>
+<div class="cell" data-fig-width="100%">
+<div class="cell-output-display">
+<div>
+<p>
+
+</p><pre class="mermaid mermaid-js" data-tooltip-selector="#mermaid-tooltip-1">sequenceDiagram
+    Note left of CLI: _quarto.yml config    
+    CLI-&gt;&gt;+Builder: .from_quarto_config()
+    Builder-&gt;&gt;MdRenderer: .from_config()
+    MdRenderer--&gt;&gt;Builder: renderer
+    Builder--&gt;&gt;-CLI: builder
 
 
-</section>
-</section>
+    CLI-&gt;&gt;+Builder: .build()
+
+    Note over Builder: prepare site
+    Builder-&gt;&gt;+PrepFunctions: blueprint(self.layout)
+    loop over Auto
+        PrepFunctions-&gt;&gt;PrepFunctions: get_object(name)
+    end
+    PrepFunctions--&gt;&gt;Builder: blueprint
+
+    Builder-&gt;&gt;PrepFunctions: collect(blueprint)
+    PrepFunctions--&gt;&gt;Builder: pages, items
+
+    Note over Builder: write the site
+    Builder-&gt;&gt;+Builder: write_index(blueprint)
+    Builder-&gt;&gt;MdRenderer: renderer.summarize(...)
+    Note right of MdRenderer: Describe each object&lt;br&gt;on the index
+    MdRenderer--&gt;&gt;Builder: index content
+
+    Builder-&gt;&gt;Builder: write_sidebar(blueprint)
+
+        Builder-&gt;&gt;Builder: write_doc_pages(pages)
+    loop over pages
+        Builder-&gt;&gt;+MdRenderer: renderer.render(...)
+        MdRenderer-&gt;&gt;MdRenderer: .render_header(...)
+        MdRenderer-&gt;&gt;MdRenderer: .signature(...)
+        MdRenderer-&gt;&gt;MdRenderer: .render_annotation(...)
+        Note right of MdRenderer: for all rendered types
+        opt table of members
+            MdRenderer-&gt;&gt;MdRenderer: .summarize(...)      
+        end
+        MdRenderer--&gt;&gt;-Builder: rendered docstring
+    end
+
+    Builder-&gt;&gt;Builder: create_inventory(items)
+</pre>
+<div id="mermaid-tooltip-1" class="mermaidTooltip">
+
+</div>
+<p></p>
+</div>
+</div>
+</div>
+
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -528,14 +459,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../api/create_inventory.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">create_inventory</span>
+      <a href="../get-started/dev-renderers.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rendering docstrings</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../api/layouts-structure.html" class="pagination-link">
-        <span class="nav-page-text">layout.Layout</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
