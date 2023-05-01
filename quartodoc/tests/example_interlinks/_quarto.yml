@@ -1,0 +1,14 @@
+project:
+  type: website
+  resources:
+    - objects.json
+
+filters:
+  - interlinks
+
+interlinks:
+  sources:
+    numpy:
+      url: https://numpy.org/doc/stable/
+    python:
+      url: https://docs.python.org/3/
