@@ -1,0 +1,150 @@
+---
+title: "The big picture: Builder"
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+While the "Basic Use" section covered how to configure and build a site with quartodoc, this section focuses on using quartodoc as a Python program.
+
+Programming with quartodoc will help with debugging, tinkering, and extending things.
+
+## Overview
+
+When a user runs `quartodoc build`, they 
+
+* Create a [Builder](`quartodoc.Builder`) object, with the quartodoc config loaded as a [layout.Layout](`quartodoc.layout.Layout`).
+* Use [blueprint](`quartodoc.blueprint`) to process the layout into a plan for building the website.
+* Use [collect](`quartodoc.collect`) to get pages to render, and info on where documented objects live.
+
+This page will cover the basics of the Builder and this process.
+
+## The Builder
+
+The code below shows a Builder object being loaded from a `_quarto.yml` config (loaded as a Python dictionary).
+
+```{python}
+import yaml
+
+from quartodoc import Builder, preview, blueprint, collect, MdRenderer
+
+cfg = yaml.safe_load("""
+quartodoc:
+  package: quartodoc
+  style: pkgdown
+  sections:
+    - title: "Some section"
+      desc: "Some description"
+      contents:
+        - name: MdRenderer
+          members: ["render", "summarize"]
+          children: separate
+""")
+
+builder = Builder.from_quarto_config(cfg)
+builder
+```
+
+Note that .from_quarto_config used the `style:` field to decide which Builder to create
+(in this case, PkgdownBuilder).
+
+We can view the config as a [layout.Layout](`quartodoc.layout.Layout`), by looking at the `.layout` attribute.
+
+```{python}
+builder.layout
+```
+
+This can be a bit difficult to read, so quartodoc implements a [preview](`quartodoc.preview`) function, which spaces things out.
+
+```{python}
+preview(builder.layout)
+```
+
+Notice the following:
+
+* `preview` represents calls like `Layout()` with a box to the left, and then
+a pipe connecting it to each of its arguments.
+* The content entry `MdRenderer` is represented by an [Auto](`quartodoc.Auto`) class.
+  This specifies a Python object to look up and document.
+
+We can follow the path in the preview above, to pull out just the contents piece:
+
+```{python}
+content = builder.layout.sections[0].contents[0]
+preview(content)
+```
+
+Next, we'll look at `blueprint()`, which processes the layout, including transforming `Auto` objects into more concrete instructions.
+
+## From config to blueprint
+
+The code below shows how `blueprint()` transforms the `Auto` entry for `MdRenderer`.
+
+```{python}
+bp = blueprint(builder.layout)
+bp_contents = bp.sections[0].contents[0]
+preview(bp_contents, max_depth=3)
+```
+
+Notice two key pieces:
+
+* The `Auto` element is now a [layout.Page](`quartodoc.layout.Page`).
+  The `.path` indicates that the documentation will be on a page called `"MdRenderer"`.
+* The content of the page is a [layout.DocClass](`quartodoc.layout.DocClass).
+  This element holds everything needed to render this doc, including the class signature
+  and parsed docstring.
+
+Importantly, the `.members` attribute specifies how to render the class methods we specified (`.render()` and `.summarize()`).
+
+```{python}
+preview(bp_contents.contents[0].members, max_depth=2)
+```
+
+Note that they are also a instances of `Page` (`MemberPage` to be exact).
+Before to building the site, we need to `collect()` all the pages.
+
+
+
+## Collecting pages and items
+
+The [collect](`quartodoc.collect`) function pulls out two important pieces of information:
+
+* **pages** - each page to be rendered.
+* **items** - information on where each documented object lives in the site.
+
+```{python}
+pages, items = collect(bp, builder.dir)
+preview(pages, max_depth=3)
+```
+
+The code below shows a preview of the items.
+
+```{python}
+preview(items, max_depth=2)
+```
+
+Notice that if you wanted to look up `quartodoc.MdRenderer.render`, the first item's `.uri` attribute shows the URL for it, relative to wherever the doc site is hosted.
+
+
+## Rendering and writing
+
+A `Builder` instantiates a `Renderer` (like [MdRenderer](`quartodoc.MdRenderer`)).
+Use the `.renderer` attribute to access it.
+
+```{python}
+builder.renderer
+```
+
+```{python}
+print(builder.renderer.render(pages[0]))
+
+```
+
+## Writing pages
+
+The builder has a number of methods it uses during build.
+The main method is [.build()](`quartodoc.Builder.build`).
+See the [Builder section of the API](#api-builders) for a list of methods,
+or this [giant build process diagram](/get-started/extra-build-sequence.qmd) for a full breakdown.

@@ -14,17 +14,25 @@ _log = logging.getLogger(__name__)
 
 
 class _Base(BaseModel):
-    ...
+    """Any data class that might appear in the quartodoc config."""
 
 
-class MISSING(BaseModel):
+class _Structural(_Base):
+    """A structural element, like an index Section or Page of docs."""
+
+
+class _Docable(_Base):
+    """An element meant to document something about a python object."""
+
+
+class MISSING(_Base):
     """Represents a missing value.
 
     Note that this is used in cases where None is meaningful.
     """
 
 
-class Layout(_Base):
+class Layout(_Structural):
     """The layout of an API doc, which may include many pages.
 
     Attributes
@@ -42,7 +50,7 @@ class Layout(_Base):
 # SubElements -----------------------------------------------------------------
 
 
-class Section(_Base):
+class Section(_Structural):
     """A section of content on the reference index page.
 
     Attributes
@@ -52,6 +60,8 @@ class Section(_Base):
         Title of the section on the index.
     desc:
         Description of the section on the index.
+    package:
+        If specified, all object lookups will be relative to this path.
     contents:
         Individual objects (e.g. functions, classes, methods) being documented.
     """
@@ -70,8 +80,21 @@ class SummaryDetails(_Base):
     desc: str = ""
 
 
-class Page(_Base):
-    """A page of documentation."""
+class Page(_Structural):
+    """A page of documentation.
+
+    Attributes
+    ----------
+    kind:
+    path:
+        The file path this page should be written to (without an extension).
+    package:
+        If specified, all object lookups will be relative to this path.
+    summary:
+        An optional title and description for the page.
+    flatten:
+        Whether to list out each object on this page in the index.
+    """
 
     kind: Literal["page"] = "page"
     path: str
@@ -99,12 +122,19 @@ class MemberPage(Page):
     contents: list[Doc]
 
 
-class Interlaced(BaseModel):
+class Interlaced(_Docable):
     """A group of objects, whose documentation will be interlaced.
 
     Rather than list each object's documentation in sequence, this element indicates
     that each piece of documentation (e.g. signatures, examples) should be grouped
     together.
+
+    Attributes
+    ----------
+    kind:
+    package:
+        If specified, all object lookups will be relative to this path.
+
     """
 
     kind: Literal["interlaced"] = "interlaced"
@@ -125,12 +155,26 @@ class Interlaced(BaseModel):
         return self.contents[0].name
 
 
-class Text(_Base):
+class Text(_Docable):
     kind: Literal["text"] = "text"
     contents: str
 
 
 class ChoicesChildren(Enum):
+    """Options for how child members of a class or module should be documented.
+
+    Attributes
+    ----------
+    embedded:
+        Embed documentation inside the parent object's documentation.
+    flat:
+        Include documentation after the parent object's documentation.
+    separate:
+        Put documentation for members on their own, separate pages.
+    linked:
+        Include only a table of links to members (which may not be documented).
+    """
+
     embedded = "embedded"
     flat = "flat"
     separate = "separate"
@@ -138,7 +182,7 @@ class ChoicesChildren(Enum):
 
 
 class Auto(_Base):
-    """Automatically document a an object (e.g. module, class, function, or attribute.)
+    """Configure a python object to document (e.g. module, class, function, attribute).
 
     Attributes
     ----------
@@ -157,7 +201,6 @@ class Auto(_Base):
         Whether to dynamically load docstring. By default docstrings are loaded
         using static analysis. dynamic may be a string pointing to another object,
         to return an alias for that object.
-
     children:
         Style for presenting members. Either separate, embedded, or flat.
 
@@ -186,8 +229,12 @@ class _AutoDefault(_Base):
         return Auto(name=__root__)
 
 
-class Link(_Base):
-    """A link to an object (e.g. a method that gets documented on a separate page)."""
+class Link(_Docable):
+    """A link to an object (e.g. a method that gets documented on a separate page).
+
+    Link can be thought of as an alternative to [](`quartodoc.layout.Doc`). It doesn't
+    represent the documenting of an object, but a link to be made to some documentation.
+    """
 
     name: str
     obj: Union[dc.Object, dc.Alias]
@@ -196,7 +243,28 @@ class Link(_Base):
         arbitrary_types_allowed = True
 
 
-class Doc(_Base):
+class Doc(_Docable):
+    """A python object to be documented.
+
+    Note that this class should not be used directly. Instead, use child classes
+    like DocFunction.
+
+    Attributes
+    ----------
+    name:
+        The import path of the object (e.g. quartodoc.get_object).
+    obj:
+        The loaded python object.
+    anchor:
+        An anchor named, used to locate this documentation on a [](`quartodoc.layout.Page`).
+
+    See Also
+    --------
+    [](`quartodoc.layout.DocModule`), [](`quartodoc.layout.DocClass`),
+    [](`quartodoc.layout.DocFunction`), [](`quartodoc.layout.DocAttribute`)
+
+    """
+
     name: str
     obj: Union[dc.Object, dc.Alias]
     anchor: str
@@ -234,20 +302,28 @@ class Doc(_Base):
 
 
 class DocFunction(Doc):
+    """Document a python function."""
+
     kind: Literal["function"] = "function"
 
 
 class DocClass(Doc):
+    """Document a python class."""
+
     kind: Literal["class"] = "class"
     members: list[Union[MemberPage, Doc, Link]] = tuple()
     flat: bool
 
 
 class DocAttribute(Doc):
+    """Document a python attribute."""
+
     kind: Literal["attribute"] = "attribute"
 
 
 class DocModule(Doc):
+    """Document a python module."""
+
     kind: Literal["module"] = "module"
     members: list[Union[MemberPage, Doc, Link]] = tuple()
     flat: bool
@@ -267,6 +343,26 @@ ContentList = list[Union[ContentElement, Doc, _AutoDefault]]
 
 
 class Item(BaseModel):
+    """Information about a documented object, including a URI to its location.
+
+    Item is used to creative relative links within a documented API. All of the
+    items for an API are saved as an inventory file (usually named objects.json),
+    so documentation sites can link across each other.
+
+    Attributes
+    ----------
+    name:
+        The name of the object.
+    obj:
+        A representation of the object (eg its parameters and parsed docstring)
+    uri:
+        A relative URI link to the object from the root of the documentation site.
+    dispname:
+        Default display name, if none is specified in the interlink. If None, the
+        default is to dipslay the name attribute.
+
+    """
+
     name: str
     obj: Union[dc.Object, dc.Alias]
     uri: Optional[str] = None

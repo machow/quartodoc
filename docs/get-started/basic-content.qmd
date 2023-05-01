@@ -1,0 +1,235 @@
+---
+title: Configuring content
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+Individual content entries (e.g. a function to be documented) can also be customized.
+For example, if you are documenting a Python class, you may want to include or exclude
+documentation on specific methods on that class.
+
+Specify content options by setting `name: <content name>`, along with any additional options.
+
+For example, below is a piece of content, MdRenderer, specified without options.
+
+```yaml
+contents:
+  - MdRenderer
+```
+
+We set it to only document its render method, by setting `name: MdRenderer` followed by the `members` option.
+
+```yaml
+contents:
+  - name: MdRenderer
+    members:
+      - render
+```
+
+Behind the scenes, quartodoc represents each content entry as a [](`quartodoc.Auto`) element, since it specifies how to automatically document some object.
+
+## Looking up objects
+
+Finding Python objects to document involves two pieces of configuration:
+
+* the package name.
+* a list of objects for content.
+
+Note that quartodoc can look up anything---whether functions, modules, classes, attributes, or methods.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+      desc: ""
+      contents:
+        - get_object        # function: quartodoc.get_object
+        - ast.preview       # submodule func: quartodoc.ast.preview
+        - MdRenderer        # class: quartodoc.MdRenderer
+        - MdRenderer.render # method: quartodoc.MDRenderer.render
+        - renderers         # module: quartodoc.renderers
+```
+
+The functions listed in `contents` are assumed to be imported from the package.
+
+## Module and class members
+
+Documentation for modules and classes can automatically include their members (e.g. class methods and attributes; everything defined inside a module).
+
+By default, all attributes and functions (including methods on a class) are documented by embedding them inside the module or class documentation.
+
+There are four styles for presenting child members:
+
+```{python}
+#| echo: false
+#| output: asis
+
+# print out the attributes table of ChoicesChildren 
+# this is overkill, but maybe a nice case of dogfooding
+from quartodoc import get_object, MdRenderer
+from quartodoc.builder.utils import extract_type
+from griffe.docstrings.dataclasses import DocstringSectionAttributes
+
+renderer = MdRenderer()
+choices = get_object("quartodoc.layout.ChoicesChildren")
+res = extract_type(DocstringSectionAttributes, choices.docstring.parsed)[0]
+
+print(renderer.render(res))
+```
+
+You can specify a style by setting the `children` option in the config:
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+      desc: ""
+      contents:
+
+        # set the children option, so that methods get documented
+        # on separate pages. MdRenderer's docs will include a summary
+        # table that links to each page.
+        - name: quartodoc.MdRenderer
+          children: separate
+```
+
+## Grouping on a page
+
+By default, content in each section gets included in the same index table,
+with each piece of content documented on its own page.
+
+For example, consider the config below.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Cool functions
+      desc: ""
+      contents:
+        - get_object
+        - name: MdRenderer
+          members: ["render"]
+```
+
+Both `get_object` and `MdRenderer` will be:
+
+* summarized and linked to in the "Cool functions" section of the index.
+* documented on their own, separate pages.
+
+### Page layout element
+
+Use a custom page element to group object documentation on the same page.
+
+Custom page elements are specified by including a `kind: <element name>` field.
+
+:::::: {.columns}
+
+
+::: {.column}
+
+**Separate**
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Cool functions
+      desc: ""
+
+      # normal contents setup ----
+      contents:
+        - get_object
+        - name: MdRenderer
+          members: ["render"]
+```
+
+:::
+::: {.column}
+
+**Grouped on same page**
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Cool functions
+      desc: ""
+
+      # contents with a page grouping ----
+      contents:
+        - kind: page
+          contents:
+            - get_object
+            - name: MdRenderer
+              members: ["render"]
+```
+
+:::
+::::::
+
+
+## Setting default package path
+
+Different levels of configuration let you set the `package` option.
+This controls the package path that quartodoc will try to import control content from.
+
+The example below shows three different places it can be set:
+top-level site config, section config, or in a page element.
+
+```yaml
+# (1) package set on top-level site config
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: ""
+      desc: ""
+      contents:
+        - get_object         # quartodoc.get_object
+    
+    # (2) package set on a section
+    - title: ""
+      desc: ""
+      package: quartodoc.ast
+      contents:
+        - preview            # quartodoc.ast.preview
+
+        # (3) package set on a page
+        - kind: page
+          package: pandas
+          contents:
+            - DataFrame     # pandas.DataFrame
+```
+
+Use `package: null` to unset the package option. This enables you to specify objects using their full name.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: ""
+      desc: ""
+      package: null
+      contents:
+        - quartodoc.get_object
+```
+
+## Dynamic lookup
+
+By default, quartodoc uses static analysis to look up objects.
+This means it gets information about your docstring without actually running your package's code.
+
+This usually works well, but may get the docstring wrong for those created in an extremely dynamic way (e.g. you manually set the `__doc__` attribute on an object).
+
+In this case, you can set the dynamic option on a piece of content.
+
+```yaml
+contents:
+  - name: get_object
+    dynamic: true
+```

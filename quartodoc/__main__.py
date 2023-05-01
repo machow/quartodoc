@@ -42,9 +42,10 @@ def cli():
 
 @click.command()
 @click.argument("config", default="_quarto.yml")
+@click.option("--filter", nargs=1, default="*")
 @click.option("--dry-run", is_flag=True, default=False)
 @click.option("--verbose", is_flag=True, default=False)
-def build(config, dry_run, verbose):
+def build(config, filter, dry_run, verbose):
     if verbose:
         _enable_logs()
 
@@ -55,7 +56,7 @@ def build(config, dry_run, verbose):
         pass
     else:
         with chdir(Path(config).parent):
-            builder.build()
+            builder.build(filter=filter)
 
 
 @click.command()

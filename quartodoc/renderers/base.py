@@ -28,25 +28,6 @@ def convert_rst_link_to_md(rst):
 
 
 # render -----------------------------------------------------------------------
-# griffe function dataclass structure:
-#   Object:
-#     kind: Kind {"module", "class", "function", "attribute"}
-#     name: str
-#     docstring: Docstring
-#     parent
-#     path, canonical_path: str
-#
-#   Alias: wraps Object (_target) to lookup properties
-#
-#   Module, Class, Function, Attribute
-#
-# griffe docstring dataclass structure:
-#   DocstringSection -> DocstringSection*
-#   DocstringElement -> DocstringNamedElement -> Docstring*
-#
-#
-# example templates:
-#   https://github.com/mkdocstrings/python/tree/master/src/mkdocstrings_handlers/python/templates
 
 
 class Renderer:

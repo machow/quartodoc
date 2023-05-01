@@ -4,7 +4,6 @@ project:
   resources:
     - examples/single-page
     - examples/pkgdown
-    - examples/shiny
 
 metadata-files:
   - api/_sidebar.yml
@@ -19,16 +18,75 @@ interlinks:
     griffe:
       url: https://mkdocstrings.github.io/griffe/
 
+website:
+  title: "quartodoc"
+  page-navigation: true
+  navbar:
+    left:
+      - file: get-started/overview.qmd
+        text: Get Started
+      - file: examples/
+        text: Examples
+      - href: api/
+        text: Reference
+    right:
+      - icon: github
+        href: https://github.com/machow/quartodoc/
+  sidebar:
+    - id: get-started
+      title: Get Started
+      style: floating
+      align: left
+      contents:
+        - get-started/overview.qmd
+        - section: "Basic Use"
+          contents:
+            - get-started/basic-docs.qmd
+            - get-started/basic-content.qmd
+            - get-started/basic-building.qmd
+            - get-started/crossrefs.qmd
+            - get-started/interlinks.qmd
+            - get-started/sidebar.qmd
+            - get-started/extending.qmd
+
+        - section: "Docstrings"
+          contents:
+            - get-started/docstring-style.qmd
+            - get-started/docstring-examples.qmd
+
+        - section: "Programming"
+          contents:
+            - get-started/dev-big-picture.qmd
+            - get-started/dev-prepare.qmd
+            - get-started/docstrings.qmd
+            - get-started/renderers.qmd
+            - get-started/dev-dataclasses.qmd
+        - section: "Extra Topics"
+          contents:
+            - get-started/extra-build-sequence.qmd
+
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
 quartodoc:
   style: pkgdown
   dir: api
   package: quartodoc
   sidebar: "api/_sidebar.yml"
   sections:
-    - title: Inspection
+    - title: Preperation Functions
       desc: |
-        These functions Fetch and analyze python objects, including parsing docstrings.
+        These functions fetch and analyze python objects, including parsing docstrings.
+        They prepare a basic representation of your doc site that can be rendered and built.
       contents:
+        - Auto
+        - blueprint
+        - collect
         - get_object
         - preview
 
@@ -57,12 +115,12 @@ quartodoc:
         - kind: auto
           name: Builder
           members: []
+        - Builder.from_quarto_config
         - Builder.build
-        - Builder.do_blueprint
-        - Builder.do_collect
-        - Builder.do_summarize
         - Builder.write_index
         - Builder.write_doc_pages
+        - Builder.write_sidebar
+        - Builder.create_inventory
 
 
     - title: Inventory links
@@ -73,18 +131,28 @@ quartodoc:
         - create_inventory
         - convert_inventory
 
-    - title: Data models
+    - title: "Data models: structural"
       desc: |
-        Classes for specifying the exact layout of your docs.
+        Classes for specifying the broad structure your docs.
       contents:
         - kind: "page"
-          path: "layouts"
+          path: "layouts-structure"
           flatten: true
           contents:
             - layout.Layout
             - layout.Section
             - layout.Page
-            - layout.Auto
+            - layout.SectionElement
+            - layout.ContentElement
+
+    - title: "Data models: docable"
+      desc: |
+        Classes representing python objects to be rendered.
+      contents:
+        - kind: "page"
+          path: "layouts-docable"
+          flatten: true
+          contents:
             - name: layout.Doc
               members: []
             - layout.DocFunction
@@ -93,50 +161,16 @@ quartodoc:
             - layout.DocClass
             - layout.Link
             - layout.Item
-            - layout.SectionElement
-            - layout.ContentElement
-
-
-website:
-  title: "quartodoc"
-  page-navigation: true
-  navbar:
-    left:
-      - file: get-started/overview.qmd
-        text: Get Started
-      - file: examples/
-        text: Examples
-      - href: api/
-        text: Reference
-    right:
-      - icon: github
-        href: https://github.com/machow/quartodoc/
-  sidebar:
-    - id: get-started
-      title: Get Started
-      style: floating
-      align: left
+            - layout.ChoicesChildren
+    - title: "Data models: docstring patches"
+      desc: |
+        Most of the classes for representing python objects live
+        in [](`griffe.dataclasses`) or [](`griffe.docstrings.dataclasses`).
+        However, the `quartodoc.ast` module has a number of custom classes to fill
+        in support for some important docstring sections.
       contents:
-        - get-started/overview.qmd
-        - section: "Basics"
-          contents:
-            - get-started/basic-docs.qmd
-            - get-started/crossrefs.qmd
-            - get-started/interlinks.qmd
-            - get-started/sidebar.qmd
-            - get-started/extending.qmd
-        - section: "Advanced"
-          contents:
-            - get-started/docstrings.qmd
-            - get-started/renderers.qmd
-            - get-started/building.qmd
-        - section: "Extra Topics"
-          contents:
-            - get-started/architecture.qmd
-
-
-format:
-  html:
-    theme: cosmo
-    css: styles.css
-    toc: true
+         - ast.DocstringSectionSeeAlso
+         - ast.DocstringSectionNotes
+         - ast.DocstringSectionWarnings
+         - ast.ExampleCode
+         - ast.ExampleText

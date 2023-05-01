@@ -1,5 +1,5 @@
 ---
-title: More Customization
+title: More customization
 ---
 
 This page details 3 common aspects of quartodoc you can extend:
@@ -64,8 +64,8 @@ quartodoc:
     style: _renderer.py
 ```
 
-See the [shiny example docs](https://github.com/machow/quartodoc/tree/main/examples/shiny), which contains a custom renderer.
-
+See the [Rendering docstrings](/get-started/renderers.qmd) page for instructions on
+creating a custom renderer, and the [](`quartodoc.MdRenderer`) docs for more information.
 
 ## Using a custom Builder
 

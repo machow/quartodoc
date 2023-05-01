@@ -26,6 +26,8 @@ from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 
+from typing import overload
+
 _log = logging.getLogger(__name__)
 
 
@@ -191,8 +193,33 @@ class _PagePackageStripper(PydanticTransformer):
         return el
 
 
-def blueprint(el: _Base, package: str = None):
-    """Create a blueprint of a layout element, that is ready to render."""
+@overload
+def blueprint(el: Auto, package: str) -> Doc:
+    ...
+
+
+def blueprint(el: _Base, package: str = None) -> _Base:
+    """Convert a configuration element to something that is ready to render.
+
+    Parameters
+    ----------
+    el:
+        An element, like layout.Auto, to transform.
+    package:
+        A base package name. If specified, this is prepended to the names of any objects.
+
+    Examples
+    --------
+
+    >>> from quartodoc import blueprint
+    >>> from quartodoc.layout import Auto
+    >>> blueprint(Auto(name = "quartodoc.get_object"))
+    DocFunction(name='quartodoc.get_object', ...)
+
+    >>> blueprint(Auto(name = "get_object"), package = "quartodoc")
+    DocFunction(name='get_object', ...)
+
+    """
 
     trans = BlueprintTransformer()
 

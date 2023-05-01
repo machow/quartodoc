@@ -4,6 +4,7 @@ import logging
 import warnings
 import yaml
 
+from fnmatch import fnmatchcase
 from griffe.loader import GriffeLoader
 from griffe.collections import ModulesCollection, LinesCollection
 from griffe.dataclasses import Alias
@@ -18,10 +19,7 @@ from .inventory import create_inventory, convert_inventory
 from . import layout
 from .renderers import Renderer
 
-from typing import Any, TYPE_CHECKING
-
-if TYPE_CHECKING:
-    import sphobjinv as soi
+from typing import Any
 
 
 _log = logging.getLogger(__name__)
@@ -90,8 +88,6 @@ def get_object(
     dynamic: bool
         Whether to dynamically import object. Useful if docstring is not hard-coded,
         but was set on object by running python code.
-    modules_collection: optional
-        A griffe [](`~griffe.collections.ModulesCollection`), used to hold loaded modules.
 
     See Also
     --------
@@ -338,11 +334,8 @@ class Builder:
         The output path of the index file, used to list all API functions.
     sidebar:
         The output path for a sidebar yaml config (by default no config generated).
-    display_name: str
-        The default name shown for documented functions. Either "name", "relative",
-        "full", or "canonical". These options range from just the function name, to its
-        full path relative to its package, to including the package name, to its
-        the its full path relative to its `.__module__`.
+    rewrite_all_pages:
+        Whether to rewrite all rendered doc pages, or only those with changes.
 
     """
 
@@ -358,7 +351,6 @@ class Builder:
     # quarto yaml config -----
     # TODO: add model for section with the fields:
     # title, desc, contents: list[str]
-    sections: "list[Any]"
     package: str
     version: "str | None"
     dir: str
@@ -384,33 +376,21 @@ class Builder:
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
         sidebar: "str | None" = None,
-        use_interlinks: bool = False,
-        display_name: str = "name",
-        rewrite_all_pages=True,
+        rewrite_all_pages=False,
     ):
         self.layout = self.load_layout(sections=sections, package=package)
-        self.sections = self.layout.sections
 
         self.package = package
         self.version = None
         self.dir = dir
         self.title = title
-        self.display_name = display_name
-
-        self.items: "list[layout.Item]"
-        # self.create_items()
-
-        self.inventory: "None | soi.Inventory"
-        # self.create_inventory()
+        self.sidebar = sidebar
 
         self.renderer = Renderer.from_config(renderer)
-
-        self.sidebar = sidebar
 
         if out_index is not None:
             self.out_index = out_index
 
-        self.use_interlinks = use_interlinks
         self.rewrite_all_pages = rewrite_all_pages
 
     def load_layout(self, sections: dict, package: str):
@@ -421,31 +401,34 @@ class Builder:
 
     # building ----------------------------------------------------------------
 
-    def build(self):
-        """Build index page, sphinx inventory, and individual doc pages."""
+    def build(self, filter: str = "*"):
+        """Build index page, sphinx inventory, and individual doc pages.
+
+        Parameters
+        ----------
+        filter:
+            A simple pattern, that may include * as a wildcard. If specified,
+            only doc paths for objects with matching names will be written.
+            Path is the file's base name in the API dir (e.g. MdRenderer.render)
+        """
+
+        from quartodoc import blueprint, collect
 
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = self.do_blueprint()
+        blueprint = blueprint(self.layout)
 
         _log.info("Collecting pages and inventory items.")
-        pages, items = self.do_collect(blueprint)
-
-        # strip package name the item name, so that it isn't repeated a ton
-        # in our internal docs links.
-        stripped_items = self._strip_item_dispname(items)
-
-        _log.info("Summarizing docs for index page.")
-        summary = self.do_summarize(blueprint, stripped_items)
+        pages, items = collect(blueprint, base_dir=self.dir)
 
         # writing pages ----
 
         _log.info("Writing index")
-        self.write_index(summary)
+        self.write_index(blueprint)
 
         _log.info("Writing docs pages")
-        self.write_doc_pages(pages, stripped_items)
+        self.write_doc_pages(pages, filter)
 
         # inventory ----
 
@@ -457,39 +440,13 @@ class Builder:
 
         if self.sidebar:
             _log.info(f"Writing sidebar yaml to {self.sidebar}")
-            d_sidebar = self.generate_sidebar(blueprint)
-            yaml.dump(d_sidebar, open(self.sidebar, "w"))
+            self.write_sidebar(blueprint)
 
-    def do_blueprint(self) -> layout.Layout:
-        """Convert a layout with Auto elements to a full-fledged doc specification."""
-
-        from quartodoc.builder.blueprint import BlueprintTransformer
-
-        bt = BlueprintTransformer()
-        blueprint = bt.visit(self.layout)
-
-        return blueprint
-
-    def do_collect(self, blueprint) -> tuple[list[layout.Page], list[layout.Item]]:
-        """Collect the pages and sphinx item information from a layout."""
-
-        from quartodoc.builder.collect import CollectTransformer
-
-        ct = CollectTransformer(self.dir)
-        ct.visit(blueprint)
-
-        return ct.pages, ct.items
-
-    def do_summarize(self, blueprint, items):
-        """Summarize a layout into index tables."""
-
-        summary = self.renderer.summarize(blueprint)
-
-        return summary
-
-    def write_index(self, content: str):
+    def write_index(self, blueprint: layout.Layout):
         """Write API index page."""
 
+        _log.info("Summarizing docs for index page.")
+        content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
         final = f"# {self.title}\n\n{content}"
@@ -500,7 +457,7 @@ class Builder:
 
         return str(p_index)
 
-    def write_doc_pages(self, pages, items):
+    def write_doc_pages(self, pages, filter: str):
         """Write individual function documentation pages."""
 
         for page in pages:
@@ -512,13 +469,24 @@ class Builder:
             # Only write out page if it has changed, or we've set the
             # rewrite_all_pages option. This ensures that quarto won't have
             # to re-render every page of the API all the time.
+            if filter != "*":
+                is_match = fnmatchcase(page.path, filter)
+
+                if is_match:
+                    _log.info("Matched filter")
+                else:
+                    _log.info("Skipping write (no filter match)")
+                    continue
+
             if (
                 self.rewrite_all_pages
                 or (not html_path.exists())
                 or (html_path.read_text() != rendered)
             ):
-                _log.info(f"Writing {page.path}")
+                _log.info(f"Writing: {page.path}")
                 html_path.write_text(rendered)
+            else:
+                _log.info("Skipping write (content unchanged)")
 
     # inventory ----
 
@@ -532,20 +500,9 @@ class Builder:
 
         return inventory
 
-    def _strip_item_dispname(self, items):
-        result = []
-        for item in items:
-            new = item.copy()
-            prefix = self.package + "."
-            if new.name.startswith(prefix):
-                new.dispname = new.name.replace(prefix, "", 1)
-            result.append(new)
-
-        return result
-
     # sidebar ----
 
-    def generate_sidebar(self, blueprint: layout.Layout):
+    def _generate_sidebar(self, blueprint: layout.Layout):
         contents = [f"{self.dir}/index{self.out_page_suffix}"]
         for section in blueprint.sections:
             links = []
@@ -555,6 +512,12 @@ class Builder:
             contents.append({"section": section.title, "contents": links})
 
         return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
+
+    def write_sidebar(self, blueprint: layout.Layout):
+        """Write a yaml config file for API sidebar."""
+
+        d_sidebar = self._generate_sidebar(blueprint)
+        yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
     def _page_to_links(self, el: layout.Page) -> list[str]:
         # if el.flatten:
@@ -578,7 +541,7 @@ class Builder:
             quarto_cfg = yaml.safe_load(open(quarto_cfg))
 
         cfg = quarto_cfg["quartodoc"]
-        style = cfg["style"]
+        style = cfg.get("style", "pkgdown")
 
         cls_builder = cls._registry[style]
 
@@ -604,9 +567,6 @@ class BuilderSinglePage(Builder):
         el.sections = [layout.Page(path=self.out_index, contents=el.sections)]
 
         return el
-
-    def do_summarize(self, *args, **kwargs):
-        pass
 
     def write_index(self, *args, **kwargs):
         pass

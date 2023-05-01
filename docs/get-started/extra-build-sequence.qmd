@@ -1,0 +1,57 @@
+---
+title: Build sequence diagram
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+This sequence diagram shows the process behind `quartodoc build`.
+See the API docs for [](`~quartodoc.Builder`), [](`~quartodoc.MdRenderer`), and the preperation functions ([](`~quartodoc.Auto`), [](`~quartodoc.blueprint`), [](`~quartodoc.collect`))
+
+```{mermaid}
+%%| fig-width: 100%
+sequenceDiagram
+    Note left of CLI: _quarto.yml config    
+    CLI->>+Builder: .from_quarto_config()
+    Builder->>MdRenderer: .from_config()
+    MdRenderer-->>Builder: renderer
+    Builder-->>-CLI: builder
+
+
+    CLI->>+Builder: .build()
+
+    Note over Builder: prepare site
+    Builder->>+PrepFunctions: blueprint(self.layout)
+    loop over Auto
+        PrepFunctions->>PrepFunctions: get_object(name)
+    end
+    PrepFunctions-->>Builder: blueprint
+
+    Builder->>PrepFunctions: collect(blueprint)
+    PrepFunctions-->>Builder: pages, items
+
+    Note over Builder: write the site
+    Builder->>+Builder: write_index(blueprint)
+    Builder->>MdRenderer: renderer.summarize(...)
+    Note right of MdRenderer: Describe each object<br>on the index
+    MdRenderer-->>Builder: index content
+
+    Builder->>Builder: write_sidebar(blueprint)
+
+        Builder->>Builder: write_doc_pages(pages)
+    loop over pages
+        Builder->>+MdRenderer: renderer.render(...)
+        MdRenderer->>MdRenderer: .render_header(...)
+        MdRenderer->>MdRenderer: .signature(...)
+        MdRenderer->>MdRenderer: .render_annotation(...)
+        Note right of MdRenderer: for all rendered types
+        opt table of members
+            MdRenderer->>MdRenderer: .summarize(...)      
+        end
+        MdRenderer-->>-Builder: rendered docstring
+    end
+
+    Builder->>Builder: create_inventory(items)
+```

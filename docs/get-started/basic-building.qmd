@@ -1,0 +1,64 @@
+---
+title: Building and debugging docs
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+**tl;dr**: Once you've configured quartodoc in your `_quarto.yml` file, use the following commands to build and preview a documentation site.
+
+```bash
+# Create the documentation files. These are written 
+# by default to the reference/ folder in your docs.
+quartodoc build --verbose
+
+# Create optional inventory files, which allow you to
+# link to API doc pages within and across documentation
+# sites. These are put in the _inv folder in your docs.
+quartodoc interlinks
+
+# Preview the documentation site.
+# Use quarto render to generate the final site.
+quarto preview
+```
+
+## Rebuilding doc pages
+
+While using `quarto preview`, you can preview updates to your docstrings by regenerating their documentation pages:
+
+```bash
+quartodoc build --verbose
+```
+
+## Speeding up preview
+
+### Rewriting doc files
+
+By default, the `quartodoc build` only re-writes doc pages when it detects
+a change to their content. This helps prevent `quarto preview` from trying
+to re-render every doc page--including those that haven't changed.
+
+###  Selectively building doc pages
+
+Use the filter option with `quartodoc build` to generate a subset of doc pages.
+This is useful when you have a many (e.g. several hundred) doc pages, and want
+to test a change on a single page.
+
+```bash
+quartodoc build --filter 'get_object'
+```
+
+This option also accepts a wildcard pattern, which causes it to build docs for all matching objects.
+
+```bash
+# write the docs for the MdRenderer class, and any of its methods
+# (e.g. MdRenderer.renderer)
+quartodoc build --filter 'MdRenderer*'
+```
+
+:::{.callout-note}
+When using a name with a wildcard, be sure to put it in single quotes!
+Otherwise, your shell may try to "expand it" to match file names.
+:::

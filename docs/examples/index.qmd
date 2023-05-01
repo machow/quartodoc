@@ -1,8 +1,18 @@
+### Demo sites
+
 | style | source | layout |
 | ----- | ------ | ------ |
 | [pkgdown] | [github][pkgdown-code] | Index page with a title and short description for functions listed in each section. Each function gets its own documentation page. |
 | [single-page] | [github][sp-code] | Index page has function documentation embedded on it. |
-| [shiny] | [github][shiny-code] | The shiny docs translated to quartodoc, using a custom renderer. |
+
+### Packages using quartodoc
+
+
+| package | source | about |
+| ----- | ------ | ------ |
+| [siuba] | [github][sb-code] | Data analysis library. |
+| [shiny][shiny] |  | Dashboarding framework. |
+| [vetiver][vetiver] | [github][vt-code] | A tool to version, share, deploy and monitor ML models. |
 
 : {tbl-colwidths="[20, 20, 60]"}
 
@@ -10,5 +20,8 @@
 [pkgdown-code]: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
 [single-page]: /examples/single-page/reference
 [sp-code]: https://github.com/machow/quartodoc/tree/main/examples/single-page
-[shiny]: /examples/shiny/reference
-[shiny-code]: https://github.com/machow/quartodoc/tree/main/examples/shiny
+[shiny]: https://shiny.rstudio.com/py/api/
+[vetiver]: https://rstudio.github.io/vetiver-python/stable/reference/
+[vt-code]: https://github.com/rstudio/vetiver-python
+[siuba]: https://siuba.org/api/
+[sb-code]: https://github.com/machow/siuba.org

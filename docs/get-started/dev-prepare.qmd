@@ -1,0 +1,115 @@
+---
+title: "Prep: Auto, blueprint, collect"
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .qmd
+      format_name: quarto
+      format_version: '1.0'
+      jupytext_version: 1.14.5
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+```{python}
+from quartodoc import Auto, blueprint, collect, preview
+from quartodoc import MdRenderer
+from quartodoc import layout
+import yaml
+```
+
+
+### Auto discovery of functions, classes, and more
+
+```{python}
+auto = Auto(name = "quartodoc.get_object")
+auto
+```
+
+* auto just represents what we want to do, blueprint has all the logic.
+* explain options like dynamic, show them in blueprint section
+
+
+## Blueprint: create a renderable doc recipe
+
+### From Auto
+
+```{python}
+doc = blueprint(auto)
+doc
+```
+
+```{python}
+preview(doc.obj.docstring, max_depth=2)
+```
+
+### Layout and Section
+
+```{python}
+lay = layout.Layout(
+    sections = [
+      layout.Section(title = "A section", desc = "A description", contents = [auto])
+    ]
+)
+```
+
+
+:::::: {.columns}
+
+::: {.column}
+
+```{python}
+# raw layout
+preview(lay, compact=True)
+```
+
+:::
+::: {.column}
+
+```{python}
+bp_layout = blueprint(lay)
+preview(bp_layout, max_depth=5, compact=True)
+```
+
+:::
+
+::::::
+
+### Grouping docs on single Page
+
+### Class members
+
+```{python}
+auto_separate = layout.Auto(name = "quartodoc.MdRenderer", children = "separate")
+auto_embedded = layout.Auto(name = "quartodoc.MdRenderer", children = "embedded")
+```
+
+:::::: {.columns}
+
+::: {.column}
+```{python}
+bp_embedded = blueprint(auto_embedded)
+preview(bp_embedded, max_depth=2)
+```
+:::
+::: {.column}
+```{python}
+bp_separate = blueprint(auto_separate)
+preview(bp_separate, max_depth=2)
+```
+:::
+
+::::::
+
+
+## Collect: fetch all pages and items
+
+
+```{python}
+some_page = layout.Page(path = "some_doc_page", contents = [doc])
+pages, items = collect(some_page, "reference")
+pages
+```
+

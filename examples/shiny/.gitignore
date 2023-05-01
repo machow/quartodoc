@@ -1,9 +1,0 @@
-# vim
-.*.sw[po]
-
-# quartodoc api folder
-reference
-
-# quarto
-/.quarto/
-_site

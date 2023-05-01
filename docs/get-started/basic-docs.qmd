@@ -1,5 +1,5 @@
 ---
-title: Configuring docs
+title: Configuring site
 jupyter:
   kernelspec:
     display_name: Python 3 (ipykernel)
@@ -7,13 +7,13 @@ jupyter:
     name: python3
 ---
 
-## Adding configuration
+## Site configuration
 
 quartodoc is configured by adding a `quartodoc` section to your `_quarto.yml`:
 
 ```yaml
 quartodoc:
-  style: single-page
+  style: pkgdown
   dir: reference
   package: quartodoc
   sections:
@@ -24,7 +24,7 @@ quartodoc:
         - preview
 ```
 
-## Top-level options
+### Top-level options
 
 The `quartodoc` section takes a `style` field, specifying which [](`quartodoc.Builder`)
 to use (currently "pkgdown" or "single-page"; see [Examples](/examples/)).
@@ -42,41 +42,13 @@ doc_params = [entry for entry in doc_parts if entry.kind.name == "parameters"][0
 print(renderer.render(doc_params))
 ```
 
-## Section options
+### Section options
 
 The `sections` field defines which functions to document.
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| title | str | A title for the section |
-| desc | str | A description for the section |
-| contents | list[str] | A list of functions to document |
+It requires three pieces of configuration:
 
+* `title`: a title for the section
+* `desc`: a description for the section
+* `contents`: a list of functions to document
 
-## Looking up functions
-
-Finding functions to document involves two pieces of configuration:
-
-* the package name.
-* a list of functions for content.
-
-```yaml
-quartodoc:
-  package: quartodoc
-  sections:
-    - contents:
-        # top-level function: quartodoc.get_object
-        - get_object
-
-        # top-level class: quartodoc.MdRenderer
-        - MdRenderer
-
-        # submodule function: quartodoc.ast.preview
-        - ast.preview
-```
-
-The functions listed in `contents` are assumed to be imported from the package.
-
-### Class methods
-
-Currently, quartodoc can't look up class methods. (Though this would be quick to implement!).
