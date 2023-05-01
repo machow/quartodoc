@@ -20,8 +20,7 @@ contents:
   - MdRenderer
 ```
 
-We set it to only document its render method, by setting `name: MdRenderer` followed by the
-`members` option.
+We set it to only document its render method, by setting `name: MdRenderer` followed by the `members` option.
 
 ```yaml
 contents:
@@ -174,6 +173,51 @@ quartodoc:
 :::
 ::::::
 
+
+## Setting default package path
+
+Different levels of configuration let you set the `package` option.
+This controls the package path that quartodoc will try to import control content from.
+
+The example below shows three different places it can be set:
+top-level site config, section config, or in a page element.
+
+```yaml
+# (1) package set on top-level site config
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: ""
+      desc: ""
+      contents:
+        - get_object         # quartodoc.get_object
+    
+    # (2) package set on a section
+    - title: ""
+      desc: ""
+      package: quartodoc.ast
+      contents:
+        - preview            # quartodoc.ast.preview
+
+        # (3) package set on a page
+        - kind: page
+          package: pandas
+          contents:
+            - DataFrame     # pandas.DataFrame
+```
+
+Use `package: null` to unset the package option. This enables you to specify objects using their full name.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: ""
+      desc: ""
+      package: null
+      contents:
+        - quartodoc.get_object
+```
 
 ## Dynamic lookup
 

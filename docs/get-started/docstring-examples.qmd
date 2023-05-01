@@ -1,5 +1,5 @@
 ---
-title: 🚧 Examples
+title: Common issues and examples
 jupyter:
   kernelspec:
     display_name: Python 3 (ipykernel)
@@ -7,11 +7,80 @@ jupyter:
     name: python3
 ---
 
-```{python}
-from quartodoc import MdRenderer, preview
+This page provides examples for commonly encountered situations (and some funky ones).
 
-renderer = MdRenderer()
+See the [numpydoc sections guide][numpydoc] for more information and examples.
+
+[numpydoc]: https://numpydoc.readthedocs.io/en/latest/format.html#sections
+
+## Examples: using code blocks
+
+Often, the Examples section of docstrings contain code examples.
+
+The Examples section supports two formats for code examples:
+
+* **doctest syntax** - code starts with `>>>`.
+* **markdown syntax** - surrounding code with three backticks (```` ``` ````)
+* **quarto syntax** - similar to markdown syntax (e.g. ```` ```{python} ````), but will execute code in the docs.
+
+Below is an example including each.
+
+
 ```
+    Examples
+    --------
+    
+    doctest syntax:
+    
+    >>> 1 + 1
+    2
+    
+    markdown syntax:
+    
+    ```python
+    1 + 1
+    ```
+    
+    quarto syntax:
+    note that the "\" should be removed.
+    
+    ```\{python}
+    1 + 1
+    ```
+```
+
+
+## Examples, etc..: the "s" matters
+
+The numpydoc spec pluralizes section most names.
+If you leave off the "s", then they may be misparsed.
+
+For example, the docstring below erroneously has a "Return" section:
+
+```
+Return
+------
+
+some_name: int
+    a description of the return result
+```
+
+In this case, the section won't be parsed, but written directly into the doc page.
+This means that "Return" would show up as a level 2 header.
+
+Here is a list of pluralized section names:
+
+* Parameters
+* Returns
+* Yields
+* Receives
+* Other Parameters
+* Raises
+* Warns
+* Warnings
+* Notes
+* References
+* Examples
 
 ## Returns: using type annotation
 
@@ -37,5 +106,3 @@ def f() -> int:
     """
 
 ```
-
-TODO: need to load as a griffe object somehow.
