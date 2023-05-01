@@ -58,9 +58,8 @@ website:
           contents:
             - get-started/dev-big-picture.qmd
             - get-started/dev-prepare.qmd
-            - get-started/docstrings.qmd
-            - get-started/renderers.qmd
-            - get-started/dev-dataclasses.qmd
+            - get-started/dev-docstrings.qmd
+            - get-started/dev-renderers.qmd
         - section: "Extra Topics"
           contents:
             - get-started/extra-build-sequence.qmd
