@@ -106,3 +106,28 @@ def f() -> int:
     """
 
 ```
+
+
+## Using interlinks in docstrings
+
+quartodoc supports linking to functions using the [interlinks quarto filter](./interlinks.qmd) (and linking in general using [quarto link syntax](./crossrefs.qmd)).
+
+The code below shows an interlink, along with a regular quarto link.
+
+```python
+def f():
+    """A function.
+
+    Interlinks filter:
+
+    See [](`quartodoc.get_object`)
+
+    Regular quarto link (to a page in your docs):
+
+    See the [reference](/reference/index.qmd) page.
+    """
+```
+
+:::{.callout-note}
+Linking to functions documented outside your package must be configured in the [interlinks filter](./interlinks.qmd).
+:::
