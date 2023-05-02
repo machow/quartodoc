@@ -44,7 +44,7 @@ Below is an example including each.
     quarto syntax:
     note that the "\" should be removed.
     
-    ```\{python}
+    ```{{python}}
     1 + 1
     ```
 ```
