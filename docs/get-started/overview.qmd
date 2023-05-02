@@ -57,7 +57,7 @@ quartodoc:
 Next, run this command to generate your API pages:
 
 ```bash
-python -m quartodoc build
+quartodoc build
 ```
 
 This should create a `reference/` directory with an `index.qmd` and documentation
@@ -74,7 +74,7 @@ quarto preview
 As mentioned in the previous section, you can preview your quartodoc site using these commands:
 
 ```bash
-python -m quartodoc build
+quartodoc build
 quarto preview
 ```
 
@@ -84,7 +84,7 @@ the quartodoc build command:
 ```bash
 # with quarto preview running, you only need to re-run quartodoc build,
 # which will re-create the pages of your API documentation.
-python -m quartodoc build
+quartodoc build
 ```
 
 ## Looking up objects
