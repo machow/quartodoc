@@ -1,0 +1,107 @@
+# Specification for testing an interlinks filter.
+# Each entry in this spec is a test case, and may contain the following fields:
+#   * input: the raw interlink text in the qmd
+#   * output_link: expect a Link with this target
+#   * output_text: expect a Link with this content
+#   * output_element: expect a custom element..
+#     - kind: the element kind (Link, Code, Unchanged)
+#     - <element fields ...>
+#   * error: expect an error with this name
+#   * warning: expect a warning with this name
+# roles -----------------------------------------------------------------------
+# can look up module
+- input: "[](`quartodoc.layout`)"
+  output_link: /api/layout.html#quartodoc.layout
+  output_text: quartodoc.layout
+
+# can look up class
+- input: "[](`quartodoc.MdRenderer`)"
+  output_link: /api/MdRenderer.html#quartodoc.MdRenderer
+  output_text: quartodoc.MdRenderer
+
+# can look up function
+- input: "[](`quartodoc.MdRenderer.render`)"
+  output_link: /api/MdRenderer.html#quartodoc.MdRenderer.render
+  output_text: quartodoc.MdRenderer.render
+
+# can look up attribute
+- input: "[](`quartodoc.MdRenderer.style`)"
+  output_link: /api/MdRenderer.html#quartodoc.MdRenderer.style
+  output_text: quartodoc.MdRenderer.style
+
+# reference syntax ------------------------------------------------------------
+# errors for invalid reference syntax (missing backtick)
+- input: "[](`quartodoc.layout)"
+  error: "RefSyntaxError"
+
+# passes through normal links
+- input: "[](http://example.com)"
+  output_element:
+    kind: Unchanged
+    content: http://example.com
+
+# reference text styles -------------------------------------------------------
+# ref with custom text
+- input: "[some explanation](`quartodoc.layout`)"
+  output_link: /api/layout.html#quartodoc.layout
+  output_text: some explanation
+
+# ref with no text defaults to name
+- input: "[](`quartodoc.layout`)"
+  output_link: /api/layout.html#quartodoc.layout
+  output_text: quartodoc.layout
+
+# ref with tilde uses short name
+- input: "[](`~quartodoc.layout`)"
+  output_text: layout
+
+# filters ---------------------------------------------------------------------
+# filters by function role
+- input: "[](:function:`quartodoc.MdRenderer.render`)"
+  output_link: /api/MdRenderer.html#quartodoc.MdRenderer.render
+  output_text: quartodoc.MdRenderer.render
+
+# filters by shorthand func role
+- input: "[](:func:`quartodoc.MdRenderer.render`)"
+  output_link: /api/MdRenderer.html#quartodoc.MdRenderer.render
+  output_text: quartodoc.MdRenderer.render
+
+# filters by attribute role
+- input: "[](:attribute:`quartodoc.MdRenderer.style`)"
+  output_link: /api/MdRenderer.html#quartodoc.MdRenderer.style
+  output_text: quartodoc.MdRenderer.style
+
+# filters by class role
+- input: "[](:class:`quartodoc.MdRenderer`)"
+  output_link: /api/MdRenderer.html#quartodoc.MdRenderer
+  output_text: quartodoc.MdRenderer
+
+# filters by module role
+- input: "[](:module:`quartodoc.layout`)"
+  output_link: /api/layout.html#quartodoc.layout
+  output_text: quartodoc.layout
+
+# filters by domain and role
+- input: "[](:py:module:`quartodoc.layout`)"
+  output_link: /api/layout.html#quartodoc.layout
+  output_text: quartodoc.layout
+
+# filters by external, domain, and role
+- input: "[](:external+other:py:function:`quartodoc.get_object`)"
+  output_link: other+api/get_object.html#quartodoc.get_object
+  output_text: quartodoc.get_object
+
+# warns for a missing entry in external inventory
+- input: "[](:external+other:`quartodoc.layout`)"
+  output_element:
+    kind: Code
+    content: ":external+other:`quartodoc.layout`"
+  warning: "InvLookupError"
+
+# warns for an attribute filter that is really a function
+- input: "[](:attribute:`quartodoc.MdRenderer.render`)"
+  warning: "InvLookupError"
+
+# warns for it fails look up when module role is written as mod
+- input: "[](:mod:`quartodoc.layout`)"
+  warning: "InvLookupError"

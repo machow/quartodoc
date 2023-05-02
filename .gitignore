@@ -141,3 +141,5 @@ dmypy.json
 
 # Local Netlify folder
 .netlify
+
+/.luarc.json
