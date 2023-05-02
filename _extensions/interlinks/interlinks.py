@@ -2,7 +2,7 @@ import itertools
 import json
 import panflute as pf
 
-from quartodoc.inventory import Ref, RefSyntaxError
+from quartodoc.interlinks import Ref, RefSyntaxError
 from pathlib import Path
 from plum import dispatch
 
