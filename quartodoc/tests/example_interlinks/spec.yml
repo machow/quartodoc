@@ -1,3 +1,13 @@
+# Specification for testing an interlinks filter.
+# Each entry in this spec is a test case, and may contain the following fields:
+#   * input: the raw interlink text in the qmd
+#   * output_link: expect a Link with this target
+#   * output_text: expect a Link with this content
+#   * output_element: expect a custom element..
+#     - kind: the element kind (Link, Code, Unchanged)
+#     - <element fields ...>
+#   * error: expect an error with this name
+#   * warning: expect a warning with this name
 # roles -----------------------------------------------------------------------
 # can look up module
 - input: "[](`quartodoc.layout`)"
