@@ -8,7 +8,8 @@ filters:
 
 interlinks:
   sources:
-    numpy:
-      url: https://numpy.org/doc/stable/
-    python:
-      url: https://docs.python.org/3/
+    other:
+      # note that url is usually the http address it is
+      # fetched from, but we generate the inventory for
+      # this source manually.
+      url: "other+"

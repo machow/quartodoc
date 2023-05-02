@@ -4,6 +4,7 @@ import os
 import itertools
 import json
 import warnings
+import yaml
 
 from pydantic import BaseModel, Field
 from dataclasses import dataclass
@@ -29,10 +30,10 @@ class InvLookupError(Exception):
 
 def get_path_to_root():
     # In lua filters you can use quarto.project.offset
-    return os.environ[ENV_PROJECT_ROOT]
+    return Path(os.environ[ENV_PROJECT_ROOT])
 
 
-def parse_rst_style_ref(full_text):
+def parse_rst_style_ref(full_text: str):
     """
     Returns
     -------
@@ -52,6 +53,19 @@ def parse_rst_style_ref(full_text):
     return ref, text
 
 
+def parse_md_style_link(full_text: str):
+    import re
+
+    m = re.match(r"\[(?P<text>.*?)\]\((?P<ref>.*?)\)", full_text)
+
+    if m is None:
+        raise Exception()
+
+    text, ref = m.groups()
+
+    return ref, text
+
+
 # Dataclasses representing pandoc elements ------------------------------------
 # These classes are used to help indicate what elements the Interlinks class
 # would return in a pandoc filter.
@@ -60,7 +74,7 @@ def parse_rst_style_ref(full_text):
 class Link(BaseModel):
     """Indicates a pandoc Link element."""
 
-    kind: Literal["link"] = "link"
+    kind: Literal["Link"] = "Link"
     content: str
     url: str
 
@@ -68,7 +82,7 @@ class Link(BaseModel):
 class Code(BaseModel):
     """Indicates a pandoc Code element."""
 
-    kind: Literal["code"] = "code"
+    kind: Literal["Code"] = "Code"
     content: str
 
 
@@ -79,11 +93,12 @@ class Unchanged(BaseModel):
     return the original content element.
     """
 
-    kind: Literal["unchanged"] = "unchanged"
+    kind: Literal["Unchanged"] = "Unchanged"
     content: str
 
 
 class TestSpecEntry(BaseModel):
+    input: str
     output_text: Optional[str] = None
     output_link: Optional[str] = None
     output_element: Optional[
@@ -91,6 +106,10 @@ class TestSpecEntry(BaseModel):
     ] = None
     error: Optional[str] = None
     warning: Optional[str] = None
+
+
+class TestSpec(BaseModel):
+    __root__: list[TestSpecEntry]
 
 
 # Reference syntax ------------------------------------------------------------
@@ -280,16 +299,16 @@ class Inventories:
         is_shortened = ref.target.startswith("~")
 
         entry = self.lookup_reference(ref)
-        dst_url = entry["full_uri"]
+        dst_url = entry.full_uri
 
         if not text:
-            name = entry["name"] if entry["dispname"] == "-" else entry["dispname"]
+            name = entry.name if entry.dispname == "-" else entry.dispname
             if is_shortened:
                 # shorten names from module.sub_module.func_name -> func_name
                 name = name.split(".")[-1]
-            return Link(name, url=dst_url)
+            return Link(content=name, url=dst_url)
 
-        return Link(text, url=dst_url)
+        return Link(content=text, url=dst_url)
 
     def pandoc_ref_to_anchor(self, ref: str, text: str) -> Link | Code | Unchanged:
         """Convert a ref to a Link, with special handling for pandoc filters.
@@ -299,27 +318,33 @@ class Inventories:
         non-ref urls unchanged.
         """
 
-        if (ref.startswith("%60") or ref.startswith(":")) and ref.endswith("%60"):
+        # detect what *might* be an interlink. note that we don't validate
+        # that it has a closing `, to allow a RefSyntaxError to bubble up.
+        if ref.startswith("%60") or ref.startswith(":"):
             # Get URL ----
             try:
                 return self.ref_to_anchor(ref.replace("%60", "`"), text)
             except InvLookupError as e:
-                warnings.warn(warnings.warn(str(e)))
+                warnings.warn(f"{e.__class__.__name__}: {e}")
                 if text:
                     # Assuming content is a ListContainer(Str(...))
                     body = text
                 else:
-                    body = ref.replace("%60", "")
-                return Code(body)
+                    body = ref.replace("%60", "`")
+                return Code(content=body)
 
-        return Unchanged(ref)
+        return Unchanged(content=ref)
 
     @staticmethod
     def _filter_by_field(items, field_name: str, value: "str | None" = None):
         if value is None:
             return items
 
-        return (item for item in items if item[field_name] == value)
+        # TODO: Ref uses invname, while EnhancedItem uses inv_name
+        if field_name == "invname":
+            field_name = "inv_name"
+
+        return (item for item in items if getattr(item, field_name) == value)
 
     @classmethod
     def from_items(cls, items: "list[EnhancedItem]"):
@@ -331,9 +356,16 @@ class Inventories:
         return invs
 
     @classmethod
-    def from_quarto_config(cls, cfg: dict):
+    def from_quarto_config(cls, cfg: str | dict, root_dir: str | None = None):
+
+        if isinstance(cfg, str):
+            if root_dir is None:
+                root_dir = Path(cfg).parent
+
+            cfg = yaml.safe_load(open(cfg))
+
         invs = cls()
-        p_root = get_path_to_root()
+        p_root = get_path_to_root() if root_dir is None else Path(root_dir)
 
         interlinks = cfg["interlinks"]
         sources = interlinks["sources"]
@@ -354,3 +386,5 @@ class Inventories:
             json_data = json.load(open(inv_path))
 
             invs.load_inventory(json_data, url=cfg["url"], invname=doc_name)
+
+        return invs

@@ -10,7 +10,7 @@
   output_text: quartodoc.MdRenderer
 
 # can look up function
-- input: "[](`quartodoc.Mdrenderer.render`)"
+- input: "[](`quartodoc.MdRenderer.render`)"
   output_link: /api/MdRenderer.html#quartodoc.MdRenderer.render
   output_text: quartodoc.MdRenderer.render
 
