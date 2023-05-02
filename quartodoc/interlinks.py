@@ -1,3 +1,15 @@
+"""The interlinks module fully specifies the behavior of an interlinks filter.
+
+Note that this module largely exists for two reasons:
+
+* Allow people to explore / debug interlinks in python.
+* Provide a reference implementation for the lua interlinks filter.
+
+See quartodoc.tests.test_interlinks for its implementation, and the fully
+loaded specification.
+"""
+
+
 from __future__ import annotations
 
 import os
