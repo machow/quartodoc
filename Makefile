@@ -1,6 +1,17 @@
 README.md: README.qmd
 	quarto render $<
 
+
+# These 2 rules are used to generate the example_interlinks folder,
+# which contains a full example for the interlinks filter to be tested
+
+quartodoc/tests/example_interlinks: scripts/filter-spec/generate_files.py
+	python3 $<
+
+quartodoc/tests/example_interlinks/test.qmd: scripts/filter-spec/generate_test_qmd.py
+	python3 $<
+
+
 examples/%/_site: examples/%/_quarto.yml
 	cd examples/$* \
 		&& quarto add --no-prompt ../.. \
@@ -8,6 +19,7 @@ examples/%/_site: examples/%/_quarto.yml
 	cd examples/$* && quartodoc build _quarto.yml --verbose
 	cd examples/$* && quartodoc interlinks
 	quarto render $(dir $<)
+
 
 docs/examples/%: examples/%/_site
 	rm -rf docs/examples/$*
