@@ -333,7 +333,12 @@ class Formatter:
         return prefix + connector.join(x.splitlines())
 
 
-def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999, compact=False):
+def preview(
+    ast: "dc.Object | ds.Docstring | object",
+    max_depth=999,
+    compact=False,
+    as_string: bool = False,
+):
     """Print a friendly representation of a griffe object (e.g. function, docstring)
 
     Examples
@@ -349,4 +354,10 @@ def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999, compact=Fal
      ...
 
     """
-    print(Formatter(max_depth=max_depth, compact=compact).format(ast))
+
+    res = Formatter(max_depth=max_depth, compact=compact).format(ast)
+
+    if as_string:
+        return res
+
+    print(res)
