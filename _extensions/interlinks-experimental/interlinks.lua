@@ -12,6 +12,7 @@ local inventory = {}
 
 function lookup(search_object)
     print("search object: ")
+    quarto.utils.dump(search_object)
     for _, inventory in ipairs(inventory) do
         for _, item in ipairs(inventory.items) do
             if item.name ~= search_object.name then
@@ -26,7 +27,7 @@ function lookup(search_object)
                 goto continue
             else
                 print("Found")
-                quarto.utils.dump({ item = item, search_object = search_object })
+                quarto.utils.dump(item)
                 return item
             end
 
@@ -46,6 +47,13 @@ function mysplit (inputstr, sep)
     return t
 end
 
+local function normalize_role(role)
+    if role == "func" then
+        return "function"
+    end
+    return role
+end
+
 local function build_search_object(str)
     quarto.utils.dump(str)
     local starts_with_colon = str:sub(1, 1) == ":"
@@ -53,14 +61,16 @@ local function build_search_object(str)
     if starts_with_colon then
         local t = mysplit(str, ":")
         if #t == 2 then
-            search.role = t[1]
+            search.role = normalize_role(t[1])
             search.name = t[2]:match("%%60(.*)%%60")
         elseif #t == 3 then
             search.domain = t[1]
-            search.role = t[2]
+            search.role = normalize_role(t[2])
             search.name = t[3]:match("%%60(.*)%%60")
         else
-            error("couldn't parse this link: " .. str)
+            -- TODO: handle external inventory files
+            print("couldn't parse this link: " .. str)
+            return {}
         end
     else
         search.name = str:match("%%60(.*)%%60")
@@ -78,33 +88,41 @@ local function build_search_object(str)
     return search
 end
 
-function report_broken_link(link, search_object)
-    return pandoc.Span({
-        pandoc.Strong("Missing target:"),
-        pandoc.Code(link.target)
-    })
+function report_broken_link(link, search_object, replacement)
+    -- TODO: how to unescape html elements like [?
+    return pandoc.Code(pandoc.utils.stringify(link.content))
 end
 
 function Link(link)
+    -- do not process regular links ----
     if not link.target:match("%%60") then
         return link
     end
 
+    -- lookup item ----
     local search = build_search_object(link.target)
     local item = lookup(search)
-    if item == nil then
-        return report_broken_link(link, search)
-    end
-    link.target = item.uri:gsub("%$$", search.name)
+
+    -- determine replacement, used if no link text specified ----
     local original_text = pandoc.utils.stringify(link.content)
     local replacement = search.name
     if search.shortened then
         local t = mysplit(search.name, ".")
         replacement = t[#t]
     end
+
+    -- set link text ----
     if original_text == "" then
         link.content = replacement
     end
+
+    -- report broken links ----
+    if item == nil then
+        return report_broken_link(link, search)
+    end
+    link.target = item.uri:gsub("%$$", search.name)
+
+
     return link
 end
 

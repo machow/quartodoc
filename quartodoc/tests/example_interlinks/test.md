@@ -40,7 +40,7 @@ output:
 
 ## `` [](`quartodoc.layout) ``
 
-output: **Missing target:**`%60quartodoc.layout`
+output: ``
 
     █─TestSpecEntry
     ├─input = '[](`quartodoc.layout)'
@@ -93,7 +93,8 @@ output:
 
 ## `` [](:func:`quartodoc.MdRenderer.render`) ``
 
-output: **Missing target:**`:func:%60quartodoc.MdRenderer.render%60`
+output:
+[quartodoc.MdRenderer.render](/api/MdRenderer.html#quartodoc.MdRenderer.render)
 
     █─TestSpecEntry
     ├─input = '[](:func:`quartodoc.MdRenderer.render`)'
@@ -140,8 +141,9 @@ output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
 
 ## `` [](:external+other:py:function:`quartodoc.get_object`) ``
 
-output: **Missing
-target:**`:external+other:py:function:%60quartodoc.get_object%60`
+NOTE THAT THIS IS A FAILING TEST CASE
+
+output: ``
 
     █─TestSpecEntry
     ├─input = '[](:external+other:py:function:`quartodoc.get_obj ...
@@ -150,7 +152,7 @@ target:**`:external+other:py:function:%60quartodoc.get_object%60`
 
 ## `` [](:external+other:`quartodoc.layout`) ``
 
-output: **Missing target:**`:external+other:%60quartodoc.layout%60`
+output: `quartodoc.layout`
 
     █─TestSpecEntry
     ├─input = '[](:external+other:`quartodoc.layout`)'
@@ -160,8 +162,7 @@ output: **Missing target:**`:external+other:%60quartodoc.layout%60`
 
 ## `` [](:attribute:`quartodoc.MdRenderer.render`) ``
 
-output: **Missing
-target:**`:attribute:%60quartodoc.MdRenderer.render%60`
+output: `quartodoc.MdRenderer.render`
 
     █─TestSpecEntry
     ├─input = '[](:attribute:`quartodoc.MdRenderer.render`)'
@@ -169,7 +170,7 @@ target:**`:attribute:%60quartodoc.MdRenderer.render%60`
 
 ## `` [](:mod:`quartodoc.layout`) ``
 
-output: **Missing target:**`:mod:%60quartodoc.layout%60`
+output: `quartodoc.layout`
 
     █─TestSpecEntry
     ├─input = '[](:mod:`quartodoc.layout`)'
