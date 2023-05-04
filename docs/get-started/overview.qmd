@@ -30,6 +30,11 @@ python -m pip install quartodoc
 python -m pip install git+https://github.com/machow/quartodoc.git
 ```
 
+:::{.callout-note}
+In order to install quarto, see the quarto [get started page](https://quarto.org/docs/get-started/).
+:::
+
+
 ## Basic use
 
 Getting started with quartodoc takes two steps: configuring a quarto website,
