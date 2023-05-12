@@ -142,3 +142,26 @@ Be sure to note these two important pieces:
 
 * Document your `__init__` method parameters on the class docstring.
 * You can use an `Attributes` section in your docstring.
+
+```python
+class MyClass:
+    """A great class.
+
+    Parameters
+    ----------
+    a:
+        Some parameter.
+
+    Attributes
+    ----------
+    x:
+        An integer
+    """
+
+
+    x: int = 1
+
+
+    def __init__(self, a: str):
+        self.a = a
+```
