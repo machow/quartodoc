@@ -132,3 +132,13 @@ def f():
 :::{.callout-note}
 Linking to functions documented outside your package must be configured in the [interlinks filter](./interlinks.qmd).
 :::
+
+
+## How do I document a class?
+
+See [this numpydoc page on documenting classes](https://numpydoc.readthedocs.io/en/latest/format.html#documenting-classes).
+
+Be sure to note these two important pieces:
+
+* Document your `__init__` method parameters on the class docstring.
+* You can use an `Attributes` section in your docstring.
