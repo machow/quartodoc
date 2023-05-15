@@ -1,0 +1,22 @@
+# quarto stuff ----------------------------------------------------------------
+project:
+  type: website
+
+website:
+  title: weird-install example
+  navbar:
+    left:
+      - file: reference/index.qmd
+        text: "Reference"
+
+
+# quartodoc -------------------------------------------------------------------
+
+quartodoc:
+  package: null
+  source_dir: ./src
+  sections:
+    - title: Some functions
+      desc: These functions inspect and parse docstrings.
+      contents:
+        - some_module.some_function

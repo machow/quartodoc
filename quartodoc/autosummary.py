@@ -336,6 +336,10 @@ class Builder:
         The output path for a sidebar yaml config (by default no config generated).
     rewrite_all_pages:
         Whether to rewrite all rendered doc pages, or only those with changes.
+    source_dir:
+        A directory where source files to be documented live. This is only necessary
+        if you are not documenting a package, but collection of scripts. Use a "."
+        to refer to the current directory.
 
     """
 
@@ -377,6 +381,7 @@ class Builder:
         out_index: str = None,
         sidebar: "str | None" = None,
         rewrite_all_pages=False,
+        source_dir: "str | None" = None,
     ):
         self.layout = self.load_layout(sections=sections, package=package)
 
@@ -392,6 +397,7 @@ class Builder:
             self.out_index = out_index
 
         self.rewrite_all_pages = rewrite_all_pages
+        self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
 
     def load_layout(self, sections: dict, package: str):
         # TODO: currently returning the list of sections, to make work with
@@ -413,6 +419,11 @@ class Builder:
         """
 
         from quartodoc import blueprint, collect
+
+        if self.source_dir:
+            import sys
+
+            sys.path.append(self.source_dir)
 
         # shaping and collection ----
 
