@@ -353,16 +353,16 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="quartodoc.Builder" class="level1">
 <h1>Builder</h1>
-<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False)</code></p>
+<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None)</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 57%">
-<col style="width: 14%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 72%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -426,6 +426,12 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 <td>Whether to rewrite all rendered doc pages, or only those with changes.</td>
 <td><code>False</code></td>
+</tr>
+<tr class="even">
+<td><code>source_dir</code></td>
+<td>str | None</td>
+<td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>

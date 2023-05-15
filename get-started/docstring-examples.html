@@ -311,6 +311,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#examples-etc..-the-s-matters" id="toc-examples-etc..-the-s-matters" class="nav-link" data-scroll-target="#examples-etc..-the-s-matters">Examples, etc..: the “s” matters</a></li>
   <li><a href="#returns-using-type-annotation" id="toc-returns-using-type-annotation" class="nav-link" data-scroll-target="#returns-using-type-annotation">Returns: using type annotation</a></li>
   <li><a href="#using-interlinks-in-docstrings" id="toc-using-interlinks-in-docstrings" class="nav-link" data-scroll-target="#using-interlinks-in-docstrings">Using interlinks in docstrings</a></li>
+  <li><a href="#how-do-i-document-a-class" id="toc-how-do-i-document-a-class" class="nav-link" data-scroll-target="#how-do-i-document-a-class">How do I document a class?</a></li>
   </ul>
 </nav>
     </div>
@@ -346,26 +347,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>quarto syntax</strong> - similar to markdown syntax (e.g.&nbsp;<code>```{python}</code>), but will execute code in the docs.</li>
 </ul>
 <p>Below is an example including each.</p>
-<pre><code>    Examples
-    --------
-    
-    doctest syntax:
-    
-    &gt;&gt;&gt; 1 + 1
-    2
-    
-    markdown syntax:
-    
-    ```python
-    1 + 1
-    ```
-    
-    quarto syntax:
-    note that the "\" should be removed.
-    
-    ```\{python}
-    1 + 1
-    ```</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">    Examples</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">    --------</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">    doctest syntax:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">    &gt;&gt;&gt; 1 + 1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">    2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">    markdown syntax:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="in">    ```python</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">    1 + 1</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">    quarto syntax:</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">    ```{python}</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">    1 + 1</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="examples-etc..-the-s-matters" class="level2">
 <h2 class="anchored" data-anchor-id="examples-etc..-the-s-matters">Examples, etc..: the “s” matters</h2>
@@ -440,6 +440,36 @@ Note
 <p>Linking to functions documented outside your package must be configured in the <a href="../get-started/interlinks.html">interlinks filter</a>.</p>
 </div>
 </div>
+</section>
+<section id="how-do-i-document-a-class" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-document-a-class">How do I document a class?</h2>
+<p>See <a href="https://numpydoc.readthedocs.io/en/latest/format.html#documenting-classes">this numpydoc page on documenting classes</a>.</p>
+<p>Below is a simple example of a class docstring.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyClass:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A great class.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    a:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">        Some parameter.</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Attributes</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">    x:</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">        An integer</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    x: <span class="bu">int</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, a: <span class="bu">str</span>):</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a <span class="op">=</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note these two important pieces:</p>
+<ul>
+<li>Document your <code>__init__</code> method parameters on the class docstring.</li>
+<li>You can use an <code>Attributes</code> section in your docstring.</li>
+</ul>
 
 
 </section>

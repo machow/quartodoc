@@ -353,10 +353,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>quartodoc</code> section takes a <code>style</code> field, specifying which <a href="../api/Builder.html#quartodoc.Builder">quartodoc.Builder</a> to use (currently “pkgdown” or “single-page”; see <a href="../examples/">Examples</a>).</p>
 <table class="table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 57%">
-<col style="width: 14%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 72%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -420,6 +420,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td></td>
 <td>Whether to rewrite all rendered doc pages, or only those with changes.</td>
 <td><code>False</code></td>
+</tr>
+<tr class="even">
+<td><code>source_dir</code></td>
+<td>str | None</td>
+<td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>
