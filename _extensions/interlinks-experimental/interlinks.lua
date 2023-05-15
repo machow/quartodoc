@@ -11,10 +11,10 @@ end
 local inventory = {}
 
 function lookup(search_object)
-    print("search object: ")
-    quarto.utils.dump(search_object)
-    for _, inventory in ipairs(inventory) do
-        for _, item in ipairs(inventory.items) do
+
+    local results = {}
+    for ii, inventory in ipairs(inventory) do
+        for jj, item in ipairs(inventory.items) do
             if item.name ~= search_object.name then
                 goto continue
             end
@@ -26,14 +26,29 @@ function lookup(search_object)
             if search_object.domain and item.domain ~= search_object.domain then
                 goto continue
             else
-                print("Found")
-                quarto.utils.dump(item)
-                return item
+                table.insert(results, item)
+
+                goto continue
             end
 
             ::continue::
         end
     end
+
+    if #results == 1 then
+        return results[1]
+    end
+    if #results > 1 then
+        print("Found multiple matches for " .. search_object.name)
+        quarto.utils.dump(results)
+        return nil
+    end
+    if #results == 0 then
+        print("Found no matches for object:")
+        quarto.utils.dump(search_object)
+    end
+
+    return nil
 end
 
 function mysplit (inputstr, sep)
@@ -55,7 +70,6 @@ local function normalize_role(role)
 end
 
 local function build_search_object(str)
-    quarto.utils.dump(str)
     local starts_with_colon = str:sub(1, 1) == ":"
     local search = {}
     if starts_with_colon then
@@ -142,12 +156,10 @@ return {
                 json = read_json(quarto.project.offset .. "/_inv/" .. k .. "_objects.json")
                 prefix = pandoc.utils.stringify(v.url)
                 fixup_json(json, prefix)
-                table.insert(inventory, json)
             end
             json = read_json(quarto.project.offset .. "/objects.json")
             if json ~= nil then
                 fixup_json(json, "/")
-                table.insert(inventory, json)
             end
         end
     },
