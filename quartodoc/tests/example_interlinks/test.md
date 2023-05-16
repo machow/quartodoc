@@ -141,9 +141,8 @@ output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
 
 ## `` [](:external+other:py:function:`quartodoc.get_object`) ``
 
-NOTE THAT THIS IS A FAILING TEST CASE
-
-output: ``
+output:
+[quartodoc.get_object](other+api/get_object.html#quartodoc.get_object)
 
     █─TestSpecEntry
     ├─input = '[](:external+other:py:function:`quartodoc.get_obj ...

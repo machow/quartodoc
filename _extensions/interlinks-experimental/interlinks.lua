@@ -15,6 +15,11 @@ function lookup(search_object)
     local results = {}
     for ii, inventory in ipairs(inventory) do
         for jj, item in ipairs(inventory.items) do
+            -- e.g. :external+<inv_name>:<domain>:<role>:`<name>`
+            if item.inv_name and item.inv_name ~= search_object.inv_name then
+                goto continue
+            end
+
             if item.name ~= search_object.name then
                 goto continue
             end
@@ -75,14 +80,23 @@ local function build_search_object(str)
     if starts_with_colon then
         local t = mysplit(str, ":")
         if #t == 2 then
+            -- e.g. :py:func:`my_func`
             search.role = normalize_role(t[1])
             search.name = t[2]:match("%%60(.*)%%60")
         elseif #t == 3 then
+            -- e.g. :py:func:`my_func`
             search.domain = t[1]
             search.role = normalize_role(t[2])
             search.name = t[3]:match("%%60(.*)%%60")
+        elseif #t == 4 then
+            -- e.g. :ext+inv:py:func:`my_func`
+            search.external = true
+
+            search.inv_name = t[1]:match("external%+(.*)")
+            search.domain = t[2]
+            search.role = normalize_role(t[3])
+            search.name = t[4]:match("%%60(.*)%%60")
         else
-            -- TODO: handle external inventory files
             print("couldn't parse this link: " .. str)
             return {}
         end
