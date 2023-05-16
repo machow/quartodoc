@@ -45,6 +45,7 @@ class BlueprintTransformer(PydanticTransformer):
             self.get_object = get_object
 
         self.crnt_package = None
+        self.dynamic = None
 
     @staticmethod
     def _append_member_path(path: str, new: str):
@@ -109,7 +110,9 @@ class BlueprintTransformer(PydanticTransformer):
 
         _log.info(f"Getting object for {path}")
 
-        obj = self.get_object_fixed(path, dynamic=el.dynamic)
+        dynamic = el.dynamic if el.dynamic is not None else self.dynamic
+
+        obj = self.get_object_fixed(path, dynamic=dynamic)
         raw_members = self._fetch_members(el, obj)
 
         # Three cases for structuring child methods ----
@@ -122,7 +125,7 @@ class BlueprintTransformer(PydanticTransformer):
             # On the other hand, we've wired get_object up to make sure getting
             # the member of an Alias also returns an Alias.
             member_path = self._append_member_path(path, entry)
-            obj_member = self.get_object_fixed(member_path, dynamic=el.dynamic)
+            obj_member = self.get_object_fixed(member_path, dynamic=dynamic)
 
             # do no document submodules
             if obj_member.kind.value == "module":
@@ -198,7 +201,7 @@ def blueprint(el: Auto, package: str) -> Doc:
     ...
 
 
-def blueprint(el: _Base, package: str = None) -> _Base:
+def blueprint(el: _Base, package: str = None, dynamic: None | bool = None) -> _Base:
     """Convert a configuration element to something that is ready to render.
 
     Parameters
@@ -207,6 +210,8 @@ def blueprint(el: _Base, package: str = None) -> _Base:
         An element, like layout.Auto, to transform.
     package:
         A base package name. If specified, this is prepended to the names of any objects.
+    dynamic:
+        Whether to dynamically load objects. Defaults to using static analysis.
 
     Examples
     --------
@@ -225,6 +230,9 @@ def blueprint(el: _Base, package: str = None) -> _Base:
 
     if package is not None:
         trans.crnt_package = package
+
+    if dynamic is not None:
+        trans.dynamic = dynamic
 
     return trans.visit(el)
 

@@ -340,6 +340,9 @@ class Builder:
         A directory where source files to be documented live. This is only necessary
         if you are not documenting a package, but collection of scripts. Use a "."
         to refer to the current directory.
+    dynamic:
+        Whether to dynamically load all python objects. By default, objects are
+        loaded using static analysis.
 
     """
 
@@ -382,6 +385,7 @@ class Builder:
         sidebar: "str | None" = None,
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
+        dynamic: bool | None = None,
     ):
         self.layout = self.load_layout(sections=sections, package=package)
 
@@ -398,6 +402,7 @@ class Builder:
 
         self.rewrite_all_pages = rewrite_all_pages
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
+        self.dynamic = dynamic
 
     def load_layout(self, sections: dict, package: str):
         # TODO: currently returning the list of sections, to make work with
@@ -428,7 +433,7 @@ class Builder:
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = blueprint(self.layout)
+        blueprint = blueprint(self.layout, self.dynamic)
 
         _log.info("Collecting pages and inventory items.")
         pages, items = collect(blueprint, base_dir=self.dir)

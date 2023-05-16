@@ -1,6 +1,6 @@
 from quartodoc import get_object
 from quartodoc import layout as lo
-from quartodoc.builder.blueprint import BlueprintTransformer
+from quartodoc.builder.blueprint import BlueprintTransformer, blueprint
 import pytest
 
 TEST_MOD = "quartodoc.tests.example"
@@ -70,3 +70,14 @@ def test_blueprint_visit_module(bp, dynamic):
     assert len(res.members) == 1
     assert res.members[0].name == "a_func"
     assert res.members[0].obj.path == path.replace(":", ".") + ".a_func"
+
+
+def test_blueprint_default_dynamic(bp):
+    from quartodoc.tests.example_dynamic import NOTE
+
+    path = "quartodoc.tests.example_dynamic:f"
+    auto = lo.Auto(name=path)
+
+    res = blueprint(auto, dynamic=True)
+    assert isinstance(res, lo.DocFunction)
+    assert NOTE in res.obj.docstring.value
