@@ -29,7 +29,8 @@ contents:
       - render
 ```
 
-Behind the scenes, quartodoc represents each content entry as a [](`quartodoc.Auto`) element, since it specifies how to automatically document some object.
+In the following sections, we'll discuss different options for configuring content.
+
 
 ## Looking up objects
 
