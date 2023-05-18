@@ -70,3 +70,12 @@ def test_blueprint_visit_module(bp, dynamic):
     assert len(res.members) == 1
     assert res.members[0].name == "a_func"
     assert res.members[0].obj.path == path.replace(":", ".") + ".a_func"
+
+
+def test_blueprint_auto_package(bp):
+    auto = lo.Auto(name="a_func", package="quartodoc.tests.example")
+    res = bp.visit(auto)
+
+    assert isinstance(res, lo.DocFunction)
+    assert res.name == "a_func"
+    assert res.anchor == "quartodoc.tests.example.a_func"

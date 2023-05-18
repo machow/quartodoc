@@ -214,6 +214,7 @@ class Auto(_Base):
     exclude: Optional[str] = None
     dynamic: Union[bool, str] = False
     children: ChoicesChildren = ChoicesChildren.embedded
+    package: Optional[str] = MISSING()
 
 
 # TODO: rename to Default or something
