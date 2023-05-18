@@ -433,7 +433,7 @@ class Builder:
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = blueprint(self.layout, self.dynamic)
+        blueprint = blueprint(self.layout, dynamic=self.dynamic)
 
         _log.info("Collecting pages and inventory items.")
         pages, items = collect(blueprint, base_dir=self.dir)
