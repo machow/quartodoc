@@ -165,6 +165,7 @@ quartodoc:
       # contents with a page grouping ----
       contents:
         - kind: page
+          path: some_funcs
           contents:
             - get_object
             - name: MdRenderer
@@ -173,6 +174,15 @@ quartodoc:
 
 :::
 ::::::
+
+Note these three important pieces of the page entry:
+
+* `kind: page` - indicates that we are creating a page
+* `path:` - specifies what the name of the page will be in the generated docs.
+  For example, `path: some_funcs` in the config above produces a file called
+  `some_funcs.qmd` in the API reference folder.
+* `contents:` - lists out the contents of the page.
+
 
 
 ## Setting default package path
