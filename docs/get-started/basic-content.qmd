@@ -205,6 +205,10 @@ quartodoc:
           package: pandas
           contents:
             - DataFrame     # pandas.DataFrame
+        
+        # (4) package set on individual content entry
+        - package: pandas
+          name: Series
 ```
 
 Use `package: null` to unset the package option. This enables you to specify objects using their full name.

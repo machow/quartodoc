@@ -203,6 +203,9 @@ class Auto(_Base):
         to return an alias for that object.
     children:
         Style for presenting members. Either separate, embedded, or flat.
+    package:
+        If specified, object lookup will be relative to this path.
+
 
     """
 
