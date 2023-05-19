@@ -28,7 +28,7 @@ def transform(el):
 
     # patch a list of docstring sections. note that this has to happen on the
     # list, since we replace single nodes on the tree (the list is the node).
-    elif isinstance(el, list) and len(el) and isinstance(el[0], dc.DocstringSection):
+    elif isinstance(el, list) and len(el) and isinstance(el[0], ds.DocstringSection):
         return _DocstringSectionPatched.transform_all(el)
 
     return el
@@ -47,8 +47,8 @@ class _DocstringSectionPatched(ds.DocstringSection):
     _registry: "dict[Enum, _DocstringSectionPatched]" = {}
 
     def __init__(self, value: str, title: "str | None" = None):
-        self.value = value
         super().__init__(title)
+        self.value = value
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)

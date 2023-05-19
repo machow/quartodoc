@@ -5,6 +5,7 @@ import quartodoc.ast as qast
 from contextlib import contextmanager
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
+from griffe import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
 from typing import Tuple, Union, Optional
@@ -95,7 +96,7 @@ class MdRenderer(Renderer):
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
-    def render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
+    def render_annotation(self, el: "str | expr.Name | expr.Expression | None"):
         """Special hook for rendering a type annotation.
 
         Parameters
@@ -110,7 +111,7 @@ class MdRenderer(Renderer):
 
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        if isinstance(el, dc.Name):
+        if isinstance(el, expr.Name):
             return sanitize(el.source)
 
         return sanitize(el.full)
