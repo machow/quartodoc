@@ -56,12 +56,6 @@ We can view the config as a [layout.Layout](`quartodoc.layout.Layout`), by looki
 builder.layout
 ```
 
-This can be a bit difficult to read, so quartodoc implements a [preview](`quartodoc.preview`) function, which spaces things out.
-
-```{python}
-preview(builder.layout)
-```
-
 Notice the following:
 
 * `preview` represents calls like `Layout()` with a box to the left, and then

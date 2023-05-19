@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 
 from typing_extensions import Annotated
 from typing import Literal, Union, Optional
+from .ast import preview
 
 
 _log = logging.getLogger(__name__)
@@ -45,6 +46,9 @@ class Layout(_Structural):
 
     sections: list[Union[SectionElement, Section]]
     package: Union[str, None, MISSING] = MISSING()
+
+    def __repr__(self):
+        return preview(self, as_string=True)
 
 
 # SubElements -----------------------------------------------------------------
