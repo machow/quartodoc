@@ -58,8 +58,7 @@ builder.layout
 
 Notice the following:
 
-* `preview` represents calls like `Layout()` with a box to the left, and then
-a pipe connecting it to each of its arguments.
+* `Layout()` is at the root, with a pipe connecting it to each of its arguments.
 * The content entry `MdRenderer` is represented by an [Auto](`quartodoc.Auto`) class.
   This specifies a Python object to look up and document.
 
