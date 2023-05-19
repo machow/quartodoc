@@ -1,10 +1,5 @@
-project:
-  type: website
-  resources:
-    - objects.json
-
 filters:
-  - interlinks
+  - interlinks.lua
 
 interlinks:
   sources:
