@@ -160,9 +160,17 @@ def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
 
 @dispatch
 def fields(el: BaseModel):
+    # TODO: this is the only quartodoc specific code.
+    # pydantic seems to copy MISSING() when it's a default, so we can't
+    # whether a MISSING() is the default MISSING(). Instead, we'll just
+    # use isinstance for this particular class
+    from .layout import MISSING
+
     # return fields whose values were not set to the default
     field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
-    return [k for k, v in el if field_defaults[k] is not v]
+    return [
+        k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
+    ]
 
 
 @dispatch

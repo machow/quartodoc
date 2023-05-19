@@ -203,6 +203,9 @@ class Auto(_Base):
         to return an alias for that object.
     children:
         Style for presenting members. Either separate, embedded, or flat.
+    package:
+        If specified, object lookup will be relative to this path.
+
 
     """
 
@@ -214,6 +217,7 @@ class Auto(_Base):
     exclude: Optional[str] = None
     dynamic: Union[bool, str] = False
     children: ChoicesChildren = ChoicesChildren.embedded
+    package: Union[str, None, MISSING] = MISSING()
 
 
 # TODO: rename to Default or something

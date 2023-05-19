@@ -29,7 +29,8 @@ contents:
       - render
 ```
 
-Behind the scenes, quartodoc represents each content entry as a [](`quartodoc.Auto`) element, since it specifies how to automatically document some object.
+In the following sections, we'll discuss different options for configuring content.
+
 
 ## Looking up objects
 
@@ -164,6 +165,7 @@ quartodoc:
       # contents with a page grouping ----
       contents:
         - kind: page
+          path: some_funcs
           contents:
             - get_object
             - name: MdRenderer
@@ -172,6 +174,15 @@ quartodoc:
 
 :::
 ::::::
+
+Note these three important pieces of the page entry:
+
+* `kind: page` - indicates that we are creating a page
+* `path:` - specifies what the name of the page will be in the generated docs.
+  For example, `path: some_funcs` in the config above produces a file called
+  `some_funcs.qmd` in the API reference folder.
+* `contents:` - lists out the contents of the page.
+
 
 
 ## Setting default package path
@@ -204,6 +215,10 @@ quartodoc:
           package: pandas
           contents:
             - DataFrame     # pandas.DataFrame
+        
+        # (4) package set on individual content entry
+        - package: pandas
+          name: Series
 ```
 
 Use `package: null` to unset the package option. This enables you to specify objects using their full name.
