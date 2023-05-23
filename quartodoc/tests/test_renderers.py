@@ -26,7 +26,7 @@ def test_render_param_kwargs_annotated():
 
     assert (
         res
-        == "a: int, b: int = 1, *args: list\\[str\\], c: int, d: int, **kwargs: dict\\[str, str\\]"
+        == "a: \[int\](`int`), b: \[int\](`int`) = 1, *args: \[list\](`list`)\[\[str\](`str`)\], c: \[int\](`int`), d: \[int\](`int`), **kwargs: \[dict\](`dict`)\[\[str\](`str`), \[str\](`str`)\]"
     )
 
 
