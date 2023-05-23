@@ -10,7 +10,7 @@ def escape(val: str):
     return f"`{val}`"
 
 
-def sanitize(val: str):
+def sanitize(val: str) -> str:
     return (
         val.replace("\n", " ")
         .replace("|", "\\|")
