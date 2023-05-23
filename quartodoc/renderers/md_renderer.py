@@ -95,32 +95,37 @@ class MdRenderer(Renderer):
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
-    def render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
-        """Special hook for rendering a type annotation.
+    # render_annotation method --------------------------------------------------------
 
+    @dispatch
+    def render_annotation(self, el: str) -> str:
+        """Special hook for rendering a type annotation.
         Parameters
         ----------
         el:
             An object representing a type annotation.
-            
         """
-
-        if isinstance(el, (type(None), str)):
-            return el
-
+        return el
+    
+    @dispatch
+    def render_annotation(self, el: None) -> str:
+        return ""
+    
+    @dispatch
+    def render_annotation(self, el: dc.Name) -> str:
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        if isinstance(el, dc.Name):
-            return sanitize(el.source)
+        return f"[{sanitize(el.source)}](`{el.full}`)"
 
-        return sanitize(el.full)
+    @dispatch
+    def render_annotation(self, el: dc.Expression) -> str:
+        return "".join(map(self.render_annotation, el))
 
     # signature method --------------------------------------------------------
 
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
         """Return a string representation of an object's signature."""
-
         return self.signature(el.target, el)
 
     @dispatch
@@ -373,9 +378,9 @@ class MdRenderer(Renderer):
         annotation = self.render_annotation(el.annotation)
         if self.show_signature_annotations:
             if annotation and has_default:
-                res = f"{glob}{el.name}: {el.annotation} = {el.default}"
+                res = f"{glob}{el.name}: {annotation} = {el.default}"
             elif annotation:
-                res = f"{glob}{el.name}: {el.annotation}"
+                res = f"{glob}{el.name}: {annotation}"
         elif has_default:
             res = f"{glob}{el.name}={el.default}"
         else:
@@ -403,7 +408,8 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringSectionParameters):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
-
+        # if rows[1][2].startswith("(Deprecated). A function name"):
+        #     import ipdb; ipdb.set_trace()
         return tabulate(rows, header, tablefmt="github")
 
     @dispatch
