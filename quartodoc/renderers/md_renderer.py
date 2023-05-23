@@ -5,13 +5,19 @@ import quartodoc.ast as qast
 from contextlib import contextmanager
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
-from griffe import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
 from typing import Tuple, Union, Optional
 from quartodoc import layout
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
+
+
+try:
+    # Name and Expression were moved to expressions in v0.28
+    from griffe import expressions as expr
+except ImportError:
+    from griffe import dataclasses as expr
 
 
 def _has_attr_section(el: dc.Docstring | None):
