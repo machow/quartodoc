@@ -202,7 +202,14 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
         mod = importlib.import_module(obj.module.canonical_path)
 
         if isinstance(obj.parent, dc.Class):
-            f = getattr(getattr(mod, obj.parent.name), obj.name)
+            parent_obj = getattr(mod, obj.parent.name)
+
+            # we might fail to get the attribute if it is only a type annotation,
+            # and in that case need to bail out of the docstring replacement
+            try:
+                f = getattr(parent_obj, obj.name)
+            except AttributeError:
+                return
         else:
             f = getattr(mod, obj.name)
 

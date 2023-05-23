@@ -84,3 +84,9 @@ def test_get_object_dynamic_class_method_doc():
 
     meth = obj.members["dynamic_create"]
     assert meth.docstring.value == "A dynamic method"
+
+
+def test_get_object_dynamic_class_instance_attr_doc():
+    obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs", dynamic=True)
+
+    assert obj.members["b"].docstring.value == "The b attribute"

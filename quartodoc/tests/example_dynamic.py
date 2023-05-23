@@ -26,3 +26,12 @@ class AClass:
     # correctly set its __doc__ attribute in that case.
     dynamic_create = partial(dynamic_doc, x=1)
     dynamic_create.__doc__ = dynamic_doc.__doc__
+
+
+class InstanceAttrs:
+    z: int
+
+    def __init__(self, a: int, b: str):
+        self.a = a
+        self.b = b
+        """The b attribute"""
