@@ -34,13 +34,13 @@ def chdir(new_dir):
     finally:
         os.chdir(prev)
 
-
 @click.group()
 def cli():
     pass
 
 
-@click.command()
+@click.command(help='Build the reference api docs automatically according '
+               'to the configuration in _quarto.yml.')
 @click.argument("config", default="_quarto.yml")
 @click.option("--filter", nargs=1, default="*")
 @click.option("--dry-run", is_flag=True, default=False)
@@ -59,10 +59,19 @@ def build(config, filter, dry_run, verbose):
             builder.build(filter=filter)
 
 
-@click.command()
+@click.command(short_help='Generate inventory files that the Quarto '
+               '`interlink` extension can use to auto-link to other docs.')
 @click.argument("config", default="_quarto.yml")
 @click.option("--dry-run", is_flag=True, default=False)
 def interlinks(config, dry_run):
+    """
+    Generate inventory files that the Quarto `interlink` extension can use to 
+    auto-link to other docs.
+
+    The files are stored in a cache directory, which defaults to _inv.
+    The Quarto extension `interlinks` will look for these files in the cache 
+    and add links to your docs accordingly.
+    """
     cfg = yaml.safe_load(open(config))
     interlinks = cfg.get("interlinks", None)
 
@@ -85,7 +94,6 @@ def interlinks(config, dry_run):
 
         p_dst = p_root / cache / f"{k}_objects.json"
         p_dst.parent.mkdir(exist_ok=True, parents=True)
-
         convert_inventory(inv, p_dst)
 
 
