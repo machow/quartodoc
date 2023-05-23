@@ -359,9 +359,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 14%">
-<col style="width: 21%">
-<col style="width: 64%">
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 80%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -404,11 +404,20 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>dynamic</td>
 <td>Union[bool, str]</td>
-<td>Whether to dynamically load docstring. By default docstrings are loaded</td>
+<td>Whether to dynamically load docstring. By default docstrings are loaded using static analysis. dynamic may be a string pointing to another object, to return an alias for that object.</td>
+</tr>
+<tr class="even">
+<td>children</td>
+<td>ChoicesChildren</td>
+<td>Style for presenting members. Either separate, embedded, or flat.</td>
+</tr>
+<tr class="odd">
+<td>package</td>
+<td>Union[str, None, MISSING]</td>
+<td>If specified, object lookup will be relative to this path.</td>
 </tr>
 </tbody>
 </table>
-<p>using static analysis. dynamic may be a string pointing to another object, to return an alias for that object. | | children | ChoicesChildren | Style for presenting members. Either separate, embedded, or flat. |</p>
 
 
 </section>

@@ -351,7 +351,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> Auto(name <span class="op">=</span> <span class="st">"quartodoc.get_object"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>auto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>Auto(kind='auto', name='quartodoc.get_object', members=None, include_private=False, include=None, exclude=None, dynamic=False, children=&lt;ChoicesChildren.embedded: 'embedded'&gt;)</code></pre>
+<pre><code>Auto(kind='auto', name='quartodoc.get_object', members=None, include_private=False, include=None, exclude=None, dynamic=False, children=&lt;ChoicesChildren.embedded: 'embedded'&gt;, package=MISSING())</code></pre>
 </div>
 </div>
 <ul>
@@ -399,19 +399,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>preview(lay, compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─Layout
-├─sections = 
-│ █─list
-│ └─0 = 
-│   █─Section
-│   ├─title = 'A section'
-│   ├─desc = 'A description'
-│   ├─package = █─MISSING
-│   └─contents = 
-│     █─list
-│     └─0 = 
-│       █─Auto
-│       └─name = 'quartodoc.get_object'
-└─package = █─MISSING</code></pre>
+└─sections = 
+  █─list
+  └─0 = 
+    █─Section
+    ├─title = 'A section'
+    ├─desc = 'A description'
+    └─contents = 
+      █─list
+      └─0 = 
+        █─Auto
+        └─name = 'quartodoc.get_object'</code></pre>
 </div>
 </div>
 </div><div class="column">
@@ -420,22 +418,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>preview(bp_layout, max_depth<span class="op">=</span><span class="dv">5</span>, compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─Layout
-├─sections = 
-│ █─list
-│ └─0 = 
-│   █─Section
-│   ├─title = 'A section'
-│   ├─desc = 'A description'
-│   ├─package = █─MISSING
-│   └─contents = 
-│     █─list
-│     └─0 = 
-│       █─Page
-│       ├─path = 'quartodoc.get_object'
-│       ├─package = █─MISSING ...
-│       └─contents = 
-│         █─list ...
-└─package = █─MISSING</code></pre>
+└─sections = 
+  █─list
+  └─0 = 
+    █─Section
+    ├─title = 'A section'
+    ├─desc = 'A description'
+    └─contents = 
+      █─list
+      └─0 = 
+        █─Page
+        ├─path = 'quartodoc.get_object'
+        └─contents = 
+          █─list ...</code></pre>
 </div>
 </div>
 </div>

@@ -372,7 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>builder <span class="op">=</span> Builder.from_quarto_config(cfg)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>builder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7fd92c4006a0&gt;</code></pre>
+<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7f361cabc430&gt;</code></pre>
 </div>
 </div>
 <p>Note that .from_quarto_config used the <code>style:</code> field to decide which Builder to create (in this case, PkgdownBuilder).</p>
@@ -380,7 +380,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>builder.layout</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>Layout(sections=[Section(kind='section', title='Some section', desc='Some description', package=MISSING(), contents=[Auto(kind='auto', name='MdRenderer', members=['render', 'summarize'], include_private=False, include=None, exclude=None, dynamic=False, children=&lt;ChoicesChildren.separate: 'separate'&gt;)])], package='quartodoc')</code></pre>
+<pre><code>Layout(sections=[Section(kind='section', title='Some section', desc='Some description', package=MISSING(), contents=[Auto(kind='auto', name='MdRenderer', members=['render', 'summarize'], include_private=False, include=None, exclude=None, dynamic=False, children=&lt;ChoicesChildren.separate: 'separate'&gt;, package=MISSING())])], package='quartodoc')</code></pre>
 </div>
 </div>
 <p>This can be a bit difficult to read, so quartodoc implements a <a href="../api/preview.html#quartodoc.preview">preview</a> function, which spaces things out.</p>
@@ -392,7 +392,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 │            └─0 = █─Section
 │                  ├─title = 'Some section'
 │                  ├─desc = 'Some description'
-│                  ├─package = █─MISSING
 │                  └─contents = █─list
 │                               └─0 = █─Auto
 │                                     ├─name = 'MdRenderer'
@@ -433,7 +432,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>█─Page
 ├─path = 'MdRenderer'
-├─package = █─MISSING
 └─contents = █─list
              └─0 = █─DocClass
                    ├─name = 'MdRenderer'
@@ -446,7 +444,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice two key pieces:</p>
 <ul>
 <li>The <code>Auto</code> element is now a <a href="../api/layouts-structure.html#quartodoc.layout.Page">layout.Page</a>. The <code>.path</code> indicates that the documentation will be on a page called <code>"MdRenderer"</code>.</li>
-<li>The content of the page is a <a href="`quartodoc.layout.DocClass">layout.DocClass</a>. This element holds everything needed to render this doc, including the class signature and parsed docstring.</li>
+<li>The content of the page is a <code>layout.DocClass</code>. This element holds everything needed to render this doc, including the class signature and parsed docstring.</li>
 </ul>
 <p>Importantly, the <code>.members</code> attribute specifies how to render the class methods we specified (<code>.render()</code> and <code>.summarize()</code>).</p>
 <div class="cell" data-execution_count="6">
@@ -455,11 +453,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>█─list
 ├─0 = █─MemberPage
 │     ├─path = 'quartodoc.MdRenderer.render'
-│     ├─package = █─MISSING ...
 │     └─contents = █─list ...
 └─1 = █─MemberPage
       ├─path = 'quartodoc.MdRenderer.summarize'
-      ├─package = █─MISSING ...
       └─contents = █─list ...</code></pre>
 </div>
 </div>
@@ -479,17 +475,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>█─list
 ├─0 = █─MemberPage
 │     ├─path = 'quartodoc.MdRenderer.render'
-│     ├─package = █─MISSING
 │     └─contents = █─list
 │                  └─0 = █─DocFunction ...
 ├─1 = █─MemberPage
 │     ├─path = 'quartodoc.MdRenderer.summarize'
-│     ├─package = █─MISSING
 │     └─contents = █─list
 │                  └─0 = █─DocFunction ...
 └─2 = █─Page
       ├─path = 'MdRenderer'
-      ├─package = █─MISSING
       └─contents = █─list
                    └─0 = █─DocClass ...</code></pre>
 </div>
@@ -521,7 +514,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>builder.renderer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7fd92c4002b0&gt;</code></pre>
+<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7f361cabc3a0&gt;</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="10">
