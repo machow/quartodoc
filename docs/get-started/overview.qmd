@@ -46,9 +46,18 @@ First, create a `_quarto.yml` file with the following:
 project:
   type: website
 
+# tell quarto to read the generated sidebar
+metadata-files:
+  - _sidebar.yml
+
+
 quartodoc:
   # the name used to import the package
   package: quartodoc
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
   sections:
     - title: Some functions
       desc: Functions to inspect docstrings.

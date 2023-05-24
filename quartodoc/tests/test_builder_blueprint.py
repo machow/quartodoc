@@ -81,3 +81,12 @@ def test_blueprint_default_dynamic(bp):
     res = blueprint(auto, dynamic=True)
     assert isinstance(res, lo.DocFunction)
     assert NOTE in res.obj.docstring.value
+
+
+def test_blueprint_auto_package(bp):
+    auto = lo.Auto(name="a_func", package="quartodoc.tests.example")
+    res = bp.visit(auto)
+
+    assert isinstance(res, lo.DocFunction)
+    assert res.name == "a_func"
+    assert res.anchor == "quartodoc.tests.example.a_func"

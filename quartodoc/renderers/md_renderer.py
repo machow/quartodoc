@@ -426,7 +426,12 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: ds.DocstringAttribute):
         annotation = self.render_annotation(el.annotation)
-        return el.name, self.render_annotation(annotation), el.description
+        row = [
+            sanitize(el.name),
+            self.render_annotation(annotation),
+            sanitize(el.description or "")
+        ]
+        return row
 
     # warnings ----
 

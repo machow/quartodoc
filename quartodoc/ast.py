@@ -160,9 +160,17 @@ def tuple_to_data(el: "tuple[ds.DocstringSectionKind, str]"):
 
 @dispatch
 def fields(el: BaseModel):
+    # TODO: this is the only quartodoc specific code.
+    # pydantic seems to copy MISSING() when it's a default, so we can't
+    # whether a MISSING() is the default MISSING(). Instead, we'll just
+    # use isinstance for this particular class
+    from .layout import MISSING
+
     # return fields whose values were not set to the default
     field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
-    return [k for k, v in el if field_defaults[k] is not v]
+    return [
+        k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
+    ]
 
 
 @dispatch
@@ -333,7 +341,12 @@ class Formatter:
         return prefix + connector.join(x.splitlines())
 
 
-def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999, compact=False):
+def preview(
+    ast: "dc.Object | ds.Docstring | object",
+    max_depth=999,
+    compact=False,
+    as_string: bool = False,
+):
     """Print a friendly representation of a griffe object (e.g. function, docstring)
 
     Examples
@@ -349,4 +362,10 @@ def preview(ast: "dc.Object | ds.Docstring | object", max_depth=999, compact=Fal
      ...
 
     """
-    print(Formatter(max_depth=max_depth, compact=compact).format(ast))
+
+    res = Formatter(max_depth=max_depth, compact=compact).format(ast)
+
+    if as_string:
+        return res
+
+    print(res)
