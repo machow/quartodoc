@@ -13,6 +13,13 @@ from quartodoc import layout
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
 
 
+try:
+    # Name and Expression were moved to expressions in v0.28
+    from griffe import expressions as expr
+except ImportError:
+    from griffe import dataclasses as expr
+
+
 def _has_attr_section(el: dc.Docstring | None):
     if el is None:
         return False
@@ -95,7 +102,7 @@ class MdRenderer(Renderer):
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
 
-    def render_annotation(self, el: "str | dc.Name | dc.Expression | None"):
+    def render_annotation(self, el: "str | expr.Name | expr.Expression | None"):
         """Special hook for rendering a type annotation.
 
         Parameters
@@ -110,7 +117,7 @@ class MdRenderer(Renderer):
 
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        if isinstance(el, dc.Name):
+        if isinstance(el, expr.Name):
             return sanitize(el.source)
 
         return sanitize(el.full)
