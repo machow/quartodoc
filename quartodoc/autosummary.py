@@ -522,7 +522,8 @@ class Builder:
 
             contents.append({"section": section.title, "contents": links})
 
-        return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
+        entries = [{"id": self.dir, "contents": contents}, {"id": "dummy-sidebar"}]
+        return {"website": {"sidebar": entries}}
 
     def write_sidebar(self, blueprint: layout.Layout):
         """Write a yaml config file for API sidebar."""
