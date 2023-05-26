@@ -30,6 +30,7 @@ class AClass:
 
 class InstanceAttrs:
     z: int
+    """The z attribute"""
 
     def __init__(self, a: int, b: str):
         self.a = a

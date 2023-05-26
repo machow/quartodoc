@@ -277,15 +277,32 @@ def dynamic_alias(
                 crnt_part = getattr(crnt_part, attr_name)
                 if not isinstance(crnt_part, ModuleType) and not canonical_path:
                     canonical_path = crnt_part.__module__ + ":" + ".".join(splits[ii:])
+                elif isinstance(crnt_part, ModuleType) and ii == (len(splits) - 1):
+                    # final object is module
+                    canonical_path = crnt_part.__name__
 
                 parts.append(crnt_part)
             except AttributeError:
+                # Fetching the attribute can fail if it is purely a type hint,
+                # and has no value. This can be an issue if you have added a
+                # docstring below the annotation
+                if canonical_path:
+                    # See if we can return the static object for a value-less attr
+                    try:
+                        obj = get_object(canonical_path, loader=loader)
+                        print(obj)
+                        if _is_valueless(obj):
+                            return obj
+                    except Exception as e:
+                        # TODO: should we fail silently, so the error below triggers?
+                        raise e
+
                 raise AttributeError(
                     f"No attribute named `{attr_name}` in the path `{path}`."
                 )
 
         if canonical_path is None:
-            raise ValueError("Cannot find canonical path for `{path}`")
+            raise ValueError(f"Cannot find canonical path for `{path}`")
 
         attr = crnt_part
 
@@ -314,6 +331,16 @@ def dynamic_alias(
 
         parent = get_object(parent_path, loader=loader)
         return dc.Alias(attr_name, obj, parent=parent)
+
+
+def _is_valueless(obj: dc.Object):
+    if isinstance(obj, dc.Attribute):
+        if "class-attribute" in obj.labels and obj.value is None:
+            return True
+        elif "instance-attribute" in obj.labels:
+            return True
+
+    return False
 
 
 # pkgdown =====================================================================

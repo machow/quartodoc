@@ -90,3 +90,9 @@ def test_get_object_dynamic_class_instance_attr_doc():
     obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs", dynamic=True)
 
     assert obj.members["b"].docstring.value == "The b attribute"
+
+
+def test_get_object_dynamic_class_instance_attr_doc():
+    obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs", dynamic=True)
+
+    assert obj.members["z"].docstring.value == "The z attribute"
