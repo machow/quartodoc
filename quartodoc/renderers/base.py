@@ -10,13 +10,16 @@ def escape(val: str):
     return f"`{val}`"
 
 
-def sanitize(val: str):
-    return (
-        val.replace("\n", " ")
-        .replace("|", "\\|")
-        .replace("[", "\\[")
-        .replace("]", "\\]")
-    )
+def sanitize(val: str, allow_markdown=False):
+    # sanitize common tokens that break tables
+    res = val.replace("\n", " ").replace("|", "\\|")
+
+    # sanitize elements that can get interpreted as markdown links
+    # or citations
+    if not allow_markdown:
+        return res.replace("[", "\\[").replace("]", "\\]")
+
+    return res
 
 
 def convert_rst_link_to_md(rst):

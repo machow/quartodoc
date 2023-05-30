@@ -419,7 +419,8 @@ class MdRenderer(Renderer):
         default = "required" if el.default is None else escape(el.default)
 
         annotation = self.render_annotation(el.annotation)
-        return (escape(el.name), annotation, sanitize(el.description), default)
+        clean_desc = sanitize(el.description, allow_markdown=True)
+        return (escape(el.name), annotation, clean_desc, default)
 
     # attributes ----
 
@@ -436,7 +437,7 @@ class MdRenderer(Renderer):
         row = [
             sanitize(el.name),
             self.render_annotation(annotation),
-            sanitize(el.description or "")
+            sanitize(el.description or "", allow_markdown=True)
         ]
         return row
 
@@ -490,7 +491,7 @@ class MdRenderer(Renderer):
     def render(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
         # similar to DocstringParameter, but no name or default
         annotation = self.render_annotation(el.annotation)
-        return (annotation, el.description)
+        return (annotation, sanitize(el.description, allow_markdown=True))
 
     # unsupported parts ----
 
@@ -512,7 +513,7 @@ class MdRenderer(Renderer):
 
     @staticmethod
     def _summary_row(link, description):
-        return f"| {link} | {sanitize(description)} |"
+        return f"| {link} | {sanitize(description, allow_markdown=True)} |"
 
     @dispatch
     def summarize(self, el):
