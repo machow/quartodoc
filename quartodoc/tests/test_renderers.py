@@ -1,9 +1,8 @@
 import pytest
+import griffe.docstrings.dataclasses as ds
 
 from quartodoc.renderers import MdRenderer
 from quartodoc import get_object
-
-# TODO: tests in test_basic.py also use the renderer, so we should move them here.
 
 
 @pytest.fixture
@@ -44,3 +43,20 @@ def test_render_param_kwonly(src, dst, renderer):
 
     res = renderer.render(f.parameters)
     assert res == dst
+
+
+@pytest.mark.parametrize(
+    "pair",
+    [
+        [ds.DocstringSectionParameters, ds.DocstringParameter],
+        [ds.DocstringSectionAttributes, ds.DocstringAttribute],
+        [ds.DocstringSectionReturns, ds.DocstringReturn],
+    ],
+)
+def test_render_table_description_interlink(renderer, pair):
+    interlink = "[](`abc`)"
+    cls_section, cls_par = pair
+    pars = cls_section([cls_par(name="x", description=interlink)])
+
+    res = renderer.render(pars)
+    assert interlink in res

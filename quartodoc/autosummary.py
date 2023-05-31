@@ -99,6 +99,10 @@ def get_object(
     >>> get_function("quartodoc", "get_function")
     <Function('get_function', ...
 
+    Returns
+    -------
+    x:
+        abc
     """
 
     if object_name is not None:
