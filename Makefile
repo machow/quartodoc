@@ -13,7 +13,7 @@ $(EXAMPLE_INTERLINKS): scripts/filter-spec/generate_files.py
 $(EXAMPLE_INTERLINKS)/test.qmd: scripts/filter-spec/generate_test_qmd.py
 	python3 $<
 
-$(EXAMPLE_INTERLINKS)/test.md: $(EXAMPLE_INTERLINKS)/test.qmd _extensions/interlinks-experimental/interlinks.lua
+$(EXAMPLE_INTERLINKS)/test.md: $(EXAMPLE_INTERLINKS)/test.qmd _extensions/interlinks/interlinks.lua
 	cd $(EXAMPLE_INTERLINKS) && quarto render test.qmd --to gfm
 
 

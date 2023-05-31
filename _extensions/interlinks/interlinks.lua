@@ -140,8 +140,8 @@ function Link(link)
     end
 
     -- set link text ----
-    if original_text == "" then
-        link.content = replacement
+    if original_text == "" and replacement ~= nil then
+        link.content = pandoc.Code(replacement)
     end
 
     -- report broken links ----
