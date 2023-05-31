@@ -39,8 +39,17 @@ class CollectTransformer(PydanticTransformer):
         p_el = page_node.value
 
         uri = f"{self.base_dir}/{p_el.path}.html#{el.anchor}"
+
+        # item corresponding to the specified path ----
+        # e.g. this might be a top-level import
         self.items.append(
             layout.Item(name=el.obj.path, obj=el.obj, uri=uri, dispname=None)
+        )
+
+        # item corresponding to the canonical path ----
+        # this is where the object is defined (which may be deep in a submodule)
+        self.items.append(
+            layout.Item(name=el.obj.canonical_path, obj=el.obj, uri=uri, dispname=None)
         )
 
         return el
