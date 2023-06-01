@@ -101,6 +101,11 @@ class MdRenderer(Renderer):
             return el.canonical_path
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
+    
+    def _render_table(self, rows, headers):
+        table = tabulate(rows, headers=headers, tablefmt="github")
+
+        return table
 
     def render_annotation(self, el: "str | expr.Name | expr.Expression | None"):
         """Special hook for rendering a type annotation.
@@ -411,7 +416,7 @@ class MdRenderer(Renderer):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
 
-        return tabulate(rows, header, tablefmt="github")
+        return self._render_table(rows, header)
 
     @dispatch
     def render(self, el: ds.DocstringParameter) -> Tuple[str]:
@@ -429,7 +434,7 @@ class MdRenderer(Renderer):
         header = ["Name", "Type", "Description"]
         rows = list(map(self.render, el.value))
 
-        return tabulate(rows, header, tablefmt="github")
+        return self._render_table(rows, header)
 
     @dispatch
     def render(self, el: ds.DocstringAttribute):
@@ -485,7 +490,7 @@ class MdRenderer(Renderer):
         rows = list(map(self.render, el.value))
         header = ["Type", "Description"]
 
-        return tabulate(rows, header, tablefmt="github")
+        return self._render_table(rows, header)
 
     @dispatch
     def render(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
