@@ -215,7 +215,7 @@ class Auto(_Base):
     include_private: bool = False
     include: Optional[str] = None
     exclude: Optional[str] = None
-    dynamic: Union[bool, str] = False
+    dynamic: Union[None, bool, str] = None
     children: ChoicesChildren = ChoicesChildren.embedded
     package: Union[str, None, MISSING] = MISSING()
 
