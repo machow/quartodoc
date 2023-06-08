@@ -528,16 +528,23 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(self, el: layout.Section):
-        header = f"## {el.title}\n\n{el.desc}"
+        desc = f"\n\n{el.desc}" if el.desc is not None else ""
+        if el.title is not None:
+            header = f"## {el.title}{desc}"
+        elif el.subtitle is not None:
+            header = f"### {el.subtitle}{desc}"
 
-        thead = "| | |\n| --- | --- |"
+        if el.contents:
+            thead = "| | |\n| --- | --- |"
 
-        rendered = []
-        for child in el.contents:
-            rendered.append(self.summarize(child))
+            rendered = []
+            for child in el.contents:
+                rendered.append(self.summarize(child))
 
-        str_func_table = "\n".join([thead, *rendered])
-        return f"{header}\n\n{str_func_table}"
+            str_func_table = "\n".join([thead, *rendered])
+            return f"{header}\n\n{str_func_table}"
+        
+        return header
 
     @dispatch
     def summarize(self, el: layout.Page):

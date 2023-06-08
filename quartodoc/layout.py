@@ -58,6 +58,9 @@ class Section(_Structural):
     kind:
     title:
         Title of the section on the index.
+    subtitle:
+        Subtitle of the section on the index. Note that either title or subtitle,
+        but not both, may be set.
     desc:
         Description of the section on the index.
     package:
@@ -67,10 +70,22 @@ class Section(_Structural):
     """
 
     kind: Literal["section"] = "section"
-    title: str
-    desc: str
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    desc: Optional[str] = None
     package: Union[str, None, MISSING] = MISSING()
-    contents: ContentList
+    contents: Optional[ContentList] = None
+
+    def __init__(self, **data):
+        super().__init__(**data)
+
+        # TODO: should these be a custom type? Or can we use pydantic's ValidationError?
+        if self.title is None and self.subtitle is None and self.contents is None:
+            raise ValueError(
+                "Section must specify a title, subtitle, or contents field"
+            )
+        elif self.title is not None and self.subtitle is not None:
+            raise ValueError("Section cannot specify both title and subtitle fields.")
 
 
 class SummaryDetails(_Base):

@@ -2,7 +2,8 @@ import pytest
 import griffe.docstrings.dataclasses as ds
 
 from quartodoc.renderers import MdRenderer
-from quartodoc import get_object
+from quartodoc import layout
+from quartodoc import get_object, blueprint
 
 
 @pytest.fixture
@@ -60,3 +61,30 @@ def test_render_table_description_interlink(renderer, pair):
 
     res = renderer.render(pars)
     assert interlink in res
+
+
+@pytest.mark.parametrize(
+    "section, dst",
+    [
+        (layout.Section(title="abc"), "## abc"),
+        (layout.Section(subtitle="abc"), "### abc"),
+        (layout.Section(title="abc", desc="zzz"), "## abc\n\nzzz"),
+        (layout.Section(subtitle="abc", desc="zzz"), "### abc\n\nzzz"),
+    ],
+)
+def test_render_summarize_section_title(renderer, section, dst):
+    res = renderer.summarize(section)
+
+    assert res == dst
+
+
+def test_render_summarize_section_contents(renderer):
+    obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
+    section = layout.Section(title="abc", desc="zzz", contents=[obj])
+    res = renderer.summarize(section)
+
+    table = (
+        "| | |\n| --- | --- |\n"
+        "| [a_func](#quartodoc.tests.example.a_func) | A function |"
+    )
+    assert res == f"## abc\n\nzzz\n\n{table}"
