@@ -142,7 +142,7 @@ class Interlaced(_Docable):
 
     # note that this is similar to a ContentList, except it cannot include
     # elements like Pages, etc..
-    contents: list[Union[Auto, Doc, _AutoDefault]]
+    contents: list[Union[Auto, _AutoDefault]]
 
     @property
     def name(self):
@@ -341,7 +341,7 @@ ContentElement = Annotated[
 ]
 """Entry in the contents list."""
 
-ContentList = list[Union[ContentElement, Doc, _AutoDefault]]
+ContentList = list[Union[ContentElement, _AutoDefault]]
 
 # Item ----
 
