@@ -451,8 +451,10 @@ class Builder:
         try:
             return layout.Layout(sections=sections, package=package)
         except ValidationError as e:
-            msg = 'Configuration error(s) for YAML:\n - '
-            msg += '\n - '.join([fmt(err) for err in e.errors() if fmt(err)])           
+            msg = 'Configuration error for YAML:\n - '
+            errors = [fmt(err) for err in e.errors() if fmt(err)]
+            first_error = errors[0] # we only want to show one error at a time b/c it is confusing otherwise
+            msg += first_error           
             raise ValueError(msg) from None
 
     # building ----------------------------------------------------------------

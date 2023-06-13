@@ -46,7 +46,6 @@ EXAMPLE_SECTIONS = [
 def test_valid_yaml():
     Builder(sections=EXAMPLE_SECTIONS, package='quartodoc')
 
-
 def test_missing_title():
     sections = copy.deepcopy(EXAMPLE_SECTIONS)
     del sections[0]['title']
@@ -64,8 +63,16 @@ def test_missing_desc():
 
     assert '- Missing field `desc` for element 2 in the list for `sections`' in str(e.value)
 
-def test_missing_name_contents():
-    # This is failing on purpose, will fix in pair programming
+def test_missing_name_contents_1():
     sections = copy.deepcopy(EXAMPLE_SECTIONS)
     del sections[2]['contents'][0]['name']
-    Builder(sections=sections, package='quartodoc')
+    with pytest.raises(ValueError) as e:
+        Builder(sections=sections, package='quartodoc')
+    assert '- Missing field `name` for element 0 in the list for `contents` located in element 2 in the list for `sections`' in str(e.value)
+
+def test_missing_name_contents_2():
+    sections = copy.deepcopy(EXAMPLE_SECTIONS)
+    del sections[1]['contents'][0]['name']
+    with pytest.raises(ValueError) as e:
+        Builder(sections=sections, package='quartodoc')
+    assert '- Missing field `name` for element 0 in the list for `contents` located in element 1 in the list for `sections`' in str(e.value)

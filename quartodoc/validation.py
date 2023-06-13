@@ -14,7 +14,10 @@ def fmt(err:dict):
             msg += f" from root level: `{err['loc'][0]}`"
         elif len(err['loc']) == 3:
             msg += f" `{err['loc'][2]}` for element {err['loc'][1]} in the list for `{err['loc'][0]}`"
-                
+        elif len(err['loc']) == 5:
+            msg += f" `{err['loc'][4]}` for element {err['loc'][3]} in the list for `{err['loc'][2]}` located in element {err['loc'][1]} in the list for `{err['loc'][0]}`"
+        elif len(err['loc']) == 6 and err['loc'][4] == 'Auto':
+            msg += f" `{err['loc'][5]}` for element {err['loc'][3]} in the list for `{err['loc'][2]}` located in element {err['loc'][1]} in the list for `{err['loc'][0]}`"
     else:
-        msg += str(err['msg'])
+        msg += str(err)
     return msg
