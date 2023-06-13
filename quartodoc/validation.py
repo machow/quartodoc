@@ -25,6 +25,3 @@ def fmt(err:dict):
     else:
         msg += str(err)
     return msg
-
-
-# {'loc': ('sections', 0, 'Page', 'path'), 'msg': 'field required', 'type': 'value_error.missing'} ... }
