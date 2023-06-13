@@ -74,3 +74,10 @@ def test_missing_name_contents_2():
     with pytest.raises(ValueError) as e:
         Builder(sections=sections, package='quartodoc')
     assert '- Missing field `name` for element 0 in the list for `contents` located in element 1 in the list for `sections`' in str(e.value)
+
+def test_misplaced_kindpage():
+    sections = copy.deepcopy(EXAMPLE_SECTIONS)
+    sections[0]['kind'] = 'page'
+    with pytest.raises(ValueError) as e:
+        Builder(sections=sections, package='quartodoc')
+    assert ' - Missing field `path` for element 0 in the list for `sections`, which you need when setting `kind: page`.' in str(e.value)
