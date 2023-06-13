@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 import warnings
 import yaml
-import sys
 
 from fnmatch import fnmatchcase
 from griffe.loader import GriffeLoader
