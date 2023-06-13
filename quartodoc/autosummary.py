@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import warnings
 import yaml
+import sys
 
 from fnmatch import fnmatchcase
 from griffe.loader import GriffeLoader
@@ -14,10 +15,12 @@ from griffe import dataclasses as dc
 from plum import dispatch  # noqa
 from pathlib import Path
 from types import ModuleType
+from pydantic import ValidationError
 
 from .inventory import create_inventory, convert_inventory
 from . import layout
 from .renderers import Renderer
+from .validation import fmt
 
 from typing import Any
 
@@ -446,7 +449,16 @@ class Builder:
         # TODO: currently returning the list of sections, to make work with
         # previous code. We should make Layout a first-class citizen of the
         # process.
-        return layout.Layout(sections=sections, package=package)
+        # import ipdb; ipdb.set_trace()
+        # sys.tracebacklimit = 0
+        try:
+            return layout.Layout(sections=sections, package=package)
+        except ValidationError as e:
+            raise e
+            msg = 'Configuration error(s) for YAML:\n - '
+            msg += '\n - '.join(fmt(err) for err in e.errors())           
+            raise ValueError(msg) from None
+
 
     # building ----------------------------------------------------------------
 
