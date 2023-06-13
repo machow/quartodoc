@@ -449,16 +449,12 @@ class Builder:
         # TODO: currently returning the list of sections, to make work with
         # previous code. We should make Layout a first-class citizen of the
         # process.
-        # import ipdb; ipdb.set_trace()
-        # sys.tracebacklimit = 0
         try:
             return layout.Layout(sections=sections, package=package)
         except ValidationError as e:
-            raise e
             msg = 'Configuration error(s) for YAML:\n - '
-            msg += '\n - '.join(fmt(err) for err in e.errors())           
+            msg += '\n - '.join([fmt(err) for err in e.errors() if fmt(err)])           
             raise ValueError(msg) from None
-
 
     # building ----------------------------------------------------------------
 

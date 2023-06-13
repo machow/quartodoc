@@ -2,6 +2,8 @@
 def fmt(err:dict):
     "format error messages from pydantic."
     msg = ""
+    if err['msg'].startswith('Discriminator'):
+        return msg
     if err['type'] == 'value_error.missing':
         msg += 'Missing field'
     else:

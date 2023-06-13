@@ -65,6 +65,7 @@ def test_missing_desc():
     assert '- Missing field `desc` for element 2 in the list for `sections`' in str(e.value)
 
 def test_missing_name_contents():
+    # This is failing on purpose, will fix in pair programming
     sections = copy.deepcopy(EXAMPLE_SECTIONS)
     del sections[2]['contents'][0]['name']
     Builder(sections=sections, package='quartodoc')
