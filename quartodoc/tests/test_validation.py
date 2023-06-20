@@ -3,7 +3,7 @@ from quartodoc.autosummary import Builder
 
 EXAMPLE_SECTIONS = [
                   {'title':  'Preperation Functions',
-                   'desc': 'These functions fetch and analyze python objects, including parsing docstrings.\nThey prepare a basic representation of your doc site that can be rendered and built.\n', 
+                   'desc': 'Functions that fetch and analyze python objects.\nThey prepare a basic representation of your doc site.\n', 
                    'contents': ['Auto', 'blueprint', 'collect', 'get_object', 'preview']}, 
                   {'title': 'Docstring Renderers', 
                    'desc': 'Renderers convert parsed docstrings into a target format, like markdown.\n', 
@@ -15,9 +15,9 @@ EXAMPLE_SECTIONS = [
                                 {'name': 'MdRenderer.summarize', 'dynamic': True}]
                     }, 
                     {'title': 'API Builders', 
-                        'desc': 'Builders are responsible for building documentation. They tie all the pieces\nof quartodoc together, and can be defined in your _quarto.yml config.\n', 
-                        'contents': [{'kind': 'auto', 'name': 'Builder', 'members': []}, 
-                                    'Builder.from_quarto_config', 'Builder.build', 'Builder.write_index', 'Builder.write_doc_pages', 'Builder.write_sidebar', 'Builder.create_inventory']
+                     'desc': 'Builders are responsible for building documentation. They tie all the pieces\nof quartodoc together.\n', 
+                     'contents': [{'kind': 'auto', 'name': 'Builder', 'members': []}, 
+                                   'Builder.from_quarto_config', 'Builder.build', 'Builder.write_index', 'Builder.write_doc_pages', 'Builder.write_sidebar', 'Builder.create_inventory']
                     },
                 ]
 
