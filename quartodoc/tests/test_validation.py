@@ -3,7 +3,7 @@ from quartodoc.autosummary import Builder
 
 EXAMPLE_SECTIONS = [
                   {'title':  'Preperation Functions',
-                   'desc': 'Functions that fetch and analyze python objects.\nThey prepare a basic representation of your doc site.\n', 
+                   'desc': 'Functions that fetch python objects.\nThey prepare a representation of your site.\n', 
                    'contents': ['Auto', 'blueprint', 'collect', 'get_object', 'preview']}, 
                   {'title': 'Docstring Renderers', 
                    'desc': 'Renderers convert parsed docstrings into a target format, like markdown.\n', 
@@ -13,9 +13,9 @@ EXAMPLE_SECTIONS = [
                                 {'name': 'MdRenderer.render_header', 'dynamic': True}]
                     }, 
                     {'title': 'API Builders', 
-                     'desc': 'Builders are responsible for building documentation. They tie all the pieces\nof quartodoc together.\n', 
+                     'desc': 'Builders build documentation. They tie all the pieces\nof quartodoc together.\n', 
                      'contents': [{'kind': 'auto', 'name': 'Builder', 'members': []}, 
-                                   'Builder.from_quarto_config', 'Builder.build', 'Builder.write_index', 'Builder.write_doc_pages']
+                                   'Builder.from_quarto_config', 'Builder.build', 'Builder.write_index']
                     },
                 ]
 
