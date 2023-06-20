@@ -10,9 +10,7 @@ EXAMPLE_SECTIONS = [
                    'contents': [{'name': 'MdRenderer', 'children': 'linked'}, 
                                 {'name': 'MdRenderer.render', 'dynamic': True}, 
                                 {'name': 'MdRenderer.render_annotation', 'dynamic': True}, 
-                                {'name': 'MdRenderer.render_header', 'dynamic': True}, 
-                                {'name': 'MdRenderer.signature', 'dynamic': True}, 
-                                {'name': 'MdRenderer.summarize', 'dynamic': True}]
+                                {'name': 'MdRenderer.render_header', 'dynamic': True}]
                     }, 
                     {'title': 'API Builders', 
                      'desc': 'Builders are responsible for building documentation. They tie all the pieces\nof quartodoc together.\n', 
