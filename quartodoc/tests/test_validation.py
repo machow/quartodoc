@@ -26,15 +26,18 @@ def sections():
     return copy.deepcopy(EXAMPLE_SECTIONS)
 
 def test_valid_yaml(sections):
+    "Test that valid YAML passes validation"
     Builder(sections=sections, package='quartodoc')
 
 def test_missing_title(sections):
+    "Test that missing title raises an error"
     del sections[0]['title']
     with pytest.raises(ValueError) as e:
         Builder(sections=sections, package='quartodoc')
     assert '- Missing field `title` for element 0 in the list for `sections`' in str(e.value)
 
 def test_missing_desc(sections):
+    "Test that a missing description raises an error"
     sections = copy.deepcopy(EXAMPLE_SECTIONS)
     del sections[2]['desc']
     with pytest.raises(ValueError) as e:
@@ -42,18 +45,21 @@ def test_missing_desc(sections):
     assert '- Missing field `desc` for element 2 in the list for `sections`' in str(e.value)
 
 def test_missing_name_contents_1(sections):
+    "Test that a missing name in contents raises an error"
     del sections[2]['contents'][0]['name']
     with pytest.raises(ValueError) as e:
         Builder(sections=sections, package='quartodoc')
     assert '- Missing field `name` for element 0 in the list for `contents` located in element 2 in the list for `sections`' in str(e.value)
 
 def test_missing_name_contents_2(sections):
+    "Test that a missing name in contents raises an error in a different section."
     del sections[1]['contents'][0]['name']
     with pytest.raises(ValueError) as e:
         Builder(sections=sections, package='quartodoc')
     assert '- Missing field `name` for element 0 in the list for `contents` located in element 1 in the list for `sections`' in str(e.value)
 
 def test_misplaced_kindpage(sections):
+    "Test that a misplaced kind: page raises an error"
     sections[0]['kind'] = 'page'
     with pytest.raises(ValueError) as e:
         Builder(sections=sections, package='quartodoc')
