@@ -15,7 +15,7 @@ EXAMPLE_SECTIONS = [
                     {'title': 'API Builders', 
                      'desc': 'Builders are responsible for building documentation. They tie all the pieces\nof quartodoc together.\n', 
                      'contents': [{'kind': 'auto', 'name': 'Builder', 'members': []}, 
-                                   'Builder.from_quarto_config', 'Builder.build', 'Builder.write_index', 'Builder.write_doc_pages', 'Builder.write_sidebar', 'Builder.create_inventory']
+                                   'Builder.from_quarto_config', 'Builder.build', 'Builder.write_index', 'Builder.write_doc_pages']
                     },
                 ]
 
