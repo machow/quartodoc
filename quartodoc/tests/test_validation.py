@@ -3,7 +3,7 @@ from quartodoc.autosummary import Builder
 
 EXAMPLE_SECTIONS = [
                   {'title':  'Preperation Functions',
-                   'desc': 'Functions that fetch python objects.\nThey prepare a representation of your site.\n', 
+                   'desc': 'Functions that fetch objects.\nThey prepare a representation of the site.\n', 
                    'contents': ['Auto', 'blueprint', 'collect', 'get_object', 'preview']}, 
                   {'title': 'Docstring Renderers', 
                    'desc': 'Renderers convert parsed docstrings into a target format, like markdown.\n', 
