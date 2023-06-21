@@ -74,13 +74,13 @@ class Section(_Structural):
     subtitle: Optional[str] = None
     desc: Optional[str] = None
     package: Union[str, None, MISSING] = MISSING()
-    contents: Optional[ContentList] = None
+    contents: ContentList = []
 
     def __init__(self, **data):
         super().__init__(**data)
 
         # TODO: should these be a custom type? Or can we use pydantic's ValidationError?
-        if self.title is None and self.subtitle is None and self.contents is None:
+        if self.title is None and self.subtitle is None and not self.contents:
             raise ValueError(
                 "Section must specify a title, subtitle, or contents field"
             )
