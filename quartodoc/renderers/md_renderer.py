@@ -105,7 +105,9 @@ class MdRenderer(Renderer):
     def _render_table(self, rows, headers):
         table = tabulate(rows, headers=headers, tablefmt="github")
 
-        return table
+        # use quarto syntax to add the .field-list class
+        return table + "\n: {.field-list}"
+
 
     def render_annotation(self, el: "str | expr.Name | expr.Expression | None"):
         """Special hook for rendering a type annotation.
@@ -542,7 +544,8 @@ class MdRenderer(Renderer):
             rendered.append(self.summarize(child))
 
         str_func_table = "\n".join([thead, *rendered])
-        return f"{header}\n\n{str_func_table}"
+        str_table_class = ": {.autosummary}"
+        return f"{header}\n\n{str_func_table}\n{str_table_class}"
 
     @dispatch
     def summarize(self, el: layout.Page):
