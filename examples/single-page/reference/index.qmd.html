@@ -303,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="quartodoc.Builder" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.Builder">Builder</h2>
-<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None)</code></p>
+<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None)</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters-1" class="level3">
 <h3 class="anchored" data-anchor-id="parameters-1">Parameters</h3>
@@ -381,6 +381,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><code>source_dir</code></td>
 <td>str | None</td>
 <td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>dynamic</code></td>
+<td>bool | None</td>
+<td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
 <td><code>None</code></td>
 </tr>
 </tbody>

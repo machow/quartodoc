@@ -417,15 +417,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="quartodoc.blueprint" class="level1">
 <h1>blueprint</h1>
-<p><code>blueprint(el, package=None)</code></p>
+<p><code>blueprint(el, package=None, dynamic=None)</code></p>
 <p>Convert a configuration element to something that is ready to render.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
 <colgroup>
 <col style="width: 9%">
-<col style="width: 7%">
-<col style="width: 73%">
+<col style="width: 11%">
+<col style="width: 69%">
 <col style="width: 9%">
 </colgroup>
 <thead>
@@ -447,6 +447,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><code>package</code></td>
 <td>str</td>
 <td>A base package name. If specified, this is prepended to the names of any objects.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td><code>dynamic</code></td>
+<td>None | bool</td>
+<td>Whether to dynamically load objects. Defaults to using static analysis.</td>
 <td><code>None</code></td>
 </tr>
 </tbody>
