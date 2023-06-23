@@ -54,11 +54,15 @@ class BlueprintTransformer(PydanticTransformer):
 
         return f"{path}:{new}"
 
-    def get_object_fixed(self, *args, **kwargs):
+    def get_object_fixed(self, path, **kwargs):
         try:
-            return self.get_object(*args, **kwargs)
+            return self.get_object(path, **kwargs)
         except KeyError as e:
-            raise WorkaroundKeyError(e.args[0])
+            key_name = e.args[0]
+            raise WorkaroundKeyError(
+                f"Cannot find an object named: {key_name}."
+                f" Does an object with the path {path} exist?"
+            )
 
     @dispatch
     def visit(self, el):
