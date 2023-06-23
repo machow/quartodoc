@@ -62,6 +62,7 @@ website:
             - get-started/dev-renderers.qmd
         - section: "Extra Topics"
           contents:
+            - get-started/extra-migrating-sphinx.qmd
             - get-started/extra-build-sequence.qmd
 
 
