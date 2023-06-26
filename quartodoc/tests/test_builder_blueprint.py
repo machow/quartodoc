@@ -1,6 +1,10 @@
 from quartodoc import get_object
 from quartodoc import layout as lo
-from quartodoc.builder.blueprint import BlueprintTransformer, blueprint
+from quartodoc.builder.blueprint import (
+    BlueprintTransformer,
+    blueprint,
+    WorkaroundKeyError,
+)
 import pytest
 
 TEST_MOD = "quartodoc.tests.example"
@@ -90,3 +94,15 @@ def test_blueprint_auto_package(bp):
     assert isinstance(res, lo.DocFunction)
     assert res.name == "a_func"
     assert res.anchor == "quartodoc.tests.example.a_func"
+
+
+def test_blueprint_lookup_error_message(bp):
+    auto = lo.Auto(name="quartodoc.bbb.ccc")
+
+    with pytest.raises(WorkaroundKeyError) as exc_info:
+        bp.visit(auto)
+
+    assert (
+        "Does an object with the path quartodoc.bbb.ccc exist?"
+        in exc_info.value.args[0]
+    )
