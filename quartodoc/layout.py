@@ -4,7 +4,7 @@ import griffe.dataclasses as dc
 import logging
 
 from enum import Enum
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, Extra
 
 from typing_extensions import Annotated
 from typing import Literal, Union, Optional
@@ -15,6 +15,9 @@ _log = logging.getLogger(__name__)
 
 class _Base(BaseModel):
     """Any data class that might appear in the quartodoc config."""
+
+    class Config:
+        extra = Extra.forbid
 
 
 class _Structural(_Base):
@@ -245,6 +248,7 @@ class Link(_Docable):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
 
 class Doc(_Docable):
@@ -275,6 +279,7 @@ class Doc(_Docable):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
     @classmethod
     def from_griffe(
@@ -374,6 +379,7 @@ class Item(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
 
 # Update forwared refs --------------------------------------------------------
