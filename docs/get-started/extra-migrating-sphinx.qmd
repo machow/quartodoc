@@ -11,29 +11,35 @@ Oftentimes, developers want to migrate from Sphinx to quartodoc without making l
 
 Suppose you have rst codeblocks in your docstring that you'd like to render:
 
-```python
+```{python}
 class MyClass:
     """This is a great class
 
     Examples
-    ========
+    --------
 
     ..code:: python
 
         example_code = "here"
 
     See Also
-    ========
+    --------
 
     :func:`float`
 
     """
+
+    def __init__(self): ...
+
 ```
 
+Note that the block above has rst directives for `.. code::`, and an rst interlink
+`` :func:`float` ``.
 
-## Changing rst to markdown
 
-A quick way to migrate it to quartodoc, would be to change the `.. code:: python` piece to markdown:
+## Manually changing rst to markdown
+
+A quick way to migrate to quartodoc, would be to change the rst directives (e.g. `.. code:: python`) to markdown:
 
 ```python
 class MyClass:
@@ -47,7 +53,6 @@ class MyClass:
     ```
 
     See Also
-    ========
 
     [](:func:`float`)
 
@@ -60,6 +65,7 @@ Note two important changes in the docstring above:
    You can also write the code in [docstring syntax or quarto blocks](./docstring-examples.qmd#examples-using-code-blocks).
 2. The See Also section is now formatted as markdown for the [interlinks filter](./interlinks.qmd).
 
+
 ## Custom rendering of rst directives
 
 While changing all the restructured text in your docstrings to markdown gets the job done,
@@ -68,14 +74,72 @@ later.
 
 In order to convert your restructured text to markdown, you can define a custom renderer.
 
+### Using conversion functions
+
 For example:
 
-```python
-from quartodoc import MdRenderer
+```{python}
+from quartodoc.experimental.sphinx_migration import (
+    convert_code_rst_to_md,
+    convert_rst_link_to_md
+)
+
+
+
+print(
+convert_code_rst_to_md("""
+..code:: 
+    example_code = "here"
+""")
+)
+```
+
+```{python}
+print(
+convert_rst_link_to_md(":func:`some_object`")
+
+)
+```
+
+### Extending a Renderer
+
+```{python}
+import re
+
+from quartodoc import MdRenderer, preview
 
 from plum import dispatch
 from griffe.docstrings import dataclasses as ds
+from quartodoc import ast as qast
 
 class MyRenderer(MdRenderer):
-    def 
+    style = "my_renderer3"
+
+    @dispatch
+    def render(self, el: qast.ExampleText):
+        new_value = convert_code_rst_to_md(el.value)
+        return new_value
+
+    @dispatch
+    def render(self, el: qast.DocstringSectionSeeAlso):
+        return convert_rst_link_to_md(el.value)
+
+
 ```
+
+### Testing docstrings
+
+```{python}
+from quartodoc.interactive import get_object_interactive
+
+mod = get_object_interactive(MyClass)
+obj = mod.members["MyClass"]
+
+
+print(
+    MyRenderer().render(obj)
+)
+
+
+```
+
