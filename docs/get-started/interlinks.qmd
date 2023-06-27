@@ -132,6 +132,25 @@ For example, python.org has two entries for the name `print`.
 | py | function | [``[](:py:function:`print`)``](:py:function:`print`) |
 
 
+## currentmodule
+
+:::::: {.quartodoc current-module="quartodoc.layout"}
+
+#### other headings
+
+* [](`Section`): matches `quartodoc.layout.Section`
+
+
+
+::: {.quartodoc current-module="quartodoc"}
+
+* [](`get_object`): matches `quartodoc.get_object`
+
+:::
+
+::::::
+
+
 ## What is a sphinx inventory file?
 
 Sphinx inventory files provide information about where the documentation for
