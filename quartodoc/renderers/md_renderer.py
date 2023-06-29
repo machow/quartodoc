@@ -438,10 +438,9 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: ds.DocstringAttribute):
-        annotation = self.render_annotation(el.annotation)
         row = [
             sanitize(el.name),
-            self.render_annotation(annotation),
+            self.render_annotation(el.annotation),
             sanitize(el.description or "", allow_markdown=True)
         ]
         return row
