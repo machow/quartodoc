@@ -281,6 +281,7 @@ def dynamic_alias(
         for ii, attr_name in enumerate(splits):
             try:
                 crnt_part = getattr(crnt_part, attr_name)
+                # TODO: this also triggers an attribute error
                 if not isinstance(crnt_part, ModuleType) and not canonical_path:
                     canonical_path = crnt_part.__module__ + ":" + ".".join(splits[ii:])
                 elif isinstance(crnt_part, ModuleType) and ii == (len(splits) - 1):
@@ -451,10 +452,12 @@ class Builder:
         try:
             return layout.Layout(sections=sections, package=package)
         except ValidationError as e:
-            msg = 'Configuration error for YAML:\n - '
+            msg = "Configuration error for YAML:\n - "
             errors = [fmt(err) for err in e.errors() if fmt(err)]
-            first_error = errors[0] # we only want to show one error at a time b/c it is confusing otherwise
-            msg += first_error           
+            first_error = errors[
+                0
+            ]  # we only want to show one error at a time b/c it is confusing otherwise
+            msg += first_error
             raise ValueError(msg) from None
 
     # building ----------------------------------------------------------------
