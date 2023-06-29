@@ -421,7 +421,7 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: ds.DocstringParameter) -> Tuple[str]:
         # TODO: if default is not, should return the word "required" (unescaped)
-        default = "required" if el.default is None else escape(el.default)
+        default = "_required_" if el.default is None else escape(el.default)
 
         annotation = self.render_annotation(el.annotation)
         clean_desc = sanitize(el.description, allow_markdown=True)
