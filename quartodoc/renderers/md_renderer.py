@@ -546,7 +546,8 @@ class MdRenderer(Renderer):
     @dispatch
     def summarize(self, el: layout.Page):
         if el.summary is not None:
-            return self._summary_row(f"[{el.summary.name}]({el.path})", el.summary.desc)
+            # TODO: assumes that files end with .qmd
+            return self._summary_row(f"[{el.summary.name}]({el.path}.qmd)", el.summary.desc)
 
         if len(el.contents) > 1 and not el.flatten:
             raise ValueError(
