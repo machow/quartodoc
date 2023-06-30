@@ -9,16 +9,8 @@ on:
     types: [published]
 
 jobs:
-  run-if:
-    name: "Run If"
-    runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
-    steps:
-      - run: |
-          echo "Running CI"
   test:
     name: "Test"
-    needs: ["run-if"]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
