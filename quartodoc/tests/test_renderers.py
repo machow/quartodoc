@@ -1,5 +1,6 @@
 import pytest
 import griffe.docstrings.dataclasses as ds
+import griffe.expressions as exp
 
 from quartodoc.renderers import MdRenderer
 from quartodoc import get_object
@@ -60,3 +61,17 @@ def test_render_table_description_interlink(renderer, pair):
 
     res = renderer.render(pars)
     assert interlink in res
+
+
+def test_render_doc_attribute(renderer):
+    attr = ds.DocstringAttribute(
+        name = "abc",
+        description="xyz",
+        annotation=exp.Expression(exp.Name("Optional", full="Optional"), "[", "]"),
+        value=1
+    )
+
+    res = renderer.render(attr)
+
+    assert res == ["abc", "Optional\[\]", "xyz"]
+
