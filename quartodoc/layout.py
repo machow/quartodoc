@@ -13,6 +13,9 @@ from typing import Literal, Union, Optional
 _log = logging.getLogger(__name__)
 
 
+# Classes used to categorize different layout elements ------------------------
+
+
 class _Base(BaseModel):
     """Any data class that might appear in the quartodoc config."""
 
@@ -30,6 +33,9 @@ class MISSING(_Base):
 
     Note that this is used in cases where None is meaningful.
     """
+
+
+# Layout ----------------------------------------------------------------------
 
 
 class Layout(_Structural):
@@ -220,19 +226,40 @@ class Auto(_Base):
     package: Union[str, None, MISSING] = MISSING()
 
 
+# hack for pydantic v2 support ----
+# pydantic v2 uses a RootModel class, rather than the __root__ attribute
+# we need to use both formats for backwards compatibility.
+try:
+    from pydantic import RootModel
+
+    class _AutoDefault(RootModel):
+        root: Union[str, dict]
+
+        def __new__(cls, root: Union[str, dict]):
+            if isinstance(root, dict):
+                return Auto(**root)
+
+            return Auto(name=root)
+
+
+except ImportError:
+
+    class _AutoDefault(BaseModel):
+        """This hacky class allows creating Auto as a default option in Pages and Sections."""
+
+        __root__: Union[str, dict]
+
+        def __new__(cls, __root__: Union[str, dict]):
+            if isinstance(__root__, dict):
+                return Auto(**__root__)
+
+            return Auto(name=__root__)
+
+
+# ----
+
+
 # TODO: rename to Default or something
-class _AutoDefault(_Base):
-    """This hacky class allows creating Auto as a default option in Pages and Sections."""
-
-    __root__: Union[str, dict]
-
-    def __new__(cls, __root__: Union[str, dict]):
-        if isinstance(__root__, dict):
-            return Auto(**__root__)
-
-        return Auto(name=__root__)
-
-
 class Link(_Docable):
     """A link to an object (e.g. a method that gets documented on a separate page).
 
