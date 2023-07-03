@@ -74,15 +74,15 @@ def cli():
 
 
 
-@click.command(help="This function builds a project based on the given configuration file (_quarto.yml by default).")
-@click.argument("config", default="_quarto.yml")
+@click.command()
+@click.option("--config", default="_quarto.yml", help="Change the path to the configuration file.  The default is `./_quarto.yml`")
 @click.option("--filter", nargs=1, default="*", help="Specify the filter to select specific files. The default is '*' which selects all files.")
 @click.option("--dry-run", is_flag=True, default=False, help="If set, prevents new documents from being generated.")
 @click.option("--watch", is_flag=True, default=False, help="If set, the command will keep running and watch for changes in the package directory.")
 @click.option("--verbose", is_flag=True, default=False, help="Enable verbose logging.")
 def build(config, filter, dry_run, watch, verbose):
     """
-    This function builds a project based on the given configuration file (_quarto.yml by default).
+    Generate API docs based on the given configuration file  (`./_quarto.yml` by default).
     """
     if verbose:
         _enable_logs()
