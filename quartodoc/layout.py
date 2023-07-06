@@ -232,28 +232,23 @@ class Auto(_Base):
 try:
     from pydantic import RootModel
 
-    class _AutoDefault(RootModel):
+    class _AutoSimple(RootModel):
         root: Union[str, dict]
-
-        def __new__(cls, root: Union[str, dict]):
-            if isinstance(root, dict):
-                return Auto(**root)
-
-            return Auto(name=root)
 
 
 except ImportError:
 
-    class _AutoDefault(BaseModel):
+    class _AutoSimple(BaseModel):
         """This hacky class allows creating Auto as a default option in Pages and Sections."""
 
         __root__: Union[str, dict]
 
-        def __new__(cls, __root__: Union[str, dict]):
-            if isinstance(__root__, dict):
-                return Auto(**__root__)
+        @property
+        def root(self):
+            return self.__root__
 
-            return Auto(name=__root__)
+
+_AutoDefault = Union[Auto, _AutoSimple]
 
 
 # ----

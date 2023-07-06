@@ -24,6 +24,13 @@ from pathlib import Path
 from typing import Literal, Annotated, Union, Optional
 
 
+try:
+    from pydantic import RootModel
+
+except ImportError:
+    RootModel = BaseModel
+
+
 ENV_PROJECT_ROOT: str = "QUARTO_PROJECT_ROOT"
 
 # Errors -----------------------------------------------------------------------
@@ -120,17 +127,8 @@ class TestSpecEntry(BaseModel):
     warning: Optional[str] = None
 
 
-try:
-    from pydantic import RootModel
-
-    class TestSpec(RootModel):
-        root: list[TestSpecEntry]
-
-
-except ImportError:
-
-    class TestSpec(BaseModel):
-        __root__: list[TestSpecEntry]
+class TestSpec(RootModel):
+    root: list[TestSpecEntry]
 
 
 # Reference syntax ------------------------------------------------------------

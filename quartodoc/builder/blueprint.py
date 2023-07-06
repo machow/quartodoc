@@ -14,6 +14,7 @@ from quartodoc.layout import (
     MISSING,
     _Base,
     Auto,
+    _AutoSimple,
     ChoicesChildren,
     Doc,
     Layout,
@@ -96,6 +97,10 @@ class BlueprintTransformer(PydanticTransformer):
         new.contents = contents
 
         return new
+
+    @dispatch
+    def enter(self, el: _AutoSimple):
+        return self.enter(Auto(name=el.root))
 
     @dispatch
     def enter(self, el: Auto):

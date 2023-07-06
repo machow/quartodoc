@@ -16,7 +16,7 @@ from importlib_resources import files
 # load test spec at import time, so that we can feed each spec entry
 # as an individual test case using parametrize
 _raw = yaml.safe_load(open(files("quartodoc") / "tests/example_interlinks/spec.yml"))
-spec = TestSpec(__root__=_raw).__root__
+spec = TestSpec(root=_raw).root
 
 
 @pytest.fixture
