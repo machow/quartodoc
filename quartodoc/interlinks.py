@@ -120,8 +120,17 @@ class TestSpecEntry(BaseModel):
     warning: Optional[str] = None
 
 
-class TestSpec(BaseModel):
-    __root__: list[TestSpecEntry]
+try:
+    from pydantic import RootModel
+
+    class TestSpec(RootModel):
+        root: list[TestSpecEntry]
+
+
+except ImportError:
+
+    class TestSpec(BaseModel):
+        __root__: list[TestSpecEntry]
 
 
 # Reference syntax ------------------------------------------------------------
