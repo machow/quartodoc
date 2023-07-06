@@ -251,10 +251,13 @@ class MdRenderer(Renderer):
 
         extra_parts = []
         meth_docs = []
+        class_docs = []
+
         if el.members:
             sub_header = "#" * (self.crnt_header_level + 1)
             raw_attrs = [x for x in el.members if x.obj.is_attribute]
             raw_meths = [x for x in el.members if x.obj.is_function]
+            raw_classes = [x for x in el.members if x.obj.is_class]
 
 
             header = "| Name | Description |\n| --- | --- |"
@@ -267,22 +270,32 @@ class MdRenderer(Renderer):
             if (
                     raw_attrs
                     and not _has_attr_section(el.obj.docstring)
-                    and not isinstance(el, layout.DocClass)
+                    # TODO: what should backwards compat be?
+                    # and not isinstance(el, layout.DocClass)
                 ):
 
                 _attrs_table = "\n".join(map(self.summarize, raw_attrs))
                 attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
                 extra_parts.append(attrs)
+            
+            # classes summary table ----
+            if raw_classes:
+                _summary_table = "\n".join(map(self.summarize, raw_classes))
+                section_name = "Classes"
+                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                extra_parts.append(objs)
+
+                class_docs = [self.render(x) for x in raw_classes if isinstance(x, layout.Doc)]
 
             # method summary table ----
             if raw_meths:
-                _meths_table = "\n".join(map(self.summarize, raw_meths))
+                _summary_table = "\n".join(map(self.summarize, raw_meths))
                 section_name = (
                     "Methods" if isinstance(el, layout.DocClass)
                     else "Functions"
                 )
-                meths = f"{sub_header} {section_name}\n\n{header}\n{_meths_table}"
-                extra_parts.append(meths)
+                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                extra_parts.append(objs)
 
                 # TODO use context manager, or context variable?
                 n_incr = 1 if el.flat else 2
@@ -290,7 +303,7 @@ class MdRenderer(Renderer):
                     meth_docs = [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
 
         body = self.render(el.obj)
-        return "\n\n".join([title, body, *extra_parts, *meth_docs])
+        return "\n\n".join([title, body, *extra_parts, *meth_docs, *class_docs])
 
     @dispatch
     def render(self, el: layout.DocFunction):
