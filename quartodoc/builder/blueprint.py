@@ -132,7 +132,7 @@ class BlueprintTransformer(PydanticTransformer):
             new_el.sections = sections
 
             print(
-                "Use the following config configuration to recreate the automatically",
+                "Use the following configuration to recreate the automatically",
                 " generated site:\n\n\n",
                 yaml.safe_dump(_to_simple_dict(new_el)),
                 "\n",
