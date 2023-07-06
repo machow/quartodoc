@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import logging
+import json
+import yaml
 
 from griffe import dataclasses as dc
 from griffe.loader import GriffeLoader
@@ -29,6 +31,36 @@ from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 from typing import overload
 
 _log = logging.getLogger(__name__)
+
+
+def _auto_package(mod: dc.Module) -> list[Section]:
+    """Create default sections for the given package."""
+
+    import griffe.docstrings.dataclasses as ds
+
+    # get module members for content ----
+    contents = []
+    for name, member in mod.members.items():
+        if member.is_module or name.startswith("__all__"):
+            continue
+
+        contents.append(Auto(name=name))
+
+    # try to fetch a description of the module ----
+    mod_summary = mod.docstring.parsed[0]
+    if isinstance(mod_summary, ds.DocstringSectionText):
+        desc = mod_summary.value
+    else:
+        desc = ""
+
+    return [Section(title=mod.name, desc=desc, contents=contents)]
+
+
+def _to_simple_dict(el):
+    # round-trip to json, so we can take advantage of pydantic
+    # dumping Enums, etc.. There may be a simple way to do
+    # this in pydantic v2.
+    return json.loads(el.json(exclude_unset=True))
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -79,6 +111,37 @@ class BlueprintTransformer(PydanticTransformer):
             return super().visit(el)
         finally:
             self.crnt_package = old
+
+    @dispatch
+    def enter(self, el: Layout):
+        if not el.sections:
+            # TODO: should be shown all the time, not just logged,
+            # but also want to be able to disable (similar to pins)
+            print("Autogenerating contents (since no contents specified in config)")
+
+            package = el.package
+
+            mod = self.get_object_fixed(package)
+            sections = _auto_package(mod)
+
+            if not sections:
+                # TODO: informative message. When would this occur?
+                raise ValueError()
+
+            new_el = el.copy()
+            new_el.sections = sections
+
+            print(
+                "Use the following config configuration to recreate the automatically",
+                " generated site:\n\n\n",
+                yaml.safe_dump(_to_simple_dict(new_el)),
+                "\n",
+                sep="",
+            )
+
+            return super().enter(new_el)
+
+        return super().enter(el)
 
     @dispatch
     def exit(self, el: Section):
@@ -178,8 +241,8 @@ class BlueprintTransformer(PydanticTransformer):
         # for modules, remove any Alias objects, since they were imported from
         # other places. Sphinx has a flag for this behavior, so may be good
         # to do something similar.
-        if obj.is_module:
-            options = {k: v for k, v in options.items() if not v.is_alias}
+        # if obj.is_module:
+        #    options = {k: v for k, v in options.items() if not v.is_alias}
 
         return sorted(options)
 

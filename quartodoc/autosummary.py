@@ -416,7 +416,8 @@ class Builder:
     def __init__(
         self,
         package: str,
-        sections: "list[Any]",
+        # TODO: correct typing
+        sections: "list[Any]" = tuple(),
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
@@ -451,10 +452,12 @@ class Builder:
         try:
             return layout.Layout(sections=sections, package=package)
         except ValidationError as e:
-            msg = 'Configuration error for YAML:\n - '
+            msg = "Configuration error for YAML:\n - "
             errors = [fmt(err) for err in e.errors() if fmt(err)]
-            first_error = errors[0] # we only want to show one error at a time b/c it is confusing otherwise
-            msg += first_error           
+            first_error = errors[
+                0
+            ]  # we only want to show one error at a time b/c it is confusing otherwise
+            msg += first_error
             raise ValueError(msg) from None
 
     # building ----------------------------------------------------------------

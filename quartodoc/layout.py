@@ -46,7 +46,7 @@ class Layout(_Structural):
         The package being documented.
     """
 
-    sections: list[Union[SectionElement, Section]]
+    sections: list[Union[SectionElement, Section]] = []
     package: Union[str, None, MISSING] = MISSING()
 
 
