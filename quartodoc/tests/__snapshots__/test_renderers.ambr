@@ -118,6 +118,10 @@
   | --- | --- |
   | [AClass](#quartodoc.tests.example.AClass) |  |
   
+  ### AClass { #quartodoc.tests.example.AClass }
+  
+  `tests.example.AClass()`
+  
   ## Functions
   
   | Name | Description |
@@ -136,10 +140,6 @@
   `tests.example.a_func()`
   
   A function
-  
-  ### AClass { #quartodoc.tests.example.AClass }
-  
-  `tests.example.AClass()`
   '''
 # ---
 # name: test_render_doc_module[flat]
@@ -162,6 +162,10 @@
   | --- | --- |
   | [AClass](#quartodoc.tests.example.AClass) |  |
   
+  ## AClass { #quartodoc.tests.example.AClass }
+  
+  `tests.example.AClass()`
+  
   ## Functions
   
   | Name | Description |
@@ -180,9 +184,5 @@
   `tests.example.a_func()`
   
   A function
-  
-  ## AClass { #quartodoc.tests.example.AClass }
-  
-  `tests.example.AClass()`
   '''
 # ---
