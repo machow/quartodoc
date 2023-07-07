@@ -4,6 +4,7 @@ project:
   resources:
     - examples/single-page
     - examples/pkgdown
+    - examples/auto-package
 
 metadata-files:
   - api/_sidebar.yml
