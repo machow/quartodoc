@@ -41,9 +41,7 @@ def _auto_package(mod: dc.Module) -> list[Section]:
     # get module members for content ----
     contents = []
     for name, member in mod.members.items():
-        external_alias = member.is_alias and not member.target_path.startswith(
-            mod.name.split(".")[0]
-        )
+        external_alias = _is_external_alias(member, mod)
         if external_alias or member.is_module or name.startswith("__"):
             continue
 
@@ -57,6 +55,35 @@ def _auto_package(mod: dc.Module) -> list[Section]:
         desc = ""
 
     return [Section(title=mod.name, desc=desc, contents=contents)]
+
+
+def _is_external_alias(obj: dc.Alias | dc.Object, mod: dc.Module):
+    package_name = mod.name.split(".")[0]
+
+    if not isinstance(obj, dc.Alias):
+        return False
+
+    crnt_target = obj
+
+    while crnt_target.is_alias:
+        if not crnt_target.target_path.startswith(package_name):
+            return True
+
+        try:
+            new_target = crnt_target.modules_collection.get_member(
+                crnt_target.target_path
+            )
+            if new_target is crnt_target:
+                raise Exception(f"Cyclic Alias: {new_target}")
+
+            crnt_target = new_target
+
+        except KeyError:
+            # assumes everything from module was loaded, so target must
+            # be outside module
+            return True
+
+    return False
 
 
 def _to_simple_dict(el):
@@ -198,7 +225,10 @@ class BlueprintTransformer(PydanticTransformer):
             obj_member = self.get_object_fixed(member_path, dynamic=dynamic)
 
             # do no document submodules
-            if obj_member.kind.value == "module":
+            if (
+                _is_external_alias(obj_member, obj.package)
+                or obj_member.kind.value == "module"
+            ):
                 continue
 
             # create element for child ----
