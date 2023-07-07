@@ -12,7 +12,8 @@ from .builder.collect import collect
 from .layout import Auto
 
 __all__ = (
-    "Auto" "blueprint",
+    "Auto",
+    "blueprint",
     "collect",
     "convert_inventory",
     "create_inventory",
