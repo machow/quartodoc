@@ -41,7 +41,10 @@ def _auto_package(mod: dc.Module) -> list[Section]:
     # get module members for content ----
     contents = []
     for name, member in mod.members.items():
-        if member.is_module or name.startswith("__all__"):
+        external_alias = member.is_alias and not member.target_path.startswith(
+            mod.name.split(".")[0]
+        )
+        if external_alias or member.is_module or name.startswith("__"):
             continue
 
         contents.append(Auto(name=name))
@@ -268,7 +271,9 @@ def blueprint(el: Auto, package: str) -> Doc:
     ...
 
 
-def blueprint(el: _Base, package: str = None, dynamic: None | bool = None) -> _Base:
+def blueprint(
+    el: _Base, package: str = None, dynamic: None | bool = None, parser="numpy"
+) -> _Base:
     """Convert a configuration element to something that is ready to render.
 
     Parameters
@@ -293,7 +298,7 @@ def blueprint(el: _Base, package: str = None, dynamic: None | bool = None) -> _B
 
     """
 
-    trans = BlueprintTransformer()
+    trans = BlueprintTransformer(parser=parser)
 
     if package is not None:
         trans.crnt_package = package

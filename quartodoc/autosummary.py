@@ -427,6 +427,7 @@ class Builder:
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
         dynamic: bool | None = None,
+        parser="numpy",
     ):
         self.layout = self.load_layout(sections=sections, package=package)
 
@@ -435,6 +436,7 @@ class Builder:
         self.dir = dir
         self.title = title
         self.sidebar = sidebar
+        self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
 
@@ -483,7 +485,7 @@ class Builder:
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = blueprint(self.layout, dynamic=self.dynamic)
+        blueprint = blueprint(self.layout, dynamic=self.dynamic, parser=self.parser)
 
         _log.info("Collecting pages and inventory items.")
         pages, items = collect(blueprint, base_dir=self.dir)
