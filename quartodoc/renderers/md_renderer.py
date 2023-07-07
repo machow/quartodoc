@@ -285,7 +285,9 @@ class MdRenderer(Renderer):
                 objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
                 extra_parts.append(objs)
 
-                class_docs = [self.render(x) for x in raw_classes if isinstance(x, layout.Doc)]
+                n_incr = 1 if el.flat else 2
+                with self._increment_header(n_incr):
+                    class_docs = [self.render(x) for x in raw_classes if isinstance(x, layout.Doc)]
 
             # method summary table ----
             if raw_meths:
