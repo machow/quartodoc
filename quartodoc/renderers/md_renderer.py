@@ -249,7 +249,7 @@ class MdRenderer(Renderer):
     def render(self, el: Union[layout.DocClass, layout.DocModule]):
         title = self.render_header(el)
 
-        extra_parts = []
+        attr_docs = []
         meth_docs = []
         class_docs = []
 
@@ -276,18 +276,18 @@ class MdRenderer(Renderer):
 
                 _attrs_table = "\n".join(map(self.summarize, raw_attrs))
                 attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
-                extra_parts.append(attrs)
+                attr_docs.append(attrs)
             
             # classes summary table ----
             if raw_classes:
                 _summary_table = "\n".join(map(self.summarize, raw_classes))
                 section_name = "Classes"
                 objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
-                extra_parts.append(objs)
+                class_docs.append(objs)
 
                 n_incr = 1 if el.flat else 2
                 with self._increment_header(n_incr):
-                    class_docs = [self.render(x) for x in raw_classes if isinstance(x, layout.Doc)]
+                    class_docs.extend([self.render(x) for x in raw_classes if isinstance(x, layout.Doc)])
 
             # method summary table ----
             if raw_meths:
@@ -297,15 +297,15 @@ class MdRenderer(Renderer):
                     else "Functions"
                 )
                 objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
-                extra_parts.append(objs)
+                meth_docs.append(objs)
 
                 # TODO use context manager, or context variable?
                 n_incr = 1 if el.flat else 2
                 with self._increment_header(n_incr):
-                    meth_docs = [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
+                    meth_docs.extend([self.render(x) for x in raw_meths if isinstance(x, layout.Doc)])
 
         body = self.render(el.obj)
-        return "\n\n".join([title, body, *extra_parts, *meth_docs, *class_docs])
+        return "\n\n".join([title, body, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
     def render(self, el: layout.DocFunction):
