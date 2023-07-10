@@ -70,9 +70,8 @@ def _is_external_alias(obj: dc.Alias | dc.Object, mod: dc.Module):
             return True
 
         try:
-            new_target = crnt_target.modules_collection.get_member(
-                crnt_target.target_path
-            )
+            new_target = crnt_target.modules_collection[crnt_target.target_path]
+
             if new_target is crnt_target:
                 raise Exception(f"Cyclic Alias: {new_target}")
 
