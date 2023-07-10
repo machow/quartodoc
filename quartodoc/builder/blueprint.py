@@ -9,6 +9,7 @@ from griffe.loader import GriffeLoader
 from griffe.collections import ModulesCollection, LinesCollection
 from griffe.docstrings.parsers import Parser
 from functools import partial
+from textwrap import indent
 
 from plum import dispatch
 
@@ -163,7 +164,10 @@ class BlueprintTransformer(PydanticTransformer):
             print(
                 "Use the following configuration to recreate the automatically",
                 " generated site:\n\n\n",
-                yaml.safe_dump(_to_simple_dict(new_el)),
+                "quartodoc:\n",
+                indent(
+                    yaml.safe_dump(_to_simple_dict(new_el), sort_keys=False), " " * 2
+                ),
                 "\n",
                 sep="",
             )
