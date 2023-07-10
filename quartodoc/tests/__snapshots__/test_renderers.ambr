@@ -126,14 +126,7 @@
   
   | Name | Description |
   | --- | --- |
-  | [a_alias](#quartodoc.tests.example.a_alias) | An alias target |
   | [a_func](#quartodoc.tests.example.a_func) | A function |
-  
-  ### a_alias { #quartodoc.tests.example.a_alias }
-  
-  `tests.example.a_alias()`
-  
-  An alias target
   
   ### a_func { #quartodoc.tests.example.a_func }
   
@@ -170,14 +163,7 @@
   
   | Name | Description |
   | --- | --- |
-  | [a_alias](#quartodoc.tests.example.a_alias) | An alias target |
   | [a_func](#quartodoc.tests.example.a_func) | A function |
-  
-  ## a_alias { #quartodoc.tests.example.a_alias }
-  
-  `tests.example.a_alias()`
-  
-  An alias target
   
   ## a_func { #quartodoc.tests.example.a_func }
   
