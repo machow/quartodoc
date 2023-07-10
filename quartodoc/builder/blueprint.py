@@ -270,6 +270,9 @@ class BlueprintTransformer(PydanticTransformer):
         if not el.include_private:
             options = {k: v for k, v in options.items() if not k.startswith("_")}
 
+        if not el.include_imports:
+            options = {k: v for k, v in options.items() if not v.is_alias}
+
         # for modules, remove any Alias objects, since they were imported from
         # other places. Sphinx has a flag for this behavior, so may be good
         # to do something similar.
