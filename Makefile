@@ -21,7 +21,7 @@ examples/%/_site: examples/%/_quarto.yml
 	cd examples/$* \
 		&& quarto add --no-prompt ../.. \
 		&& quarto add --no-prompt quarto-ext/shinylive
-	cd examples/$* && quartodoc build _quarto.yml --verbose
+	cd examples/$* && quartodoc build --config _quarto.yml --verbose
 	cd examples/$* && quartodoc interlinks
 	quarto render $(dir $<)
 
