@@ -416,7 +416,8 @@ class Builder:
     def __init__(
         self,
         package: str,
-        sections: "list[Any]",
+        # TODO: correct typing
+        sections: "list[Any]" = tuple(),
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
@@ -426,6 +427,7 @@ class Builder:
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
         dynamic: bool | None = None,
+        parser="numpy",
     ):
         self.layout = self.load_layout(sections=sections, package=package)
 
@@ -434,6 +436,7 @@ class Builder:
         self.dir = dir
         self.title = title
         self.sidebar = sidebar
+        self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
 
@@ -451,10 +454,12 @@ class Builder:
         try:
             return layout.Layout(sections=sections, package=package)
         except ValidationError as e:
-            msg = 'Configuration error for YAML:\n - '
+            msg = "Configuration error for YAML:\n - "
             errors = [fmt(err) for err in e.errors() if fmt(err)]
-            first_error = errors[0] # we only want to show one error at a time b/c it is confusing otherwise
-            msg += first_error           
+            first_error = errors[
+                0
+            ]  # we only want to show one error at a time b/c it is confusing otherwise
+            msg += first_error
             raise ValueError(msg) from None
 
     # building ----------------------------------------------------------------
@@ -480,7 +485,7 @@ class Builder:
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = blueprint(self.layout, dynamic=self.dynamic)
+        blueprint = blueprint(self.layout, dynamic=self.dynamic, parser=self.parser)
 
         _log.info("Collecting pages and inventory items.")
         pages, items = collect(blueprint, base_dir=self.dir)

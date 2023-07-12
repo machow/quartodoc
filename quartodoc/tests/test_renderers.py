@@ -3,7 +3,7 @@ import griffe.docstrings.dataclasses as ds
 import griffe.expressions as exp
 
 from quartodoc.renderers import MdRenderer
-from quartodoc import get_object
+from quartodoc import Auto, blueprint, get_object
 
 
 @pytest.fixture
@@ -65,13 +65,35 @@ def test_render_table_description_interlink(renderer, pair):
 
 def test_render_doc_attribute(renderer):
     attr = ds.DocstringAttribute(
-        name = "abc",
+        name="abc",
         description="xyz",
         annotation=exp.Expression(exp.Name("Optional", full="Optional"), "[", "]"),
-        value=1
+        value=1,
     )
 
     res = renderer.render(attr)
 
-    assert res == ["abc", "Optional\[\]", "xyz"]
+    assert res == ["abc", r"Optional\[\]", "xyz"]
 
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_module(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_class(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.C", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_doc_class_attributes_section(snapshot, renderer):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.AttributesTable"))
+    res = renderer.render(bp)
+
+    assert res == snapshot

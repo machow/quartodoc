@@ -46,7 +46,7 @@ class Layout(_Structural):
         The package being documented.
     """
 
-    sections: list[Union[SectionElement, Section]]
+    sections: list[Union[SectionElement, Section]] = []
     package: Union[str, None, MISSING] = MISSING()
 
 
@@ -196,6 +196,8 @@ class Auto(_Base):
         A list of members, such as attributes or methods on a class, to document.
     include_private:
         Whether to include members starting with "_"
+    include_imports:
+        Whether to include members that were imported from somewhere else.
     include:
         (Not implemented). A list of members to include.
     exclude:
@@ -216,6 +218,7 @@ class Auto(_Base):
     name: str
     members: Optional[list[str]] = None
     include_private: bool = False
+    include_imports: bool = False
     include: Optional[str] = None
     exclude: Optional[str] = None
     dynamic: Union[None, bool, str] = None

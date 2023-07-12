@@ -30,7 +30,7 @@ docs/examples/%: examples/%/_site
 	rm -rf docs/examples/$*
 	cp -rv $< $@
 
-docs-build-examples: docs/examples/single-page docs/examples/pkgdown
+docs-build-examples: docs/examples/single-page docs/examples/pkgdown docs/examples/auto-package
 
 docs-build: docs-build-examples
 	cd docs && quarto add --no-prompt ..

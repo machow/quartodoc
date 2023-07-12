@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import logging
+import json
+import yaml
 
 from griffe import dataclasses as dc
 from griffe.loader import GriffeLoader
 from griffe.collections import ModulesCollection, LinesCollection
 from griffe.docstrings.parsers import Parser
 from functools import partial
+from textwrap import indent
 
 from plum import dispatch
 
@@ -29,6 +32,65 @@ from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 from typing import overload
 
 _log = logging.getLogger(__name__)
+
+
+def _auto_package(mod: dc.Module) -> list[Section]:
+    """Create default sections for the given package."""
+
+    import griffe.docstrings.dataclasses as ds
+
+    # get module members for content ----
+    contents = []
+    for name, member in mod.members.items():
+        external_alias = _is_external_alias(member, mod)
+        if external_alias or member.is_module or name.startswith("__"):
+            continue
+
+        contents.append(Auto(name=name))
+
+    # try to fetch a description of the module ----
+    mod_summary = mod.docstring.parsed[0]
+    if isinstance(mod_summary, ds.DocstringSectionText):
+        desc = mod_summary.value
+    else:
+        desc = ""
+
+    return [Section(title=mod.path, desc=desc, contents=contents)]
+
+
+def _is_external_alias(obj: dc.Alias | dc.Object, mod: dc.Module):
+    package_name = mod.path.split(".")[0]
+
+    if not isinstance(obj, dc.Alias):
+        return False
+
+    crnt_target = obj
+
+    while crnt_target.is_alias:
+        if not crnt_target.target_path.startswith(package_name):
+            return True
+
+        try:
+            new_target = crnt_target.modules_collection[crnt_target.target_path]
+
+            if new_target is crnt_target:
+                raise Exception(f"Cyclic Alias: {new_target}")
+
+            crnt_target = new_target
+
+        except KeyError:
+            # assumes everything from module was loaded, so target must
+            # be outside module
+            return True
+
+    return False
+
+
+def _to_simple_dict(el):
+    # round-trip to json, so we can take advantage of pydantic
+    # dumping Enums, etc.. There may be a simple way to do
+    # this in pydantic v2.
+    return json.loads(el.json(exclude_unset=True))
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -64,6 +126,13 @@ class BlueprintTransformer(PydanticTransformer):
                 f" Does an object with the path {path} exist?"
             )
 
+    @staticmethod
+    def _clean_member_path(path, new):
+        if ":" in new:
+            return new.replace(":", ".")
+
+        return new
+
     @dispatch
     def visit(self, el):
         # TODO: use a context handler
@@ -79,6 +148,40 @@ class BlueprintTransformer(PydanticTransformer):
             return super().visit(el)
         finally:
             self.crnt_package = old
+
+    @dispatch
+    def enter(self, el: Layout):
+        if not el.sections:
+            # TODO: should be shown all the time, not just logged,
+            # but also want to be able to disable (similar to pins)
+            print("Autogenerating contents (since no contents specified in config)")
+
+            package = el.package
+
+            mod = self.get_object_fixed(package)
+            sections = _auto_package(mod)
+
+            if not sections:
+                # TODO: informative message. When would this occur?
+                raise ValueError()
+
+            new_el = el.copy()
+            new_el.sections = sections
+
+            print(
+                "Use the following configuration to recreate the automatically",
+                " generated site:\n\n\n",
+                "quartodoc:\n",
+                indent(
+                    yaml.safe_dump(_to_simple_dict(new_el), sort_keys=False), " " * 2
+                ),
+                "\n",
+                sep="",
+            )
+
+            return super().enter(new_el)
+
+        return super().enter(el)
 
     @dispatch
     def exit(self, el: Section):
@@ -109,8 +212,10 @@ class BlueprintTransformer(PydanticTransformer):
         pkg = self.crnt_package
         if pkg is None:
             path = el.name
+        elif ":" in pkg or ":" in el.name:
+            path = f"{pkg}.{el.name}"
         else:
-            path = f"{pkg}.{el.name}" if ":" in el.name else f"{pkg}:{el.name}"
+            path = f"{pkg}:{el.name}"
 
         _log.info(f"Getting object for {path}")
 
@@ -128,19 +233,27 @@ class BlueprintTransformer(PydanticTransformer):
             # but the actual objects on the target.
             # On the other hand, we've wired get_object up to make sure getting
             # the member of an Alias also returns an Alias.
-            member_path = self._append_member_path(path, entry)
-            obj_member = self.get_object_fixed(member_path, dynamic=dynamic)
+            # member_path = self._append_member_path(path, entry)
+            relative_path = self._clean_member_path(path, entry)
+
+            # create Doc element for member ----
+            # TODO: when a member is a Class, it is currently created using
+            # defaults, and there is no way to override those.
+            doc = self.visit(Auto(name=relative_path, dynamic=dynamic, package=path))
 
             # do no document submodules
-            if obj_member.kind.value == "module":
+            if (
+                _is_external_alias(doc.obj, obj.package)
+                or doc.obj.kind.value == "module"
+            ):
                 continue
 
-            # create element for child ----
-            doc = Doc.from_griffe(obj_member.name, obj_member)
+            # obj_member = self.get_object_fixed(member_path, dynamic=dynamic)
+            # doc = Doc.from_griffe(obj_member.name, obj_member)
 
             # Case 1: make each member entry its own page
             if el.children == ChoicesChildren.separate:
-                res = MemberPage(path=obj_member.path, contents=[doc])
+                res = MemberPage(path=doc.obj.path, contents=[doc])
             # Case2: use just the Doc element, so it gets embedded directly
             # into the class being documented
             elif el.children in {ChoicesChildren.embedded, ChoicesChildren.flat}:
@@ -149,8 +262,9 @@ class BlueprintTransformer(PydanticTransformer):
             # if the page for the member is not created somewhere else, then it
             # won't exist in the documentation (but its summary will still be in
             # the table).
+            # TODO: we shouldn't even bother blueprinting these members.
             elif el.children == ChoicesChildren.linked:
-                res = Link(name=obj_member.path, obj=obj_member)
+                res = Link(name=doc.obj.path, obj=doc.obj)
             else:
                 raise ValueError(f"Unsupported value of children: {el.children}")
 
@@ -175,11 +289,14 @@ class BlueprintTransformer(PydanticTransformer):
         if not el.include_private:
             options = {k: v for k, v in options.items() if not k.startswith("_")}
 
+        if not el.include_imports:
+            options = {k: v for k, v in options.items() if not v.is_alias}
+
         # for modules, remove any Alias objects, since they were imported from
         # other places. Sphinx has a flag for this behavior, so may be good
         # to do something similar.
-        if obj.is_module:
-            options = {k: v for k, v in options.items() if not v.is_alias}
+        # if obj.is_module:
+        #    options = {k: v for k, v in options.items() if not v.is_alias}
 
         return sorted(options)
 
@@ -205,7 +322,9 @@ def blueprint(el: Auto, package: str) -> Doc:
     ...
 
 
-def blueprint(el: _Base, package: str = None, dynamic: None | bool = None) -> _Base:
+def blueprint(
+    el: _Base, package: str = None, dynamic: None | bool = None, parser="numpy"
+) -> _Base:
     """Convert a configuration element to something that is ready to render.
 
     Parameters
@@ -230,7 +349,7 @@ def blueprint(el: _Base, package: str = None, dynamic: None | bool = None) -> _B
 
     """
 
-    trans = BlueprintTransformer()
+    trans = BlueprintTransformer(parser=parser)
 
     if package is not None:
         trans.crnt_package = package

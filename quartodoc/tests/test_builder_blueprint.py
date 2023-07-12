@@ -106,3 +106,14 @@ def test_blueprint_lookup_error_message(bp):
         "Does an object with the path quartodoc.bbb.ccc exist?"
         in exc_info.value.args[0]
     )
+
+
+def test_blueprint_auto_package(bp):
+    layout = blueprint(lo.Layout(package="quartodoc.tests.example"))
+    sections = layout.sections
+    assert len(sections) == 1
+    assert sections[0].title == "quartodoc.tests.example"
+    assert sections[0].desc == "A module"
+
+    # 4 objects documented
+    assert len(sections[0].contents) == 4
