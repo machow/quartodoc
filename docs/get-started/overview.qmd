@@ -85,20 +85,18 @@ quarto preview
 
 ## Rebuilding site
 
-As mentioned in the previous section, you can preview your quartodoc site using these commands:
+You can preview your `quartodoc` site using the following commands:
+
+First, watch for changes to the library you are documenting so that your docs will automatically re-generate:
 
 ```bash
-quartodoc build
-quarto preview
+quartodoc build --watch
 ```
 
-In order to rebuild your API documentation pages during a quarto preview, re-run
-the quartodoc build command:
+Second, preview your site:
 
 ```bash
-# with quarto preview running, you only need to re-run quartodoc build,
-# which will re-create the pages of your API documentation.
-quartodoc build
+quarto preview
 ```
 
 ## Looking up objects
