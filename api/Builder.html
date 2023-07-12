@@ -353,7 +353,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="quartodoc.Builder" class="level1">
 <h1>Builder</h1>
-<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None)</code></p>
+<p><code>Builder(self, package, sections=tuple(), version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
@@ -383,7 +383,7 @@ ul.task-list li input[type="checkbox"] {
 <td><code>sections</code></td>
 <td>list[Any]</td>
 <td>A list of sections, with items to document.</td>
-<td><em>required</em></td>
+<td><code>tuple()</code></td>
 </tr>
 <tr class="odd">
 <td><code>version</code></td>

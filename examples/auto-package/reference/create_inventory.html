@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>pkgdown example – builder</title>
+<title>pkgdown example – create_inventory</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -108,20 +171,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quartodoc.Builder" id="toc-quartodoc.Builder" class="nav-link active" data-scroll-target="#quartodoc.Builder">Builder</a>
+  <li><a href="#quartodoc.create_inventory" id="toc-quartodoc.create_inventory" class="nav-link active" data-scroll-target="#quartodoc.create_inventory">create_inventory</a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
-  <ul class="collapse">
-  <li><a href="#quartodoc.Builder.build" id="toc-quartodoc.Builder.build" class="nav-link" data-scroll-target="#quartodoc.Builder.build">build</a></li>
-  <li><a href="#quartodoc.Builder.create_inventory" id="toc-quartodoc.Builder.create_inventory" class="nav-link" data-scroll-target="#quartodoc.Builder.create_inventory">create_inventory</a></li>
-  <li><a href="#quartodoc.Builder.from_quarto_config" id="toc-quartodoc.Builder.from_quarto_config" class="nav-link" data-scroll-target="#quartodoc.Builder.from_quarto_config">from_quarto_config</a></li>
-  <li><a href="#quartodoc.Builder.load_layout" id="toc-quartodoc.Builder.load_layout" class="nav-link" data-scroll-target="#quartodoc.Builder.load_layout">load_layout</a></li>
-  <li><a href="#quartodoc.Builder.write_doc_pages" id="toc-quartodoc.Builder.write_doc_pages" class="nav-link" data-scroll-target="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></li>
-  <li><a href="#quartodoc.Builder.write_index" id="toc-quartodoc.Builder.write_index" class="nav-link" data-scroll-target="#quartodoc.Builder.write_index">write_index</a></li>
-  <li><a href="#quartodoc.Builder.write_sidebar" id="toc-quartodoc.Builder.write_sidebar" class="nav-link" data-scroll-target="#quartodoc.Builder.write_sidebar">write_sidebar</a></li>
-  </ul></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -131,18 +184,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="quartodoc.Builder" class="level1">
-<h1>Builder</h1>
-<p><code>Builder(self, package, sections=tuple(), version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')</code></p>
-<p>Base class for building API docs.</p>
+<section id="quartodoc.create_inventory" class="level1">
+<h1>create_inventory</h1>
+<p><code>create_inventory(project, version, items, uri=lambda s: f'{s.canonical_path}.html', dispname='-')</code></p>
+<p>Return a sphinx inventory file.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 9%">
-<col style="width: 72%">
-<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 23%">
+<col style="width: 42%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -154,250 +207,57 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>package</code></td>
+<td><code>project</code></td>
 <td>str</td>
-<td>The name of the package.</td>
+<td>Name of the project (often the package name).</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>sections</code></td>
-<td>list[Any]</td>
-<td>A list of sections, with items to document.</td>
-<td><code>tuple()</code></td>
-</tr>
-<tr class="odd">
 <td><code>version</code></td>
-<td>str | None</td>
-<td>The package version. By default this attempts to look up the current package version (TODO).</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td><code>dir</code></td>
 <td>str</td>
-<td>Name of API directory.</td>
-<td><code>'reference'</code></td>
+<td>Version of the project (often the package version).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><code>title</code></td>
-<td>str</td>
-<td>Title of the API index page.</td>
-<td><code>'Function reference'</code></td>
+<td><code>items</code></td>
+<td>list[dc.Object | dc.Alias]</td>
+<td>A docstring parser to use.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>renderer</code></td>
-<td>dict | Renderer | str</td>
-<td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
-<td><code>'markdown'</code></td>
+<td><code>uri</code></td>
+<td>str | Callable[dc.Object, str]</td>
+<td>Link relative to the docs where the items documentation lives.</td>
+<td><code>lambda s: f'{s.canonical_path}.html'</code></td>
 </tr>
 <tr class="odd">
-<td><code>out_index</code></td>
-<td>str</td>
-<td>The output path of the index file, used to list all API functions.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="even">
-<td><code>sidebar</code></td>
-<td>str | None</td>
-<td>The output path for a sidebar yaml config (by default no config generated).</td>
-<td><code>None</code></td>
-</tr>
-<tr class="odd">
-<td><code>rewrite_all_pages</code></td>
-<td></td>
-<td>Whether to rewrite all rendered doc pages, or only those with changes.</td>
-<td><code>False</code></td>
-</tr>
-<tr class="even">
-<td><code>source_dir</code></td>
-<td>str | None</td>
-<td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
-<td><code>None</code></td>
-</tr>
-<tr class="odd">
-<td><code>dynamic</code></td>
-<td>bool | None</td>
-<td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
-<td><code>None</code></td>
+<td><code>dispname</code></td>
+<td>str | Callable[dc.Object, str]</td>
+<td>Name to be shown when a link to the item is made.</td>
+<td><code>'-'</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="attributes" class="level2">
-<h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.dir">dir</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.dynamic">dynamic</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.layout">layout</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.out_index">out_index</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.out_inventory">out_inventory</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.out_page_suffix">out_page_suffix</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.package">package</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.parser">parser</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.renderer">renderer</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.rewrite_all_pages">rewrite_all_pages</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.sidebar">sidebar</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.source_dir">source_dir</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.style">style</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.title">title</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.version">version</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="methods" class="level2">
-<h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.build">build</a></td>
-<td>Build index page, sphinx inventory, and individual doc pages.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.create_inventory">create_inventory</a></td>
-<td>Generate sphinx inventory object.</td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.from_quarto_config">from_quarto_config</a></td>
-<td>Construct a Builder from a configuration object (or yaml file).</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.load_layout">load_layout</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></td>
-<td>Write individual function documentation pages.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.write_index">write_index</a></td>
-<td>Write API index page.</td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.write_sidebar">write_sidebar</a></td>
-<td>Write a yaml config file for API sidebar.</td>
-</tr>
-</tbody>
-</table>
-<section id="quartodoc.Builder.build" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.build">build</h3>
-<p><code>Builder.build(self, filter='*')</code></p>
-<p>Build index page, sphinx inventory, and individual doc pages.</p>
-<section id="parameters-1" class="level4">
-<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
-<table class="table">
-<colgroup>
-<col style="width: 4%">
-<col style="width: 3%">
-<col style="width: 87%">
-<col style="width: 4%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>filter</code></td>
-<td>str</td>
-<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
-<td><code>'*'</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="quartodoc.Builder.create_inventory" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.create_inventory">create_inventory</h3>
-<p><code>Builder.create_inventory(self, items)</code></p>
-<p>Generate sphinx inventory object.</p>
-</section>
-<section id="quartodoc.Builder.from_quarto_config" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.from_quarto_config">from_quarto_config</h3>
-<p><code>Builder.from_quarto_config(cls, quarto_cfg)</code></p>
-<p>Construct a Builder from a configuration object (or yaml file).</p>
-</section>
-<section id="quartodoc.Builder.load_layout" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.load_layout">load_layout</h3>
-<p><code>Builder.load_layout(self, sections, package)</code></p>
-</section>
-<section id="quartodoc.Builder.write_doc_pages" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.write_doc_pages">write_doc_pages</h3>
-<p><code>Builder.write_doc_pages(self, pages, filter)</code></p>
-<p>Write individual function documentation pages.</p>
-</section>
-<section id="quartodoc.Builder.write_index" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.write_index">write_index</h3>
-<p><code>Builder.write_index(self, blueprint)</code></p>
-<p>Write API index page.</p>
-</section>
-<section id="quartodoc.Builder.write_sidebar" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.Builder.write_sidebar">write_sidebar</h3>
-<p><code>Builder.write_sidebar(self, blueprint)</code></p>
-<p>Write a yaml config file for API sidebar.</p>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"create_inventory"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv <span class="op">=</span> create_inventory(<span class="st">"example"</span>, <span class="st">"0.0"</span>, [f_obj])</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Inventory(project<span class="op">=</span><span class="st">'example'</span>, version<span class="op">=</span><span class="st">'0.0'</span>, source_type<span class="op">=&lt;</span>SourceTypes.Manual: <span class="st">'manual'</span><span class="op">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To preview the inventory, we can convert it to a dictionary:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> _to_clean_dict(inv)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{<span class="st">'project'</span>: <span class="st">'example'</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'version'</span>: <span class="st">'0.0'</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> <span class="st">'count'</span>: <span class="dv">1</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a> <span class="st">'items'</span>: [{<span class="st">'name'</span>: <span class="st">'quartodoc.create_inventory'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">'domain'</span>: <span class="st">'py'</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">'role'</span>: <span class="st">'function'</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   <span class="st">'priority'</span>: <span class="st">'1'</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">'uri'</span>: <span class="st">'quartodoc.create_inventory.html'</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>   <span class="st">'dispname'</span>: <span class="st">'-'</span>}]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 </section>
 

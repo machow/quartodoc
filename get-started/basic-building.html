@@ -307,7 +307,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rebuilding-doc-pages" id="toc-rebuilding-doc-pages" class="nav-link active" data-scroll-target="#rebuilding-doc-pages">Rebuilding doc pages</a></li>
+  <li><a href="#quartodoc-build-create-doc-files" id="toc-quartodoc-build-create-doc-files" class="nav-link active" data-scroll-target="#quartodoc-build-create-doc-files"><code>quartodoc build</code>: Create doc files</a></li>
+  <li><a href="#quartodoc-interlinks-create-inventory-files" id="toc-quartodoc-interlinks-create-inventory-files" class="nav-link" data-scroll-target="#quartodoc-interlinks-create-inventory-files"><code>quartodoc interlinks</code>: Create inventory files</a></li>
+  <li><a href="#quarto-preview-preview-the-site" id="toc-quarto-preview-preview-the-site" class="nav-link" data-scroll-target="#quarto-preview-preview-the-site"><code>quarto preview</code>: Preview the site</a></li>
   <li><a href="#speeding-up-preview" id="toc-speeding-up-preview" class="nav-link" data-scroll-target="#speeding-up-preview">Speeding up preview</a>
   <ul class="collapse">
   <li><a href="#rewriting-doc-files" id="toc-rewriting-doc-files" class="nav-link" data-scroll-target="#rewriting-doc-files">Rewriting doc files</a></li>
@@ -337,22 +339,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p><strong>tl;dr</strong>: Once you’ve configured quartodoc in your <code>_quarto.yml</code> file, use the following commands to build and preview a documentation site.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the documentation files. These are written </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># by default to the reference/ folder in your docs.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--verbose</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create optional inventory files, which allow you to</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># link to API doc pages within and across documentation</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># sites. These are put in the _inv folder in your docs.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> interlinks</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the documentation site.</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Use quarto render to generate the final site.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="rebuilding-doc-pages" class="level2">
-<h2 class="anchored" data-anchor-id="rebuilding-doc-pages">Rebuilding doc pages</h2>
-<p>While using <code>quarto preview</code>, you can preview updates to your docstrings by regenerating their documentation pages:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--verbose</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="quartodoc-build-create-doc-files" class="level2">
+<h2 class="anchored" data-anchor-id="quartodoc-build-create-doc-files"><code>quartodoc build</code>: Create doc files</h2>
+<p>Automatically generate <code>.qmd</code> files with reference api documentation. This is written by default to the reference/ folder in your quarto project.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you are iterating on your docstrings while previewing your site with <code>quarto preview</code>, you will likely want to rebuild the doc pages automatically when docstrings change. The <code>--watch</code> flag does exactly this.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--watch</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For more information on the <code>quartodoc build</code> command, use <code>--help</code> in the terminal like so:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<pre><code>Usage: quartodoc build [OPTIONS]
+
+  Generate API docs based on the given configuration file  (`./_quarto.yml` by
+  default).
+
+Options:
+  --config TEXT  Change the path to the configuration file.  The default is
+                 `./_quarto.yml`
+  --filter TEXT  Specify the filter to select specific files. The default is
+                 '*' which selects all files.
+  --dry-run      If set, prevents new documents from being generated.
+  --watch        If set, the command will keep running and watch for changes
+                 in the package directory.
+  --verbose      Enable verbose logging.
+  --help         Show this message and exit.</code></pre>
+</div>
+</div>
+</section>
+<section id="quartodoc-interlinks-create-inventory-files" class="level2">
+<h2 class="anchored" data-anchor-id="quartodoc-interlinks-create-inventory-files"><code>quartodoc interlinks</code>: Create inventory files</h2>
+<p>Inventory files facilitate linking to API doc pages within and across <code>quartodoc</code> sites. This is optional.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> interlinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="quarto-preview-preview-the-site" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-preview-preview-the-site"><code>quarto preview</code>: Preview the site</h2>
+<p>Use <code>quarto</code> to preview the site:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="speeding-up-preview" class="level2">
 <h2 class="anchored" data-anchor-id="speeding-up-preview">Speeding up preview</h2>
@@ -363,11 +386,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="selectively-building-doc-pages" class="level3">
 <h3 class="anchored" data-anchor-id="selectively-building-doc-pages">Selectively building doc pages</h3>
 <p>Use the filter option with <code>quartodoc build</code> to generate a subset of doc pages. This is useful when you have a many (e.g.&nbsp;several hundred) doc pages, and want to test a change on a single page.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--filter</span> <span class="st">'get_object'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--filter</span> <span class="st">'get_object'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This option also accepts a wildcard pattern, which causes it to build docs for all matching objects.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write the docs for the MdRenderer class, and any of its methods</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (e.g. MdRenderer.renderer)</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--filter</span> <span class="st">'MdRenderer*'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write the docs for the MdRenderer class, and any of its methods</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (e.g. MdRenderer.renderer)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">quartodoc</span> build <span class="at">--filter</span> <span class="st">'MdRenderer*'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

@@ -187,6 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#quartodoc.Builder" id="toc-quartodoc.Builder" class="nav-link" data-scroll-target="#quartodoc.Builder">Builder</a>
   <ul class="collapse">
   <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters</a></li>
+  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   </ul></li>
   <li><a href="#quartodoc.Builder.build" id="toc-quartodoc.Builder.build" class="nav-link" data-scroll-target="#quartodoc.Builder.build">Builder.build</a>
@@ -303,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="quartodoc.Builder" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.Builder">Builder</h2>
-<p><code>Builder(self, package, sections, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None)</code></p>
+<p><code>Builder(self, package, sections=tuple(), version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters-1" class="level3">
 <h3 class="anchored" data-anchor-id="parameters-1">Parameters</h3>
@@ -333,7 +334,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><code>sections</code></td>
 <td>list[Any]</td>
 <td>A list of sections, with items to document.</td>
-<td><em>required</em></td>
+<td><code>tuple()</code></td>
 </tr>
 <tr class="odd">
 <td><code>version</code></td>
@@ -388,6 +389,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>bool | None</td>
 <td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
 <td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes" class="level3">
+<h3 class="anchored" data-anchor-id="attributes">Attributes</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.dir">dir</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#quartodoc.Builder.dynamic">dynamic</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.layout">layout</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#quartodoc.Builder.out_index">out_index</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.out_inventory">out_inventory</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#quartodoc.Builder.out_page_suffix">out_page_suffix</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.package">package</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#quartodoc.Builder.parser">parser</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.renderer">renderer</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#quartodoc.Builder.rewrite_all_pages">rewrite_all_pages</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.sidebar">sidebar</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#quartodoc.Builder.source_dir">source_dir</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.style">style</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#quartodoc.Builder.title">title</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#quartodoc.Builder.version">version</a></td>
+<td></td>
 </tr>
 </tbody>
 </table>
