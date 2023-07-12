@@ -126,6 +126,13 @@ class BlueprintTransformer(PydanticTransformer):
                 f" Does an object with the path {path} exist?"
             )
 
+    @staticmethod
+    def _clean_member_path(path, new):
+        if ":" in new:
+            return new.replace(":", ".")
+
+        return new
+
     @dispatch
     def visit(self, el):
         # TODO: use a context handler
@@ -205,8 +212,10 @@ class BlueprintTransformer(PydanticTransformer):
         pkg = self.crnt_package
         if pkg is None:
             path = el.name
+        elif ":" in pkg or ":" in el.name:
+            path = f"{pkg}.{el.name}"
         else:
-            path = f"{pkg}.{el.name}" if ":" in el.name else f"{pkg}:{el.name}"
+            path = f"{pkg}:{el.name}"
 
         _log.info(f"Getting object for {path}")
 
@@ -224,22 +233,27 @@ class BlueprintTransformer(PydanticTransformer):
             # but the actual objects on the target.
             # On the other hand, we've wired get_object up to make sure getting
             # the member of an Alias also returns an Alias.
-            member_path = self._append_member_path(path, entry)
-            obj_member = self.get_object_fixed(member_path, dynamic=dynamic)
+            # member_path = self._append_member_path(path, entry)
+            relative_path = self._clean_member_path(path, entry)
+
+            # create Doc element for member ----
+            # TODO: when a member is a Class, it is currently created using
+            # defaults, and there is no way to override those.
+            doc = self.visit(Auto(name=relative_path, dynamic=dynamic, package=path))
 
             # do no document submodules
             if (
-                _is_external_alias(obj_member, obj.package)
-                or obj_member.kind.value == "module"
+                _is_external_alias(doc.obj, obj.package)
+                or doc.obj.kind.value == "module"
             ):
                 continue
 
-            # create element for child ----
-            doc = Doc.from_griffe(obj_member.name, obj_member)
+            # obj_member = self.get_object_fixed(member_path, dynamic=dynamic)
+            # doc = Doc.from_griffe(obj_member.name, obj_member)
 
             # Case 1: make each member entry its own page
             if el.children == ChoicesChildren.separate:
-                res = MemberPage(path=obj_member.path, contents=[doc])
+                res = MemberPage(path=doc.obj.path, contents=[doc])
             # Case2: use just the Doc element, so it gets embedded directly
             # into the class being documented
             elif el.children in {ChoicesChildren.embedded, ChoicesChildren.flat}:
@@ -248,8 +262,9 @@ class BlueprintTransformer(PydanticTransformer):
             # if the page for the member is not created somewhere else, then it
             # won't exist in the documentation (but its summary will still be in
             # the table).
+            # TODO: we shouldn't even bother blueprinting these members.
             elif el.children == ChoicesChildren.linked:
-                res = Link(name=obj_member.path, obj=obj_member)
+                res = Link(name=doc.obj.path, obj=doc.obj)
             else:
                 raise ValueError(f"Unsupported value of children: {el.children}")
 

@@ -122,6 +122,24 @@
   
   `tests.example.AClass()`
   
+  #### Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_attr](#quartodoc.tests.example.AClass.a_attr) | A class attribute |
+  
+  #### Methods
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_method](#quartodoc.tests.example.AClass.a_method) | A method |
+  
+  ##### a_method { #quartodoc.tests.example.AClass.a_method }
+  
+  `tests.example.AClass.a_method()`
+  
+  A method
+  
   ## Functions
   
   | Name | Description |
@@ -158,6 +176,24 @@
   ## AClass { #quartodoc.tests.example.AClass }
   
   `tests.example.AClass()`
+  
+  ### Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_attr](#quartodoc.tests.example.AClass.a_attr) | A class attribute |
+  
+  ### Methods
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_method](#quartodoc.tests.example.AClass.a_method) | A method |
+  
+  #### a_method { #quartodoc.tests.example.AClass.a_method }
+  
+  `tests.example.AClass.a_method()`
+  
+  A method
   
   ## Functions
   
