@@ -9,7 +9,7 @@ jupyter:
 
 **tl;dr**: Once you've configured quartodoc in your `_quarto.yml` file, use the following commands to build and preview a documentation site.
 
-## Create documentation files with `quartodoc build`
+## `quartodoc build`: Create doc files
 
 Automatically generate `.qmd` files with reference api documentation.  This is written by default to the reference/ folder in your quarto project.
 
@@ -35,7 +35,7 @@ quartodoc build --help
 ```
 
 
-## Create inventory files with `quartodoc interlinks`
+## `quartodoc interlinks`: Create inventory files
 
 Inventory files facilitate linking to API doc pages within and across `quartodoc` sites.  This is optional.
   
@@ -43,7 +43,7 @@ Inventory files facilitate linking to API doc pages within and across `quartodoc
 quartodoc interlinks
 ```
 
-## Preview the site with `quarto preview`
+## `quarto preview`: Preview the site
 
 Use `quarto` to preview the site:
 
