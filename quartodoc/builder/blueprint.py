@@ -55,11 +55,11 @@ def _auto_package(mod: dc.Module) -> list[Section]:
     else:
         desc = ""
 
-    return [Section(title=mod.name, desc=desc, contents=contents)]
+    return [Section(title=mod.path, desc=desc, contents=contents)]
 
 
 def _is_external_alias(obj: dc.Alias | dc.Object, mod: dc.Module):
-    package_name = mod.name.split(".")[0]
+    package_name = mod.path.split(".")[0]
 
     if not isinstance(obj, dc.Alias):
         return False
