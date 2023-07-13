@@ -11,6 +11,7 @@ from functools import partial
 from watchdog.events import FileSystemEventHandler
 from quartodoc import Builder, convert_inventory
 
+
 def get_package_path(package_name):
     """
     Get the path to a package installed in the current environment.
@@ -19,18 +20,22 @@ def get_package_path(package_name):
         lib = importlib.import_module(package_name)
         return lib.__path__[0]
     except ModuleNotFoundError:
-        raise ModuleNotFoundError(f"Package {package_name} not found.  Please install it in your environment.")
+        raise ModuleNotFoundError(
+            f"Package {package_name} not found.  Please install it in your environment."
+        )
+
 
 class FileChangeHandler(FileSystemEventHandler):
     """
     A handler for file changes.
     """
+
     def __init__(self, callback):
         self.callback = callback
-    
+
     @classmethod
     def print_event(cls, event):
-        print(f'Rebuilding docs.  Detected: {event.event_type} path : {event.src_path}')
+        print(f"Rebuilding docs.  Detected: {event.event_type} path : {event.src_path}")
 
     def on_modified(self, event):
         self.print_event(event)
@@ -39,6 +44,7 @@ class FileChangeHandler(FileSystemEventHandler):
     def on_created(self, event):
         self.print_event(event)
         self.callback()
+
 
 def _enable_logs():
     import logging
@@ -71,14 +77,30 @@ def cli():
     pass
 
 
-
-
-
 @click.command()
-@click.option("--config", default="_quarto.yml", help="Change the path to the configuration file.  The default is `./_quarto.yml`")
-@click.option("--filter", nargs=1, default="*", help="Specify the filter to select specific files. The default is '*' which selects all files.")
-@click.option("--dry-run", is_flag=True, default=False, help="If set, prevents new documents from being generated.")
-@click.option("--watch", is_flag=True, default=False, help="If set, the command will keep running and watch for changes in the package directory.")
+@click.option(
+    "--config",
+    default="_quarto.yml",
+    help="Change the path to the configuration file.  The default is `./_quarto.yml`",
+)
+@click.option(
+    "--filter",
+    nargs=1,
+    default="*",
+    help="Specify the filter to select specific files. The default is '*' which selects all files.",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    default=False,
+    help="If set, prevents new documents from being generated.",
+)
+@click.option(
+    "--watch",
+    is_flag=True,
+    default=False,
+    help="If set, the command will keep running and watch for changes in the package directory.",
+)
 @click.option("--verbose", is_flag=True, default=False, help="Enable verbose logging.")
 def build(config, filter, dry_run, watch, verbose):
     """
@@ -94,21 +116,26 @@ def build(config, filter, dry_run, watch, verbose):
         pass
     else:
         with chdir(Path(config).parent):
+            doc_build()
             if watch:
                 pkg_path = get_package_path(builder.package)
+                abs_config = str(Path(config).absolute())
                 print(f"Watching {pkg_path} for changes...")
+                print(f"Watching {abs_config} for changes...")
                 event_handler = FileChangeHandler(callback=doc_build)
                 observer = Observer()
                 observer.schedule(event_handler, pkg_path, recursive=True)
+                observer.schedule(event_handler, abs_config)
                 observer.start()
                 try:
                     while True:
                         time.sleep(1)
                 except KeyboardInterrupt:
+                    pass
+                finally:
                     observer.stop()
-                observer.join()
-            else:   
-                doc_build()
+                    observer.join()
+
 
 @click.command()
 @click.argument("config", default="_quarto.yml")
