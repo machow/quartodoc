@@ -20,6 +20,7 @@ class C:
         self.x = x
         self.y = y
         self.z: int = 1
+        """A documented init attribute"""
 
     def some_method(self):
         """A method"""

@@ -198,6 +198,8 @@ class Auto(_Base):
         Whether to include members starting with "_"
     include_imports:
         Whether to include members that were imported from somewhere else.
+    include_empty:
+        Whether to include members with no docstring.
     include:
         (Not implemented). A list of members to include.
     exclude:
@@ -219,6 +221,7 @@ class Auto(_Base):
     members: Optional[list[str]] = None
     include_private: bool = False
     include_imports: bool = False
+    include_empty: bool = False
     include: Optional[str] = None
     exclude: Optional[str] = None
     dynamic: Union[None, bool, str] = None

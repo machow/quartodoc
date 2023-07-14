@@ -23,9 +23,7 @@
   | --- | --- |
   | [SOME_ATTRIBUTE](#quartodoc.tests.example_class.C.SOME_ATTRIBUTE) | An attribute |
   | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
-  | [x](#quartodoc.tests.example_class.C.x) |  |
-  | [y](#quartodoc.tests.example_class.C.y) |  |
-  | [z](#quartodoc.tests.example_class.C.z) |  |
+  | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
   
   ## Methods
   
@@ -64,9 +62,7 @@
   | --- | --- |
   | [SOME_ATTRIBUTE](#quartodoc.tests.example_class.C.SOME_ATTRIBUTE) | An attribute |
   | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
-  | [x](#quartodoc.tests.example_class.C.x) |  |
-  | [y](#quartodoc.tests.example_class.C.y) |  |
-  | [z](#quartodoc.tests.example_class.C.z) |  |
+  | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
   
   ## Methods
   
@@ -116,11 +112,13 @@
   
   | Name | Description |
   | --- | --- |
-  | [AClass](#quartodoc.tests.example.AClass) |  |
+  | [AClass](#quartodoc.tests.example.AClass) | A class |
   
   ### AClass { #quartodoc.tests.example.AClass }
   
   `tests.example.AClass()`
+  
+  A class
   
   #### Attributes
   
@@ -171,11 +169,13 @@
   
   | Name | Description |
   | --- | --- |
-  | [AClass](#quartodoc.tests.example.AClass) |  |
+  | [AClass](#quartodoc.tests.example.AClass) | A class |
   
   ## AClass { #quartodoc.tests.example.AClass }
   
   `tests.example.AClass()`
+  
+  A class
   
   ### Attributes
   
