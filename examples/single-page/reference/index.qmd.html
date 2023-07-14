@@ -187,7 +187,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#quartodoc.Builder" id="toc-quartodoc.Builder" class="nav-link" data-scroll-target="#quartodoc.Builder">Builder</a>
   <ul class="collapse">
   <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters</a></li>
-  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   </ul></li>
   <li><a href="#quartodoc.Builder.build" id="toc-quartodoc.Builder.build" class="nav-link" data-scroll-target="#quartodoc.Builder.build">Builder.build</a>
@@ -393,79 +392,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="attributes" class="level3">
-<h3 class="anchored" data-anchor-id="attributes">Attributes</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.dir">dir</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.dynamic">dynamic</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.layout">layout</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.out_index">out_index</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.out_inventory">out_inventory</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.out_page_suffix">out_page_suffix</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.package">package</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.parser">parser</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.renderer">renderer</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.rewrite_all_pages">rewrite_all_pages</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.sidebar">sidebar</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.source_dir">source_dir</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.style">style</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.title">title</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.version">version</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="methods" class="level3">
 <h3 class="anchored" data-anchor-id="methods">Methods</h3>
 <table class="table">
@@ -489,18 +415,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Construct a Builder from a configuration object (or yaml file).</td>
 </tr>
 <tr class="even">
-<td><a href="#quartodoc.Builder.load_layout">load_layout</a></td>
-<td></td>
-</tr>
-<tr class="odd">
 <td><a href="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></td>
 <td>Write individual function documentation pages.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="#quartodoc.Builder.write_index">write_index</a></td>
 <td>Write API index page.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="#quartodoc.Builder.write_sidebar">write_sidebar</a></td>
 <td>Write a yaml config file for API sidebar.</td>
 </tr>
@@ -547,10 +469,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.from_quarto_config">from_quarto_config</h4>
 <p><code>Builder.from_quarto_config(cls, quarto_cfg)</code></p>
 <p>Construct a Builder from a configuration object (or yaml file).</p>
-</section>
-<section id="quartodoc.Builder.load_layout" class="level4">
-<h4 class="anchored" data-anchor-id="quartodoc.Builder.load_layout">load_layout</h4>
-<p><code>Builder.load_layout(self, sections, package)</code></p>
 </section>
 <section id="quartodoc.Builder.write_doc_pages" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.write_doc_pages">write_doc_pages</h4>

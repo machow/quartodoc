@@ -397,26 +397,31 @@ ul.task-list li input[type="checkbox"] {
 <td>Whether to include members that were imported from somewhere else.</td>
 </tr>
 <tr class="even">
+<td>include_empty</td>
+<td>bool</td>
+<td>Whether to include members with no docstring.</td>
+</tr>
+<tr class="odd">
 <td>include</td>
 <td>Optional[str]</td>
 <td>(Not implemented). A list of members to include.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>exclude</td>
 <td>Optional[str]</td>
 <td>(Not implemented). A list of members to exclude.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>dynamic</td>
 <td>Union[None, bool, str]</td>
 <td>Whether to dynamically load docstring. By default docstrings are loaded using static analysis. dynamic may be a string pointing to another object, to return an alias for that object.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>children</td>
 <td>ChoicesChildren</td>
 <td>Style for presenting members. Either separate, embedded, or flat.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>package</td>
 <td>Union[str, None, MISSING]</td>
 <td>If specified, object lookup will be relative to this path.</td>
