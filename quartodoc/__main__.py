@@ -120,8 +120,10 @@ def build(config, filter, dry_run, watch, verbose):
                     while True:
                         time.sleep(1)
                 except KeyboardInterrupt:
+                    pass
+                finally:
                     observer.stop()
-                observer.join()
+                    observer.join()
             else:   
                 doc_build()
 
