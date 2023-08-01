@@ -10,7 +10,7 @@ from watchdog.observers import Observer
 from functools import partial
 from watchdog.events import PatternMatchingEventHandler
 from quartodoc import Builder, convert_inventory
-from typing import List
+from pydantic import BaseModel
 
 def get_package_path(package_name):
     """
@@ -21,6 +21,12 @@ def get_package_path(package_name):
         return lib.__path__[0]
     except ModuleNotFoundError:
         raise ModuleNotFoundError(f"Package {package_name} not found.  Please install it in your environment.")
+
+
+class FileInfo(BaseModel):
+    size: int
+    mtime: float
+    name: str= ""
 
 class QuartoDocFileChangeHandler(PatternMatchingEventHandler):
     """
@@ -45,14 +51,37 @@ class QuartoDocFileChangeHandler(PatternMatchingEventHandler):
     def __init__(self, callback):
         super().__init__(ignore_patterns=self.py_ignore_patterns, ignore_directories=True)
         self.callback = callback
+        self.old_file_info = FileInfo(size=-1, mtime=-1, name="")
+
+
+    def get_file_info(self, path:str) -> FileInfo:
+        """
+        Get the file size and modification time.
+        """
+        return FileInfo(size=os.stat(path).st_size, 
+                        mtime=os.stat(path).st_mtime, 
+                        name=path)
     
+    def is_diff(self, old:FileInfo, new:FileInfo) -> bool:
+        """
+        Check if a file has changed. Prevents duplicate events from being triggered.
+        """
+        same_nm = old.name == new.name
+        diff_sz = old.size != new.size
+        diff_tm = (new.mtime - old.mtime) > 0.25 # wait 1/4 second before triggering
+        return not same_nm or (same_nm and (diff_sz or diff_tm))
+
     @classmethod
     def print_event(cls, event):
         print(f'Rebuilding docs.  Detected: {event.event_type} path : {event.src_path}')
 
     def on_modified(self, event):
-        self.print_event(event)
-        self.callback()
+        # Prevents duplicate events from getting fired too quickly
+        new_file_info = self.get_file_info(event.src_path)
+        if self.is_diff(self.old_file_info, new_file_info):
+            self.callback()
+            self.print_event(event)
+        self.old_file_info = new_file_info
 
     def on_created(self, event):
         self.print_event(event)
