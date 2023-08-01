@@ -3,7 +3,7 @@
   '''
   website:
     sidebar:
-      contents:
+    - contents:
       - reference/index.qmd
       - contents:
         - reference/a_func.qmd
@@ -14,6 +14,7 @@
           section: a subsection
         section: second section
       id: reference
-
+    - id: dummy-sidebar
+  
   '''
 # ---
