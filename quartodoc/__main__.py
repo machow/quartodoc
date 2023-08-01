@@ -43,7 +43,7 @@ class QuartoDocFileChangeHandler(PatternMatchingEventHandler):
     ]
 
     def __init__(self, callback):
-        super().__init__(ignore_patterns=self.py_ignore_patterns)
+        super().__init__(ignore_patterns=self.py_ignore_patterns, ignore_directories=True)
         self.callback = callback
     
     @classmethod
