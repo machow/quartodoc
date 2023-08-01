@@ -1,9 +1,9 @@
 import pytest
 import griffe.docstrings.dataclasses as ds
+import griffe.expressions as exp
 
 from quartodoc.renderers import MdRenderer
-from quartodoc import layout
-from quartodoc import get_object, blueprint
+from quartodoc import layout, get_object, blueprint, Auto
 
 
 @pytest.fixture
@@ -88,3 +88,39 @@ def test_render_summarize_section_contents(renderer):
         "| [a_func](#quartodoc.tests.example.a_func) | A function |"
     )
     assert res == f"## abc\n\nzzz\n\n{table}"
+
+
+def test_render_doc_attribute(renderer):
+    attr = ds.DocstringAttribute(
+        name="abc",
+        description="xyz",
+        annotation=exp.Expression(exp.Name("Optional", full="Optional"), "[", "]"),
+        value=1,
+    )
+
+    res = renderer.render(attr)
+
+    assert res == ["abc", r"Optional\[\]", "xyz"]
+
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_module(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_class(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.C", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_doc_class_attributes_section(snapshot, renderer):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.AttributesTable"))
+    res = renderer.render(bp)
+
+    assert res == snapshot

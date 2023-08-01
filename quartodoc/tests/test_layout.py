@@ -1,5 +1,6 @@
 import pytest
 
+from pydantic import ValidationError
 from quartodoc.layout import Layout, Page, Text, Section  # noqa
 
 
@@ -41,3 +42,10 @@ def test_section_validation_fails(kwargs, msg_part):
         Section(**kwargs)
 
     assert msg_part in exc_info.value.args[0]
+
+
+def test_layout_extra_forbidden():
+    with pytest.raises(ValidationError) as exc_info:
+        Section(title="abc", desc="xyz", contents=[], zzzzz=1)
+
+    assert "extra fields not permitted" in str(exc_info.value)

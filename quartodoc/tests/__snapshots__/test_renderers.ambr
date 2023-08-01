@@ -1,0 +1,210 @@
+# serializer version: 1
+# name: test_render_doc_class[embedded]
+  '''
+  # quartodoc.tests.example_class.C { #quartodoc.tests.example_class.C }
+  
+  `tests.example_class.C(self, x, y)`
+  
+  The short summary.
+  
+  The extended summary,
+  which may be multiple lines.
+  
+  ## Parameters
+  
+  | Name   | Type   | Description          | Default    |
+  |--------|--------|----------------------|------------|
+  | `x`    | str    | Uses signature type. | _required_ |
+  | `y`    | int    | Uses manual type.    | _required_ |
+  
+  ## Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [SOME_ATTRIBUTE](#quartodoc.tests.example_class.C.SOME_ATTRIBUTE) | An attribute |
+  | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
+  | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
+  
+  ## Methods
+  
+  | Name | Description |
+  | --- | --- |
+  | [some_method](#quartodoc.tests.example_class.C.some_method) | A method |
+  
+  ### some_method { #quartodoc.tests.example_class.C.some_method }
+  
+  `tests.example_class.C.some_method(self)`
+  
+  A method
+  '''
+# ---
+# name: test_render_doc_class[flat]
+  '''
+  # quartodoc.tests.example_class.C { #quartodoc.tests.example_class.C }
+  
+  `tests.example_class.C(self, x, y)`
+  
+  The short summary.
+  
+  The extended summary,
+  which may be multiple lines.
+  
+  ## Parameters
+  
+  | Name   | Type   | Description          | Default    |
+  |--------|--------|----------------------|------------|
+  | `x`    | str    | Uses signature type. | _required_ |
+  | `y`    | int    | Uses manual type.    | _required_ |
+  
+  ## Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [SOME_ATTRIBUTE](#quartodoc.tests.example_class.C.SOME_ATTRIBUTE) | An attribute |
+  | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
+  | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
+  
+  ## Methods
+  
+  | Name | Description |
+  | --- | --- |
+  | [some_method](#quartodoc.tests.example_class.C.some_method) | A method |
+  
+  ## some_method { #quartodoc.tests.example_class.C.some_method }
+  
+  `tests.example_class.C.some_method(self)`
+  
+  A method
+  '''
+# ---
+# name: test_render_doc_class_attributes_section
+  '''
+  # quartodoc.tests.example_class.AttributesTable { #quartodoc.tests.example_class.AttributesTable }
+  
+  `tests.example_class.AttributesTable(self)`
+  
+  The short summary.
+  
+  ## Attributes
+  
+  | Name   | Type   | Description         |
+  |--------|--------|---------------------|
+  | x      | str    | Uses signature type |
+  | y      | int    | Uses manual type    |
+  | z      | float  | Defined in init     |
+  '''
+# ---
+# name: test_render_doc_module[embedded]
+  '''
+  # quartodoc.tests.example { #quartodoc.tests.example }
+  
+  `tests.example`
+  
+  A module
+  
+  ## Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_attr](#quartodoc.tests.example.a_attr) | An attribute |
+  
+  ## Classes
+  
+  | Name | Description |
+  | --- | --- |
+  | [AClass](#quartodoc.tests.example.AClass) | A class |
+  
+  ### AClass { #quartodoc.tests.example.AClass }
+  
+  `tests.example.AClass()`
+  
+  A class
+  
+  #### Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_attr](#quartodoc.tests.example.AClass.a_attr) | A class attribute |
+  
+  #### Methods
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_method](#quartodoc.tests.example.AClass.a_method) | A method |
+  
+  ##### a_method { #quartodoc.tests.example.AClass.a_method }
+  
+  `tests.example.AClass.a_method()`
+  
+  A method
+  
+  ## Functions
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_func](#quartodoc.tests.example.a_func) | A function |
+  
+  ### a_func { #quartodoc.tests.example.a_func }
+  
+  `tests.example.a_func()`
+  
+  A function
+  '''
+# ---
+# name: test_render_doc_module[flat]
+  '''
+  # quartodoc.tests.example { #quartodoc.tests.example }
+  
+  `tests.example`
+  
+  A module
+  
+  ## Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_attr](#quartodoc.tests.example.a_attr) | An attribute |
+  
+  ## Classes
+  
+  | Name | Description |
+  | --- | --- |
+  | [AClass](#quartodoc.tests.example.AClass) | A class |
+  
+  ## AClass { #quartodoc.tests.example.AClass }
+  
+  `tests.example.AClass()`
+  
+  A class
+  
+  ### Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_attr](#quartodoc.tests.example.AClass.a_attr) | A class attribute |
+  
+  ### Methods
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_method](#quartodoc.tests.example.AClass.a_method) | A method |
+  
+  #### a_method { #quartodoc.tests.example.AClass.a_method }
+  
+  `tests.example.AClass.a_method()`
+  
+  A method
+  
+  ## Functions
+  
+  | Name | Description |
+  | --- | --- |
+  | [a_func](#quartodoc.tests.example.a_func) | A function |
+  
+  ## a_func { #quartodoc.tests.example.a_func }
+  
+  `tests.example.a_func()`
+  
+  A function
+  '''
+# ---
