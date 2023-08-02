@@ -29,9 +29,13 @@ from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 
-from typing import overload
+from typing import overload, TYPE_CHECKING
+
 
 _log = logging.getLogger(__name__)
+
+if TYPE_CHECKING:
+    from pydantic import BaseModel
 
 
 def _auto_package(mod: dc.Module) -> list[Section]:
@@ -86,11 +90,22 @@ def _is_external_alias(obj: dc.Alias | dc.Object, mod: dc.Module):
     return False
 
 
-def _to_simple_dict(el):
+def _to_simple_dict(el: "BaseModel"):
     # round-trip to json, so we can take advantage of pydantic
     # dumping Enums, etc.. There may be a simple way to do
     # this in pydantic v2.
     return json.loads(el.json(exclude_unset=True))
+
+
+def _non_default_entries(el: "BaseModel"):
+    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
+    set_fields = [
+        k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
+    ]
+
+    d = el.dict()
+
+    return {k: d[k] for k in set_fields}
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -232,7 +247,9 @@ class BlueprintTransformer(PydanticTransformer):
         # auto default overrides
         if self.options is not None:
             # TODO: is this round-tripping guaranteed by pydantic?
-            el = el.__class__(**{**self.options.dict(), **el.dict()})
+            _option_dict = _non_default_entries(self.options)
+            _el_dict = _non_default_entries(el)
+            el = el.__class__(**{**_option_dict, **_el_dict})
 
         # fetching object ----
         _log.info(f"Getting object for {path}")
