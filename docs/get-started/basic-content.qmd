@@ -95,8 +95,34 @@ quartodoc:
         # set the children option, so that methods get documented
         # on separate pages. MdRenderer's docs will include a summary
         # table that links to each page.
-        - name: quartodoc.MdRenderer
+        - name: MdRenderer
           children: separate
+```
+
+## Reference page sub-sections
+
+quartodoc supports two levels of grouping on the reference page.
+Use the `subtitle:` option to add an additional level of grouping.
+
+For example, the code below creates an API reference page with one top-level section ("Some section"),
+with two sub-sections inside it.
+
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+
+    - subtitle: Stuff A
+      desc: This is subsection A
+      contents:
+        - MdRenderer
+
+    - subtitle: Stuff B
+      desc: This is subsection B
+      contents:
+        - get_object
 ```
 
 ## Grouping on a page

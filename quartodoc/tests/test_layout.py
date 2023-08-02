@@ -30,6 +30,20 @@ def test_layout_from_config(cfg, res):
     assert layout.sections[0] == res
 
 
+@pytest.mark.parametrize(
+    "kwargs, msg_part",
+    [
+        ({}, "must specify a title, subtitle, or contents field"),
+        ({"title": "x", "subtitle": "y"}, "cannot specify both"),
+    ],
+)
+def test_section_validation_fails(kwargs, msg_part):
+    with pytest.raises(ValueError) as exc_info:
+        Section(**kwargs)
+
+    assert msg_part in exc_info.value.args[0]
+
+
 def test_layout_extra_forbidden():
     with pytest.raises(ValidationError) as exc_info:
         Section(title="abc", desc="xyz", contents=[], zzzzz=1)

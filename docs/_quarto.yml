@@ -131,38 +131,33 @@ quartodoc:
         - create_inventory
         - convert_inventory
 
-    - title: "Data models: structural"
+    - title: "Data models"
+
+    - subtitle: "Structural"
       desc: |
         Classes for specifying the broad structure your docs.
       contents:
-        - kind: "page"
-          path: "layouts-structure"
-          flatten: true
-          contents:
-            - layout.Layout
-            - layout.Section
-            - layout.Page
-            - layout.SectionElement
-            - layout.ContentElement
+        - layout.Layout
+        - layout.Section
+        - layout.Page
+        - layout.SectionElement
+        - layout.ContentElement
 
-    - title: "Data models: docable"
+    - subtitle: "Docable"
       desc: |
         Classes representing python objects to be rendered.
       contents:
-        - kind: "page"
-          path: "layouts-docable"
-          flatten: true
-          contents:
-            - name: layout.Doc
-              members: []
-            - layout.DocFunction
-            - layout.DocAttribute
-            - layout.DocModule
-            - layout.DocClass
-            - layout.Link
-            - layout.Item
-            - layout.ChoicesChildren
-    - title: "Data models: docstring patches"
+        - name: layout.Doc
+          members: []
+        - layout.DocFunction
+        - layout.DocAttribute
+        - layout.DocModule
+        - layout.DocClass
+        - layout.Link
+        - layout.Item
+        - layout.ChoicesChildren
+
+    - subtitle: "Docstring patches"
       desc: |
         Most of the classes for representing python objects live
         in [](`griffe.dataclasses`) or [](`griffe.docstrings.dataclasses`).

@@ -36,10 +36,29 @@ html { font-family: 'Inter', sans-serif; }
   line-height: 22px;
 }
 
+.sidebar-item {
+  margin-top: 0px;
+}
+
 .sidebar-item-section {
   padding-top: 16px;
 }
 
 .sidebar-section {
   padding-left: 0px !important;
+}
+
+.sidebar-item-section .sidebar-item-section {
+  padding-top: 0px;
+  padding-left: 10px;
+}
+
+
+td:first-child {
+  text-wrap: nowrap;
+  text-size-adjust: 100%;
+}
+
+td:first-child a {
+  word-break: normal;
 }

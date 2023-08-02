@@ -572,12 +572,30 @@ class Builder:
 
     def _generate_sidebar(self, blueprint: layout.Layout):
         contents = [f"{self.dir}/index{self.out_page_suffix}"]
+        in_subsection = False
+        crnt_entry = {}
         for section in blueprint.sections:
+            if section.title:
+                if crnt_entry:
+                    contents.append(crnt_entry)
+
+                in_subsection = False
+                crnt_entry = {"section": section.title, "contents": []}
+            elif section.subtitle:
+                in_subsection = True
+
             links = []
             for entry in section.contents:
                 links.extend(self._page_to_links(entry))
 
-            contents.append({"section": section.title, "contents": links})
+            if in_subsection:
+                sub_entry = {"section": section.subtitle, "contents": links}
+                crnt_entry["contents"].append(sub_entry)
+            else:
+                crnt_entry["contents"].extend(links)
+
+        if crnt_entry:
+            contents.append(crnt_entry)
 
         entries = [{"id": self.dir, "contents": contents}, {"id": "dummy-sidebar"}]
         return {"website": {"sidebar": entries}}
