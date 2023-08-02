@@ -141,8 +141,9 @@ def build(config, filter, dry_run, watch, verbose):
             if watch:
                 pkg_path = get_package_path(builder.package)
                 print(f"Watching {pkg_path} for changes...")
-                event_handler = QuartoDocFileChangeHandler(callback=doc_build)
                 observer = Observer()
+                observer._event_queue.maxsize = 1 # the default is 0 which is infinite, and there isn't a way to set this in the constructor
+                event_handler = QuartoDocFileChangeHandler(callback=doc_build)
                 observer.schedule(event_handler, pkg_path, recursive=True)
                 observer.start()
                 try:
