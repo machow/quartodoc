@@ -70,22 +70,26 @@ class QuartoDocFileChangeHandler(PatternMatchingEventHandler):
         diff_sz = old.size != new.size
         diff_tm = (new.mtime - old.mtime) > 0.25 # wait 1/4 second before triggering
         return not same_nm or (same_nm and (diff_sz or diff_tm))
-
-    @classmethod
-    def print_event(cls, event):
-        print(f'Rebuilding docs.  Detected: {event.event_type} path : {event.src_path}')
-
-    def on_modified(self, event):
-        # Prevents duplicate events from getting fired too quickly
+    
+    def callback_if_diff(self, event):
+        """
+        Call the callback if the file has changed.
+        """
         new_file_info = self.get_file_info(event.src_path)
         if self.is_diff(self.old_file_info, new_file_info):
             self.callback()
             self.print_event(event)
         self.old_file_info = new_file_info
 
+    @classmethod
+    def print_event(cls, event):
+        print(f'Rebuilding docs.  Detected: {event.event_type} path : {event.src_path}')
+
+    def on_modified(self, event):
+        self.callback_if_diff(event)
+
     def on_created(self, event):
-        self.print_event(event)
-        self.callback()
+        self.callback_if_diff(event)
 
 def _enable_logs():
     import logging
