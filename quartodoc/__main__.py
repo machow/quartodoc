@@ -68,8 +68,17 @@ class QuartoDocFileChangeHandler(PatternMatchingEventHandler):
         """
         same_nm = old.name == new.name
         diff_sz = old.size != new.size
-        diff_tm = (new.mtime - old.mtime) > 0.25 # wait 1/4 second before triggering
-        return not same_nm or (same_nm and (diff_sz or diff_tm))
+        diff_tm = (new.mtime - old.mtime) # wait 1/4 second before triggering
+
+        if diff_tm < .25: # if consequetive events are less than 1/4th of a second apart, ignore
+            return False
+        elif same_nm:
+            if diff_sz or diff_tm >= 0.25:
+                return True
+            else:
+                return False
+        else:
+            return True     
     
     def callback_if_diff(self, event):
         """
