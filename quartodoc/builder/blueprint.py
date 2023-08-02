@@ -107,7 +107,8 @@ class BlueprintTransformer(PydanticTransformer):
             self.get_object = get_object
 
         self.crnt_package = None
-        self.dynamic = None
+        self.options = None
+        self.dynamic = False
 
     @staticmethod
     def _append_member_path(path: str, new: str):
@@ -138,16 +139,26 @@ class BlueprintTransformer(PydanticTransformer):
         # TODO: use a context handler
         self._log("VISITING", el)
 
+        # set package ----
         package = getattr(el, "package", MISSING())
         old = self.crnt_package
 
         if not isinstance(package, MISSING):
             self.crnt_package = package
 
+        # set options ----
+        # TODO: check for Section instead?
+        options = getattr(el, "options", None)
+        old_options = self.options
+
+        if options is not None:
+            self.options = options
+
         try:
             return super().visit(el)
         finally:
             self.crnt_package = old
+            self.options = old_options
 
     @dispatch
     def enter(self, el: Layout):
@@ -208,6 +219,7 @@ class BlueprintTransformer(PydanticTransformer):
     def enter(self, el: Auto):
         self._log("Entering", el)
 
+        # settings based on parent context options (package, options) ----
         # TODO: make this less brittle
         pkg = self.crnt_package
         if pkg is None:
@@ -217,6 +229,12 @@ class BlueprintTransformer(PydanticTransformer):
         else:
             path = f"{pkg}:{el.name}"
 
+        # auto default overrides
+        if self.options is not None:
+            # TODO: is this round-tripping guaranteed by pydantic?
+            el = el.__class__(**{**self.options.dict(), **el.dict()})
+
+        # fetching object ----
         _log.info(f"Getting object for {path}")
 
         dynamic = el.dynamic if el.dynamic is not None else self.dynamic

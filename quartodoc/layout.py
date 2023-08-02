@@ -78,6 +78,7 @@ class Section(_Structural):
     desc: Optional[str] = None
     package: Union[str, None, MISSING] = MISSING()
     contents: ContentList = []
+    options: Optional["AutoOptions"] = None
 
     def __init__(self, **data):
         super().__init__(**data)
@@ -199,7 +200,21 @@ class ChoicesChildren(Enum):
     linked = "linked"
 
 
-class Auto(_Base):
+class AutoOptions(_Base):
+    """Options available for Auto content layout element."""
+
+    members: Optional[list[str]] = None
+    include_private: bool = False
+    include_imports: bool = False
+    include_empty: bool = False
+    include: Optional[str] = None
+    exclude: Optional[str] = None
+    dynamic: Union[None, bool, str] = None
+    children: ChoicesChildren = ChoicesChildren.embedded
+    package: Union[str, None, MISSING] = MISSING()
+
+
+class Auto(AutoOptions):
     """Configure a python object to document (e.g. module, class, function, attribute).
 
     Attributes
@@ -233,15 +248,6 @@ class Auto(_Base):
 
     kind: Literal["auto"] = "auto"
     name: str
-    members: Optional[list[str]] = None
-    include_private: bool = False
-    include_imports: bool = False
-    include_empty: bool = False
-    include: Optional[str] = None
-    exclude: Optional[str] = None
-    dynamic: Union[None, bool, str] = None
-    children: ChoicesChildren = ChoicesChildren.embedded
-    package: Union[str, None, MISSING] = MISSING()
 
 
 # TODO: rename to Default or something
