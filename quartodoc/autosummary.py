@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import logging
 import warnings
 import yaml
@@ -276,18 +277,24 @@ def dynamic_alias(
         splits = object_path.split(".")
 
         canonical_path = None
-        parts = []
         crnt_part = mod
         for ii, attr_name in enumerate(splits):
             try:
                 crnt_part = getattr(crnt_part, attr_name)
                 if not isinstance(crnt_part, ModuleType) and not canonical_path:
-                    canonical_path = crnt_part.__module__ + ":" + ".".join(splits[ii:])
+                    if inspect.isclass(crnt_part) or inspect.isfunction(crnt_part):
+                        _mod = getattr(crnt_part, "__module__", None)
+
+                        if _mod is None:
+                            canonical_path = path
+                        else:
+                            canonical_path = _mod + ":" + ".".join(splits[ii:])
+                    else:
+                        canonical_path = path
                 elif isinstance(crnt_part, ModuleType) and ii == (len(splits) - 1):
                     # final object is module
                     canonical_path = crnt_part.__name__
 
-                parts.append(crnt_part)
             except AttributeError:
                 # Fetching the attribute can fail if it is purely a type hint,
                 # and has no value. This can be an issue if you have added a
