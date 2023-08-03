@@ -14,3 +14,5 @@ _inv
 objects.json
 _sidebar.yml
 _extensions
+
+/.luarc.json
