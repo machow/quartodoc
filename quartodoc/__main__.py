@@ -86,8 +86,8 @@ class QuartoDocFileChangeHandler(PatternMatchingEventHandler):
         """
         new_file_info = self.get_file_info(event.src_path)
         if self.is_diff(self.old_file_info, new_file_info):
-            self.callback()
             self.print_event(event)
+            self.callback()
         self.old_file_info = new_file_info
 
     @classmethod
