@@ -342,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>When a user runs <code>quartodoc build</code>, they</p>
 <ul>
-<li>Create a <a href="../api/Builder.html#quartodoc.Builder">Builder</a> object, with the quartodoc config loaded as a <a href="../api/layouts-structure.html#quartodoc.layout.Layout">layout.Layout</a>.</li>
+<li>Create a <a href="../api/Builder.html#quartodoc.Builder">Builder</a> object, with the quartodoc config loaded as a <a href="../api/layout.Layout.html#quartodoc.layout.Layout">layout.Layout</a>.</li>
 <li>Use <a href="../api/blueprint.html#quartodoc.blueprint">blueprint</a> to process the layout into a plan for building the website.</li>
 <li>Use <a href="../api/collect.html#quartodoc.collect">collect</a> to get pages to render, and info on where documented objects live.</li>
 </ul>
@@ -372,15 +372,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>builder <span class="op">=</span> Builder.from_quarto_config(cfg)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>builder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7f7f1bfc86d0&gt;</code></pre>
+<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7f19bef00730&gt;</code></pre>
 </div>
 </div>
 <p>Note that .from_quarto_config used the <code>style:</code> field to decide which Builder to create (in this case, PkgdownBuilder).</p>
-<p>We can view the config as a <a href="../api/layouts-structure.html#quartodoc.layout.Layout">layout.Layout</a>, by looking at the <code>.layout</code> attribute.</p>
+<p>We can view the config as a <a href="../api/layout.Layout.html#quartodoc.layout.Layout">layout.Layout</a>, by looking at the <code>.layout</code> attribute.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>builder.layout</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>Layout(sections=[Section(kind='section', title='Some section', desc='Some description', package=MISSING(), contents=[Auto(kind='auto', name='MdRenderer', members=['render', 'summarize'], include_private=False, include_imports=False, include_empty=False, include=None, exclude=None, dynamic=None, children=&lt;ChoicesChildren.separate: 'separate'&gt;, package=MISSING())])], package='quartodoc')</code></pre>
+<pre><code>Layout(sections=[Section(kind='section', title='Some section', subtitle=None, desc='Some description', package=MISSING(), contents=[Auto(members=['render', 'summarize'], include_private=False, include_imports=False, include_empty=False, include=None, exclude=None, dynamic=None, children=&lt;ChoicesChildren.separate: 'separate'&gt;, package=MISSING(), kind='auto', name='MdRenderer')], options=None)], package='quartodoc')</code></pre>
 </div>
 </div>
 <p>This can be a bit difficult to read, so quartodoc implements a <a href="../api/preview.html#quartodoc.preview">preview</a> function, which spaces things out.</p>
@@ -394,11 +394,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 │                  ├─desc = 'Some description'
 │                  └─contents = █─list
 │                               └─0 = █─Auto
-│                                     ├─name = 'MdRenderer'
 │                                     ├─members = █─list
 │                                     │           ├─0 = 'render'
 │                                     │           └─1 = 'summarize'
-│                                     └─children = &lt;ChoicesChildren.separate: 'separate'&gt;
+│                                     ├─children = &lt;ChoicesChildren.separate: 'separate'&gt;
+│                                     └─name = 'MdRenderer'
 └─package = 'quartodoc'</code></pre>
 </div>
 </div>
@@ -413,11 +413,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>preview(content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─Auto
-├─name = 'MdRenderer'
 ├─members = █─list
 │           ├─0 = 'render'
 │           └─1 = 'summarize'
-└─children = &lt;ChoicesChildren.separate: 'separate'&gt;</code></pre>
+├─children = &lt;ChoicesChildren.separate: 'separate'&gt;
+└─name = 'MdRenderer'</code></pre>
 </div>
 </div>
 <p>Next, we’ll look at <code>blueprint()</code>, which processes the layout, including transforming <code>Auto</code> objects into more concrete instructions.</p>
@@ -443,7 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Notice two key pieces:</p>
 <ul>
-<li>The <code>Auto</code> element is now a <a href="../api/layouts-structure.html#quartodoc.layout.Page">layout.Page</a>. The <code>.path</code> indicates that the documentation will be on a page called <code>"MdRenderer"</code>.</li>
+<li>The <code>Auto</code> element is now a <a href="../api/layout.Page.html#quartodoc.layout.Page">layout.Page</a>. The <code>.path</code> indicates that the documentation will be on a page called <code>"MdRenderer"</code>.</li>
 <li>The content of the page is a <code>layout.DocClass</code>. This element holds everything needed to render this doc, including the class signature and parsed docstring.</li>
 </ul>
 <p>Importantly, the <code>.members</code> attribute specifies how to render the class methods we specified (<code>.render()</code> and <code>.summarize()</code>).</p>
@@ -529,7 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>builder.renderer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7f7f1bfc81f0&gt;</code></pre>
+<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7f19bef00250&gt;</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="10">

@@ -366,6 +366,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">    ```{python}</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">    1 + 1</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that different syntaxes are handled differently:</p>
+<ul>
+<li>doctest and markdown syntax: rendered without executing.</li>
+<li>quarto syntax: executed by quarto when you run commands like <code>quarto render</code>.</li>
+</ul>
+<p>See the quarto documentation on <a href="https://quarto.org/docs/computations/python.html#code-blocks">code blocks</a> for more detail.</p>
 </section>
 <section id="examples-etc..-the-s-matters" class="level2">
 <h2 class="anchored" data-anchor-id="examples-etc..-the-s-matters">Examples, etc..: the “s” matters</h2>

@@ -373,18 +373,31 @@ website:
       - api/convert_inventory.qmd
       section: Inventory links
     - contents:
-      - api/layouts-structure.qmd
-      section: 'Data models: structural'
-    - contents:
-      - api/layouts-docable.qmd
-      section: 'Data models: docable'
-    - contents:
-      - api/ast.DocstringSectionSeeAlso.qmd
-      - api/ast.DocstringSectionNotes.qmd
-      - api/ast.DocstringSectionWarnings.qmd
-      - api/ast.ExampleCode.qmd
-      - api/ast.ExampleText.qmd
-      section: 'Data models: docstring patches'
+      - contents:
+        - api/layout.Layout.qmd
+        - api/layout.Section.qmd
+        - api/layout.Page.qmd
+        - api/layout.SectionElement.qmd
+        - api/layout.ContentElement.qmd
+        section: Structural
+      - contents:
+        - api/layout.Doc.qmd
+        - api/layout.DocFunction.qmd
+        - api/layout.DocAttribute.qmd
+        - api/layout.DocModule.qmd
+        - api/layout.DocClass.qmd
+        - api/layout.Link.qmd
+        - api/layout.Item.qmd
+        - api/layout.ChoicesChildren.qmd
+        section: Docable
+      - contents:
+        - api/ast.DocstringSectionSeeAlso.qmd
+        - api/ast.DocstringSectionNotes.qmd
+        - api/ast.DocstringSectionWarnings.qmd
+        - api/ast.ExampleCode.qmd
+        - api/ast.ExampleText.qmd
+        section: Docstring patches
+      section: Data models
     id: api
   - id: dummy-sidebar
 

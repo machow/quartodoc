@@ -1,10 +1,45 @@
 [
   {
+    "objectID": "reference/collect.html",
+    "href": "reference/collect.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "collect(el, base_dir)\nReturn all pages and items in a layout.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nel\nlayout._Base\nAn element, like layout.Section or layout.Page, to collect pages and items from.\nrequired\n\n\nbase_dir\nstr\nThe directory where API pages will live.\nrequired"
+  },
+  {
+    "objectID": "reference/Auto.html",
+    "href": "reference/Auto.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "Auto()\nConfigure a python object to document (e.g. module, class, function, attribute).\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nkind\nLiteral[‘auto’]\n\n\n\nname\nstr\nName of the object. This should be the path needed to import it.\n\n\nmembers\n\nA list of members, such as attributes or methods on a class, to document.\n\n\ninclude_private\n\nWhether to include members starting with “_”\n\n\ninclude_imports\n\nWhether to include members that were imported from somewhere else.\n\n\ninclude_empty\n\nWhether to include members with no docstring.\n\n\ninclude\n\n(Not implemented). A list of members to include.\n\n\nexclude\n\n(Not implemented). A list of members to exclude.\n\n\ndynamic\n\nWhether to dynamically load docstring. By default docstrings are loaded using static analysis. dynamic may be a string pointing to another object, to return an alias for that object.\n\n\nchildren\n\nStyle for presenting members. Either separate, embedded, or flat.\n\n\npackage\n\nIf specified, object lookup will be relative to this path."
+  },
+  {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
     "title": "pkgdown example",
     "section": "",
     "text": "quartodoc is a package for building delightful python API documentation.\n\n\n\nget_function\nFetch a function.\n\n\nget_object\nFetch a griffe object.\n\n\nBuilder\nBase class for building API docs.\n\n\nMdRenderer\nRender docstrings to markdown.\n\n\nconvert_inventory\nConvert a sphinx inventory file to json.\n\n\ncreate_inventory\nReturn a sphinx inventory file.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\nblueprint\nConvert a configuration element to something that is ready to render.\n\n\ncollect\nReturn all pages and items in a layout.\n\n\nAuto\nConfigure a python object to document (e.g. module, class, function, attribute)."
+  },
+  {
+    "objectID": "reference/create_inventory.html",
+    "href": "reference/create_inventory.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "create_inventory(project, version, items, uri=lambda s: f'{s.canonical_path}.html', dispname='-')\nReturn a sphinx inventory file.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nproject\nstr\nName of the project (often the package name).\nrequired\n\n\nversion\nstr\nVersion of the project (often the package version).\nrequired\n\n\nitems\nlist[dc.Object | dc.Alias]\nA docstring parser to use.\nrequired\n\n\nuri\nstr | Callable[dc.Object, str]\nLink relative to the docs where the items documentation lives.\nlambda s: f'{s.canonical_path}.html'\n\n\ndispname\nstr | Callable[dc.Object, str]\nName to be shown when a link to the item is made.\n'-'\n\n\n\n\n\n\n>>> f_obj = get_object(\"quartodoc\", \"create_inventory\")\n>>> inv = create_inventory(\"example\", \"0.0\", [f_obj])\n>>> inv\nInventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)\nTo preview the inventory, we can convert it to a dictionary:\n>>> _to_clean_dict(inv)\n{'project': 'example',\n 'version': '0.0',\n 'count': 1,\n 'items': [{'name': 'quartodoc.create_inventory',\n   'domain': 'py',\n   'role': 'function',\n   'priority': '1',\n   'uri': 'quartodoc.create_inventory.html',\n   'dispname': '-'}]}"
+  },
+  {
+    "objectID": "reference/MdRenderer.html",
+    "href": "reference/MdRenderer.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "renderers.MdRenderer(self, header_level=1, show_signature=True, show_signature_annotations=False, display_name='relative', hook_pre=None, use_interlinks=False)\nRender docstrings to markdown.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nheader_level\nint\nThe level of the header (e.g. 1 is the biggest).\n1\n\n\nshow_signature\nbool\nWhether to show the function signature.\nTrue\n\n\nshow_signature_annotations\nbool\nWhether to show annotations in the function signature.\nFalse\n\n\ndisplay_name\nstr\nThe default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.\n'relative'\n\n\n\n\n\n\n>>> from quartodoc import MdRenderer, get_object\n>>> renderer = MdRenderer(header_level=2)\n>>> f = get_object(\"quartodoc\", \"get_object\")\n>>> print(renderer.render(f)[:81])\n## get_object\n`get_object(module: str, object_name: str, parser: str = 'numpy')`\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nrender_annotation\nSpecial hook for rendering a type annotation.\n\n\nrender_header\nRender the header of a docstring, including any anchors.\n\n\nsummarize\nTest\n\n\n\n\n\nMdRenderer.render_annotation(self, el)\nSpecial hook for rendering a type annotation.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nel\nstr | expr.Name | expr.Expression | None\nAn object representing a type annotation.\nrequired\n\n\n\n\n\n\n\nMdRenderer.render_header(self, el)\nRender the header of a docstring, including any anchors.\n\n\n\nMdRenderer.summarize(self, obj)\nTest"
+  },
+  {
+    "objectID": "reference/convert_inventory.html",
+    "href": "reference/convert_inventory.html",
+    "title": "pkgdown example",
+    "section": "",
+    "text": "convert_inventory(in_name, out_name=None)\nConvert a sphinx inventory file to json.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nin_name\nUnion[str, soi.Inventory]\nName of inventory file.\nrequired\n\n\nout_name\n\nOutput file name.\nNone"
   },
   {
     "objectID": "reference/blueprint.html",
@@ -35,45 +70,10 @@
     "text": "Builder(self, package, sections=tuple(), version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\nlist[Any]\nA list of sections, with items to document.\ntuple()\n\n\nversion\nstr | None\nThe package version. By default this attempts to look up the current package version (TODO).\nNone\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\ndict | Renderer | str\nThe renderer used to convert docstrings (e.g. to markdown).\n'markdown'\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone\n\n\nsidebar\nstr | None\nThe output path for a sidebar yaml config (by default no config generated).\nNone\n\n\nrewrite_all_pages\n\nWhether to rewrite all rendered doc pages, or only those with changes.\nFalse\n\n\nsource_dir\nstr | None\nA directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.\nNone\n\n\ndynamic\nbool | None\nWhether to dynamically load all python objects. By default, objects are loaded using static analysis.\nNone\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nbuild\nBuild index page, sphinx inventory, and individual doc pages.\n\n\ncreate_inventory\nGenerate sphinx inventory object.\n\n\nfrom_quarto_config\nConstruct a Builder from a configuration object (or yaml file).\n\n\nwrite_doc_pages\nWrite individual function documentation pages.\n\n\nwrite_index\nWrite API index page.\n\n\nwrite_sidebar\nWrite a yaml config file for API sidebar.\n\n\n\n\n\nBuilder.build(self, filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g. MdRenderer.render)\n'*'\n\n\n\n\n\n\n\nBuilder.create_inventory(self, items)\nGenerate sphinx inventory object.\n\n\n\nBuilder.from_quarto_config(cls, quarto_cfg)\nConstruct a Builder from a configuration object (or yaml file).\n\n\n\nBuilder.write_doc_pages(self, pages, filter)\nWrite individual function documentation pages.\n\n\n\nBuilder.write_index(self, blueprint)\nWrite API index page.\n\n\n\nBuilder.write_sidebar(self, blueprint)\nWrite a yaml config file for API sidebar."
   },
   {
-    "objectID": "reference/convert_inventory.html",
-    "href": "reference/convert_inventory.html",
-    "title": "pkgdown example",
-    "section": "",
-    "text": "convert_inventory(in_name, out_name=None)\nConvert a sphinx inventory file to json.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nin_name\nUnion[str, soi.Inventory]\nName of inventory file.\nrequired\n\n\nout_name\n\nOutput file name.\nNone"
-  },
-  {
-    "objectID": "reference/MdRenderer.html",
-    "href": "reference/MdRenderer.html",
-    "title": "pkgdown example",
-    "section": "",
-    "text": "renderers.MdRenderer(self, header_level=1, show_signature=True, show_signature_annotations=False, display_name='relative', hook_pre=None, use_interlinks=False)\nRender docstrings to markdown.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nheader_level\nint\nThe level of the header (e.g. 1 is the biggest).\n1\n\n\nshow_signature\nbool\nWhether to show the function signature.\nTrue\n\n\nshow_signature_annotations\nbool\nWhether to show annotations in the function signature.\nFalse\n\n\ndisplay_name\nstr\nThe default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.\n'relative'\n\n\n\n\n\n\n>>> from quartodoc import MdRenderer, get_object\n>>> renderer = MdRenderer(header_level=2)\n>>> f = get_object(\"quartodoc\", \"get_object\")\n>>> print(renderer.render(f)[:81])\n## get_object\n`get_object(module: str, object_name: str, parser: str = 'numpy')`\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nrender_annotation\nSpecial hook for rendering a type annotation.\n\n\nrender_header\nRender the header of a docstring, including any anchors.\n\n\nsummarize\nTest\n\n\n\n\n\nMdRenderer.render_annotation(self, el)\nSpecial hook for rendering a type annotation.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nel\nstr | expr.Name | expr.Expression | None\nAn object representing a type annotation.\nrequired\n\n\n\n\n\n\n\nMdRenderer.render_header(self, el)\nRender the header of a docstring, including any anchors.\n\n\n\nMdRenderer.summarize(self, obj)\nTest"
-  },
-  {
-    "objectID": "reference/create_inventory.html",
-    "href": "reference/create_inventory.html",
-    "title": "pkgdown example",
-    "section": "",
-    "text": "create_inventory(project, version, items, uri=lambda s: f'{s.canonical_path}.html', dispname='-')\nReturn a sphinx inventory file.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nproject\nstr\nName of the project (often the package name).\nrequired\n\n\nversion\nstr\nVersion of the project (often the package version).\nrequired\n\n\nitems\nlist[dc.Object | dc.Alias]\nA docstring parser to use.\nrequired\n\n\nuri\nstr | Callable[dc.Object, str]\nLink relative to the docs where the items documentation lives.\nlambda s: f'{s.canonical_path}.html'\n\n\ndispname\nstr | Callable[dc.Object, str]\nName to be shown when a link to the item is made.\n'-'\n\n\n\n\n\n\n>>> f_obj = get_object(\"quartodoc\", \"create_inventory\")\n>>> inv = create_inventory(\"example\", \"0.0\", [f_obj])\n>>> inv\nInventory(project='example', version='0.0', source_type=<SourceTypes.Manual: 'manual'>)\nTo preview the inventory, we can convert it to a dictionary:\n>>> _to_clean_dict(inv)\n{'project': 'example',\n 'version': '0.0',\n 'count': 1,\n 'items': [{'name': 'quartodoc.create_inventory',\n   'domain': 'py',\n   'role': 'function',\n   'priority': '1',\n   'uri': 'quartodoc.create_inventory.html',\n   'dispname': '-'}]}"
-  },
-  {
-    "objectID": "reference/collect.html",
-    "href": "reference/collect.html",
-    "title": "pkgdown example",
-    "section": "",
-    "text": "collect(el, base_dir)\nReturn all pages and items in a layout.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nel\nlayout._Base\nAn element, like layout.Section or layout.Page, to collect pages and items from.\nrequired\n\n\nbase_dir\nstr\nThe directory where API pages will live.\nrequired"
-  },
-  {
     "objectID": "reference/get_function.html",
     "href": "reference/get_function.html",
     "title": "pkgdown example",
     "section": "",
     "text": "get_function(module, func_name, parser='numpy')\nFetch a function.\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nmodule\nstr\nA module name.\nrequired\n\n\nfunc_name\nstr\nA function name.\nrequired\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\n\n\n\n\n>>> get_function(\"quartodoc\", \"get_function\")\n<Function('get_function', ..."
-  },
-  {
-    "objectID": "reference/Auto.html",
-    "href": "reference/Auto.html",
-    "title": "pkgdown example",
-    "section": "",
-    "text": "Auto()\nConfigure a python object to document (e.g. module, class, function, attribute).\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nkind\nLiteral[‘auto’]\n\n\n\nname\nstr\nName of the object. This should be the path needed to import it.\n\n\nmembers\nOptional[list[str]]\nA list of members, such as attributes or methods on a class, to document.\n\n\ninclude_private\nbool\nWhether to include members starting with “_”\n\n\ninclude_imports\nbool\nWhether to include members that were imported from somewhere else.\n\n\ninclude_empty\nbool\nWhether to include members with no docstring.\n\n\ninclude\nOptional[str]\n(Not implemented). A list of members to include.\n\n\nexclude\nOptional[str]\n(Not implemented). A list of members to exclude.\n\n\ndynamic\nUnion[None, bool, str]\nWhether to dynamically load docstring. By default docstrings are loaded using static analysis. dynamic may be a string pointing to another object, to return an alias for that object.\n\n\nchildren\nChoicesChildren\nStyle for presenting members. Either separate, embedded, or flat.\n\n\npackage\nUnion[str, None, MISSING]\nIf specified, object lookup will be relative to this path."
   }
 ]
