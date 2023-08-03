@@ -117,3 +117,21 @@ def test_blueprint_auto_package(bp):
 
     # 4 objects documented
     assert len(sections[0].contents) == 4
+
+
+def test_blueprint_section_options():
+    layout = lo.Layout(
+        sections=[
+            lo.Section(
+                contents=[lo.Auto(name="AClass")],
+                package="quartodoc.tests.example",
+                options={"members": []},
+            )
+        ]
+    )
+
+    res = blueprint(layout)
+    page = res.sections[0].contents[0]
+    doc = page.contents[0]
+
+    assert doc.members == []

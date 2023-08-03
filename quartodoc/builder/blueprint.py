@@ -29,9 +29,13 @@ from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 
-from typing import overload
+from typing import overload, TYPE_CHECKING
+
 
 _log = logging.getLogger(__name__)
+
+if TYPE_CHECKING:
+    from pydantic import BaseModel
 
 
 def _auto_package(mod: dc.Module) -> list[Section]:
@@ -86,11 +90,22 @@ def _is_external_alias(obj: dc.Alias | dc.Object, mod: dc.Module):
     return False
 
 
-def _to_simple_dict(el):
+def _to_simple_dict(el: "BaseModel"):
     # round-trip to json, so we can take advantage of pydantic
     # dumping Enums, etc.. There may be a simple way to do
     # this in pydantic v2.
     return json.loads(el.json(exclude_unset=True))
+
+
+def _non_default_entries(el: "BaseModel"):
+    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
+    set_fields = [
+        k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
+    ]
+
+    d = el.dict()
+
+    return {k: d[k] for k in set_fields}
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -107,7 +122,8 @@ class BlueprintTransformer(PydanticTransformer):
             self.get_object = get_object
 
         self.crnt_package = None
-        self.dynamic = None
+        self.options = None
+        self.dynamic = False
 
     @staticmethod
     def _append_member_path(path: str, new: str):
@@ -138,16 +154,26 @@ class BlueprintTransformer(PydanticTransformer):
         # TODO: use a context handler
         self._log("VISITING", el)
 
+        # set package ----
         package = getattr(el, "package", MISSING())
         old = self.crnt_package
 
         if not isinstance(package, MISSING):
             self.crnt_package = package
 
+        # set options ----
+        # TODO: check for Section instead?
+        options = getattr(el, "options", None)
+        old_options = self.options
+
+        if options is not None:
+            self.options = options
+
         try:
             return super().visit(el)
         finally:
             self.crnt_package = old
+            self.options = old_options
 
     @dispatch
     def enter(self, el: Layout):
@@ -208,6 +234,7 @@ class BlueprintTransformer(PydanticTransformer):
     def enter(self, el: Auto):
         self._log("Entering", el)
 
+        # settings based on parent context options (package, options) ----
         # TODO: make this less brittle
         pkg = self.crnt_package
         if pkg is None:
@@ -217,6 +244,14 @@ class BlueprintTransformer(PydanticTransformer):
         else:
             path = f"{pkg}:{el.name}"
 
+        # auto default overrides
+        if self.options is not None:
+            # TODO: is this round-tripping guaranteed by pydantic?
+            _option_dict = _non_default_entries(self.options)
+            _el_dict = _non_default_entries(el)
+            el = el.__class__(**{**_option_dict, **_el_dict})
+
+        # fetching object ----
         _log.info(f"Getting object for {path}")
 
         dynamic = el.dynamic if el.dynamic is not None else self.dynamic

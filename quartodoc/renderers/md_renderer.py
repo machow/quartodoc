@@ -552,6 +552,8 @@ class MdRenderer(Renderer):
             header = f"## {el.title}{desc}"
         elif el.subtitle is not None:
             header = f"### {el.subtitle}{desc}"
+        else:
+            header = ""
 
         if el.contents:
             thead = "| | |\n| --- | --- |"
