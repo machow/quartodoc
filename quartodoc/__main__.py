@@ -141,6 +141,11 @@ def build(config, filter, dry_run, watch, verbose):
     """
     Generate API docs based on the given configuration file  (`./_quarto.yml` by default).
     """
+    cfg_path = f"{os.getcwd()}/{config}"
+    if not Path(cfg_path).exists():
+        raise FileNotFoundError(
+            f"Configuration file {cfg_path} not found.  Please create one."
+        )
     if verbose:
         _enable_logs()
 
@@ -158,6 +163,7 @@ def build(config, filter, dry_run, watch, verbose):
                 observer._event_queue.maxsize = 1 # the default is 0 which is infinite, and there isn't a way to set this in the constructor
                 event_handler = QuartoDocFileChangeHandler(callback=doc_build)
                 observer.schedule(event_handler, pkg_path, recursive=True)
+                observer.schedule(event_handler, cfg_path, recursive=True)
                 observer.start()
                 try:
                     while True:
