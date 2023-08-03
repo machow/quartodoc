@@ -29,6 +29,8 @@ class AClass:
 
 
 class InstanceAttrs:
+    """Some InstanceAttrs class"""
+
     z: int
     """The z attribute"""
 
@@ -36,3 +38,7 @@ class InstanceAttrs:
         self.a = a
         self.b = b
         """The b attribute"""
+
+
+some_instance = InstanceAttrs(1, 1)
+some_instance.__doc__ = "Dynamic instance doc"
