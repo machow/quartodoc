@@ -154,6 +154,27 @@ quartodoc:
 Note that the **with options** block sets `members: []` inside `options`.
 This sets `members: []` as the default for each piece of content.
 
+::: {.callout-tip}
+Options can be given a name, and re-used in multiple sections:
+
+```yaml
+- title: Some section
+  options: &no-members
+    members: []
+  content:
+    - ThingA
+    - ThingB
+- title: Another section
+  options: *no-members
+  content:
+    - ThingC
+```
+
+The code above uses `&no-members` to name the options in the first section "no-members",
+then `*no-members` to reference it in the second section.
+The `&` and `*` are called an anchor and alias, respectively, in YAML.
+:::
+
 ## Specifying package path
 
 Different levels of configuration let you set the `package` option.
