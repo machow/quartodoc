@@ -1,96 +1,125 @@
-import copy
 import pytest
+import yaml
+
+from textwrap import indent, dedent
 
 from quartodoc.autosummary import Builder
 
-pytest.skip(allow_module_level=True)
 
-EXAMPLE_SECTIONS = [
-    {
-        "title": "Preperation Functions",
-        "desc": "Functions that fetch objects.\nThey prepare a representation of the site.\n",
-        "contents": ["Auto", "blueprint", "collect", "get_object", "preview"],
-    },
-    {
-        "title": "Docstring Renderers",
-        "desc": "Renderers convert parsed docstrings into a target format, like markdown.\n",
-        "contents": [
-            {"name": "MdRenderer", "children": "linked"},
-            {"name": "MdRenderer.render", "dynamic": True},
-            {"name": "MdRenderer.render_annotation", "dynamic": True},
-            {"name": "MdRenderer.render_header", "dynamic": True},
-        ],
-    },
-    {
-        "title": "API Builders",
-        "desc": "Builders build documentation. They tie all the pieces\nof quartodoc together.\n",
-        "contents": [
-            {"kind": "auto", "name": "Builder", "members": []},
-            "Builder.from_quarto_config",
-            "Builder.build",
-            "Builder.write_index",
-        ],
-    },
-]
-
-
-@pytest.fixture
-def sections():
-    return copy.deepcopy(EXAMPLE_SECTIONS)
-
-
-def check_ValueError(sections):
+def check_ValueError(cfg: str):
     "Check that a ValueError is raised when creating a `Builder` instance. Return the error message as a string."
+
+    d = yaml.safe_load(cfg)
     with pytest.raises(ValueError) as e:
-        Builder(sections=sections, package="quartodoc")
-    return str(e.value)
+        Builder.from_quarto_config(d)
+
+    fmt_cfg = indent(dedent(cfg), " " * 4)
+    fmt_value = indent(str(e.value), " " * 4)
+    return f"""\
+Code:\n{fmt_cfg}
+Error:\n{fmt_value}
+"""
 
 
-def test_valid_yaml(sections):
-    "Test that valid YAML passes validation"
-    Builder(sections=sections, package="quartodoc")
-
-
-def test_missing_title(sections):
+@pytest.mark.skip("title is now optional")
+def test_missing_title():
     "Test that missing title raises an error"
-    del sections[0]["title"]
-    msg = check_ValueError(sections)
-    assert "- Missing field `title` for element 0 in the list for `sections`" in msg
+
+    cfg = """
+    quartodoc:
+      package: zzz
+      sections:
+        - desc: "abc"
+          contents:
+            - get_object
+    """
+
+    check_ValueError(cfg)
+    # assert "- Missing field `title` for element 0 in the list for `sections`" in msg
 
 
-def test_missing_desc(sections):
+@pytest.mark.skip("desc is now optional")
+def test_missing_desc():
     "Test that a missing description raises an error"
-    sections = copy.deepcopy(EXAMPLE_SECTIONS)
-    del sections[2]["desc"]
-    msg = check_ValueError(sections)
-    assert "- Missing field `desc` for element 2 in the list for `sections`" in msg
+
+    cfg = """
+    quartodoc:
+      package: zzz
+      sections:
+        - title: "A section"
+          contents:
+            - get_object
+    """
+
+    check_ValueError(cfg)
+    # assert "- Missing field `desc` for element 2 in the list for `sections`" in msg
 
 
-def test_missing_name_contents_1(sections):
+@pytest.mark.skip("contents is now optional")
+def test_missing_name_contents_1():
     "Test that a missing name in contents raises an error"
-    del sections[2]["contents"][0]["name"]
-    msg = check_ValueError(sections)
-    assert (
-        "- Missing field `name` for element 0 in the list for `contents` located in element 2 in the list for `sections`"
-        in msg
-    )
+
+    cfg = """
+    quartodoc:
+      package: zzz
+      sections:
+        - title: "A section"
+          contents:
+            - get_object
+    """
+
+    check_ValueError(cfg)
+    # assert (
+    #     "- Missing field `name` for element 0 in the list for `contents` located in element 2 in the list for `sections`"
+    #     in msg
+    # )
 
 
-def test_missing_name_contents_2(sections):
+def test_missing_name_contents_2(snapshot):
     "Test that a missing name in contents raises an error in a different section."
-    del sections[1]["contents"][0]["name"]
-    msg = check_ValueError(sections)
-    assert (
-        "- Missing field `name` for element 0 in the list for `contents` located in element 1 in the list for `sections`"
-        in msg
-    )
+
+    cfg = """
+    quartodoc:
+      package: zzz
+      sections:
+        - title: Section 1
+        - title: Section 2
+          contents:
+            - children: linked
+            - name: MdRenderer
+    """
+
+    msg = check_ValueError(cfg)
+    assert msg == snapshot
+    # assert (
+    #     "- Missing field `name` for element 0 in the list for `contents` located in element 1 in the list for `sections`"
+    #     in msg
+    # )
 
 
-def test_misplaced_kindpage(sections):
+def test_misplaced_kindpage(snapshot):
     "Test that a misplaced kind: page raises an error"
-    sections[0]["kind"] = "page"
-    msg = check_ValueError(sections)
-    assert (
-        " - Missing field `path` for element 0 in the list for `sections`, which you need when setting `kind: page`."
-        in msg
-    )
+
+    cfg = """
+    quartodoc:
+      package: zzz
+      sections:
+        - kind: page
+
+    """
+
+    # the challenge with the pydantic feedback here is that, since Section now does
+    # not need to have title, desc, or contents. It believes the `kind: page` is a
+    # screwed up section :/.
+    # It seems like we need to intercept any error where kind is specified, and
+    # customize our message (e.g. we know kind: "page" indicates someone is trying
+    # to specify a Page)
+    msg = check_ValueError(cfg)
+    assert msg == snapshot
+
+    # sections[0]["kind"] = "page"
+    # msg = check_ValueError(sections)
+    # assert (
+    #     " - Missing field `path` for element 0 in the list for `sections`, which you need when setting `kind: page`."
+    #     in msg
+    # )

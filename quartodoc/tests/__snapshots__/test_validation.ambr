@@ -1,0 +1,36 @@
+# serializer version: 1
+# name: test_misplaced_kindpage
+  '''
+  Code:
+  
+      quartodoc:
+        package: zzz
+        sections:
+          - kind: page
+  
+  
+  Error:
+      Configuration error for YAML:
+       - Input should be 'section': from root level: `kind`
+  
+  '''
+# ---
+# name: test_missing_name_contents_2
+  '''
+  Code:
+  
+      quartodoc:
+        package: zzz
+        sections:
+          - title: Section 1
+          - title: Section 2
+            contents:
+              - children: linked
+              - name: MdRenderer
+  
+  Error:
+      Configuration error for YAML:
+       - Unable to extract tag using discriminator 'kind': `tagged-union[...,...,...,...,...]` for element 0 in the list for `contents`
+  
+  '''
+# ---
