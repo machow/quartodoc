@@ -48,4 +48,4 @@ def test_layout_extra_forbidden():
     with pytest.raises(ValidationError) as exc_info:
         Section(title="abc", desc="xyz", contents=[], zzzzz=1)
 
-    assert "extra fields not permitted" in str(exc_info.value)
+    assert "Extra inputs are not permitted" in str(exc_info.value)
