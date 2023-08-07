@@ -43,19 +43,37 @@ def _auto_package(mod: dc.Module) -> list[Section]:
 
     import griffe.docstrings.dataclasses as ds
 
+    has_all = "__all__" in mod.members
+
+    if not has_all:
+        print(
+            f"\nWARNING: the module {mod.name} does not define an __all__ attribute."
+            " Generating documentation from all members of the module."
+            " Define __all__ in your package's __init__.py to specify exactly which"
+            " functions it exports (and should be documented).\n"
+        )
+
     # get module members for content ----
     contents = []
     for name, member in mod.members.items():
         external_alias = _is_external_alias(member, mod)
-        if external_alias or member.is_module or name.startswith("__"):
+        if (
+            external_alias
+            or member.is_module
+            or name.startswith("__")
+            or (has_all and not mod.member_is_exported(member))
+        ):
             continue
 
         contents.append(Auto(name=name))
 
     # try to fetch a description of the module ----
-    mod_summary = mod.docstring.parsed[0]
-    if isinstance(mod_summary, ds.DocstringSectionText):
-        desc = mod_summary.value
+    if mod.docstring and mod.docstring.parsed:
+        mod_summary = mod.docstring.parsed[0]
+        if isinstance(mod_summary, ds.DocstringSectionText):
+            desc = mod_summary.value
+        else:
+            desc = ""
     else:
         desc = ""
 
