@@ -263,7 +263,7 @@ try:
     from pydantic import RootModel
 
     class _AutoSimple(RootModel):
-        root: Union[str, dict]
+        root: str
 
 
 except ImportError:
@@ -271,7 +271,7 @@ except ImportError:
     class _AutoSimple(BaseModel):
         """This hacky class allows creating Auto as a default option in Pages and Sections."""
 
-        __root__: Union[str, dict]
+        __root__: str
 
         @property
         def root(self):

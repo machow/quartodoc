@@ -167,7 +167,7 @@ def fields(el: BaseModel):
     from .layout import MISSING
 
     # return fields whose values were not set to the default
-    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
+    field_defaults = {name: mf.default for name, mf in el.__fields__.items()}
     return [
         k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
     ]

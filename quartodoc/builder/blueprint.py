@@ -117,7 +117,7 @@ def _to_simple_dict(el: "BaseModel"):
 
 
 def _non_default_entries(el: "BaseModel"):
-    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
+    field_defaults = {name: mf.default for name, mf in el.__fields__.items()}
     set_fields = [
         k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
     ]
