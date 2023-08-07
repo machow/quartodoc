@@ -14,6 +14,8 @@ a_attr = 1
 
 
 class AClass:
+    """A class"""
+
     a_attr = 1
     """A class attribute"""
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import logging
 import warnings
 import yaml
@@ -276,18 +277,24 @@ def dynamic_alias(
         splits = object_path.split(".")
 
         canonical_path = None
-        parts = []
         crnt_part = mod
         for ii, attr_name in enumerate(splits):
             try:
                 crnt_part = getattr(crnt_part, attr_name)
                 if not isinstance(crnt_part, ModuleType) and not canonical_path:
-                    canonical_path = crnt_part.__module__ + ":" + ".".join(splits[ii:])
+                    if inspect.isclass(crnt_part) or inspect.isfunction(crnt_part):
+                        _mod = getattr(crnt_part, "__module__", None)
+
+                        if _mod is None:
+                            canonical_path = path
+                        else:
+                            canonical_path = _mod + ":" + ".".join(splits[ii:])
+                    else:
+                        canonical_path = path
                 elif isinstance(crnt_part, ModuleType) and ii == (len(splits) - 1):
                     # final object is module
                     canonical_path = crnt_part.__name__
 
-                parts.append(crnt_part)
             except AttributeError:
                 # Fetching the attribute can fail if it is purely a type hint,
                 # and has no value. This can be an issue if you have added a
@@ -416,7 +423,8 @@ class Builder:
     def __init__(
         self,
         package: str,
-        sections: "list[Any]",
+        # TODO: correct typing
+        sections: "list[Any]" = tuple(),
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
@@ -426,6 +434,7 @@ class Builder:
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
         dynamic: bool | None = None,
+        parser="numpy",
     ):
         self.layout = self.load_layout(sections=sections, package=package)
 
@@ -434,6 +443,7 @@ class Builder:
         self.dir = dir
         self.title = title
         self.sidebar = sidebar
+        self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
 
@@ -451,10 +461,12 @@ class Builder:
         try:
             return layout.Layout(sections=sections, package=package)
         except ValidationError as e:
-            msg = 'Configuration error for YAML:\n - '
+            msg = "Configuration error for YAML:\n - "
             errors = [fmt(err) for err in e.errors() if fmt(err)]
-            first_error = errors[0] # we only want to show one error at a time b/c it is confusing otherwise
-            msg += first_error           
+            first_error = errors[
+                0
+            ]  # we only want to show one error at a time b/c it is confusing otherwise
+            msg += first_error
             raise ValueError(msg) from None
 
     # building ----------------------------------------------------------------
@@ -480,7 +492,7 @@ class Builder:
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = blueprint(self.layout, dynamic=self.dynamic)
+        blueprint = blueprint(self.layout, dynamic=self.dynamic, parser=self.parser)
 
         _log.info("Collecting pages and inventory items.")
         pages, items = collect(blueprint, base_dir=self.dir)
@@ -567,12 +579,30 @@ class Builder:
 
     def _generate_sidebar(self, blueprint: layout.Layout):
         contents = [f"{self.dir}/index{self.out_page_suffix}"]
+        in_subsection = False
+        crnt_entry = {}
         for section in blueprint.sections:
+            if section.title:
+                if crnt_entry:
+                    contents.append(crnt_entry)
+
+                in_subsection = False
+                crnt_entry = {"section": section.title, "contents": []}
+            elif section.subtitle:
+                in_subsection = True
+
             links = []
             for entry in section.contents:
                 links.extend(self._page_to_links(entry))
 
-            contents.append({"section": section.title, "contents": links})
+            if in_subsection:
+                sub_entry = {"section": section.subtitle, "contents": links}
+                crnt_entry["contents"].append(sub_entry)
+            else:
+                crnt_entry["contents"].extend(links)
+
+        if crnt_entry:
+            contents.append(crnt_entry)
 
         entries = [{"id": self.dir, "contents": contents}, {"id": "dummy-sidebar"}]
         return {"website": {"sidebar": entries}}

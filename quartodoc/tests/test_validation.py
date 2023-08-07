@@ -1,5 +1,6 @@
 import copy
 import pytest
+
 from quartodoc.autosummary import Builder
 
 pytest.skip(allow_module_level=True)

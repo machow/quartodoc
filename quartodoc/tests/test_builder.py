@@ -1,8 +1,9 @@
 import pytest
+import yaml
 
 from pathlib import Path
 from quartodoc import layout as lo
-from quartodoc import Builder
+from quartodoc import Builder, blueprint
 
 
 @pytest.fixture
@@ -40,3 +41,28 @@ def test_builder_build_filter_wildcard_methods(builder):
     builder.build(filter="MdRenderer.*")
 
     len(list(Path(builder.dir).glob("Mdrenderer.*"))) == 2
+
+
+def test_builder_generate_sidebar(tmp_path, snapshot):
+    cfg = yaml.safe_load(
+        """
+    quartodoc:
+      package: quartodoc.tests.example
+      sections:
+        - title: first section
+          desc: some description
+          contents: [a_func]
+        - title: second section
+          desc: title description
+        - subtitle: a subsection
+          desc: subtitle description
+          contents:
+            - a_attr
+    """
+    )
+
+    builder = Builder.from_quarto_config(cfg)
+    bp = blueprint(builder.layout)
+    d_sidebar = builder._generate_sidebar(bp)
+
+    assert yaml.dump(d_sidebar) == snapshot

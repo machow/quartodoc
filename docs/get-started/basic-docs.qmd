@@ -46,9 +46,10 @@ print(renderer.render(doc_params))
 
 The `sections` field defines which functions to document.
 
-It requires three pieces of configuration:
+It commonly requires three pieces of configuration:
 
 * `title`: a title for the section
 * `desc`: a description for the section
 * `contents`: a list of functions to document
 
+You can also replace `title` with `subtitle` to create a sub-section.
