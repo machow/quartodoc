@@ -1,3 +1,4 @@
+[flake8]
 exclude = docs, test_*, examples
 max-line-length = 90
 ignore =
