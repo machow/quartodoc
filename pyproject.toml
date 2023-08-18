@@ -13,10 +13,15 @@ testpaths = ["quartodoc/tests"]
 
 [project]
 name = "quartodoc"
-description = "Generate API documentation with quarto."
+description = "Generate API documentation with Quarto."
 readme = "README.md"
 keywords = ["documentation", "quarto"]
 classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10"
 ]
@@ -39,8 +44,9 @@ dependencies = [
 
 
 [project.urls]
-Homepage = "https://github.com/machow/quartodoc"
-Documentation = "https://github.com/machow/quartodoc"
+homepage = "https://machow.github.io/quartodoc"
+repository = "https://github.com/machow/quartodoc"
+ci = "https://github.com/machow/quartodoc/actions"
 
 [[project.authors]]
 name = "Michael Chow"
