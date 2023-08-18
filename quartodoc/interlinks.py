@@ -369,7 +369,6 @@ class Inventories:
 
     @classmethod
     def from_quarto_config(cls, cfg: str | dict, root_dir: str | None = None):
-
         if isinstance(cfg, str):
             if root_dir is None:
                 root_dir = Path(cfg).parent
@@ -391,7 +390,6 @@ class Inventories:
 
         # load other inventories ----
         for doc_name, cfg in sources.items():
-
             fname = doc_name + "_objects.json"
             inv_path = p_root / Path(cache) / fname
 
