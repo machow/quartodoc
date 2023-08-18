@@ -101,6 +101,11 @@ class MdRenderer(Renderer):
             return el.canonical_path
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
+    
+    def _render_table(self, rows, headers):
+        table = tabulate(rows, headers=headers, tablefmt="github")
+
+        return table
 
 
     # render_annotation method --------------------------------------------------------
@@ -250,12 +255,15 @@ class MdRenderer(Renderer):
     def render(self, el: Union[layout.DocClass, layout.DocModule]):
         title = self.render_header(el)
 
-        extra_parts = []
+        attr_docs = []
         meth_docs = []
+        class_docs = []
+
         if el.members:
             sub_header = "#" * (self.crnt_header_level + 1)
             raw_attrs = [x for x in el.members if x.obj.is_attribute]
             raw_meths = [x for x in el.members if x.obj.is_function]
+            raw_classes = [x for x in el.members if x.obj.is_class]
 
 
             header = "| Name | Description |\n| --- | --- |"
@@ -268,30 +276,42 @@ class MdRenderer(Renderer):
             if (
                     raw_attrs
                     and not _has_attr_section(el.obj.docstring)
-                    and not isinstance(el, layout.DocClass)
+                    # TODO: what should backwards compat be?
+                    # and not isinstance(el, layout.DocClass)
                 ):
 
                 _attrs_table = "\n".join(map(self.summarize, raw_attrs))
                 attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
-                extra_parts.append(attrs)
+                attr_docs.append(attrs)
+            
+            # classes summary table ----
+            if raw_classes:
+                _summary_table = "\n".join(map(self.summarize, raw_classes))
+                section_name = "Classes"
+                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                class_docs.append(objs)
+
+                n_incr = 1 if el.flat else 2
+                with self._increment_header(n_incr):
+                    class_docs.extend([self.render(x) for x in raw_classes if isinstance(x, layout.Doc)])
 
             # method summary table ----
             if raw_meths:
-                _meths_table = "\n".join(map(self.summarize, raw_meths))
+                _summary_table = "\n".join(map(self.summarize, raw_meths))
                 section_name = (
                     "Methods" if isinstance(el, layout.DocClass)
                     else "Functions"
                 )
-                meths = f"{sub_header} {section_name}\n\n{header}\n{_meths_table}"
-                extra_parts.append(meths)
+                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                meth_docs.append(objs)
 
                 # TODO use context manager, or context variable?
                 n_incr = 1 if el.flat else 2
                 with self._increment_header(n_incr):
-                    meth_docs = [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
+                    meth_docs.extend([self.render(x) for x in raw_meths if isinstance(x, layout.Doc)])
 
         body = self.render(el.obj)
-        return "\n\n".join([title, body, *extra_parts, *meth_docs])
+        return "\n\n".join([title, body, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
     def render(self, el: layout.DocFunction):
@@ -416,17 +436,16 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringSectionParameters):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
-        # if rows[1][2].startswith("(Deprecated). A function name"):
-        #     import ipdb; ipdb.set_trace()
-        return tabulate(rows, header, tablefmt="github")
+        return self._render_table(rows, header)
 
     @dispatch
     def render(self, el: ds.DocstringParameter) -> Tuple[str]:
         # TODO: if default is not, should return the word "required" (unescaped)
-        default = "required" if el.default is None else escape(el.default)
+        default = "_required_" if el.default is None else escape(el.default)
 
         annotation = self.render_annotation(el.annotation)
-        return (escape(el.name), annotation, sanitize(el.description), default)
+        clean_desc = sanitize(el.description, allow_markdown=True)
+        return (escape(el.name), annotation, clean_desc, default)
 
     # attributes ----
 
@@ -435,15 +454,14 @@ class MdRenderer(Renderer):
         header = ["Name", "Type", "Description"]
         rows = list(map(self.render, el.value))
 
-        return tabulate(rows, header, tablefmt="github")
+        return self._render_table(rows, header)
 
     @dispatch
     def render(self, el: ds.DocstringAttribute):
-        annotation = self.render_annotation(el.annotation)
         row = [
             sanitize(el.name),
-            self.render_annotation(annotation),
-            sanitize(el.description or "")
+            self.render_annotation(el.annotation),
+            sanitize(el.description or "", allow_markdown=True)
         ]
         return row
 
@@ -491,13 +509,13 @@ class MdRenderer(Renderer):
         rows = list(map(self.render, el.value))
         header = ["Type", "Description"]
 
-        return tabulate(rows, header, tablefmt="github")
+        return self._render_table(rows, header)
 
     @dispatch
     def render(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
         # similar to DocstringParameter, but no name or default
         annotation = self.render_annotation(el.annotation)
-        return (annotation, el.description)
+        return (annotation, sanitize(el.description, allow_markdown=True))
 
     # unsupported parts ----
 
@@ -519,7 +537,7 @@ class MdRenderer(Renderer):
 
     @staticmethod
     def _summary_row(link, description):
-        return f"| {link} | {sanitize(description)} |"
+        return f"| {link} | {sanitize(description, allow_markdown=True)} |"
 
     @dispatch
     def summarize(self, el):
@@ -534,21 +552,31 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(self, el: layout.Section):
-        header = f"## {el.title}\n\n{el.desc}"
+        desc = f"\n\n{el.desc}" if el.desc is not None else ""
+        if el.title is not None:
+            header = f"## {el.title}{desc}"
+        elif el.subtitle is not None:
+            header = f"### {el.subtitle}{desc}"
+        else:
+            header = ""
 
-        thead = "| | |\n| --- | --- |"
+        if el.contents:
+            thead = "| | |\n| --- | --- |"
 
-        rendered = []
-        for child in el.contents:
-            rendered.append(self.summarize(child))
+            rendered = []
+            for child in el.contents:
+                rendered.append(self.summarize(child))
 
-        str_func_table = "\n".join([thead, *rendered])
-        return f"{header}\n\n{str_func_table}"
+            str_func_table = "\n".join([thead, *rendered])
+            return f"{header}\n\n{str_func_table}"
+        
+        return header
 
     @dispatch
     def summarize(self, el: layout.Page):
         if el.summary is not None:
-            return self._summary_row(f"[{el.summary.name}]({el.path})", el.summary.desc)
+            # TODO: assumes that files end with .qmd
+            return self._summary_row(f"[{el.summary.name}]({el.path}.qmd)", el.summary.desc)
 
         if len(el.contents) > 1 and not el.flatten:
             raise ValueError(

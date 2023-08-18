@@ -4,7 +4,7 @@ import griffe.dataclasses as dc
 import logging
 
 from enum import Enum
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, Extra
 
 from typing_extensions import Annotated
 from typing import Literal, Union, Optional
@@ -15,6 +15,9 @@ _log = logging.getLogger(__name__)
 
 class _Base(BaseModel):
     """Any data class that might appear in the quartodoc config."""
+
+    class Config:
+        extra = Extra.forbid
 
 
 class _Structural(_Base):
@@ -43,7 +46,7 @@ class Layout(_Structural):
         The package being documented.
     """
 
-    sections: list[Union[SectionElement, Section]]
+    sections: list[Union[SectionElement, Section]] = []
     package: Union[str, None, MISSING] = MISSING()
 
 
@@ -58,6 +61,9 @@ class Section(_Structural):
     kind:
     title:
         Title of the section on the index.
+    subtitle:
+        Subtitle of the section on the index. Note that either title or subtitle,
+        but not both, may be set.
     desc:
         Description of the section on the index.
     package:
@@ -67,10 +73,23 @@ class Section(_Structural):
     """
 
     kind: Literal["section"] = "section"
-    title: str
-    desc: str
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    desc: Optional[str] = None
     package: Union[str, None, MISSING] = MISSING()
-    contents: ContentList
+    contents: ContentList = []
+    options: Optional["AutoOptions"] = None
+
+    def __init__(self, **data):
+        super().__init__(**data)
+
+        # TODO: should these be a custom type? Or can we use pydantic's ValidationError?
+        if self.title is None and self.subtitle is None and not self.contents:
+            raise ValueError(
+                "Section must specify a title, subtitle, or contents field"
+            )
+        elif self.title is not None and self.subtitle is not None:
+            raise ValueError("Section cannot specify both title and subtitle fields.")
 
 
 class SummaryDetails(_Base):
@@ -181,7 +200,21 @@ class ChoicesChildren(Enum):
     linked = "linked"
 
 
-class Auto(_Base):
+class AutoOptions(_Base):
+    """Options available for Auto content layout element."""
+
+    members: Optional[list[str]] = None
+    include_private: bool = False
+    include_imports: bool = False
+    include_empty: bool = False
+    include: Optional[str] = None
+    exclude: Optional[str] = None
+    dynamic: Union[None, bool, str] = None
+    children: ChoicesChildren = ChoicesChildren.embedded
+    package: Union[str, None, MISSING] = MISSING()
+
+
+class Auto(AutoOptions):
     """Configure a python object to document (e.g. module, class, function, attribute).
 
     Attributes
@@ -193,6 +226,10 @@ class Auto(_Base):
         A list of members, such as attributes or methods on a class, to document.
     include_private:
         Whether to include members starting with "_"
+    include_imports:
+        Whether to include members that were imported from somewhere else.
+    include_empty:
+        Whether to include members with no docstring.
     include:
         (Not implemented). A list of members to include.
     exclude:
@@ -211,13 +248,6 @@ class Auto(_Base):
 
     kind: Literal["auto"] = "auto"
     name: str
-    members: Optional[list[str]] = None
-    include_private: bool = False
-    include: Optional[str] = None
-    exclude: Optional[str] = None
-    dynamic: Union[bool, str] = False
-    children: ChoicesChildren = ChoicesChildren.embedded
-    package: Union[str, None, MISSING] = MISSING()
 
 
 # TODO: rename to Default or something
@@ -245,6 +275,7 @@ class Link(_Docable):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
 
 class Doc(_Docable):
@@ -275,6 +306,7 @@ class Doc(_Docable):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
     @classmethod
     def from_griffe(
@@ -374,6 +406,7 @@ class Item(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
 
 # Update forwared refs --------------------------------------------------------

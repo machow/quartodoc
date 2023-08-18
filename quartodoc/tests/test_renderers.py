@@ -1,9 +1,9 @@
 import pytest
+import griffe.docstrings.dataclasses as ds
+import griffe.expressions as exp
 
 from quartodoc.renderers import MdRenderer
-from quartodoc import get_object
-
-# TODO: tests in test_basic.py also use the renderer, so we should move them here.
+from quartodoc import layout, get_object, blueprint, Auto
 
 
 @pytest.fixture
@@ -44,3 +44,83 @@ def test_render_param_kwonly(src, dst, renderer):
 
     res = renderer.render(f.parameters)
     assert res == dst
+
+
+@pytest.mark.parametrize(
+    "pair",
+    [
+        [ds.DocstringSectionParameters, ds.DocstringParameter],
+        [ds.DocstringSectionAttributes, ds.DocstringAttribute],
+        [ds.DocstringSectionReturns, ds.DocstringReturn],
+    ],
+)
+def test_render_table_description_interlink(renderer, pair):
+    interlink = "[](`abc`)"
+    cls_section, cls_par = pair
+    pars = cls_section([cls_par(name="x", description=interlink)])
+
+    res = renderer.render(pars)
+    assert interlink in res
+
+
+@pytest.mark.parametrize(
+    "section, dst",
+    [
+        (layout.Section(title="abc"), "## abc"),
+        (layout.Section(subtitle="abc"), "### abc"),
+        (layout.Section(title="abc", desc="zzz"), "## abc\n\nzzz"),
+        (layout.Section(subtitle="abc", desc="zzz"), "### abc\n\nzzz"),
+    ],
+)
+def test_render_summarize_section_title(renderer, section, dst):
+    res = renderer.summarize(section)
+
+    assert res == dst
+
+
+def test_render_summarize_section_contents(renderer):
+    obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
+    section = layout.Section(title="abc", desc="zzz", contents=[obj])
+    res = renderer.summarize(section)
+
+    table = (
+        "| | |\n| --- | --- |\n"
+        "| [a_func](#quartodoc.tests.example.a_func) | A function |"
+    )
+    assert res == f"## abc\n\nzzz\n\n{table}"
+
+
+def test_render_doc_attribute(renderer):
+    attr = ds.DocstringAttribute(
+        name="abc",
+        description="xyz",
+        annotation=exp.Expression(exp.Name("Optional", full="Optional"), "[", "]"),
+        value=1,
+    )
+
+    res = renderer.render(attr)
+
+    assert res == ["abc", r"Optional\[\]", "xyz"]
+
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_module(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_class(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.C", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_doc_class_attributes_section(snapshot, renderer):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.AttributesTable"))
+    res = renderer.render(bp)
+
+    assert res == snapshot

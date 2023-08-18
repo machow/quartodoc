@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import logging
 import warnings
 import yaml
@@ -14,10 +15,12 @@ from griffe import dataclasses as dc
 from plum import dispatch  # noqa
 from pathlib import Path
 from types import ModuleType
+from pydantic import ValidationError
 
 from .inventory import create_inventory, convert_inventory
 from . import layout
 from .renderers import Renderer
+from .validation import fmt
 
 from typing import Any
 
@@ -99,6 +102,10 @@ def get_object(
     >>> get_function("quartodoc", "get_function")
     <Function('get_function', ...
 
+    Returns
+    -------
+    x:
+        abc
     """
 
     if object_name is not None:
@@ -202,7 +209,14 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
         mod = importlib.import_module(obj.module.canonical_path)
 
         if isinstance(obj.parent, dc.Class):
-            f = getattr(getattr(mod, obj.parent.name), obj.name)
+            parent_obj = getattr(mod, obj.parent.name)
+
+            # we might fail to get the attribute if it is only a type annotation,
+            # and in that case need to bail out of the docstring replacement
+            try:
+                f = getattr(parent_obj, obj.name)
+            except AttributeError:
+                return
         else:
             f = getattr(mod, obj.name)
 
@@ -263,22 +277,45 @@ def dynamic_alias(
         splits = object_path.split(".")
 
         canonical_path = None
-        parts = []
         crnt_part = mod
         for ii, attr_name in enumerate(splits):
             try:
                 crnt_part = getattr(crnt_part, attr_name)
                 if not isinstance(crnt_part, ModuleType) and not canonical_path:
-                    canonical_path = crnt_part.__module__ + ":" + ".".join(splits[ii:])
+                    if inspect.isclass(crnt_part) or inspect.isfunction(crnt_part):
+                        _mod = getattr(crnt_part, "__module__", None)
 
-                parts.append(crnt_part)
+                        if _mod is None:
+                            canonical_path = path
+                        else:
+                            canonical_path = _mod + ":" + ".".join(splits[ii:])
+                    else:
+                        canonical_path = path
+                elif isinstance(crnt_part, ModuleType) and ii == (len(splits) - 1):
+                    # final object is module
+                    canonical_path = crnt_part.__name__
+
             except AttributeError:
+                # Fetching the attribute can fail if it is purely a type hint,
+                # and has no value. This can be an issue if you have added a
+                # docstring below the annotation
+                if canonical_path:
+                    # See if we can return the static object for a value-less attr
+                    try:
+                        obj = get_object(canonical_path, loader=loader)
+                        print(obj)
+                        if _is_valueless(obj):
+                            return obj
+                    except Exception as e:
+                        # TODO: should we fail silently, so the error below triggers?
+                        raise e
+
                 raise AttributeError(
                     f"No attribute named `{attr_name}` in the path `{path}`."
                 )
 
         if canonical_path is None:
-            raise ValueError("Cannot find canonical path for `{path}`")
+            raise ValueError(f"Cannot find canonical path for `{path}`")
 
         attr = crnt_part
 
@@ -307,6 +344,16 @@ def dynamic_alias(
 
         parent = get_object(parent_path, loader=loader)
         return dc.Alias(attr_name, obj, parent=parent)
+
+
+def _is_valueless(obj: dc.Object):
+    if isinstance(obj, dc.Attribute):
+        if "class-attribute" in obj.labels and obj.value is None:
+            return True
+        elif "instance-attribute" in obj.labels:
+            return True
+
+    return False
 
 
 # pkgdown =====================================================================
@@ -340,6 +387,9 @@ class Builder:
         A directory where source files to be documented live. This is only necessary
         if you are not documenting a package, but collection of scripts. Use a "."
         to refer to the current directory.
+    dynamic:
+        Whether to dynamically load all python objects. By default, objects are
+        loaded using static analysis.
 
     """
 
@@ -373,7 +423,8 @@ class Builder:
     def __init__(
         self,
         package: str,
-        sections: "list[Any]",
+        # TODO: correct typing
+        sections: "list[Any]" = tuple(),
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
@@ -382,6 +433,8 @@ class Builder:
         sidebar: "str | None" = None,
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
+        dynamic: bool | None = None,
+        parser="numpy",
     ):
         self.layout = self.load_layout(sections=sections, package=package)
 
@@ -390,6 +443,7 @@ class Builder:
         self.dir = dir
         self.title = title
         self.sidebar = sidebar
+        self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
 
@@ -398,12 +452,22 @@ class Builder:
 
         self.rewrite_all_pages = rewrite_all_pages
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
+        self.dynamic = dynamic
 
     def load_layout(self, sections: dict, package: str):
         # TODO: currently returning the list of sections, to make work with
         # previous code. We should make Layout a first-class citizen of the
         # process.
-        return layout.Layout(sections=sections, package=package)
+        try:
+            return layout.Layout(sections=sections, package=package)
+        except ValidationError as e:
+            msg = "Configuration error for YAML:\n - "
+            errors = [fmt(err) for err in e.errors() if fmt(err)]
+            first_error = errors[
+                0
+            ]  # we only want to show one error at a time b/c it is confusing otherwise
+            msg += first_error
+            raise ValueError(msg) from None
 
     # building ----------------------------------------------------------------
 
@@ -428,7 +492,7 @@ class Builder:
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = blueprint(self.layout)
+        blueprint = blueprint(self.layout, dynamic=self.dynamic, parser=self.parser)
 
         _log.info("Collecting pages and inventory items.")
         pages, items = collect(blueprint, base_dir=self.dir)
@@ -515,14 +579,33 @@ class Builder:
 
     def _generate_sidebar(self, blueprint: layout.Layout):
         contents = [f"{self.dir}/index{self.out_page_suffix}"]
+        in_subsection = False
+        crnt_entry = {}
         for section in blueprint.sections:
+            if section.title:
+                if crnt_entry:
+                    contents.append(crnt_entry)
+
+                in_subsection = False
+                crnt_entry = {"section": section.title, "contents": []}
+            elif section.subtitle:
+                in_subsection = True
+
             links = []
             for entry in section.contents:
                 links.extend(self._page_to_links(entry))
 
-            contents.append({"section": section.title, "contents": links})
+            if in_subsection:
+                sub_entry = {"section": section.subtitle, "contents": links}
+                crnt_entry["contents"].append(sub_entry)
+            else:
+                crnt_entry["contents"].extend(links)
 
-        return {"website": {"sidebar": {"id": self.dir, "contents": contents}}}
+        if crnt_entry:
+            contents.append(crnt_entry)
+
+        entries = [{"id": self.dir, "contents": contents}, {"id": "dummy-sidebar"}]
+        return {"website": {"sidebar": entries}}
 
     def write_sidebar(self, blueprint: layout.Layout):
         """Write a yaml config file for API sidebar."""

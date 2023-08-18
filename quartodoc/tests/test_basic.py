@@ -79,8 +79,41 @@ def test_get_object_dynamic_class_method_doc():
     assert meth.docstring.value == "A dynamic method"
 
 
-def test_get_object_dynamic_class_method_doc():
+def test_get_object_dynamic_class_method_doc_partial():
     obj = get_object("quartodoc.tests.example_dynamic:AClass", dynamic=True)
 
     meth = obj.members["dynamic_create"]
     assert meth.docstring.value == "A dynamic method"
+
+
+def test_get_object_dynamic_class_instance_attr_doc():
+    obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs", dynamic=True)
+
+    assert obj.members["b"].docstring.value == "The b attribute"
+
+
+def test_get_object_dynamic_class_instance_attr_doc_class_attr_valueless():
+    obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs", dynamic=True)
+
+    assert obj.members["z"].docstring.value == "The z attribute"
+
+
+def test_get_object_dynamic_module_attr_str():
+    # a key behavior here is that it does not error attempting to look up
+    # str.__module__, which does not exist
+    obj = get_object("quartodoc.tests.example_dynamic:NOTE", dynamic=True)
+
+    assert obj.name == "NOTE"
+
+    # this case is weird, but we are dynamically looking up a string
+    # so our __doc__ is technically str.__doc__
+    assert obj.docstring.value == str.__doc__
+
+
+def test_get_object_dynamic_module_attr_class_instance():
+    # a key behavior here is that it does not error attempting to look up
+    # str.__module__, which does not exist
+    obj = get_object("quartodoc.tests.example_dynamic:some_instance", dynamic=True)
+
+    assert obj.path == "quartodoc.tests.example_dynamic.some_instance"
+    assert obj.docstring.value == "Dynamic instance doc"
