@@ -8,3 +8,5 @@ ignore =
     W503,
     # redefinition of unused function name
     F811
+exclude =
+    test_*

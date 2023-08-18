@@ -25,8 +25,8 @@ def test_render_param_kwargs_annotated():
     res = renderer.render(f.parameters)
 
     assert (
-        res
-        == "a: \[int\](`int`), b: \[int\](`int`) = 1, *args: \[list\](`list`)\[\[str\](`str`)\], c: \[int\](`int`), d: \[int\](`int`), **kwargs: \[dict\](`dict`)\[\[str\](`str`), \[str\](`str`)\]"
+        res  # noqa: W605
+        == "a: \[int\](`int`), b: \[int\](`int`) = 1, *args: \[list\](`list`)\[\[str\](`str`)\], c: \[int\](`int`), d: \[int\](`int`), **kwargs: \[dict\](`dict`)\[\[str\](`str`), \[str\](`str`)\]"  # noqa: W605
     )
 
 
@@ -94,13 +94,14 @@ def test_render_doc_attribute(renderer):
     attr = ds.DocstringAttribute(
         name="abc",
         description="xyz",
-        annotation=exp.Expression(exp.Name("Optional", full="Optional"), "[", "]"),
+        annotation=exp.Expression(exp.Name("Optional[]", full="Optional")),
         value=1,
     )
 
     res = renderer.render(attr)
+    print(res)
 
-    assert res == ["abc", r"Optional\[\]", "xyz"]
+    assert res == ["abc", "[Optional\\[\\]](`Optional`)", "xyz"]  # noqa
 
 
 @pytest.mark.parametrize("children", ["embedded", "flat"])
