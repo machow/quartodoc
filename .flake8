@@ -1,5 +1,5 @@
 [flake8]
-exclude = docs
+exclude = docs, test_*, .flake8
 max-line-length = 90
 ignore =
     # line too long
@@ -8,5 +8,3 @@ ignore =
     W503,
     # redefinition of unused function name
     F811
-exclude =
-    test_*
