@@ -128,7 +128,6 @@ def _non_default_entries(el: "BaseModel"):
 
 class BlueprintTransformer(PydanticTransformer):
     def __init__(self, get_object=None, parser="numpy"):
-
         if get_object is None:
             loader = GriffeLoader(
                 docstring_parser=Parser(parser),

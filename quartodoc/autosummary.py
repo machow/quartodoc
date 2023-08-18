@@ -358,6 +358,7 @@ def _is_valueless(obj: dc.Object):
 
 # pkgdown =====================================================================
 
+
 # TODO: styles -- pkgdown, single-page, many-pages
 class Builder:
     """Base class for building API docs.
@@ -643,9 +644,7 @@ class Builder:
 
 
 class BuilderPkgdown(Builder):
-    """Build an API in R pkgdown style.
-
-    """
+    """Build an API in R pkgdown style."""
 
     style = "pkgdown"
 
