@@ -1,0 +1,7 @@
+[flake8]
+exclude = docs
+max-line-length = 90
+ignore =
+    E501    # line too long
+    W503    # line before binary operator
+    F811    # redefinition of unused function name
