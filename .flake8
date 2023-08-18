@@ -2,4 +2,9 @@
 exclude = docs
 max-line-length = 90
 ignore =
-    E501,W503,F811
+    # line too long
+    E501,
+    # line before binary operator
+    W503,
+    # redefinition of unused function name
+    F811
