@@ -39,6 +39,3 @@ docs-build: docs-build-examples
 	quarto render docs
 
 test-interlinks: quartodoc/tests/example_interlinks/test.md
-
-requirements-dev.txt:
-	pip-compile setup.cfg --extra dev -o $@
