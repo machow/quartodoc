@@ -1,11 +1,17 @@
-### Demo sites
+---
+jupyter:
+  kernel: python3
+---
+
+:::::: {.column-page }
+
+::::: {.d-none}
+
 
 | style | source | layout |
 | ----- | ------ | ------ |
 | [pkgdown] | [github][pkgdown-code] | Index page with a title and short description for functions listed in each section. Each function gets its own documentation page. |
 | [single-page] | [github][sp-code] | Index page has function documentation embedded on it. |
-
-### Packages using quartodoc
 
 
 | package | source | about |
@@ -13,8 +19,14 @@
 | [siuba] | [github][sb-code] | Data analysis library. |
 | [shiny][shiny] |  | Dashboarding framework. |
 | [vetiver][vetiver] | [github][vt-code] | A tool to version, share, deploy and monitor ML models. |
+| pins | | |
+| shinyswatch | | |
+| tiledb | | |
+
 
 : {tbl-colwidths="[20, 20, 60]"}
+
+https://tiledb-inc.github.io/TileDB-Vector-Search/documentation/reference/
 
 [pkgdown]: /examples/pkgdown/reference
 [pkgdown-code]: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
@@ -25,3 +37,85 @@
 [vt-code]: https://github.com/rstudio/vetiver-python
 [siuba]: https://siuba.org/api/
 [sb-code]: https://github.com/machow/siuba.org
+
+:::::
+
+
+```{python}
+#| output: asis
+#| echo: false
+
+def gallery(entries):
+    combined = "\n\n".join(entries)
+
+    return f":::::: {{.gallery .list .grid}}\n{combined}\n::::::"
+
+
+def gallery_entry(src_thumbnail: str, href: str, title: str, href_ref=None, href_source=None):
+    href_ref = href if href_ref is None else href_ref
+    href_source = href if href_source is None else href_source
+
+    return f"""
+<div class="card border-2 rounded-3 g-col-12 g-col-sm-6 g-col-md-4 mb-2">
+<a href="{href}">
+  <div class="card-header py-1 px-2 border-bottom border-1 bg-light">
+  <p>{title}</p>
+  </div>
+  <div class="gallery-card-body">
+  <img src="{src_thumbnail}">
+  </div>
+  <ul class="gallery-links">
+    <li>
+      <a class="view-reference" href="{href_ref}">Reference Page</a>
+    </li>
+    <li>
+      <a class="view-source" href="{href_source}">Source</a>
+    </li>
+  </ul>
+</a>
+</div>
+"""
+
+print(
+  gallery([
+    gallery_entry(
+        "images/siuba-home.png",
+        "https://siuba.org",
+        "Siuba",
+        href_ref = "https://siuba.org/api",
+        href_source = "https://github.com/machow/siuba.org",
+    ),
+    gallery_entry(
+        "images/pins-home.png",
+        "https://rstudio.github.io/pins-python",
+        "Pins",
+        href_ref = "https://rstudio.github.io/pins-python/reference",
+        href_source = "http://github.com/rstudio/pins-python",
+    ),
+    gallery_entry(
+        "images/vetiver-home.png",
+        "https://rstudio.github.io/vetiver-python",
+        "Vetiver",
+        href_ref = "https://rstudio.github.io/vetiver-python/stable/reference",
+        href_source = "https://github.com/rstudio/vetiver-python",
+    ),
+    gallery_entry(
+        "images/shiny-home.png",
+        "https://shiny.rstudio.com/py/",
+        "Shiny",
+        href_ref = "https://shiny.rstudio.com/py/api",
+        href_source = "https://github.com/rstudio/py-shiny",
+    ),
+    gallery_entry(
+        "images/shinyswatch-home.png",
+        "https://rstudio.github.io/py-shinyswatch/",
+        "Shinyswatch",
+        href_ref = "https://rstudio.github.io/py-shinyswatch/reference",
+        href_source = "https://github.com/rstudio/py-shinyswatch",
+    ),
+  ])
+)
+```
+
+
+::::::

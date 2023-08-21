@@ -9,17 +9,21 @@ jupyter:
     name: python3
 ---
 
-::: {.callout-note} 
-quartodoc is used to create the API documentation for [shiny], [siuba], and [vetiver].
-
-It's full-featured and relatively stable, but may see some small changes in the the name of making API documentation a real delight.
-
-If you're interested in using quartodoc for your package's documentation, please open an issue, so we can make sure it does exactly what you want.
-:::
 
 quartodoc lets you quickly generate python package documentation,
 using markdown and [quarto](https://quarto.org).
 It is designed as an alternative to Sphinx.
+
+Check out the screencast below for a full walkthrough of creating a documentation site,
+or read on for instructions on installation and use.
+
+<br>
+
+
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<br>
+<br>
 
 ## Installation
 

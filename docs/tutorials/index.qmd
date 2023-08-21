@@ -1,0 +1,12 @@
+---
+title: Tutorials
+---
+
+
+## Building a basic doc site
+
+This screencast walks through the process of build API documentation, by re-creating
+the [pins API documentation](https://rstudio.github.io/pins-python/reference/) from scratch.
+
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
