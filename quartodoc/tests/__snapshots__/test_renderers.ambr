@@ -208,3 +208,51 @@
   A function
   '''
 # ---
+# name: test_render_docstring_styles[google]
+  '''
+  # f_google { #quartodoc.tests.example_docstring_styles.f_google }
+  
+  `tests.example_docstring_styles.f_google(a, b)`
+  
+  A google style docstring.
+  
+  ## Parameters
+  
+  | Name   | Type   | Description      | Default    |
+  |--------|--------|------------------|------------|
+  | `a`    | int    | The a parameter. | _required_ |
+  | `b`    | str    | The b parameter. | _required_ |
+  '''
+# ---
+# name: test_render_docstring_styles[numpy]
+  '''
+  # f_numpy { #quartodoc.tests.example_docstring_styles.f_numpy }
+  
+  `tests.example_docstring_styles.f_numpy(a, b)`
+  
+  A numpy style docstring.
+  
+  ## Parameters
+  
+  | Name   | Type   | Description      | Default    |
+  |--------|--------|------------------|------------|
+  | `a`    |        | The a parameter. | _required_ |
+  | `b`    | str    | The b parameter. | _required_ |
+  '''
+# ---
+# name: test_render_docstring_styles[sphinx]
+  '''
+  # f_sphinx { #quartodoc.tests.example_docstring_styles.f_sphinx }
+  
+  `tests.example_docstring_styles.f_sphinx(a, b)`
+  
+  A sphinx style docstring.
+  
+  ## Parameters
+  
+  | Name   | Type   | Description      | Default    |
+  |--------|--------|------------------|------------|
+  | `a`    | int    | The a parameter. | _required_ |
+  | `b`    | str    | The b parameter. | _required_ |
+  '''
+# ---
