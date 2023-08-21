@@ -114,8 +114,10 @@ class MdRenderer(Renderer):
 
         """
 
-        if isinstance(el, (type(None), str)):
+        if isinstance(el, type(None)):
             return el
+        elif isinstance(el, str):
+            return sanitize(el)
 
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
