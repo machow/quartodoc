@@ -391,6 +391,9 @@ class Builder:
     dynamic:
         Whether to dynamically load all python objects. By default, objects are
         loaded using static analysis.
+    parser:
+        Docstring parser to use. This correspond to different docstring styles,
+        and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".
 
     """
 
