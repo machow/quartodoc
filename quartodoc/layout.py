@@ -70,6 +70,11 @@ class Section(_Structural):
         If specified, all object lookups will be relative to this path.
     contents:
         Individual objects (e.g. functions, classes, methods) being documented.
+    explode:
+        Name of an object used to create the section. If no description is specified,
+        then object's docstring will be used for the description.
+    options:
+        Options to set as defaults for all content.
     """
 
     kind: Literal["section"] = "section"
@@ -78,13 +83,16 @@ class Section(_Structural):
     desc: Optional[str] = None
     package: Union[str, None, MISSING] = MISSING()
     contents: ContentList = []
+    explode: Optional[str] = None
     options: Optional["AutoOptions"] = None
 
     def __init__(self, **data):
         super().__init__(**data)
 
         # TODO: should these be a custom type? Or can we use pydantic's ValidationError?
-        if self.title is None and self.subtitle is None and not self.contents:
+        if self.explode:
+            pass
+        elif self.title is None and self.subtitle is None and not self.contents:
             raise ValueError(
                 "Section must specify a title, subtitle, or contents field"
             )

@@ -29,7 +29,7 @@ from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 
-from typing import overload, TYPE_CHECKING
+from typing import overload, Optional, TYPE_CHECKING
 
 
 _log = logging.getLogger(__name__)
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
     from pydantic import BaseModel
 
 
-def _auto_package(mod: dc.Module) -> list[Section]:
+def _auto_package(mod: dc.Module, prefix: Optional[str] = None) -> list[Section]:
     """Create default sections for the given package."""
 
     import griffe.docstrings.dataclasses as ds
@@ -65,7 +65,10 @@ def _auto_package(mod: dc.Module) -> list[Section]:
         ):
             continue
 
-        contents.append(Auto(name=name))
+        if prefix:
+            contents.append(Auto(name=f"{prefix}:{name}"))
+        else:
+            contents.append(Auto(name=name))
 
     # try to fetch a description of the module ----
     if mod.docstring and mod.docstring.parsed:
@@ -160,7 +163,7 @@ class BlueprintTransformer(PydanticTransformer):
             )
 
     @staticmethod
-    def _clean_member_path(path, new):
+    def _clean_member_path(new):
         if ":" in new:
             return new.replace(":", ".")
 
@@ -227,6 +230,25 @@ class BlueprintTransformer(PydanticTransformer):
         return super().enter(el)
 
     @dispatch
+    def enter(self, el: Section):
+        if el.explode:
+            package = self.crnt_package
+
+            mod = self.get_object_fixed(f"{package}.{el.explode}", dynamic=self.dynamic)
+            sections = _auto_package(mod, prefix=el.explode)
+
+            only_section = sections[0]
+
+            if el.title:
+                only_section.title = el.title
+            if el.desc:
+                only_section.desc = el.desc
+
+            return super().enter(only_section)
+
+        return super().enter(el)
+
+    @dispatch
     def exit(self, el: Section):
         """Transform top-level sections, so their contents are all Pages."""
 
@@ -286,7 +308,7 @@ class BlueprintTransformer(PydanticTransformer):
             # On the other hand, we've wired get_object up to make sure getting
             # the member of an Alias also returns an Alias.
             # member_path = self._append_member_path(path, entry)
-            relative_path = self._clean_member_path(path, entry)
+            relative_path = self._clean_member_path(entry)
 
             # create Doc element for member ----
             # TODO: when a member is a Class, it is currently created using
@@ -323,7 +345,9 @@ class BlueprintTransformer(PydanticTransformer):
             children.append(res)
 
         is_flat = el.children == ChoicesChildren.flat
-        return Doc.from_griffe(el.name, obj, members=children, flat=is_flat)
+        return Doc.from_griffe(
+            self._clean_member_path(el.name), obj, members=children, flat=is_flat
+        )
 
     @staticmethod
     def _fetch_members(el: Auto, obj: dc.Object | dc.Alias):
