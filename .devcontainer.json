@@ -6,7 +6,7 @@
         "extensions": [
             "quarto.quarto",
             "ms-python.python"
-          ],
+          ]
       }
     },
   
