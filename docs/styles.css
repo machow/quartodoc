@@ -68,7 +68,20 @@ td:first-child a {
 
 .gallery .gallery-card-body {
     height: 250px;
+    padding-bottom: 20px;
 }
+
+.gallery .gallery-card-lets-gooo {
+  font-size: 32px;
+  text-align: center;
+  padding: 100px 45px 45px 45px;
+  width: 100%;
+}
+
+.gallery a {
+  text-decoration: none;
+}
+
 
 .gallery .gallery-card-body img {
     width: 100%;
