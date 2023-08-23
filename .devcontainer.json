@@ -1,0 +1,14 @@
+{
+    "build": { "dockerfile": "Dockerfile" },
+  
+    "customizations": {
+      "vscode": {
+        "extensions": [
+            "quarto.quarto",
+            "ms-python.python"
+          ]
+      }
+    },
+  
+    "forwardPorts": [8888]
+  }
