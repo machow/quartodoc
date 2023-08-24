@@ -28,8 +28,11 @@ website:
         text: Get Started
       - file: examples/
         text: Examples
+      - file: tutorials/
+        text: Tutorials
       - href: api/
         text: Reference
+
     right:
       - icon: github
         href: https://github.com/machow/quartodoc/
