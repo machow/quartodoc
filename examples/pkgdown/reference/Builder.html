@@ -138,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <colgroup>
 <col style="width: 8%">
-<col style="width: 9%">
+<col style="width: 10%">
 <col style="width: 72%">
 <col style="width: 9%">
 </colgroup>
@@ -159,13 +159,13 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>sections</code></td>
-<td>list[Any]</td>
+<td>‘list[Any]’</td>
 <td>A list of sections, with items to document.</td>
 <td><code>tuple()</code></td>
 </tr>
 <tr class="odd">
 <td><code>version</code></td>
-<td>str | None</td>
+<td>‘str | None’</td>
 <td>The package version. By default this attempts to look up the current package version (TODO).</td>
 <td><code>None</code></td>
 </tr>
@@ -183,7 +183,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>renderer</code></td>
-<td>dict | Renderer | str</td>
+<td>‘dict | Renderer | str’</td>
 <td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
 <td><code>'markdown'</code></td>
 </tr>
@@ -195,7 +195,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>sidebar</code></td>
-<td>str | None</td>
+<td>‘str | None’</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
 <td><code>None</code></td>
 </tr>
@@ -207,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>source_dir</code></td>
-<td>str | None</td>
+<td>‘str | None’</td>
 <td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
 <td><code>None</code></td>
 </tr>
@@ -216,6 +216,12 @@ ul.task-list li input[type="checkbox"] {
 <td>bool | None</td>
 <td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
 <td><code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>parser</code></td>
+<td></td>
+<td>Docstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.</td>
+<td><code>'numpy'</code></td>
 </tr>
 </tbody>
 </table>

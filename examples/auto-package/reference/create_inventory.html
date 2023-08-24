@@ -193,8 +193,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <table class="table">
 <colgroup>
 <col style="width: 7%">
-<col style="width: 23%">
-<col style="width: 42%">
+<col style="width: 24%">
+<col style="width: 41%">
 <col style="width: 26%">
 </colgroup>
 <thead>
@@ -220,19 +220,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td><code>items</code></td>
-<td>list[dc.Object | dc.Alias]</td>
+<td>‘list[dc.Object | dc.Alias]’</td>
 <td>A docstring parser to use.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
 <td><code>uri</code></td>
-<td>str | Callable[dc.Object, str]</td>
+<td>‘str | Callable[dc.Object, str]’</td>
 <td>Link relative to the docs where the items documentation lives.</td>
 <td><code>lambda s: f'{s.canonical_path}.html'</code></td>
 </tr>
 <tr class="odd">
 <td><code>dispname</code></td>
-<td>str | Callable[dc.Object, str]</td>
+<td>‘str | Callable[dc.Object, str]’</td>
 <td>Name to be shown when a link to the item is made.</td>
 <td><code>'-'</code></td>
 </tr>

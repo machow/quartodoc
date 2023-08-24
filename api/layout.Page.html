@@ -90,6 +90,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Examples</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../tutorials/">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -424,9 +428,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 26%">
-<col style="width: 64%">
+<col style="width: 6%">
+<col style="width: 40%">
+<col style="width: 53%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -438,7 +442,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>kind</td>
-<td>Literal[‘page’]</td>
+<td>typing.Literal[‘page’]</td>
 <td></td>
 </tr>
 <tr class="even">
@@ -448,12 +452,12 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>package</td>
-<td>Union[str, None, MISSING]</td>
+<td>typing.Union[str, None, quartodoc.layout.MISSING]</td>
 <td>If specified, all object lookups will be relative to this path.</td>
 </tr>
 <tr class="even">
 <td>summary</td>
-<td>Optional[SummaryDetails]</td>
+<td>typing.Optional[quartodoc.layout.SummaryDetails]</td>
 <td>An optional title and description for the page.</td>
 </tr>
 <tr class="odd">

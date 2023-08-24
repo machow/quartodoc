@@ -90,6 +90,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Examples</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../tutorials/">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -405,6 +409,9 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#quartodoc.MdRenderer.render" id="toc-quartodoc.MdRenderer.render" class="nav-link active" data-scroll-target="#quartodoc.MdRenderer.render">MdRenderer.render</a></li>
+  <li><a href="#text--" id="toc-text--" class="nav-link" data-scroll-target="#text--">text —-</a></li>
+  <li><a href="#note-this-can-be-a-number-of-things.-for-example-opening-docstring-text" id="toc-note-this-can-be-a-number-of-things.-for-example-opening-docstring-text" class="nav-link" data-scroll-target="#note-this-can-be-a-number-of-things.-for-example-opening-docstring-text">note this can be a number of things. for example, opening docstring text,</a></li>
+  <li><a href="#or-a-section-with-a-header-not-included-in-the-numpydoc-standard" id="toc-or-a-section-with-a-header-not-included-in-the-numpydoc-standard" class="nav-link" data-scroll-target="#or-a-section-with-a-header-not-included-in-the-numpydoc-standard">or a section with a header not included in the numpydoc standard</a></li>
   </ul>
 </nav>
     </div>
@@ -417,6 +424,66 @@ ul.task-list li input[type="checkbox"] {
 <h1>MdRenderer.render</h1>
 <p><code>MdRenderer.render(self, el)</code></p>
 <p>Return a string representation of an object, or layout element.</p>
+<hr>
+<p>render(self, el: str)</p>
+<hr>
+<p>render(self, el: quartodoc.layout.Page)</p>
+<hr>
+<p>render(self, el: quartodoc.layout.Section)</p>
+<hr>
+<p>render(self, el: quartodoc.layout.Interlaced)</p>
+<hr>
+<p>render(self, el: quartodoc.layout.Doc)</p>
+<hr>
+<p>render(self, el: Union[quartodoc.layout.DocClass, quartodoc.layout.DocModule])</p>
+<hr>
+<p>render(self, el: quartodoc.layout.DocFunction)</p>
+<hr>
+<p>render(self, el: quartodoc.layout.DocAttribute)</p>
+<hr>
+<p>render(self, el: Union[griffe.dataclasses.Object, griffe.dataclasses.Alias])</p>
+<p>Render high level objects representing functions, classes, etc..</p>
+<hr>
+<p>render(self, el: griffe.dataclasses.Parameters)</p>
+<hr>
+<p>render(self, el: griffe.dataclasses.Parameter)</p>
+<hr>
+<p>render(self, el: griffe.docstrings.dataclasses.DocstringSectionText)</p>
+</section>
+<section id="text--" class="level1">
+<h1>text —-</h1>
+</section>
+<section id="note-this-can-be-a-number-of-things.-for-example-opening-docstring-text" class="level1">
+<h1>note this can be a number of things. for example, opening docstring text,</h1>
+</section>
+<section id="or-a-section-with-a-header-not-included-in-the-numpydoc-standard" class="level1">
+<h1>or a section with a header not included in the numpydoc standard</h1>
+<hr>
+<p>render(self, el: griffe.docstrings.dataclasses.DocstringSectionParameters)</p>
+<hr>
+<p>render(self, el: griffe.docstrings.dataclasses.DocstringParameter) -&gt; Tuple[str]</p>
+<hr>
+<p>render(self, el: griffe.docstrings.dataclasses.DocstringSectionAttributes)</p>
+<hr>
+<p>render(self, el: griffe.docstrings.dataclasses.DocstringAttribute)</p>
+<hr>
+<p>render(self, el: quartodoc.ast.DocstringSectionWarnings)</p>
+<hr>
+<p>render(self, el: quartodoc.ast.DocstringSectionSeeAlso)</p>
+<hr>
+<p>render(self, el: quartodoc.ast.DocstringSectionNotes)</p>
+<hr>
+<p>render(self, el: griffe.docstrings.dataclasses.DocstringSectionExamples)</p>
+<hr>
+<p>render(self, el: quartodoc.ast.ExampleCode)</p>
+<hr>
+<p>render(self, el: quartodoc.ast.ExampleText)</p>
+<hr>
+<p>render(self, el: Union[griffe.docstrings.dataclasses.DocstringSectionReturns, griffe.docstrings.dataclasses.DocstringSectionRaises])</p>
+<hr>
+<p>render(self, el: Union[griffe.docstrings.dataclasses.DocstringReturn, griffe.docstrings.dataclasses.DocstringRaise])</p>
+<hr>
+<p>render(self, el)</p>
 
 
 </section>

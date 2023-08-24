@@ -90,6 +90,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Examples</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../tutorials/">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -424,9 +428,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 9%">
-<col style="width: 41%">
-<col style="width: 48%">
+<col style="width: 7%">
+<col style="width: 58%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -438,12 +442,12 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>sections</td>
-<td>list[Union[SectionElement, Section]]</td>
+<td>list[typing.Union[quartodoc.layout.SectionElement, quartodoc.layout.Section]]</td>
 <td>Top-level sections of the quarto layout config.</td>
 </tr>
 <tr class="even">
 <td>package</td>
-<td>Union[str, None, MISSING]</td>
+<td>typing.Union[str, None, quartodoc.layout.MISSING]</td>
 <td>The package being documented.</td>
 </tr>
 </tbody>

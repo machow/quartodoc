@@ -90,6 +90,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Examples</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../tutorials/">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -425,9 +429,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 6%">
-<col style="width: 19%">
-<col style="width: 74%">
+<col style="width: 5%">
+<col style="width: 26%">
+<col style="width: 68%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -444,17 +448,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>obj</td>
-<td>Union[dc.Object, dc.Alias]</td>
+<td>typing.Union[griffe.Object, griffe.Alias]</td>
 <td>A representation of the object (eg its parameters and parsed docstring)</td>
 </tr>
 <tr class="odd">
 <td>uri</td>
-<td>Optional[str]</td>
+<td>typing.Optional[str]</td>
 <td>A relative URI link to the object from the root of the documentation site.</td>
 </tr>
 <tr class="even">
 <td>dispname</td>
-<td>Optional[str]</td>
+<td>typing.Optional[str]</td>
 <td>Default display name, if none is specified in the interlink. If None, the default is to dipslay the name attribute.</td>
 </tr>
 </tbody>

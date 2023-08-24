@@ -152,6 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="menu-text">Examples</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../tutorials/">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -310,11 +314,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#basic-use" id="toc-basic-use" class="nav-link" data-scroll-target="#basic-use">Basic use</a></li>
   <li><a href="#rebuilding-site" id="toc-rebuilding-site" class="nav-link" data-scroll-target="#rebuilding-site">Rebuilding site</a></li>
   <li><a href="#looking-up-objects" id="toc-looking-up-objects" class="nav-link" data-scroll-target="#looking-up-objects">Looking up objects</a></li>
-  <li><a href="#example-sites" id="toc-example-sites" class="nav-link" data-scroll-target="#example-sites">Example sites</a>
-  <ul class="collapse">
-  <li><a href="#demo-sites" id="toc-demo-sites" class="nav-link" data-scroll-target="#demo-sites">Demo sites</a></li>
-  <li><a href="#packages-using-quartodoc" id="toc-packages-using-quartodoc" class="nav-link" data-scroll-target="#packages-using-quartodoc">Packages using quartodoc</a></li>
-  </ul></li>
+  <li><a href="#learning-more" id="toc-learning-more" class="nav-link" data-scroll-target="#learning-more">Learning more</a></li>
   </ul>
 </nav>
     </div>
@@ -338,22 +338,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>quartodoc is used to create the API documentation for <a href="https://shiny.rstudio.com/py/api/">shiny</a>, <a href="https://siuba.org/api/">siuba</a>, and <a href="https://rstudio.github.io/vetiver-python/stable/reference/">vetiver</a>.</p>
-<p>It’s full-featured and relatively stable, but may see some small changes in the the name of making API documentation a real delight.</p>
-<p>If you’re interested in using quartodoc for your package’s documentation, please open an issue, so we can make sure it does exactly what you want.</p>
-</div>
-</div>
 <p>quartodoc lets you quickly generate python package documentation, using markdown and <a href="https://quarto.org">quarto</a>. It is designed as an alternative to Sphinx.</p>
+<p>Check out the screencast below for a full walkthrough of creating a documentation site, or read on for instructions on installation and use.</p>
+<p><br></p>
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;">
+<iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+</iframe>
+</div>
+<p><br> <br></p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install quartodoc</span>
@@ -436,68 +428,17 @@ Note
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> renderers</span><span class="co">         # module: quartodoc.renderers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The functions listed in <code>contents</code> are assumed to be imported from the package.</p>
 </section>
-<section id="example-sites" class="level2">
-<h2 class="anchored" data-anchor-id="example-sites">Example sites</h2>
-<section id="demo-sites" class="level3">
-<h3 class="anchored" data-anchor-id="demo-sites">Demo sites</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>style</th>
-<th>source</th>
-<th>layout</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../examples/pkgdown/reference">pkgdown</a></td>
-<td><a href="https://github.com/machow/quartodoc/tree/main/examples/pkgdown">github</a></td>
-<td>Index page with a title and short description for functions listed in each section. Each function gets its own documentation page.</td>
-</tr>
-<tr class="even">
-<td><a href="../examples/single-page/reference">single-page</a></td>
-<td><a href="https://github.com/machow/quartodoc/tree/main/examples/single-page">github</a></td>
-<td>Index page has function documentation embedded on it.</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="packages-using-quartodoc" class="level3">
-<h3 class="anchored" data-anchor-id="packages-using-quartodoc">Packages using quartodoc</h3>
-<table class="table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 60%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>package</th>
-<th>source</th>
-<th>about</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="https://siuba.org/api/">siuba</a></td>
-<td><a href="https://github.com/machow/siuba.org">github</a></td>
-<td>Data analysis library.</td>
-</tr>
-<tr class="even">
-<td><a href="https://shiny.rstudio.com/py/api/">shiny</a></td>
-<td></td>
-<td>Dashboarding framework.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://rstudio.github.io/vetiver-python/stable/reference/">vetiver</a></td>
-<td><a href="https://github.com/rstudio/vetiver-python">github</a></td>
-<td>A tool to version, share, deploy and monitor ML models.</td>
-</tr>
-</tbody>
-</table>
+<section id="learning-more" class="level2">
+<h2 class="anchored" data-anchor-id="learning-more">Learning more</h2>
+<p>Go <a href="./get-started/basic-docs.qmd">to the next page</a> to learn how to configure quartodoc sites, or check out these handy pages:</p>
+<ul>
+<li><a href="./examples/index.qmd">Examples page</a>: sites using quartodoc.</li>
+<li><a href="./tutorials/index.qmd">Tutorials page</a>: screencasts of building a quartodoc site.</li>
+<li><a href="./get-started/docstring-examples.qmd">Docstring issues and examples</a>: common issues when formatting docstrings.</li>
+<li><a href="./get-started/dev-big-picture.qmd">Programming, the big picture</a>: the nitty gritty of how quartodoc works, and how to extend it.</li>
+</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

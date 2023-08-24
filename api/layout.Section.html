@@ -90,6 +90,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Examples</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../tutorials/">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -424,9 +428,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 20%">
-<col style="width: 72%">
+<col style="width: 6%">
+<col style="width: 32%">
+<col style="width: 61%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -438,27 +442,27 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>kind</td>
-<td>Literal[‘section’]</td>
+<td>typing.Literal[‘section’]</td>
 <td></td>
 </tr>
 <tr class="even">
 <td>title</td>
-<td>Optional[str]</td>
+<td>typing.Optional[str]</td>
 <td>Title of the section on the index.</td>
 </tr>
 <tr class="odd">
 <td>subtitle</td>
-<td>Optional[str]</td>
+<td>typing.Optional[str]</td>
 <td>Subtitle of the section on the index. Note that either title or subtitle, but not both, may be set.</td>
 </tr>
 <tr class="even">
 <td>desc</td>
-<td>Optional[str]</td>
+<td>typing.Optional[str]</td>
 <td>Description of the section on the index.</td>
 </tr>
 <tr class="odd">
 <td>package</td>
-<td>Union[str, None, MISSING]</td>
+<td>typing.Union[str, None, quartodoc.layout.MISSING]</td>
 <td>If specified, all object lookups will be relative to this path.</td>
 </tr>
 <tr class="even">

@@ -90,6 +90,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Examples</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../tutorials/">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../api/">
  <span class="menu-text">Reference</span></a>
   </li>  
@@ -417,6 +421,23 @@ ul.task-list li input[type="checkbox"] {
 <h1>MdRenderer.summarize</h1>
 <p><code>MdRenderer.summarize(self, obj)</code></p>
 <p>Produce a summary table.</p>
+<hr>
+<p>summarize(self, el: quartodoc.layout.Layout)</p>
+<hr>
+<p>summarize(self, el: quartodoc.layout.Section)</p>
+<hr>
+<p>summarize(self, el: quartodoc.layout.Page)</p>
+<hr>
+<p>summarize(self, el: quartodoc.layout.MemberPage)</p>
+<hr>
+<p>summarize(self, el: quartodoc.layout.Interlaced, *args, **kwargs)</p>
+<hr>
+<p>summarize(self, el: quartodoc.layout.Doc, path: Optional[str] = None, shorten: bool = False)</p>
+<hr>
+<p>summarize(self, el: quartodoc.layout.Link)</p>
+<hr>
+<p>summarize(self, obj: Union[griffe.dataclasses.Object, griffe.dataclasses.Alias]) -&gt; str</p>
+<p>Test</p>
 
 
 </section>
