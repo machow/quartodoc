@@ -44,11 +44,9 @@ def gallery_entry(src_thumbnail: str, href: str, title: str, href_ref=None, href
 def gallery_entry_cta():
     href = "https://github.com/machow/quartodoc/discussions/new?category=general&title=New%20Doc%20Site:"
     return f"""
-<div class="card border-2 rounded-3 g-col-12 g-col-sm-12 g-col-md-6 g-col-lg-4 mb-2">
+<div class="gallery-card-cta card border-2 rounded-3 g-col-12 g-col-sm-12 g-col-md-6 g-col-lg-4 mb-2">
 <a class="gallery-href" href="{href}" target="_blank">
-  <div class="gallery-card-body gallery-card-lets-gooo">
   Get help creating documentation ⚡️
-  </div>
 </a>
 </div>
 """
@@ -56,35 +54,35 @@ def gallery_entry_cta():
 print(
   gallery([
     gallery_entry(
-        "images/siuba-home.png",
+        "images/siuba-home.jpeg",
         "https://siuba.org",
         "Siuba",
         href_ref = "https://siuba.org/api",
         href_source = "https://github.com/machow/siuba.org",
     ),
     gallery_entry(
-        "images/pins-home.png",
+        "images/pins-home.jpeg",
         "https://rstudio.github.io/pins-python",
         "Pins",
         href_ref = "https://rstudio.github.io/pins-python/reference",
         href_source = "http://github.com/rstudio/pins-python",
     ),
     gallery_entry(
-        "images/vetiver-home.png",
+        "images/vetiver-home.jpeg",
         "https://rstudio.github.io/vetiver-python",
         "Vetiver",
         href_ref = "https://rstudio.github.io/vetiver-python/stable/reference",
         href_source = "https://github.com/rstudio/vetiver-python",
     ),
     gallery_entry(
-        "images/shiny-home.png",
+        "images/shiny-home.jpeg",
         "https://shiny.rstudio.com/py/",
         "Shiny",
         href_ref = "https://shiny.rstudio.com/py/api",
         href_source = "https://github.com/rstudio/py-shiny",
     ),
     gallery_entry(
-        "images/shinyswatch-home.png",
+        "images/shinyswatch-home.jpeg",
         "https://rstudio.github.io/py-shinyswatch/",
         "Shinyswatch",
         href_ref = "https://rstudio.github.io/py-shinyswatch/reference",

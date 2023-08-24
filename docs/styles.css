@@ -71,11 +71,12 @@ td:first-child a {
     padding-bottom: 20px;
 }
 
-.gallery .gallery-card-lets-gooo {
+.gallery .gallery-card-cta {
   font-size: 32px;
   text-align: center;
   padding: 100px 45px 45px 45px;
   width: 100%;
+  background-color: rgb(248, 249, 250);
 }
 
 .gallery a {
@@ -93,6 +94,10 @@ td:first-child a {
     font-size: 14px;
     text-decoration: none;
     text-align: center;
+}
+
+.gallery .card-header h6 {
+  margin-top: 0.5rem;
 }
 
 .gallery .card-header a {
