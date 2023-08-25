@@ -656,7 +656,7 @@ class Builder:
         style = cfg.get("style", "pkgdown")
         cls_builder = cls._registry[style]
 
-        _fast_inventory = cfg.get("interlinks", {}).get("fast", False)
+        _fast_inventory = quarto_cfg.get("interlinks", {}).get("fast", False)
 
         return cls_builder(
             **{k: v for k, v in cfg.items() if k != "style"},
