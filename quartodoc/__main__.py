@@ -212,7 +212,8 @@ def build(config, filter, dry_run, watch, verbose):
 @click.command()
 @click.argument("config", default="_quarto.yml")
 @click.option("--dry-run", is_flag=True, default=False)
-def interlinks(config, dry_run):
+@click.option("--fast", is_flag=True, default=False)
+def interlinks(config, dry_run, fast):
     cfg = yaml.safe_load(open(config))
     interlinks = cfg.get("interlinks", None)
 
@@ -225,17 +226,25 @@ def interlinks(config, dry_run):
         return
 
     for k, v in interlinks["sources"].items():
-        # TODO: user shouldn't need to include their own docs in interlinks
+        # don't include user's own docs (users don't need to specify their own docs in
+        # the interlinks config anymore, so this is for backwards compat).
         if v["url"] == "/":
             continue
 
         url = v["url"] + v.get("inv", "objects.inv")
         inv = soi.Inventory(url=url)
 
-        p_dst = p_root / cache / f"{k}_objects.json"
+        p_dst = p_root / cache / f"{k}_objects"
         p_dst.parent.mkdir(exist_ok=True, parents=True)
 
-        convert_inventory(inv, p_dst)
+        if fast:
+            # use sphobjinv to dump inv in txt format
+            df = inv.data_file()
+            soi.writebytes(p_dst.with_suffix(".txt"), df)
+
+        else:
+            # old behavior of converting to custom json format
+            convert_inventory(inv, p_dst.with_suffix(".json"))
 
 
 cli.add_command(build)

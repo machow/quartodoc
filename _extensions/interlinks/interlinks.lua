@@ -1,11 +1,77 @@
-local function read_json(filename)
+local function read_inv_text(filename)
+    -- read file
     local file = io.open(filename, "r")
     if file == nil then
         return nil
     end
     local str = file:read("a")
     file:close()
-    return quarto.json.decode(str)
+
+
+    local project = str:match("# Project: (%S+)")
+    local version = str:match("# Version: (%S+)")
+
+    local data = {project = project, version = version, items = {}}
+
+    local ptn_data =
+        "^" ..
+        "(.-)%s+" ..        -- name
+        "([%S:]-):" ..      -- domain
+        "([%S]+)%s+" ..     -- role
+        "(%-?%d+)%s+" ..     -- priority
+        "(%S*)%s+" ..       -- uri
+        "(.-)\r?$"         -- dispname
+
+
+    -- Iterate through each line in the file content
+    for line in str:gmatch("[^\r\n]+") do
+        if not line:match("^#") then
+            -- Match each line against the pattern
+            local name, domain, role, priority, uri, dispName = line:match(ptn_data)
+
+            -- if name is nil, raise an error
+            if name == nil then
+                error("Error parsing line: " .. line)
+            end
+
+            data.items[#data.items + 1] = {
+                name = name,
+                domain = domain,
+                role = role,
+                priority = priority,
+                uri = uri,
+                dispName = dispName
+            }
+        end
+    end
+    return data
+end
+
+local function read_json(filename)
+
+    local file = io.open(filename, "r")
+    if file == nil then
+        return nil
+    end
+    local str = file:read("a")
+    file:close()
+
+    local decoded = quarto.json.decode(str)
+    return decoded
+end
+
+local function read_inv_text_or_json(base_name)
+    local file = io.open(base_name .. ".txt", "r")
+    if file then
+        -- TODO: refactors so we don't just close the file immediately
+        io.close(file)
+        json = read_inv_text(base_name .. ".txt")
+
+    else
+        json = read_json(base_name .. ".json")
+    end
+
+    return json
 end
 
 local inventory = {}
@@ -167,11 +233,12 @@ return {
             local json
             local prefix
             for k, v in pairs(meta.interlinks.sources) do
-                json = read_json(quarto.project.offset .. "/_inv/" .. k .. "_objects.json")
+                local base_name = quarto.project.offset .. "/_inv/" .. k .. "_objects"
+                json = read_inv_text_or_json(base_name)
                 prefix = pandoc.utils.stringify(v.url)
                 fixup_json(json, prefix)
             end
-            json = read_json(quarto.project.offset .. "/objects.json")
+            json = read_inv_text_or_json(quarto.project.offset .. "/objects")
             if json ~= nil then
                 fixup_json(json, "/")
             end
