@@ -218,6 +218,9 @@ def interlinks(config, dry_run, fast):
     interlinks = cfg.get("interlinks", None)
 
     cache = cfg.get("cache", "_inv")
+    cfg_fast = cfg.get("fast", False)
+
+    fast = cfg_fast or fast
 
     p_root = Path(config).parent
 
