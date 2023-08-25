@@ -220,7 +220,7 @@ def interlinks(config, dry_run, fast):
 
     p_root = Path(config).parent
 
-    if interlinks is None:
+    if not interlinks:
         print("No interlinks field found in your quarto config. Quitting.")
         return
 
