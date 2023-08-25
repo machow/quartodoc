@@ -214,19 +214,21 @@ def build(config, filter, dry_run, watch, verbose):
 @click.option("--dry-run", is_flag=True, default=False)
 @click.option("--fast", is_flag=True, default=False)
 def interlinks(config, dry_run, fast):
+    # config loading ----
     cfg = yaml.safe_load(open(config))
-    interlinks = cfg.get("interlinks", None)
-
-    cache = cfg.get("cache", "_inv")
-    cfg_fast = cfg.get("fast", False)
-
-    fast = cfg_fast or fast
+    interlinks = cfg.get("interlinks", {})
 
     p_root = Path(config).parent
 
     if interlinks is None:
         print("No interlinks field found in your quarto config. Quitting.")
         return
+
+    # interlinks config settings ----
+    cache = interlinks.get("cache", "_inv")
+    cfg_fast = interlinks.get("fast", False)
+
+    fast = cfg_fast or fast
 
     for k, v in interlinks["sources"].items():
         # don't include user's own docs (users don't need to specify their own docs in
