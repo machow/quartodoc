@@ -19,6 +19,7 @@ from pydantic import ValidationError
 
 from .inventory import create_inventory, convert_inventory
 from . import layout
+from .parsers import get_parser_defaults
 from .renderers import Renderer
 from .validation import fmt
 
@@ -59,7 +60,9 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
     <Function('get_function', ...
 
     """
-    griffe = GriffeLoader(docstring_parser=Parser(parser))
+    griffe = GriffeLoader(
+        docstring_parser=Parser(parser), docstring_options=get_parser_defaults(parser)
+    )
     mod = griffe.load_module(module)
 
     f_data = mod.functions[func_name]
@@ -118,6 +121,7 @@ def get_object(
     if loader is None:
         loader = GriffeLoader(
             docstring_parser=Parser(parser),
+            docstring_options=get_parser_defaults(parser),
             modules_collection=ModulesCollection(),
             lines_collection=LinesCollection(),
         )
