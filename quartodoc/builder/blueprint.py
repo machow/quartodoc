@@ -25,6 +25,7 @@ from quartodoc.layout import (
     Page,
     Section,
 )
+from quartodoc.parsers import get_parser_defaults
 from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
@@ -131,6 +132,7 @@ class BlueprintTransformer(PydanticTransformer):
         if get_object is None:
             loader = GriffeLoader(
                 docstring_parser=Parser(parser),
+                docstring_options=get_parser_defaults(parser),
                 modules_collection=ModulesCollection(),
                 lines_collection=LinesCollection(),
             )

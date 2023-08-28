@@ -27,3 +27,19 @@ def f_numpy(a, b: str):
         The b parameter.
 
     """
+
+
+# we set an option by default in griffe's numpy parsing
+# to allow linebreaks in parameter tables
+def f_numpy_with_linebreaks(a, b: str):
+    """A numpy style docstring.
+
+    Parameters
+    ----------
+    a: int
+        The a parameter.
+
+    b:
+        The b parameter.
+
+    """
