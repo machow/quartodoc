@@ -157,3 +157,11 @@ def test_blueprint_fetch_members_include_kind_false(kind, removed):
     auto = lo.Auto(name="quartodoc.tests.example_class.C", **option)
     bp = blueprint(auto)
     _check_member_names(bp.members, all_members - removed)
+
+
+def test_blueprint_fetch_members_include_inherited():
+    auto = lo.Auto(name="quartodoc.tests.example_class.Child", include_inherited=True)
+    bp = blueprint(auto)
+
+    member_names = set([entry.name for entry in bp.members])
+    assert "some_method" in member_names

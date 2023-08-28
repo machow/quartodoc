@@ -207,6 +207,7 @@ class AutoOptions(_Base):
     include_private: bool = False
     include_imports: bool = False
     include_empty: bool = False
+    include_inherited: bool = False
 
     # member types to include ----
     include_attributes: bool = True
@@ -237,6 +238,8 @@ class Auto(AutoOptions):
         Whether to include members that were imported from somewhere else.
     include_empty:
         Whether to include members with no docstring.
+    include_inherited:
+        Whether to include members inherited from a parent class.
     include_attributes:
         Whether to include attributes.
     include_classes:
