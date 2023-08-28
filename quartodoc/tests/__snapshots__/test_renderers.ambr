@@ -25,6 +25,18 @@
   | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
   | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
   
+  ## Classes
+  
+  | Name | Description |
+  | --- | --- |
+  | [D](#quartodoc.tests.example_class.C.D) | A nested class |
+  
+  ### D { #quartodoc.tests.example_class.C.D }
+  
+  `tests.example_class.C.D()`
+  
+  A nested class
+  
   ## Methods
   
   | Name | Description |
@@ -63,6 +75,18 @@
   | [SOME_ATTRIBUTE](#quartodoc.tests.example_class.C.SOME_ATTRIBUTE) | An attribute |
   | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
   | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
+  
+  ## Classes
+  
+  | Name | Description |
+  | --- | --- |
+  | [D](#quartodoc.tests.example_class.C.D) | A nested class |
+  
+  ## D { #quartodoc.tests.example_class.C.D }
+  
+  `tests.example_class.C.D()`
+  
+  A nested class
   
   ## Methods
   
