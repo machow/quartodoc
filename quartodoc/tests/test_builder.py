@@ -43,6 +43,22 @@ def test_builder_build_filter_wildcard_methods(builder):
     len(list(Path(builder.dir).glob("Mdrenderer.*"))) == 2
 
 
+def test_builder_auto_options():
+    cfg = yaml.safe_load(
+        """
+    quartodoc:
+      package: quartodoc
+      options:
+        members: [a_func, a_attr]
+      sections:
+        - contents: [quartodoc.tests.example]
+    """
+    )
+
+    builder = Builder.from_quarto_config(cfg)
+    assert builder.layout.options.members == ["a_func", "a_attr"]
+
+
 def test_builder_generate_sidebar(tmp_path, snapshot):
     cfg = yaml.safe_load(
         """

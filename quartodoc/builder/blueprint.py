@@ -332,7 +332,7 @@ class BlueprintTransformer(PydanticTransformer):
         if el.members is not None:
             return el.members
 
-        options = obj.members
+        options = obj.all_members if el.include_inherited else obj.members
 
         if el.include:
             raise NotImplementedError("include argument currently unsupported.")
@@ -343,11 +343,20 @@ class BlueprintTransformer(PydanticTransformer):
         if not el.include_private:
             options = {k: v for k, v in options.items() if not k.startswith("_")}
 
-        if not el.include_imports:
+        if not el.include_imports and not el.include_inherited:
             options = {k: v for k, v in options.items() if not v.is_alias}
 
         if not el.include_empty:
             options = {k: v for k, v in options.items() if v.docstring is not None}
+
+        if not el.include_attributes:
+            options = {k: v for k, v in options.items() if not v.is_attribute}
+
+        if not el.include_classes:
+            options = {k: v for k, v in options.items() if not v.is_class}
+
+        if not el.include_functions:
+            options = {k: v for k, v in options.items() if not v.is_function}
 
         # for modules, remove any Alias objects, since they were imported from
         # other places. Sphinx has a flag for this behavior, so may be good
