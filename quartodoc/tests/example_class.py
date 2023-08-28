@@ -29,6 +29,9 @@ class C:
     def some_property(self):
         """A property"""
 
+    class D:
+        """A nested class"""
+
 
 class AttributesTable:
     """The short summary.

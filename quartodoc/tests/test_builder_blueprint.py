@@ -135,3 +135,25 @@ def test_blueprint_section_options():
     doc = page.contents[0]
 
     assert doc.members == []
+
+
+def _check_member_names(members, expected):
+    member_names = set([entry.name for entry in members])
+    assert member_names == expected
+
+
+@pytest.mark.parametrize(
+    "kind, removed",
+    [
+        ("attributes", {"some_property", "z", "SOME_ATTRIBUTE"}),
+        ("classes", {"D"}),
+        ("functions", {"some_method"}),
+    ],
+)
+def test_blueprint_fetch_members_include_kind_false(kind, removed):
+    option = {f"include_{kind}": False}
+    all_members = {"SOME_ATTRIBUTE", "z", "some_property", "some_method", "D"}
+
+    auto = lo.Auto(name="quartodoc.tests.example_class.C", **option)
+    bp = blueprint(auto)
+    _check_member_names(bp.members, all_members - removed)

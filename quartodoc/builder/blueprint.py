@@ -347,6 +347,15 @@ class BlueprintTransformer(PydanticTransformer):
         if not el.include_empty:
             options = {k: v for k, v in options.items() if v.docstring is not None}
 
+        if not el.include_attributes:
+            options = {k: v for k, v in options.items() if not v.is_attribute}
+
+        if not el.include_classes:
+            options = {k: v for k, v in options.items() if not v.is_class}
+
+        if not el.include_functions:
+            options = {k: v for k, v in options.items() if not v.is_function}
+
         # for modules, remove any Alias objects, since they were imported from
         # other places. Sphinx has a flag for this behavior, so may be good
         # to do something similar.
