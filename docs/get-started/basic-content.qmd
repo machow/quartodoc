@@ -154,7 +154,8 @@ quartodoc:
 Note that the **with options** block sets `members: []` inside `options`.
 This sets `members: []` as the default for each piece of content.
 
-::: {.callout-tip}
+### Reusing options
+
 Options can be given a name, and re-used in multiple sections:
 
 ```yaml
@@ -173,7 +174,31 @@ Options can be given a name, and re-used in multiple sections:
 The code above uses `&no-members` to name the options in the first section "no-members",
 then `*no-members` to reference it in the second section.
 The `&` and `*` are called an anchor and alias, respectively, in YAML.
-:::
+
+
+### Where to put options
+
+You can specify options in either the top-level config, or individual Sections.
+
+```yaml
+quartodoc:
+  package: quartodoc
+
+  # set options on the top-level config.
+  # this will apply to all pieces of content.
+  options:
+    include_attributes: false
+  sections:
+    - contents:
+        - MdRenderer
+
+      # set options in an individual section.
+      # in thise case, it resets include_attributes back
+      # to defaulting as true
+      options:
+        include_attributes: true
+        
+```
 
 ## Specifying package path
 
