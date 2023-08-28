@@ -48,6 +48,7 @@ class Layout(_Structural):
 
     sections: list[Union[SectionElement, Section]] = []
     package: Union[str, None, MISSING] = MISSING()
+    options: Optional["AutoOptions"] = None
 
 
 # SubElements -----------------------------------------------------------------

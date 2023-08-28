@@ -378,6 +378,8 @@ class Builder:
         Title of the API index page.
     renderer: Renderer
         The renderer used to convert docstrings (e.g. to markdown).
+    options:
+        Default options to set for all pieces of content (e.g. include_attributes).
     out_index:
         The output path of the index file, used to list all API functions.
     sidebar:
@@ -429,6 +431,7 @@ class Builder:
         package: str,
         # TODO: correct typing
         sections: "list[Any]" = tuple(),
+        options: "dict | None" = None,
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
@@ -440,7 +443,9 @@ class Builder:
         dynamic: bool | None = None,
         parser="numpy",
     ):
-        self.layout = self.load_layout(sections=sections, package=package)
+        self.layout = self.load_layout(
+            sections=sections, package=package, options=options
+        )
 
         self.package = package
         self.version = None
@@ -458,12 +463,12 @@ class Builder:
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
         self.dynamic = dynamic
 
-    def load_layout(self, sections: dict, package: str):
+    def load_layout(self, sections: dict, package: str, options=None):
         # TODO: currently returning the list of sections, to make work with
         # previous code. We should make Layout a first-class citizen of the
         # process.
         try:
-            return layout.Layout(sections=sections, package=package)
+            return layout.Layout(sections=sections, package=package, options=options)
         except ValidationError as e:
             msg = "Configuration error for YAML:\n - "
             errors = [fmt(err) for err in e.errors() if fmt(err)]
