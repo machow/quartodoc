@@ -135,3 +135,13 @@ def test_render_docstring_styles(snapshot, renderer, parser):
     res = renderer.render(bp)
 
     assert res == snapshot
+
+
+def test_render_docstring_numpy_linebreaks(snapshot, renderer):
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_with_linebreaks", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot

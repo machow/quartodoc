@@ -48,6 +48,7 @@ class Layout(_Structural):
 
     sections: list[Union[SectionElement, Section]] = []
     package: Union[str, None, MISSING] = MISSING()
+    options: Optional["AutoOptions"] = None
 
 
 # SubElements -----------------------------------------------------------------
@@ -207,6 +208,14 @@ class AutoOptions(_Base):
     include_private: bool = False
     include_imports: bool = False
     include_empty: bool = False
+    include_inherited: bool = False
+
+    # member types to include ----
+    include_attributes: bool = True
+    include_classes: bool = True
+    include_functions: bool = True
+
+    # other options ----
     include: Optional[str] = None
     exclude: Optional[str] = None
     dynamic: Union[None, bool, str] = None
@@ -230,6 +239,14 @@ class Auto(AutoOptions):
         Whether to include members that were imported from somewhere else.
     include_empty:
         Whether to include members with no docstring.
+    include_inherited:
+        Whether to include members inherited from a parent class.
+    include_attributes:
+        Whether to include attributes.
+    include_classes:
+        Whether to include classes.
+    include_functions:
+        Whether to include functions.
     include:
         (Not implemented). A list of members to include.
     exclude:

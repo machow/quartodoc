@@ -19,6 +19,7 @@ from pydantic import ValidationError
 
 from .inventory import create_inventory, convert_inventory
 from . import layout
+from .parsers import get_parser_defaults
 from .renderers import Renderer
 from .validation import fmt
 
@@ -59,7 +60,9 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
     <Function('get_function', ...
 
     """
-    griffe = GriffeLoader(docstring_parser=Parser(parser))
+    griffe = GriffeLoader(
+        docstring_parser=Parser(parser), docstring_options=get_parser_defaults(parser)
+    )
     mod = griffe.load_module(module)
 
     f_data = mod.functions[func_name]
@@ -118,6 +121,7 @@ def get_object(
     if loader is None:
         loader = GriffeLoader(
             docstring_parser=Parser(parser),
+            docstring_options=get_parser_defaults(parser),
             modules_collection=ModulesCollection(),
             lines_collection=LinesCollection(),
         )
@@ -378,6 +382,8 @@ class Builder:
         Title of the API index page.
     renderer: Renderer
         The renderer used to convert docstrings (e.g. to markdown).
+    options:
+        Default options to set for all pieces of content (e.g. include_attributes).
     out_index:
         The output path of the index file, used to list all API functions.
     sidebar:
@@ -429,6 +435,7 @@ class Builder:
         package: str,
         # TODO: correct typing
         sections: "list[Any]" = tuple(),
+        options: "dict | None" = None,
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
@@ -440,7 +447,9 @@ class Builder:
         dynamic: bool | None = None,
         parser="numpy",
     ):
-        self.layout = self.load_layout(sections=sections, package=package)
+        self.layout = self.load_layout(
+            sections=sections, package=package, options=options
+        )
 
         self.package = package
         self.version = None
@@ -458,12 +467,12 @@ class Builder:
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
         self.dynamic = dynamic
 
-    def load_layout(self, sections: dict, package: str):
+    def load_layout(self, sections: dict, package: str, options=None):
         # TODO: currently returning the list of sections, to make work with
         # previous code. We should make Layout a first-class citizen of the
         # process.
         try:
-            return layout.Layout(sections=sections, package=package)
+            return layout.Layout(sections=sections, package=package, options=options)
         except ValidationError as e:
             msg = "Configuration error for YAML:\n - "
             errors = [fmt(err) for err in e.errors() if fmt(err)]
