@@ -50,8 +50,7 @@ local function lookup(search_object)
         return results[1]
     end
     if #results == 0 then
-        quarto.log.warning("Found no matches for object: " .. search_object.name .. ".")
-        quarto.log.dump(search_object)
+        quarto.log.warning("Found no matches for object:\n", search_object)
     end
 
     return nil
