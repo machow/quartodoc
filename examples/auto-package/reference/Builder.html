@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="quartodoc.Builder" class="level1">
 <h1>Builder</h1>
-<p><code>Builder(self, package, sections=tuple(), version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')</code></p>
+<p><code>Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
@@ -188,36 +188,42 @@ ul.task-list li input[type="checkbox"] {
 <td><code>'markdown'</code></td>
 </tr>
 <tr class="odd">
+<td><code>options</code></td>
+<td>‘dict | None’</td>
+<td>Default options to set for all pieces of content (e.g.&nbsp;include_attributes).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
 <td><code>out_index</code></td>
 <td>str</td>
 <td>The output path of the index file, used to list all API functions.</td>
 <td><code>None</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>sidebar</code></td>
 <td>‘str | None’</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
 <td><code>None</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>rewrite_all_pages</code></td>
 <td></td>
 <td>Whether to rewrite all rendered doc pages, or only those with changes.</td>
 <td><code>False</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>source_dir</code></td>
 <td>‘str | None’</td>
 <td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
 <td><code>None</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>dynamic</code></td>
 <td>bool | None</td>
 <td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
 <td><code>None</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>parser</code></td>
 <td></td>
 <td>Docstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.</td>
