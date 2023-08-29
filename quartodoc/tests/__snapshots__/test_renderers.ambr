@@ -232,6 +232,15 @@
   A function
   '''
 # ---
+# name: test_render_doc_signature_path
+  '''
+  # example.a_func { #quartodoc.tests.example.a_func }
+  
+  `a_func()`
+  
+  A function
+  '''
+# ---
 # name: test_render_docstring_numpy_linebreaks
   '''
   # f_numpy_with_linebreaks { #quartodoc.tests.example_docstring_styles.f_numpy_with_linebreaks }

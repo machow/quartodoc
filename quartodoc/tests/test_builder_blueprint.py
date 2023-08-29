@@ -87,7 +87,7 @@ def test_blueprint_default_dynamic(bp):
     assert NOTE in res.obj.docstring.value
 
 
-def test_blueprint_auto_package(bp):
+def test_blueprint_auto_anchor(bp):
     auto = lo.Auto(name="a_func", package="quartodoc.tests.example")
     res = bp.visit(auto)
 
@@ -183,3 +183,19 @@ def test_blueprint_fetch_members_include_inherited():
 
     member_names = set([entry.name for entry in bp.members])
     assert "some_method" in member_names
+
+
+def test_blueprint_member_options():
+    auto = lo.Auto(
+        name="quartodoc.tests.example",
+        member_options={"signature_path": "short"},
+        members=["AClass"],
+    )
+    bp = blueprint(auto)
+    doc_a_class = bp.members[0]
+
+    # member has option set
+    assert doc_a_class.signature_path == "short"
+
+    # this currently does not apply to members of members
+    assert doc_a_class.members[0].signature_path == "relative"

@@ -3,6 +3,7 @@ from __future__ import annotations
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
+from functools import wraps
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from tabulate import tabulate
@@ -25,6 +26,29 @@ def _has_attr_section(el: dc.Docstring | None):
         return False
 
     return any([isinstance(x, ds.DocstringSectionAttributes) for x in el.parsed])
+
+
+def with_doc_options(f):
+    """Decorator to add docstring options to a renderer.
+    
+    Currently, the renderer renders signatures directly from griffe objects,
+    so this decorator is used, to temporarily set some things from layout.Doc
+    as renderer settings.
+
+    (Not ideal but works for now.)
+    """
+
+    @wraps(f)
+    def wrapper(self, el, *args, **kwargs):
+        orig = self.display_name
+        self.display_name = el.signature_path
+        res = f(self, el, *args, **kwargs)
+
+        self.display_name = orig
+
+        return res
+    
+    return wrapper
 
 
 class MdRenderer(Renderer):
@@ -86,7 +110,7 @@ class MdRenderer(Renderer):
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
-        if self.display_name == "name":
+        if self.display_name in {"name", "short"}:
             return el.name
         elif self.display_name == "relative":
             return ".".join(el.path.split(".")[1:])
@@ -246,6 +270,7 @@ class MdRenderer(Renderer):
         raise NotImplementedError(f"Unsupported Doc type: {type(el)}")
 
     @dispatch
+    @with_doc_options
     def render(self, el: Union[layout.DocClass, layout.DocModule]):
         title = self.render_header(el)
 
@@ -314,12 +339,14 @@ class MdRenderer(Renderer):
         return "\n\n".join([title, body, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
+    @with_doc_options
     def render(self, el: layout.DocFunction):
         title = self.render_header(el)
 
         return "\n\n".join([title, self.render(el.obj)])
 
     @dispatch
+    @with_doc_options
     def render(self, el: layout.DocAttribute):
         title = self.render_header(el)
         return "\n\n".join([title, self.render(el.obj)])
