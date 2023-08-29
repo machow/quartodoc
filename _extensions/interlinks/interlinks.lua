@@ -31,7 +31,7 @@ local function lookup(search_object)
             if search_object.domain and item.domain ~= search_object.domain then
                 goto continue
             else
-                if item.domain == "py" then
+                if search_object.domain or item.domain == "py" then
                   table.insert(results, item)
                 end
 
