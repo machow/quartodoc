@@ -49,10 +49,7 @@ def test_render_attribute():
     # TODO: snapshot tests
     a = get_object("quartodoc", "tests.example_attribute.a")
 
-    assert (
-        MdRenderer().render(a)
-        == "`tests.example_attribute.a`\n\nI am an attribute docstring"
-    )
+    assert MdRenderer().render(a) == "I am an attribute docstring"
 
 
 def test_get_object_dynamic_module_root():
