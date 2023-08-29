@@ -10,11 +10,11 @@ end
 
 local inventory = {}
 
-function lookup(search_object)
+local function lookup(search_object)
 
     local results = {}
-    for ii, inventory in ipairs(inventory) do
-        for jj, item in ipairs(inventory.items) do
+    for _, inv in ipairs(inventory) do
+        for _, item in ipairs(inv.items) do
             -- e.g. :external+<inv_name>:<domain>:<role>:`<name>`
             if item.inv_name and item.inv_name ~= search_object.inv_name then
                 goto continue
@@ -31,7 +31,9 @@ function lookup(search_object)
             if search_object.domain and item.domain ~= search_object.domain then
                 goto continue
             else
-                table.insert(results, item)
+                if search_object.domain or item.domain == "py" then
+                  table.insert(results, item)
+                end
 
                 goto continue
             end
@@ -44,19 +46,17 @@ function lookup(search_object)
         return results[1]
     end
     if #results > 1 then
-        print("Found multiple matches for " .. search_object.name)
-        quarto.utils.dump(results)
-        return nil
+        quarto.log.warning("Found multiple matches for " .. search_object.name .. ", using the first match.")
+        return results[1]
     end
     if #results == 0 then
-        print("Found no matches for object:")
-        quarto.utils.dump(search_object)
+        quarto.log.warning("Found no matches for object:\n", search_object)
     end
 
     return nil
 end
 
-function mysplit (inputstr, sep)
+local function mysplit (inputstr, sep)
     if sep == nil then
             sep = "%s"
     end
@@ -97,7 +97,7 @@ local function build_search_object(str)
             search.role = normalize_role(t[3])
             search.name = t[4]:match("%%60(.*)%%60")
         else
-            print("couldn't parse this link: " .. str)
+            quarto.log.warning("couldn't parse this link: " .. str)
             return {}
         end
     else
@@ -105,7 +105,7 @@ local function build_search_object(str)
     end
 
     if search.name == nil then
-        print("couldn't parse this link: " .. str)
+        quarto.log.warning("couldn't parse this link: " .. str)
         return {}
     end
 
@@ -116,7 +116,7 @@ local function build_search_object(str)
     return search
 end
 
-function report_broken_link(link, search_object, replacement)
+local function report_broken_link(link, search_object, replacement)
     -- TODO: how to unescape html elements like [?
     return pandoc.Code(pandoc.utils.stringify(link.content))
 end
@@ -154,7 +154,7 @@ function Link(link)
     return link
 end
 
-function fixup_json(json, prefix)
+local function fixup_json(json, prefix)
     for _, item in ipairs(json.items) do
         item.uri = prefix .. item.uri
     end
