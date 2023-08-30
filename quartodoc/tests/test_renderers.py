@@ -155,3 +155,25 @@ def test_render_doc_signature_path(snapshot, renderer):
     res = renderer.render(bp)
 
     assert res == snapshot
+
+
+def test_render_source(renderer):
+    obj = get_object("quartodoc.tests.example.a_func")
+    res = renderer.render_source(obj)
+
+    code = '''\
+def a_func():
+    """A function"""\
+'''
+
+    res == f"<code><pre>{code}</pre></code>"
+
+
+def test_render_doc_show_source(renderer, snapshot):
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_quarto_block_in_docstring", package=package, show_source=True)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot

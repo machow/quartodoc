@@ -43,3 +43,12 @@ def f_numpy_with_linebreaks(a, b: str):
         The b parameter.
 
     """
+
+
+def f_quarto_block_in_docstring(a, b: str):
+    """A quarto style docstring.
+
+    ```{python}
+    1 < 2
+    ```
+    """

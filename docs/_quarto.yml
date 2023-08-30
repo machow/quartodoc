@@ -87,7 +87,8 @@ quartodoc:
         These functions fetch and analyze python objects, including parsing docstrings.
         They prepare a basic representation of your doc site that can be rendered and built.
       contents:
-        - Auto
+        - name: Auto
+          show_source: true
         - blueprint
         - collect
         - get_object

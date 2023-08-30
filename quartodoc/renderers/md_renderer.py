@@ -11,7 +11,7 @@ from plum import dispatch
 from typing import Tuple, Union, Optional
 from quartodoc import layout
 
-from .base import Renderer, escape, sanitize, convert_rst_link_to_md
+from .base import Renderer, escape, escape_source, sanitize, convert_rst_link_to_md
 
 
 try:
@@ -176,6 +176,22 @@ class MdRenderer(Renderer):
         # e.g. get_object, rather than quartodoc.get_object
         _anchor = f"{{ #{el.obj.path} }}"
         return f"{'#' * self.crnt_header_level} {_str_dispname} {_anchor}"
+    
+    # render source -----------------------------------------------------------
+
+    @dispatch
+    def render_source(self, el: Union[dc.Object, dc.Alias]):
+        """Render the source code for an object."""
+
+        # TODO: what happens if no source
+        code = escape_source(el.source)
+
+        code_block = f"<pre><code>{code}</code></pre>"
+        
+        # TODO: could use el.relative_filepath to show file path, but
+        # this does it relative to the current working directory, so if
+        # your cwd is a docs folder, surprising things can happen.
+        return f"<details>\n<summary>Show source</summary>\n{code_block}\n</details>"
 
     # render method -----------------------------------------------------------
 
@@ -330,20 +346,21 @@ class MdRenderer(Renderer):
 
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
+        source = [self.render_source(el.obj)] if el.show_source else []
 
         body = self.render(el.obj)
 
 
-        return "\n\n".join([title, *sig_part, body, *attr_docs, *class_docs, *meth_docs])
+        return "\n\n".join([title, *sig_part, body, *source, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
     def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
         title = self.render_header(el)
 
-        str_sig = self.signature(el)
-        sig_part = [str_sig] if self.show_signature else []
+        sig_part = [self.signature(el)] if self.show_signature else []
+        source = [self.render_source(el.obj)] if el.show_source else []
 
-        return "\n\n".join([title, *sig_part, self.render(el.obj)])
+        return "\n\n".join([title, *sig_part, self.render(el.obj), *source])
 
     # render griffe objects ===================================================
 

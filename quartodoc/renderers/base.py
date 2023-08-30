@@ -1,4 +1,5 @@
 import re
+import html
 
 from plum import dispatch
 
@@ -8,6 +9,18 @@ from plum import dispatch
 
 def escape(val: str):
     return f"`{val}`"
+
+
+def escape_source(source: str):
+    """Escape python source code for adding to a qmd file.
+
+    Since quarto looks for ```{python} blocks, even in indented markdown,
+    we need to be careful to ensure it doesn't attempt to execute parts of
+    python source code (since the output will look wrong and weird).
+    """
+
+    # escape html characters, and replace ` with its html encoding
+    return html.escape(source, quote=False).replace("`", "&#96;")
 
 
 def sanitize(val: str, allow_markdown=False):

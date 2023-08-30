@@ -232,6 +232,30 @@
   A function
   '''
 # ---
+# name: test_render_doc_show_source
+  '''
+  # f_quarto_block_in_docstring { #quartodoc.tests.example_docstring_styles.f_quarto_block_in_docstring }
+  
+  `tests.example_docstring_styles.f_quarto_block_in_docstring(a, b)`
+  
+  A quarto style docstring.
+  
+  ```{python}
+  1 < 2
+  ```
+  
+  <details>
+  <summary>Show source</summary>
+  <pre><code>def f_quarto_block_in_docstring(a, b: str):
+      """A quarto style docstring.
+  
+      &#96;&#96;&#96;{python}
+      1 &lt; 2
+      &#96;&#96;&#96;
+      """</code></pre>
+  </details>
+  '''
+# ---
 # name: test_render_doc_signature_path
   '''
   # example.a_func { #quartodoc.tests.example.a_func }

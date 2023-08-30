@@ -224,6 +224,7 @@ class AutoOptions(_Base):
     exclude: Optional[str] = None
     dynamic: Union[None, bool, str] = None
     children: ChoicesChildren = ChoicesChildren.embedded
+    show_source: bool = False
     package: Union[str, None, MISSING] = MISSING()
     member_options: Optional["AutoOptions"] = None
 
@@ -270,6 +271,8 @@ class Auto(AutoOptions):
         to return an alias for that object.
     children:
         Style for presenting members. Either separate, embedded, or flat.
+    show_source:
+        Whether to show the source code for the object.
     package:
         If specified, object lookup will be relative to this path.
     member_options:
@@ -336,6 +339,7 @@ class Doc(_Docable):
     obj: Union[dc.Object, dc.Alias]
     anchor: str
     signature_path: SignatureOptions = "relative"
+    show_source: bool = False
 
     class Config:
         arbitrary_types_allowed = True
@@ -350,6 +354,7 @@ class Doc(_Docable):
         anchor: str = None,
         flat: bool = False,
         signature_path: str = "relative",
+        show_source: bool = False,
     ):
         if members is None:
             members = []
@@ -362,6 +367,7 @@ class Doc(_Docable):
             "obj": obj,
             "anchor": anchor,
             "signature_path": signature_path,
+            "show_source": show_source,
         }
 
         if kind == "function":
