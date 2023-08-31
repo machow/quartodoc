@@ -355,7 +355,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> Auto(name <span class="op">=</span> <span class="st">"quartodoc.get_object"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>auto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>Auto(members=None, include_private=False, include_imports=False, include_empty=False, include_inherited=False, include_attributes=True, include_classes=True, include_functions=True, include=None, exclude=None, dynamic=None, children=&lt;ChoicesChildren.embedded: 'embedded'&gt;, package=MISSING(), kind='auto', name='quartodoc.get_object')</code></pre>
+<pre><code>Auto(signature_name='relative', members=None, include_private=False, include_imports=False, include_empty=False, include_inherited=False, include_attributes=True, include_classes=True, include_functions=True, include=None, exclude=None, dynamic=None, children=&lt;ChoicesChildren.embedded: 'embedded'&gt;, package=MISSING(), member_options=None, kind='auto', name='quartodoc.get_object')</code></pre>
 </div>
 </div>
 <ul>
@@ -371,7 +371,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> blueprint(auto)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>doc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>DocFunction(name='quartodoc.get_object', obj=&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;, anchor='quartodoc.get_object', kind='function')</code></pre>
+<pre><code>DocFunction(name='quartodoc.get_object', obj=&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;, anchor='quartodoc.get_object', signature_name='relative', kind='function')</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="4">
@@ -469,8 +469,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ├─anchor = 'quartodoc.MdRenderer'
 ├─members = █─list
 │           ├─0 = █─DocFunction ...
-│           ├─1 = █─DocFunction ...
-│           └─2 = █─DocFunction ...
+│           └─1 = █─DocFunction ...
 └─flat = False</code></pre>
 </div>
 </div>
@@ -492,8 +491,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ├─anchor = 'quartodoc.MdRenderer'
 ├─members = █─list
 │           ├─0 = █─MemberPage ...
-│           ├─1 = █─MemberPage ...
-│           └─2 = █─MemberPage ...
+│           └─1 = █─MemberPage ...
 └─flat = False</code></pre>
 </div>
 </div>
@@ -508,7 +506,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pages, items <span class="op">=</span> collect(some_page, <span class="st">"reference"</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>pages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>[Page(kind='page', path='some_doc_page', package=MISSING(), summary=None, flatten=False, contents=[DocFunction(name='quartodoc.get_object', obj=&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;, anchor='quartodoc.get_object', kind='function')])]</code></pre>
+<pre><code>[Page(kind='page', path='some_doc_page', package=MISSING(), summary=None, flatten=False, contents=[DocFunction(name='quartodoc.get_object', obj=&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;, anchor='quartodoc.get_object', signature_name='relative', kind='function')])]</code></pre>
 </div>
 </div>
 

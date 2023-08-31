@@ -423,33 +423,15 @@ ul.task-list li input[type="checkbox"] {
 <section id="quartodoc.MdRenderer.render_annotation" class="level1">
 <h1>MdRenderer.render_annotation</h1>
 <p><code>MdRenderer.render_annotation(self, el)</code></p>
-<p>Special hook for rendering a type annotation.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
-<table class="table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 42%">
-<col style="width: 39%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>el</code></td>
-<td>‘str | expr.Name | expr.Expression | None’</td>
-<td>An object representing a type annotation.</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
+<p>el: An object representing a type annotation.</p>
+<hr>
+<p>render_annotation(self, el: NoneType) -&gt; str</p>
+<hr>
+<p>render_annotation(self, el: griffe.expressions.Name) -&gt; str</p>
+<hr>
+<p>render_annotation(self, el: griffe.expressions.Expression) -&gt; str</p>
 
 
 </section>

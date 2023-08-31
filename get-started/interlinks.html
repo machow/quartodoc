@@ -312,7 +312,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#installing" id="toc-installing" class="nav-link active" data-scroll-target="#installing">Installing</a></li>
-  <li><a href="#configuring-the-interlinks-filter" id="toc-configuring-the-interlinks-filter" class="nav-link" data-scroll-target="#configuring-the-interlinks-filter">Configuring the interlinks filter</a></li>
+  <li><a href="#configuring-the-interlinks-filter" id="toc-configuring-the-interlinks-filter" class="nav-link" data-scroll-target="#configuring-the-interlinks-filter">Configuring the interlinks filter</a>
+  <ul class="collapse">
+  <li><a href="#experimental-fast-option" id="toc-experimental-fast-option" class="nav-link" data-scroll-target="#experimental-fast-option">Experimental fast option</a></li>
+  <li><a href="#rendering-interlinks-in-api-docs" id="toc-rendering-interlinks-in-api-docs" class="nav-link" data-scroll-target="#rendering-interlinks-in-api-docs">Rendering interlinks in API docs</a></li>
+  </ul></li>
   <li><a href="#running-the-interlinks-filter" id="toc-running-the-interlinks-filter" class="nav-link" data-scroll-target="#running-the-interlinks-filter">Running the interlinks filter</a></li>
   <li><a href="#link-formats" id="toc-link-formats" class="nav-link" data-scroll-target="#link-formats">Link formats</a></li>
   <li><a href="#link-filtering-syntax" id="toc-link-filtering-syntax" class="nav-link" data-scroll-target="#link-filtering-syntax">Link filtering syntax</a>
@@ -386,15 +390,43 @@ Note
 <li>The <code>url</code> fields indicate where inventory files can be found.</li>
 </ul>
 <p>By default, downloaded inventory files will be saved in the <code>_inv</code> folder of your documentation directory.</p>
+<section id="experimental-fast-option" class="level3">
+<h3 class="anchored" data-anchor-id="experimental-fast-option">Experimental fast option</h3>
+<p>Use the experimental <code>fast: true</code> option to speed up the interlinks filter.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interlinks</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">fast</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sources</span><span class="kw">:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>By default inventory files are saved as JSON, but this option keeps them as text files, and attempts to parse them much faster.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Be sure to install the latest version of the interlinks filter, using <code>quarto add machow/quartodoc</code>.</p>
+</div>
+</div>
+</section>
+<section id="rendering-interlinks-in-api-docs" class="level3">
+<h3 class="anchored" data-anchor-id="rendering-interlinks-in-api-docs">Rendering interlinks in API docs</h3>
+<p>quartodoc can convert type annotations in function signatures to interlinks.</p>
+<p>In order to enable this behavior, set <code>render_interlinks: true</code> in the quartodoc config.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">render_interlinks</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 <section id="running-the-interlinks-filter" class="level2">
 <h2 class="anchored" data-anchor-id="running-the-interlinks-filter">Running the interlinks filter</h2>
 <p>First, build the reference for your own site, which includes an objects.json inventory:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Second, retrieve the inventory files for any other sources:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc interlinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> quartodoc interlinks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Finally you should see the filter run when previewing your docs:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="link-formats" class="level2">
 <h2 class="anchored" data-anchor-id="link-formats">Link formats</h2>
@@ -449,10 +481,10 @@ Note
 <li><code>domain</code>: what kind of piece of documentation is it? For example, <code>"py"</code> indicates it is a python function, and <code>"c"</code> indicates it’s a C function. This lets sites document libraries that are implemented in multiple languages.</li>
 </ul>
 <p>Filtering by these pieces of information can be down using the following syntax:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode rst code-with-copy"><code class="sourceCode rest"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:external+inventory_name:domain:role:</span><span class="dv">`target`</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">:domain:role:</span><span class="dv">`target`</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">:role:</span><span class="dv">`target`</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dv">`target`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode rst code-with-copy"><code class="sourceCode rest"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">:external+inventory_name:domain:role:</span><span class="dv">`target`</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">:domain:role:</span><span class="dv">`target`</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">:role:</span><span class="dv">`target`</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dv">`target`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice that this syntax allows you to go from more specific information (i.e.&nbsp;<code>`target`</code> on the right), to least specific information (<code>role</code>, then <code>domain</code>).</p>
 <p>In practice, it’s often enough to specify the role of a function, like:</p>
 <ul>

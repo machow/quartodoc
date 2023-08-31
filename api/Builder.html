@@ -422,17 +422,11 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="quartodoc.Builder" class="level1">
 <h1>Builder</h1>
-<p><code>Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')</code></p>
+<p><code>Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy', render_interlinks=False, _fast_inventory=False)</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 10%">
-<col style="width: 72%">
-<col style="width: 9%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -444,7 +438,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>package</code></td>
-<td>str</td>
+<td><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></td>
 <td>The name of the package.</td>
 <td><em>required</em></td>
 </tr>
@@ -462,13 +456,13 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>dir</code></td>
-<td>str</td>
+<td><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></td>
 <td>Name of API directory.</td>
 <td><code>'reference'</code></td>
 </tr>
 <tr class="odd">
 <td><code>title</code></td>
-<td>str</td>
+<td><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></td>
 <td>Title of the API index page.</td>
 <td><code>'Function reference'</code></td>
 </tr>
@@ -486,7 +480,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>out_index</code></td>
-<td>str</td>
+<td><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></td>
 <td>The output path of the index file, used to list all API functions.</td>
 <td><code>None</code></td>
 </tr>
@@ -510,11 +504,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><code>dynamic</code></td>
-<td>bool | None</td>
+<td><a href="https://docs.python.org/3/library/functions.html#bool">bool</a> | None</td>
 <td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
+<td><code>render_interlinks</code></td>
+<td><a href="https://docs.python.org/3/library/functions.html#bool">bool</a></td>
+<td>Whether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.</td>
+<td><code>False</code></td>
+</tr>
+<tr class="even">
 <td><code>parser</code></td>
 <td></td>
 <td>Docstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.</td>

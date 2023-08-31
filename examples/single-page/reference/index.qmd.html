@@ -280,7 +280,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>griffe.dataclasses.Object</td>
+<td>dc.Object</td>
 <td>abc</td>
 </tr>
 </tbody>
@@ -303,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="quartodoc.Builder" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.Builder">Builder</h2>
-<p><code>Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy')</code></p>
+<p><code>Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy', render_interlinks=False, _fast_inventory=False)</code></p>
 <p>Base class for building API docs.</p>
 <section id="parameters-1" class="level3">
 <h3 class="anchored" data-anchor-id="parameters-1">Parameters</h3>
@@ -396,6 +396,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
+<td><code>render_interlinks</code></td>
+<td>bool</td>
+<td>Whether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.</td>
+<td><code>False</code></td>
+</tr>
+<tr class="even">
 <td><code>parser</code></td>
 <td></td>
 <td>Docstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.</td>

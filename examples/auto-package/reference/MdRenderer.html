@@ -177,7 +177,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
   <ul class="collapse">
-  <li><a href="#quartodoc.MdRenderer.render_annotation" id="toc-quartodoc.MdRenderer.render_annotation" class="nav-link" data-scroll-target="#quartodoc.MdRenderer.render_annotation">render_annotation</a></li>
   <li><a href="#quartodoc.MdRenderer.render_header" id="toc-quartodoc.MdRenderer.render_header" class="nav-link" data-scroll-target="#quartodoc.MdRenderer.render_header">render_header</a></li>
   <li><a href="#quartodoc.MdRenderer.summarize" id="toc-quartodoc.MdRenderer.summarize" class="nav-link" data-scroll-target="#quartodoc.MdRenderer.summarize">summarize</a></li>
   </ul></li>
@@ -192,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="quartodoc.MdRenderer" class="level1">
 <h1>MdRenderer</h1>
-<p><code>renderers.MdRenderer(self, header_level=1, show_signature=True, show_signature_annotations=False, display_name='relative', hook_pre=None, use_interlinks=False)</code></p>
+<p><code>renderers.MdRenderer(self, header_level=1, show_signature=True, show_signature_annotations=False, display_name='relative', hook_pre=None, render_interlinks=False)</code></p>
 <p>Render docstrings to markdown.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
@@ -259,51 +258,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="#quartodoc.MdRenderer.render_annotation">render_annotation</a></td>
-<td>Special hook for rendering a type annotation.</td>
-</tr>
-<tr class="even">
 <td><a href="#quartodoc.MdRenderer.render_header">render_header</a></td>
 <td>Render the header of a docstring, including any anchors.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="#quartodoc.MdRenderer.summarize">summarize</a></td>
 <td>Test</td>
 </tr>
 </tbody>
 </table>
-<section id="quartodoc.MdRenderer.render_annotation" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.MdRenderer.render_annotation">render_annotation</h3>
-<p><code>MdRenderer.render_annotation(self, el)</code></p>
-<p>Special hook for rendering a type annotation.</p>
-<section id="parameters-1" class="level4">
-<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
-<table class="table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 42%">
-<col style="width: 39%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>el</code></td>
-<td>‘str | expr.Name | expr.Expression | None’</td>
-<td>An object representing a type annotation.</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
 <section id="quartodoc.MdRenderer.render_header" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.MdRenderer.render_header">render_header</h3>
 <p><code>MdRenderer.render_header(self, el)</code></p>

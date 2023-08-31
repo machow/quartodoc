@@ -376,7 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>builder <span class="op">=</span> Builder.from_quarto_config(cfg)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>builder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7f30ce99e620&gt;</code></pre>
+<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7f6b56d7a4a0&gt;</code></pre>
 </div>
 </div>
 <p>Note that .from_quarto_config used the <code>style:</code> field to decide which Builder to create (in this case, PkgdownBuilder).</p>
@@ -384,7 +384,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>builder.layout</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>Layout(sections=[Section(kind='section', title='Some section', subtitle=None, desc='Some description', package=MISSING(), contents=[Auto(members=['render', 'summarize'], include_private=False, include_imports=False, include_empty=False, include_inherited=False, include_attributes=True, include_classes=True, include_functions=True, include=None, exclude=None, dynamic=None, children=&lt;ChoicesChildren.separate: 'separate'&gt;, package=MISSING(), kind='auto', name='MdRenderer')], options=None)], package='quartodoc', options=None)</code></pre>
+<pre><code>Layout(sections=[Section(kind='section', title='Some section', subtitle=None, desc='Some description', package=MISSING(), contents=[Auto(signature_name='relative', members=['render', 'summarize'], include_private=False, include_imports=False, include_empty=False, include_inherited=False, include_attributes=True, include_classes=True, include_functions=True, include=None, exclude=None, dynamic=None, children=&lt;ChoicesChildren.separate: 'separate'&gt;, package=MISSING(), member_options=None, kind='auto', name='MdRenderer')], options=None)], package='quartodoc', options=None)</code></pre>
 </div>
 </div>
 <p>This can be a bit difficult to read, so quartodoc implements a <a href="../api/preview.html#quartodoc.preview">preview</a> function, which spaces things out.</p>
@@ -533,7 +533,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>builder.renderer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7f30ce99e410&gt;</code></pre>
+<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7f6b56d0e380&gt;</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="10">
@@ -541,7 +541,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code># render { #quartodoc.MdRenderer.render }
 
-`MdRenderer.render(self, el)`</code></pre>
+`MdRenderer.render(self, el)`
+
+</code></pre>
 </div>
 </div>
 </section>
