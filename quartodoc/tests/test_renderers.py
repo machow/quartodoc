@@ -19,14 +19,14 @@ def test_render_param_kwargs(renderer):
 
 
 def test_render_param_kwargs_annotated():
-    renderer = MdRenderer()
+    renderer = MdRenderer(show_signature_annotations=True)
     f = get_object("quartodoc.tests.example_signature.yes_annotations")
 
     res = renderer.render(f.parameters)
 
     assert (
         res
-        == "a: int, b: int = 1, *args: list\\[str\\], c: int, d: int, **kwargs: dict\\[str, str\\]"
+        == "a: int, b: int = 1, *args: list\[str\], c: int, d: int, **kwargs: dict\[str, str\]"
     )
 
 
@@ -94,19 +94,27 @@ def test_render_doc_attribute(renderer):
     attr = ds.DocstringAttribute(
         name="abc",
         description="xyz",
-        annotation=exp.Expression(exp.Name("Optional[]", full="Optional")),
+        annotation=exp.Expression(exp.Name("Optional", full="Optional"), "[", "]"),
         value=1,
     )
 
     res = renderer.render(attr)
     print(res)
 
-    assert res == ["abc", r"[Optional\[\]](`Optional`)", "xyz"]  # noqa
+    assert res == ["abc", r"Optional\[\]", "xyz"]
 
 
 @pytest.mark.parametrize("children", ["embedded", "flat"])
 def test_render_doc_module(snapshot, renderer, children):
     bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_annotations_complex(snapshot):
+    renderer = MdRenderer(render_interlinks=True)
+    bp = blueprint(Auto(name="quartodoc.tests.example_signature.a_complex_signature"))
     res = renderer.render(bp)
 
     assert res == snapshot

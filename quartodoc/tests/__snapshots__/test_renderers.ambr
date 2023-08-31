@@ -1,4 +1,11 @@
 # serializer version: 1
+# name: test_render_annotations_complex
+  '''
+  # quartodoc.tests.example_signature.a_complex_signature { #quartodoc.tests.example_signature.a_complex_signature }
+  
+  `tests.example_signature.a_complex_signature(x)`
+  '''
+# ---
 # name: test_render_doc_class[embedded]
   '''
   # quartodoc.tests.example_class.C { #quartodoc.tests.example_class.C }
@@ -12,10 +19,10 @@
   
   ## Parameters
   
-  | Name   | Type         | Description          | Default    |
-  |--------|--------------|----------------------|------------|
-  | `x`    | [str](`str`) | Uses signature type. | _required_ |
-  | `y`    | [int](`int`) | Uses manual type.    | _required_ |
+  | Name   | Type   | Description          | Default    |
+  |--------|--------|----------------------|------------|
+  | `x`    | str    | Uses signature type. | _required_ |
+  | `y`    | int    | Uses manual type.    | _required_ |
   
   ## Attributes
   
@@ -51,10 +58,10 @@
   
   ## Parameters
   
-  | Name   | Type         | Description          | Default    |
-  |--------|--------------|----------------------|------------|
-  | `x`    | [str](`str`) | Uses signature type. | _required_ |
-  | `y`    | [int](`int`) | Uses manual type.    | _required_ |
+  | Name   | Type   | Description          | Default    |
+  |--------|--------|----------------------|------------|
+  | `x`    | str    | Uses signature type. | _required_ |
+  | `y`    | int    | Uses manual type.    | _required_ |
   
   ## Attributes
   
@@ -87,11 +94,11 @@
   
   ## Attributes
   
-  | Name   | Type             | Description         |
-  |--------|------------------|---------------------|
-  | x      | [str](`str`)     | Uses signature type |
-  | y      | [int](`int`)     | Uses manual type    |
-  | z      | [float](`float`) | Defined in init     |
+  | Name   | Type   | Description         |
+  |--------|--------|---------------------|
+  | x      | str    | Uses signature type |
+  | y      | int    | Uses manual type    |
+  | z      | float  | Defined in init     |
   '''
 # ---
 # name: test_render_doc_module[embedded]

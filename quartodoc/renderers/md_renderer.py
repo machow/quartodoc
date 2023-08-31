@@ -65,14 +65,14 @@ class MdRenderer(Renderer):
         show_signature_annotations: bool = False,
         display_name: str = "relative",
         hook_pre=None,
-        use_interlinks=False,
+        render_interlinks=False,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
         self.display_name = display_name
         self.hook_pre = hook_pre
-        self.use_interlinks = use_interlinks
+        self.render_interlinks = render_interlinks
 
         self.crnt_header_level = self.header_level
 
@@ -124,7 +124,10 @@ class MdRenderer(Renderer):
     def render_annotation(self, el: expr.Name) -> str:
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        return f"[{sanitize(el.source)}](`{el.full}`)"
+        if self.render_interlinks:
+            return f"[{el.source}](`{el.full}`)"
+        
+        return el.source
 
     @dispatch
     def render_annotation(self, el: expr.Expression) -> str:
@@ -468,7 +471,7 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringAttribute):
         row = [
             sanitize(el.name),
-            self.render_annotation(el.annotation),
+            sanitize(self.render_annotation(el.annotation)),
             sanitize(el.description or "", allow_markdown=True),
         ]
         return row

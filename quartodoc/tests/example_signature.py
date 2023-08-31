@@ -22,3 +22,11 @@ def early_args(x, *args, a, b=2, **kwargs):
 
 def late_args(x, a, b=2, *args, **kwargs):
     ...
+
+
+class C:
+    ...
+
+
+def a_complex_signature(x: "list[C | int | None]"):
+    ...
