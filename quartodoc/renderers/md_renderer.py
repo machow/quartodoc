@@ -66,14 +66,14 @@ class MdRenderer(Renderer):
         show_signature_annotations: bool = False,
         display_name: str = "relative",
         hook_pre=None,
-        use_interlinks=False,
+        render_interlinks=False,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
         self.display_name = display_name
         self.hook_pre = hook_pre
-        self.use_interlinks = use_interlinks
+        self.render_interlinks = render_interlinks
 
         self.crnt_header_level = self.header_level
 
@@ -105,27 +105,34 @@ class MdRenderer(Renderer):
 
         return table
 
-    def render_annotation(self, el: "str | expr.Name | expr.Expression | None"):
-        """Special hook for rendering a type annotation.
+    # render_annotation method --------------------------------------------------------
 
+    @dispatch
+    def render_annotation(self, el: str) -> str:
+        """Special hook for rendering a type annotation.
         Parameters
         ----------
         el:
             An object representing a type annotation.
-
         """
+        return sanitize(el)
 
-        if isinstance(el, type(None)):
-            return el
-        elif isinstance(el, str):
-            return sanitize(el)
+    @dispatch
+    def render_annotation(self, el: None) -> str:
+        return ""
 
+    @dispatch
+    def render_annotation(self, el: expr.Name) -> str:
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        if isinstance(el, expr.Name):
-            return sanitize(el.source)
+        if self.render_interlinks:
+            return f"[{sanitize(el.source)}](`{el.full}`)"
+        
+        return sanitize(el.source)
 
-        return sanitize(el.full)
+    @dispatch
+    def render_annotation(self, el: expr.Expression) -> str:
+        return "".join(map(self.render_annotation, el))
 
     # signature method --------------------------------------------------------
 
@@ -148,7 +155,6 @@ class MdRenderer(Renderer):
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
         """Return a string representation of an object's signature."""
-
         return self.signature(el.target, el)
 
     @dispatch
@@ -425,17 +431,19 @@ class MdRenderer(Renderer):
             glob = ""
 
         annotation = self.render_annotation(el.annotation)
+        name = sanitize(el.name)
+
         if self.show_signature_annotations:
             if annotation and has_default:
-                res = f"{glob}{el.name}: {el.annotation} = {el.default}"
+                res = f"{glob}{name}: {annotation} = {el.default}"
             elif annotation:
-                res = f"{glob}{el.name}: {el.annotation}"
+                res = f"{glob}{name}: {annotation}"
         elif has_default:
-            res = f"{glob}{el.name}={el.default}"
+            res = f"{glob}{name}={el.default}"
         else:
-            res = f"{glob}{el.name}"
+            res = f"{glob}{name}"
 
-        return sanitize(res)
+        return res
 
     # docstring parts -------------------------------------------------------------
 
@@ -457,7 +465,6 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringSectionParameters):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
-
         return self._render_table(rows, header)
 
     @dispatch

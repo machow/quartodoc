@@ -397,6 +397,9 @@ class Builder:
     dynamic:
         Whether to dynamically load all python objects. By default, objects are
         loaded using static analysis.
+    render_interlinks:
+        Whether to render interlinks syntax inside documented objects. Note that the
+        interlinks filter is required to generate the links in quarto.
     parser:
         Docstring parser to use. This correspond to different docstring styles,
         and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".
@@ -446,6 +449,7 @@ class Builder:
         source_dir: "str | None" = None,
         dynamic: bool | None = None,
         parser="numpy",
+        render_interlinks: bool = False,
         _fast_inventory=False,
     ):
         self.layout = self.load_layout(
@@ -460,6 +464,10 @@ class Builder:
         self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
+        if render_interlinks:
+            # this is a top-level option, but lives on the renderer
+            # so we just manually set it there for now.
+            self.renderer.render_interlinks = render_interlinks
 
         if out_index is not None:
             self.out_index = out_index

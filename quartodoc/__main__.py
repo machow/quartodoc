@@ -209,11 +209,23 @@ def build(config, filter, dry_run, watch, verbose):
                 doc_build()
 
 
-@click.command()
+@click.command(
+    short_help="Generate inventory files that the Quarto "
+    "`interlink` extension can use to auto-link to other docs."
+)
 @click.argument("config", default="_quarto.yml")
 @click.option("--dry-run", is_flag=True, default=False)
 @click.option("--fast", is_flag=True, default=False)
 def interlinks(config, dry_run, fast):
+    """
+    Generate inventory files that the Quarto `interlink` extension can use to
+    auto-link to other docs.
+
+    The files are stored in a cache directory, which defaults to _inv.
+    The Quarto extension `interlinks` will look for these files in the cache
+    and add links to your docs accordingly.
+    """
+
     # config loading ----
     cfg = yaml.safe_load(open(config))
     interlinks = cfg.get("interlinks", {})

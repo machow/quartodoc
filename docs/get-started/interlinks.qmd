@@ -71,6 +71,20 @@ and attempts to parse them much faster.
 Be sure to install the latest version of the interlinks filter, using `quarto add machow/quartodoc`.
 :::
 
+### Rendering interlinks in API docs
+
+quartodoc can convert type annotations in function signatures to interlinks.
+
+In order to enable this behavior, set `render_interlinks: true` in the quartodoc config.
+
+
+```yaml
+quartodoc:
+  render_interlinks: true
+```
+
+
+
 ## Running the interlinks filter
 
 First, build the reference for your own site, which includes an objects.json inventory:

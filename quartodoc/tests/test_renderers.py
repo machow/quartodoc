@@ -26,7 +26,7 @@ def test_render_param_kwargs_annotated():
 
     assert (
         res
-        == "a: int, b: int = 1, *args: list\\[str\\], c: int, d: int, **kwargs: dict\\[str, str\\]"
+        == "a: int, b: int = 1, *args: list\[str\], c: int, d: int, **kwargs: dict\[str, str\]"
     )
 
 
@@ -99,6 +99,7 @@ def test_render_doc_attribute(renderer):
     )
 
     res = renderer.render(attr)
+    print(res)
 
     assert res == ["abc", r"Optional\[\]", "xyz"]
 
@@ -106,6 +107,14 @@ def test_render_doc_attribute(renderer):
 @pytest.mark.parametrize("children", ["embedded", "flat"])
 def test_render_doc_module(snapshot, renderer, children):
     bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_annotations_complex(snapshot):
+    renderer = MdRenderer(render_interlinks=True, show_signature_annotations=True)
+    bp = blueprint(Auto(name="quartodoc.tests.example_signature.a_complex_signature"))
     res = renderer.render(bp)
 
     assert res == snapshot

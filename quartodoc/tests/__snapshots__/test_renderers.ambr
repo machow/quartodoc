@@ -1,4 +1,17 @@
 # serializer version: 1
+# name: test_render_annotations_complex
+  '''
+  # quartodoc.tests.example_signature.a_complex_signature { #quartodoc.tests.example_signature.a_complex_signature }
+  
+  `tests.example_signature.a_complex_signature(x: [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\])`
+  
+  ## Parameters
+  
+  | Name   | Type                                                                                 | Description     | Default    |
+  |--------|--------------------------------------------------------------------------------------|-----------------|------------|
+  | `x`    | [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\] | The x parameter | _required_ |
+  '''
+# ---
 # name: test_render_doc_class[embedded]
   '''
   # quartodoc.tests.example_class.C { #quartodoc.tests.example_class.C }
