@@ -25,6 +25,18 @@
   | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
   | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
   
+  ## Classes
+  
+  | Name | Description |
+  | --- | --- |
+  | [D](#quartodoc.tests.example_class.C.D) | A nested class |
+  
+  ### D { #quartodoc.tests.example_class.C.D }
+  
+  `tests.example_class.C.D()`
+  
+  A nested class
+  
   ## Methods
   
   | Name | Description |
@@ -63,6 +75,18 @@
   | [SOME_ATTRIBUTE](#quartodoc.tests.example_class.C.SOME_ATTRIBUTE) | An attribute |
   | [some_property](#quartodoc.tests.example_class.C.some_property) | A property |
   | [z](#quartodoc.tests.example_class.C.z) | A documented init attribute |
+  
+  ## Classes
+  
+  | Name | Description |
+  | --- | --- |
+  | [D](#quartodoc.tests.example_class.C.D) | A nested class |
+  
+  ## D { #quartodoc.tests.example_class.C.D }
+  
+  `tests.example_class.C.D()`
+  
+  A nested class
   
   ## Methods
   
@@ -206,6 +230,22 @@
   `tests.example.a_func()`
   
   A function
+  '''
+# ---
+# name: test_render_docstring_numpy_linebreaks
+  '''
+  # f_numpy_with_linebreaks { #quartodoc.tests.example_docstring_styles.f_numpy_with_linebreaks }
+  
+  `tests.example_docstring_styles.f_numpy_with_linebreaks(a, b)`
+  
+  A numpy style docstring.
+  
+  ## Parameters
+  
+  | Name   | Type   | Description      | Default    |
+  |--------|--------|------------------|------------|
+  | `a`    |        | The a parameter. | _required_ |
+  | `b`    | str    | The b parameter. | _required_ |
   '''
 # ---
 # name: test_render_docstring_styles[google]
