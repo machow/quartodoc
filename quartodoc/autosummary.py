@@ -446,6 +446,7 @@ class Builder:
         source_dir: "str | None" = None,
         dynamic: bool | None = None,
         parser="numpy",
+        _fast_inventory=False,
     ):
         self.layout = self.load_layout(
             sections=sections, package=package, options=options
@@ -466,6 +467,8 @@ class Builder:
         self.rewrite_all_pages = rewrite_all_pages
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
         self.dynamic = dynamic
+
+        self._fast_inventory = _fast_inventory
 
     def load_layout(self, sections: dict, package: str, options=None):
         # TODO: currently returning the list of sections, to make work with
@@ -522,7 +525,16 @@ class Builder:
 
         _log.info("Creating inventory file")
         inv = self.create_inventory(items)
-        convert_inventory(inv, self.out_inventory)
+        if self._fast_inventory:
+            # dump the inventory file directly as text
+            # TODO: copied from __main__.py, should add to inventory.py
+            import sphobjinv as soi
+
+            df = inv.data_file()
+            soi.writebytes(Path(self.out_inventory).with_suffix(".txt"), df)
+
+        else:
+            convert_inventory(inv, self.out_inventory)
 
         # sidebar ----
 
@@ -647,12 +659,18 @@ class Builder:
 
             quarto_cfg = yaml.safe_load(open(quarto_cfg))
 
-        cfg = quarto_cfg["quartodoc"]
+        cfg = quarto_cfg.get("quartodoc")
+        if cfg is None:
+            raise KeyError("No `quartodoc:` section found in your _quarto.yml.")
         style = cfg.get("style", "pkgdown")
-
         cls_builder = cls._registry[style]
 
-        return cls_builder(**{k: v for k, v in cfg.items() if k != "style"})
+        _fast_inventory = quarto_cfg.get("interlinks", {}).get("fast", False)
+
+        return cls_builder(
+            **{k: v for k, v in cfg.items() if k != "style"},
+            _fast_inventory=_fast_inventory,
+        )
 
 
 class BuilderPkgdown(Builder):
