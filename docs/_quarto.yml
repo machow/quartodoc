@@ -80,6 +80,7 @@ quartodoc:
   style: pkgdown
   dir: api
   package: quartodoc
+  render_interlinks: true
   sidebar: "api/_sidebar.yml"
   sections:
     - title: Preperation Functions
