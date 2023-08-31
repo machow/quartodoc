@@ -1,7 +1,7 @@
 
 ## `` [](`quartodoc.layout`) ``
 
-output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
+output: [`quartodoc.layout`](/api/layout.html#quartodoc.layout)
 
     █─TestSpecEntry
     ├─input = '[](`quartodoc.layout`)'
@@ -11,7 +11,7 @@ output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
 ## `` [](`quartodoc.MdRenderer`) ``
 
 output:
-[quartodoc.MdRenderer](/api/MdRenderer.html#quartodoc.MdRenderer)
+[`quartodoc.MdRenderer`](/api/MdRenderer.html#quartodoc.MdRenderer)
 
     █─TestSpecEntry
     ├─input = '[](`quartodoc.MdRenderer`)'
@@ -21,7 +21,7 @@ output:
 ## `` [](`quartodoc.MdRenderer.render`) ``
 
 output:
-[quartodoc.MdRenderer.render](/api/MdRenderer.html#quartodoc.MdRenderer.render)
+[`quartodoc.MdRenderer.render`](/api/MdRenderer.html#quartodoc.MdRenderer.render)
 
     █─TestSpecEntry
     ├─input = '[](`quartodoc.MdRenderer.render`)'
@@ -31,7 +31,7 @@ output:
 ## `` [](`quartodoc.MdRenderer.style`) ``
 
 output:
-[quartodoc.MdRenderer.style](/api/MdRenderer.html#quartodoc.MdRenderer.style)
+[`quartodoc.MdRenderer.style`](/api/MdRenderer.html#quartodoc.MdRenderer.style)
 
     █─TestSpecEntry
     ├─input = '[](`quartodoc.MdRenderer.style`)'
@@ -66,7 +66,7 @@ output: [some explanation](/api/layout.html#quartodoc.layout)
 
 ## `` [](`quartodoc.layout`) ``
 
-output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
+output: [`quartodoc.layout`](/api/layout.html#quartodoc.layout)
 
     █─TestSpecEntry
     ├─input = '[](`quartodoc.layout`)'
@@ -75,7 +75,7 @@ output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
 
 ## `` [](`~quartodoc.layout`) ``
 
-output: [layout](/api/layout.html#quartodoc.layout)
+output: [`layout`](/api/layout.html#quartodoc.layout)
 
     █─TestSpecEntry
     ├─input = '[](`~quartodoc.layout`)'
@@ -84,7 +84,7 @@ output: [layout](/api/layout.html#quartodoc.layout)
 ## `` [](:function:`quartodoc.MdRenderer.render`) ``
 
 output:
-[quartodoc.MdRenderer.render](/api/MdRenderer.html#quartodoc.MdRenderer.render)
+[`quartodoc.MdRenderer.render`](/api/MdRenderer.html#quartodoc.MdRenderer.render)
 
     █─TestSpecEntry
     ├─input = '[](:function:`quartodoc.MdRenderer.render`)'
@@ -94,7 +94,7 @@ output:
 ## `` [](:func:`quartodoc.MdRenderer.render`) ``
 
 output:
-[quartodoc.MdRenderer.render](/api/MdRenderer.html#quartodoc.MdRenderer.render)
+[`quartodoc.MdRenderer.render`](/api/MdRenderer.html#quartodoc.MdRenderer.render)
 
     █─TestSpecEntry
     ├─input = '[](:func:`quartodoc.MdRenderer.render`)'
@@ -104,7 +104,7 @@ output:
 ## `` [](:attribute:`quartodoc.MdRenderer.style`) ``
 
 output:
-[quartodoc.MdRenderer.style](/api/MdRenderer.html#quartodoc.MdRenderer.style)
+[`quartodoc.MdRenderer.style`](/api/MdRenderer.html#quartodoc.MdRenderer.style)
 
     █─TestSpecEntry
     ├─input = '[](:attribute:`quartodoc.MdRenderer.style`)'
@@ -114,7 +114,7 @@ output:
 ## `` [](:class:`quartodoc.MdRenderer`) ``
 
 output:
-[quartodoc.MdRenderer](/api/MdRenderer.html#quartodoc.MdRenderer)
+[`quartodoc.MdRenderer`](/api/MdRenderer.html#quartodoc.MdRenderer)
 
     █─TestSpecEntry
     ├─input = '[](:class:`quartodoc.MdRenderer`)'
@@ -123,7 +123,7 @@ output:
 
 ## `` [](:module:`quartodoc.layout`) ``
 
-output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
+output: [`quartodoc.layout`](/api/layout.html#quartodoc.layout)
 
     █─TestSpecEntry
     ├─input = '[](:module:`quartodoc.layout`)'
@@ -132,7 +132,7 @@ output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
 
 ## `` [](:py:module:`quartodoc.layout`) ``
 
-output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
+output: [`quartodoc.layout`](/api/layout.html#quartodoc.layout)
 
     █─TestSpecEntry
     ├─input = '[](:py:module:`quartodoc.layout`)'
@@ -142,7 +142,7 @@ output: [quartodoc.layout](/api/layout.html#quartodoc.layout)
 ## `` [](:external+other:py:function:`quartodoc.get_object`) ``
 
 output:
-[quartodoc.get_object](other+api/get_object.html#quartodoc.get_object)
+[`quartodoc.get_object`](other+api/get_object.html#quartodoc.get_object)
 
     █─TestSpecEntry
     ├─input = '[](:external+other:py:function:`quartodoc.get_obj ...

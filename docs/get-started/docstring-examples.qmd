@@ -48,6 +48,13 @@ Below is an example including each.
     ```
 ```
 
+Note that different syntaxes are handled differently:
+
+* doctest and markdown syntax: rendered without executing.
+* quarto syntax: executed by quarto when you run commands like `quarto render`.
+
+See the quarto documentation on [code blocks](https://quarto.org/docs/computations/python.html#code-blocks) for more detail.
+
 
 ## Examples, etc..: the "s" matters
 

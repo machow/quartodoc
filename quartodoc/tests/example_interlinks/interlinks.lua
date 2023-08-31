@@ -1,1 +1,1 @@
-../../../_extensions/interlinks-experimental/interlinks.lua
+../../../_extensions/interlinks/interlinks.lua

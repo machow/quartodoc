@@ -1,6 +1,10 @@
 from quartodoc import get_object
 from quartodoc import layout as lo
-from quartodoc.builder.blueprint import BlueprintTransformer, blueprint
+from quartodoc.builder.blueprint import (
+    BlueprintTransformer,
+    blueprint,
+    WorkaroundKeyError,
+)
 import pytest
 
 TEST_MOD = "quartodoc.tests.example"
@@ -83,10 +87,115 @@ def test_blueprint_default_dynamic(bp):
     assert NOTE in res.obj.docstring.value
 
 
-def test_blueprint_auto_package(bp):
+def test_blueprint_auto_anchor(bp):
     auto = lo.Auto(name="a_func", package="quartodoc.tests.example")
     res = bp.visit(auto)
 
     assert isinstance(res, lo.DocFunction)
     assert res.name == "a_func"
     assert res.anchor == "quartodoc.tests.example.a_func"
+
+
+def test_blueprint_lookup_error_message(bp):
+    auto = lo.Auto(name="quartodoc.bbb.ccc")
+
+    with pytest.raises(WorkaroundKeyError) as exc_info:
+        bp.visit(auto)
+
+    assert (
+        "Does an object with the path quartodoc.bbb.ccc exist?"
+        in exc_info.value.args[0]
+    )
+
+
+def test_blueprint_auto_package(bp):
+    layout = blueprint(lo.Layout(package="quartodoc.tests.example"))
+    sections = layout.sections
+    assert len(sections) == 1
+    assert sections[0].title == "quartodoc.tests.example"
+    assert sections[0].desc == "A module"
+
+    # 4 objects documented
+    assert len(sections[0].contents) == 4
+
+
+def test_blueprint_layout_options():
+    layout = lo.Layout(
+        options={"members": []},
+        sections=[
+            lo.Section(
+                contents=[lo.Auto(name="AClass")],
+                package="quartodoc.tests.example",
+            )
+        ],
+    )
+
+    res = blueprint(layout)
+    page = res.sections[0].contents[0]
+    doc = page.contents[0]
+
+    assert doc.members == []
+
+
+def test_blueprint_section_options():
+    layout = lo.Layout(
+        sections=[
+            lo.Section(
+                contents=[lo.Auto(name="AClass")],
+                package="quartodoc.tests.example",
+                options={"members": []},
+            )
+        ]
+    )
+
+    res = blueprint(layout)
+    page = res.sections[0].contents[0]
+    doc = page.contents[0]
+
+    assert doc.members == []
+
+
+def _check_member_names(members, expected):
+    member_names = set([entry.name for entry in members])
+    assert member_names == expected
+
+
+@pytest.mark.parametrize(
+    "kind, removed",
+    [
+        ("attributes", {"some_property", "z", "SOME_ATTRIBUTE"}),
+        ("classes", {"D"}),
+        ("functions", {"some_method"}),
+    ],
+)
+def test_blueprint_fetch_members_include_kind_false(kind, removed):
+    option = {f"include_{kind}": False}
+    all_members = {"SOME_ATTRIBUTE", "z", "some_property", "some_method", "D"}
+
+    auto = lo.Auto(name="quartodoc.tests.example_class.C", **option)
+    bp = blueprint(auto)
+    _check_member_names(bp.members, all_members - removed)
+
+
+def test_blueprint_fetch_members_include_inherited():
+    auto = lo.Auto(name="quartodoc.tests.example_class.Child", include_inherited=True)
+    bp = blueprint(auto)
+
+    member_names = set([entry.name for entry in bp.members])
+    assert "some_method" in member_names
+
+
+def test_blueprint_member_options():
+    auto = lo.Auto(
+        name="quartodoc.tests.example",
+        member_options={"signature_path": "short"},
+        members=["AClass"],
+    )
+    bp = blueprint(auto)
+    doc_a_class = bp.members[0]
+
+    # member has option set
+    assert doc_a_class.signature_path == "short"
+
+    # this currently does not apply to members of members
+    assert doc_a_class.members[0].signature_path == "relative"

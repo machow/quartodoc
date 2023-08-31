@@ -1,0 +1,25 @@
+project:
+  type: website
+  resources:
+    - objects.json
+
+website:
+  title: pkgdown example
+  navbar:
+    left:
+      - href: https://machow.github.io/quartodoc/
+        text: quartodoc home
+      - file: reference/index.qmd
+        text: "Reference"
+    right:
+      - icon: github
+        href: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
+
+format:
+  html:
+    toc: true
+
+quartodoc:
+  style: pkgdown
+  dir: reference
+  package: quartodoc

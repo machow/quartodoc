@@ -9,17 +9,21 @@ jupyter:
     name: python3
 ---
 
-::: {.callout-note} 
-quartodoc is used to create the API documentation for [shiny], [siuba], and [vetiver].
-
-It's full-featured and relatively stable, but may see some small changes in the the name of making API documentation a real delight.
-
-If you're interested in using quartodoc for your package's documentation, please open an issue, so we can make sure it does exactly what you want.
-:::
 
 quartodoc lets you quickly generate python package documentation,
 using markdown and [quarto](https://quarto.org).
 It is designed as an alternative to Sphinx.
+
+Check out the screencast below for a full walkthrough of creating a documentation site,
+or read on for instructions on installation and use.
+
+<br>
+
+
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<br>
+<br>
 
 ## Installation
 
@@ -85,20 +89,18 @@ quarto preview
 
 ## Rebuilding site
 
-As mentioned in the previous section, you can preview your quartodoc site using these commands:
+You can preview your `quartodoc` site using the following commands:
+
+First, watch for changes to the library you are documenting so that your docs will automatically re-generate:
 
 ```bash
-quartodoc build
-quarto preview
+quartodoc build --watch
 ```
 
-In order to rebuild your API documentation pages during a quarto preview, re-run
-the quartodoc build command:
+Second, preview your site:
 
 ```bash
-# with quarto preview running, you only need to re-run quartodoc build,
-# which will re-create the pages of your API documentation.
-quartodoc build
+quarto preview
 ```
 
 ## Looking up objects
@@ -127,32 +129,11 @@ quartodoc:
 The functions listed in `contents` are assumed to be imported from the package.
 
 
-## Example sites
+## Learning more
 
-### Demo sites
+Go [to the next page](./get-started/basic-docs.qmd) to learn how to configure quartodoc sites, or check out these handy pages:
 
-| style | source | layout |
-| ----- | ------ | ------ |
-| [pkgdown] | [github][pkgdown-code] | Index page with a title and short description for functions listed in each section. Each function gets its own documentation page. |
-| [single-page] | [github][sp-code] | Index page has function documentation embedded on it. |
-
-### Packages using quartodoc
-
-
-| package | source | about |
-| ----- | ------ | ------ |
-| [siuba] | [github][sb-code] | Data analysis library. |
-| [shiny][shiny] |  | Dashboarding framework. |
-| [vetiver][vetiver] | [github][vt-code] | A tool to version, share, deploy and monitor ML models. |
-
-: {tbl-colwidths="[20, 20, 60]"}
-
-[pkgdown]: /examples/pkgdown/reference
-[pkgdown-code]: https://github.com/machow/quartodoc/tree/main/examples/pkgdown
-[single-page]: /examples/single-page/reference
-[sp-code]: https://github.com/machow/quartodoc/tree/main/examples/single-page
-[shiny]: https://shiny.rstudio.com/py/api/
-[vetiver]: https://rstudio.github.io/vetiver-python/stable/reference/
-[vt-code]: https://github.com/rstudio/vetiver-python
-[siuba]: https://siuba.org/api/
-[sb-code]: https://github.com/machow/siuba.org
+* [Examples page](./examples/index.qmd): sites using quartodoc.
+* [Tutorials page](./tutorials/index.qmd): screencasts of building a quartodoc site.
+* [Docstring issues and examples](./get-started/docstring-examples.qmd): common issues when formatting docstrings.
+* [Programming, the big picture](./get-started/dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.

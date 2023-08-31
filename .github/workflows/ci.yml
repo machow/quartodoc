@@ -9,43 +9,41 @@ on:
     types: [published]
 
 jobs:
-  run-if:
-    name: "Run If"
-    runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
-    steps:
-      - run: |
-          echo "Running CI"
   test:
     name: "Test"
-    needs: ["run-if"]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         # Checks based on python versions ---
         python-version: ['3.9', '3.10']
-        requirements: [""]
 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: "${{ matrix.python-version }}"
-      - name: Install dependencies from requirements file
+      - name: Install dev dependencies
         run: |
           python -m pip install --upgrade pip
-          # optionally install a requirements file
-          if [[ ! -z "${REQUIREMENTS}" ]]; then
-            python -m pip install -r "${REQUIREMENTS}"
-          fi
-          # install package with dev dependencies
-          python -m pip install .[dev]
-        env:
-          REQUIREMENTS: ${{ matrix.requirements }}
+          python -m pip install ".[dev]"
       - name: Run tests
         run: |
           pytest
+
+  pre-commit:
+    name: "pre-commit checks"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: Install dev dependencies
+        run: |
+            python -m pip install --upgrade pip
+            python -m pip install ".[dev]"
+      - uses: pre-commit/action@v3.0.0
 
   release-pypi:
     name: "Release to pypi"
@@ -76,8 +74,7 @@ jobs:
           python-version: "3.10"
       - name: Install dependencies
         run: |
-          python -m pip install -r requirements-dev.txt
-          python -m pip install .
+          python -m pip install ".[dev]"
           # TODO: temporary installs for examples
           # once quartodoc is stable we should move into their own libraries
           python -m pip install shiny shinylive
