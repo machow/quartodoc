@@ -119,6 +119,24 @@ def test_blueprint_auto_package(bp):
     assert len(sections[0].contents) == 4
 
 
+def test_blueprint_layout_options():
+    layout = lo.Layout(
+        options={"members": []},
+        sections=[
+            lo.Section(
+                contents=[lo.Auto(name="AClass")],
+                package="quartodoc.tests.example",
+            )
+        ],
+    )
+
+    res = blueprint(layout)
+    page = res.sections[0].contents[0]
+    doc = page.contents[0]
+
+    assert doc.members == []
+
+
 def test_blueprint_section_options():
     layout = lo.Layout(
         sections=[
@@ -135,3 +153,33 @@ def test_blueprint_section_options():
     doc = page.contents[0]
 
     assert doc.members == []
+
+
+def _check_member_names(members, expected):
+    member_names = set([entry.name for entry in members])
+    assert member_names == expected
+
+
+@pytest.mark.parametrize(
+    "kind, removed",
+    [
+        ("attributes", {"some_property", "z", "SOME_ATTRIBUTE"}),
+        ("classes", {"D"}),
+        ("functions", {"some_method"}),
+    ],
+)
+def test_blueprint_fetch_members_include_kind_false(kind, removed):
+    option = {f"include_{kind}": False}
+    all_members = {"SOME_ATTRIBUTE", "z", "some_property", "some_method", "D"}
+
+    auto = lo.Auto(name="quartodoc.tests.example_class.C", **option)
+    bp = blueprint(auto)
+    _check_member_names(bp.members, all_members - removed)
+
+
+def test_blueprint_fetch_members_include_inherited():
+    auto = lo.Auto(name="quartodoc.tests.example_class.Child", include_inherited=True)
+    bp = blueprint(auto)
+
+    member_names = set([entry.name for entry in bp.members])
+    assert "some_method" in member_names

@@ -1,20 +1,86 @@
-local function read_json(filename)
+local function read_inv_text(filename)
+    -- read file
     local file = io.open(filename, "r")
     if file == nil then
         return nil
     end
     local str = file:read("a")
     file:close()
-    return quarto.json.decode(str)
+
+
+    local project = str:match("# Project: (%S+)")
+    local version = str:match("# Version: (%S+)")
+
+    local data = {project = project, version = version, items = {}}
+
+    local ptn_data =
+        "^" ..
+        "(.-)%s+" ..        -- name
+        "([%S:]-):" ..      -- domain
+        "([%S]+)%s+" ..     -- role
+        "(%-?%d+)%s+" ..     -- priority
+        "(%S*)%s+" ..       -- uri
+        "(.-)\r?$"         -- dispname
+
+
+    -- Iterate through each line in the file content
+    for line in str:gmatch("[^\r\n]+") do
+        if not line:match("^#") then
+            -- Match each line against the pattern
+            local name, domain, role, priority, uri, dispName = line:match(ptn_data)
+
+            -- if name is nil, raise an error
+            if name == nil then
+                error("Error parsing line: " .. line)
+            end
+
+            data.items[#data.items + 1] = {
+                name = name,
+                domain = domain,
+                role = role,
+                priority = priority,
+                uri = uri,
+                dispName = dispName
+            }
+        end
+    end
+    return data
+end
+
+local function read_json(filename)
+
+    local file = io.open(filename, "r")
+    if file == nil then
+        return nil
+    end
+    local str = file:read("a")
+    file:close()
+
+    local decoded = quarto.json.decode(str)
+    return decoded
+end
+
+local function read_inv_text_or_json(base_name)
+    local file = io.open(base_name .. ".txt", "r")
+    if file then
+        -- TODO: refactors so we don't just close the file immediately
+        io.close(file)
+        json = read_inv_text(base_name .. ".txt")
+
+    else
+        json = read_json(base_name .. ".json")
+    end
+
+    return json
 end
 
 local inventory = {}
 
-function lookup(search_object)
+local function lookup(search_object)
 
     local results = {}
-    for ii, inventory in ipairs(inventory) do
-        for jj, item in ipairs(inventory.items) do
+    for _, inv in ipairs(inventory) do
+        for _, item in ipairs(inv.items) do
             -- e.g. :external+<inv_name>:<domain>:<role>:`<name>`
             if item.inv_name and item.inv_name ~= search_object.inv_name then
                 goto continue
@@ -31,7 +97,9 @@ function lookup(search_object)
             if search_object.domain and item.domain ~= search_object.domain then
                 goto continue
             else
-                table.insert(results, item)
+                if search_object.domain or item.domain == "py" then
+                  table.insert(results, item)
+                end
 
                 goto continue
             end
@@ -44,19 +112,17 @@ function lookup(search_object)
         return results[1]
     end
     if #results > 1 then
-        print("Found multiple matches for " .. search_object.name)
-        quarto.utils.dump(results)
-        return nil
+        quarto.log.warning("Found multiple matches for " .. search_object.name .. ", using the first match.")
+        return results[1]
     end
     if #results == 0 then
-        print("Found no matches for object:")
-        quarto.utils.dump(search_object)
+        quarto.log.warning("Found no matches for object:\n", search_object)
     end
 
     return nil
 end
 
-function mysplit (inputstr, sep)
+local function mysplit (inputstr, sep)
     if sep == nil then
             sep = "%s"
     end
@@ -97,7 +163,7 @@ local function build_search_object(str)
             search.role = normalize_role(t[3])
             search.name = t[4]:match("%%60(.*)%%60")
         else
-            print("couldn't parse this link: " .. str)
+            quarto.log.warning("couldn't parse this link: " .. str)
             return {}
         end
     else
@@ -105,7 +171,7 @@ local function build_search_object(str)
     end
 
     if search.name == nil then
-        print("couldn't parse this link: " .. str)
+        quarto.log.warning("couldn't parse this link: " .. str)
         return {}
     end
 
@@ -116,7 +182,7 @@ local function build_search_object(str)
     return search
 end
 
-function report_broken_link(link, search_object, replacement)
+local function report_broken_link(link, search_object, replacement)
     -- TODO: how to unescape html elements like [?
     return pandoc.Code(pandoc.utils.stringify(link.content))
 end
@@ -154,7 +220,7 @@ function Link(link)
     return link
 end
 
-function fixup_json(json, prefix)
+local function fixup_json(json, prefix)
     for _, item in ipairs(json.items) do
         item.uri = prefix .. item.uri
     end
@@ -167,11 +233,12 @@ return {
             local json
             local prefix
             for k, v in pairs(meta.interlinks.sources) do
-                json = read_json(quarto.project.offset .. "/_inv/" .. k .. "_objects.json")
+                local base_name = quarto.project.offset .. "/_inv/" .. k .. "_objects"
+                json = read_inv_text_or_json(base_name)
                 prefix = pandoc.utils.stringify(v.url)
                 fixup_json(json, prefix)
             end
-            json = read_json(quarto.project.offset .. "/objects.json")
+            json = read_inv_text_or_json(quarto.project.offset .. "/objects")
             if json ~= nil then
                 fixup_json(json, "/")
             end

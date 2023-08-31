@@ -54,6 +54,22 @@ Notice 2 important pieces in this config:
 By default, downloaded inventory files will be saved in the `_inv` folder of your
 documentation directory.
 
+### Experimental fast option
+
+Use the experimental `fast: true` option to speed up the interlinks filter.
+
+```yaml
+interlinks:
+  fast: true
+  sources:
+```
+
+By default inventory files are saved as JSON, but this option keeps them as text files,
+and attempts to parse them much faster.
+
+:::{.callout-warning}
+Be sure to install the latest version of the interlinks filter, using `quarto add machow/quartodoc`.
+:::
 
 ### Rendering interlinks in API docs
 

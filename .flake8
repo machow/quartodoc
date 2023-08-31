@@ -1,5 +1,5 @@
 [flake8]
-exclude = docs, test_*, .flake8
+exclude = docs, test_*, .flake8, examples
 max-line-length = 90
 ignore =
     # line too long
