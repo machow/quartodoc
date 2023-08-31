@@ -29,4 +29,9 @@ class C:
 
 
 def a_complex_signature(x: "list[C | int | None]"):
-    ...
+    """
+    Parameters
+    ----------
+    x:
+        The x parameter
+    """

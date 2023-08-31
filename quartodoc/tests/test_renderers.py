@@ -113,7 +113,7 @@ def test_render_doc_module(snapshot, renderer, children):
 
 
 def test_render_annotations_complex(snapshot):
-    renderer = MdRenderer(render_interlinks=True)
+    renderer = MdRenderer(render_interlinks=True, show_signature_annotations=True)
     bp = blueprint(Auto(name="quartodoc.tests.example_signature.a_complex_signature"))
     res = renderer.render(bp)
 

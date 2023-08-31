@@ -114,7 +114,7 @@ class MdRenderer(Renderer):
         el:
             An object representing a type annotation.
         """
-        return el
+        return sanitize(el)
 
     @dispatch
     def render_annotation(self, el: None) -> str:
@@ -125,9 +125,9 @@ class MdRenderer(Renderer):
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
         if self.render_interlinks:
-            return f"[{el.source}](`{el.full}`)"
+            return f"[{sanitize(el.source)}](`{el.full}`)"
         
-        return el.source
+        return sanitize(el.source)
 
     @dispatch
     def render_annotation(self, el: expr.Expression) -> str:
@@ -415,17 +415,19 @@ class MdRenderer(Renderer):
             glob = ""
 
         annotation = self.render_annotation(el.annotation)
+        name = sanitize(el.name)
+
         if self.show_signature_annotations:
             if annotation and has_default:
-                res = f"{glob}{el.name}: {annotation} = {el.default}"
+                res = f"{glob}{name}: {annotation} = {el.default}"
             elif annotation:
-                res = f"{glob}{el.name}: {annotation}"
+                res = f"{glob}{name}: {annotation}"
         elif has_default:
-            res = f"{glob}{el.name}={el.default}"
+            res = f"{glob}{name}={el.default}"
         else:
-            res = f"{glob}{el.name}"
+            res = f"{glob}{name}"
 
-        return sanitize(res)
+        return res
 
     # docstring parts -------------------------------------------------------------
 
@@ -471,7 +473,7 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringAttribute):
         row = [
             sanitize(el.name),
-            sanitize(self.render_annotation(el.annotation)),
+            self.render_annotation(el.annotation),
             sanitize(el.description or "", allow_markdown=True),
         ]
         return row
