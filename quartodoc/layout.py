@@ -207,7 +207,7 @@ SignatureOptions = Literal["full", "short", "relative"]
 class AutoOptions(_Base):
     """Options available for Auto content layout element."""
 
-    signature_path: SignatureOptions = "relative"
+    signature_name: SignatureOptions = "relative"
     members: Optional[list[str]] = None
     include_private: bool = False
     include_imports: bool = False
@@ -335,7 +335,7 @@ class Doc(_Docable):
     name: str
     obj: Union[dc.Object, dc.Alias]
     anchor: str
-    signature_path: SignatureOptions = "relative"
+    signature_name: SignatureOptions = "relative"
 
     class Config:
         arbitrary_types_allowed = True
@@ -349,7 +349,7 @@ class Doc(_Docable):
         members=None,
         anchor: str = None,
         flat: bool = False,
-        signature_path: str = "relative",
+        signature_name: str = "relative",
     ):
         if members is None:
             members = []
@@ -361,7 +361,7 @@ class Doc(_Docable):
             "name": name,
             "obj": obj,
             "anchor": anchor,
-            "signature_path": signature_path,
+            "signature_name": signature_name,
         }
 
         if kind == "function":

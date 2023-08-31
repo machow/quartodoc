@@ -137,7 +137,7 @@ class MdRenderer(Renderer):
         # TODO: this is for backwards compatibility with the old approach
         # of only defining signature over griffe objects, which projects
         # like shiny currently extend
-        self.display_name = el.signature_path
+        self.display_name = el.signature_name
         res = self.signature(el.obj)
         self.display_name = orig
 

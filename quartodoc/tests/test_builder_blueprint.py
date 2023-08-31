@@ -188,14 +188,14 @@ def test_blueprint_fetch_members_include_inherited():
 def test_blueprint_member_options():
     auto = lo.Auto(
         name="quartodoc.tests.example",
-        member_options={"signature_path": "short"},
+        member_options={"signature_name": "short"},
         members=["AClass"],
     )
     bp = blueprint(auto)
     doc_a_class = bp.members[0]
 
     # member has option set
-    assert doc_a_class.signature_path == "short"
+    assert doc_a_class.signature_name == "short"
 
     # this currently does not apply to members of members
-    assert doc_a_class.members[0].signature_path == "relative"
+    assert doc_a_class.members[0].signature_name == "relative"

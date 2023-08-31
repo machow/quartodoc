@@ -327,7 +327,11 @@ class BlueprintTransformer(PydanticTransformer):
 
         is_flat = el.children == ChoicesChildren.flat
         return Doc.from_griffe(
-            el.name, obj, children, flat=is_flat, signature_path=el.signature_path
+            el.name,
+            obj,
+            children,
+            flat=is_flat,
+            signature_name=el.signature_name,
         )
 
     @staticmethod

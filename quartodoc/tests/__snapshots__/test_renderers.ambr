@@ -232,7 +232,7 @@
   A function
   '''
 # ---
-# name: test_render_doc_signature_path
+# name: test_render_doc_signature_name
   '''
   # example.a_func { #quartodoc.tests.example.a_func }
   
