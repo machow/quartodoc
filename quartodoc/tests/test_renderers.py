@@ -26,7 +26,7 @@ def test_render_param_kwargs_annotated():
 
     assert (
         res  # noqa: W605
-        == "a: \[int\](`int`), b: \[int\](`int`) = 1, *args: \[list\](`list`)\[\[str\](`str`)\], c: \[int\](`int`), d: \[int\](`int`), **kwargs: \[dict\](`dict`)\[\[str\](`str`), \[str\](`str`)\]"  # noqa: W605
+        == r"a: \[int\](`int`), b: \[int\](`int`) = 1, *args: \[list\](`list`)\[\[str\](`str`)\], c: \[int\](`int`), d: \[int\](`int`), **kwargs: \[dict\](`dict`)\[\[str\](`str`), \[str\](`str`)\]"  # noqa: W605
     )
 
 
@@ -101,7 +101,7 @@ def test_render_doc_attribute(renderer):
     res = renderer.render(attr)
     print(res)
 
-    assert res == ["abc", "[Optional\\[\\]](`Optional`)", "xyz"]  # noqa
+    assert res == ["abc", r"[Optional\[\]](`Optional`)", "xyz"]  # noqa
 
 
 @pytest.mark.parametrize("children", ["embedded", "flat"])
