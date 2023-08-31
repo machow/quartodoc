@@ -19,14 +19,14 @@ def test_render_param_kwargs(renderer):
 
 
 def test_render_param_kwargs_annotated():
-    renderer = MdRenderer(show_signature_annotations=True)
+    renderer = MdRenderer()
     f = get_object("quartodoc.tests.example_signature.yes_annotations")
 
     res = renderer.render(f.parameters)
 
     assert (
-        res  # noqa: W605
-        == r"a: \[int\](`int`), b: \[int\](`int`) = 1, *args: \[list\](`list`)\[\[str\](`str`)\], c: \[int\](`int`), d: \[int\](`int`), **kwargs: \[dict\](`dict`)\[\[str\](`str`), \[str\](`str`)\]"  # noqa: W605
+        res
+        == "a: int, b: int = 1, *args: list\\[str\\], c: int, d: int, **kwargs: dict\\[str, str\\]"
     )
 
 
