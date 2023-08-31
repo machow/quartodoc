@@ -226,6 +226,7 @@ class AutoOptions(_Base):
     children: ChoicesChildren = ChoicesChildren.embedded
     package: Union[str, None, MISSING] = MISSING()
     member_options: Optional["AutoOptions"] = None
+    show_bases: bool = False
 
     # for tracking fields users manually specify
     # so we can tell them apart from defaults
@@ -274,7 +275,8 @@ class Auto(AutoOptions):
         If specified, object lookup will be relative to this path.
     member_options:
         Options to apply to members. These can include any of the options above.
-
+    show_bases:
+        Whether to show the names base classes of a class.
 
     """
 
@@ -336,6 +338,7 @@ class Doc(_Docable):
     obj: Union[dc.Object, dc.Alias]
     anchor: str
     signature_name: SignatureOptions = "relative"
+    show_bases: bool = False
 
     class Config:
         arbitrary_types_allowed = True
@@ -350,6 +353,7 @@ class Doc(_Docable):
         anchor: str = None,
         flat: bool = False,
         signature_name: str = "relative",
+        show_bases: bool = False
     ):
         if members is None:
             members = []
@@ -362,6 +366,7 @@ class Doc(_Docable):
             "obj": obj,
             "anchor": anchor,
             "signature_name": signature_name,
+            "show_bases": show_bases,
         }
 
         if kind == "function":

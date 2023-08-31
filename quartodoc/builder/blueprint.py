@@ -332,6 +332,7 @@ class BlueprintTransformer(PydanticTransformer):
             children,
             flat=is_flat,
             signature_name=el.signature_name,
+            show_bases=el.show_bases
         )
 
     @staticmethod

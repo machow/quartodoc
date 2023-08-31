@@ -275,6 +275,9 @@ class MdRenderer(Renderer):
         attr_docs = []
         meth_docs = []
         class_docs = []
+        bases=''
+        if el.show_bases and el.obj.is_class and el.obj.bases:
+            bases = f"\n\nBases: `{'`, '.join([x.source for x in el.obj.bases])}`"
 
         if el.members:
             sub_header = "#" * (self.crnt_header_level + 1)
@@ -340,7 +343,7 @@ class MdRenderer(Renderer):
         body = self.render(el.obj)
 
 
-        return "\n\n".join([title, *sig_part, body, *attr_docs, *class_docs, *meth_docs])
+        return "\n\n".join([title, *sig_part, bases, body, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
     def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
