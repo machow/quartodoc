@@ -3,6 +3,7 @@ from __future__ import annotations
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
+from functools import wraps
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from tabulate import tabulate
@@ -86,7 +87,7 @@ class MdRenderer(Renderer):
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
-        if self.display_name == "name":
+        if self.display_name in {"name", "short"}:
             return el.name
         elif self.display_name == "relative":
             return ".".join(el.path.split(".")[1:])
@@ -127,6 +128,22 @@ class MdRenderer(Renderer):
         return sanitize(el.full)
 
     # signature method --------------------------------------------------------
+
+    @dispatch
+    def signature(self, el: layout.Doc):
+        orig = self.display_name
+
+        # set signature path, generate signature, then set back
+        # TODO: this is for backwards compatibility with the old approach
+        # of only defining signature over griffe objects, which projects
+        # like shiny currently extend
+        self.display_name = el.signature_name
+        res = self.signature(el.obj)
+        self.display_name = orig
+
+        return res
+
+
 
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
@@ -310,27 +327,29 @@ class MdRenderer(Renderer):
                         [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
                     )
 
+
+        str_sig = self.signature(el)
+        sig_part = [str_sig] if self.show_signature else []
+
         body = self.render(el.obj)
-        return "\n\n".join([title, body, *attr_docs, *class_docs, *meth_docs])
+
+
+        return "\n\n".join([title, *sig_part, body, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
-    def render(self, el: layout.DocFunction):
+    def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
         title = self.render_header(el)
 
-        return "\n\n".join([title, self.render(el.obj)])
+        str_sig = self.signature(el)
+        sig_part = [str_sig] if self.show_signature else []
 
-    @dispatch
-    def render(self, el: layout.DocAttribute):
-        title = self.render_header(el)
-        return "\n\n".join([title, self.render(el.obj)])
+        return "\n\n".join([title, *sig_part, self.render(el.obj)])
 
     # render griffe objects ===================================================
 
     @dispatch
     def render(self, el: Union[dc.Object, dc.Alias]):
         """Render high level objects representing functions, classes, etc.."""
-
-        str_sig = self.signature(el)
 
         str_body = []
         if el.docstring is None:
@@ -347,10 +366,7 @@ class MdRenderer(Renderer):
                 else:
                     str_body.append(body)
 
-        if self.show_signature:
-            parts = [str_sig, *str_body]
-        else:
-            parts = [*str_body]
+        parts = [*str_body]
 
         return "\n\n".join(parts)
 

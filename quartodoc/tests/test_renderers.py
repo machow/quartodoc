@@ -145,3 +145,13 @@ def test_render_docstring_numpy_linebreaks(snapshot, renderer):
     res = renderer.render(bp)
 
     assert res == snapshot
+
+
+def test_render_doc_signature_name(snapshot, renderer):
+    package = "quartodoc.tests"
+    auto = Auto(name="example.a_func", package=package, signature_name="short")
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot

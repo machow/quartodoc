@@ -116,15 +116,10 @@ def _to_simple_dict(el: "BaseModel"):
     return json.loads(el.json(exclude_unset=True))
 
 
-def _non_default_entries(el: "BaseModel"):
-    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
-    set_fields = [
-        k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
-    ]
-
+def _non_default_entries(el: Auto):
     d = el.dict()
 
-    return {k: d[k] for k in set_fields}
+    return {k: d[k] for k in el._fields_specified}
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -280,6 +275,12 @@ class BlueprintTransformer(PydanticTransformer):
 
         # Three cases for structuring child methods ----
 
+        _defaults = {"dynamic": dynamic, "package": path}
+        if el.member_options is not None:
+            member_options = {**_defaults, **_non_default_entries(el.member_options)}
+        else:
+            member_options = _defaults
+
         children = []
         for entry in raw_members:
             # Note that we could have iterated over obj.members, but currently
@@ -293,7 +294,7 @@ class BlueprintTransformer(PydanticTransformer):
             # create Doc element for member ----
             # TODO: when a member is a Class, it is currently created using
             # defaults, and there is no way to override those.
-            doc = self.visit(Auto(name=relative_path, dynamic=dynamic, package=path))
+            doc = self.visit(Auto(name=relative_path, **member_options))
 
             # do no document submodules
             if (
@@ -325,7 +326,13 @@ class BlueprintTransformer(PydanticTransformer):
             children.append(res)
 
         is_flat = el.children == ChoicesChildren.flat
-        return Doc.from_griffe(el.name, obj, members=children, flat=is_flat)
+        return Doc.from_griffe(
+            el.name,
+            obj,
+            children,
+            flat=is_flat,
+            signature_name=el.signature_name,
+        )
 
     @staticmethod
     def _fetch_members(el: Auto, obj: dc.Object | dc.Alias):
