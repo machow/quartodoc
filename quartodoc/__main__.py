@@ -225,7 +225,7 @@ def interlinks(config, dry_run, fast):
         return
 
     # interlinks config settings ----
-    cache = interlinks.get("cache", "_inv")
+    cache = p_root / "_inv"
     cfg_fast = interlinks.get("fast", False)
 
     fast = cfg_fast or fast
