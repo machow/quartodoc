@@ -1,6 +1,7 @@
 from quartodoc import get_object
 from quartodoc import layout as lo
 from quartodoc.builder.blueprint import (
+    _non_default_entries,
     BlueprintTransformer,
     blueprint,
     WorkaroundKeyError,
@@ -35,6 +36,23 @@ def lay():
 @pytest.fixture
 def bp():
     return BlueprintTransformer()
+
+
+def test_non_default_entries_auto():
+    assert _non_default_entries(lo.Auto(name="a_func", include_attributes=False)) == {
+        "name": "a_func",
+        "include_attributes": False,
+    }
+
+
+def test_non_default_entries_auto_member_options():
+    # these entries are nested inside auto
+    res = _non_default_entries(
+        lo.Auto(name="a_func", member_options={"include_attributes": False})
+    )
+
+    assert res["name"] == "a_func"
+    assert _non_default_entries(res["member_options"]) == {"include_attributes": False}
 
 
 @pytest.mark.parametrize("path", ["quartodoc.get_object", "quartodoc:get_object"])
