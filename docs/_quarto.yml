@@ -9,27 +9,11 @@ project:
 metadata-files:
   - api/_sidebar.yml
 
-filters:
-  - "interlinks"
-
-interlinks:
-  sources:
-    python:
-      url: https://docs.python.org/3/
-    griffe:
-      url: https://mkdocstrings.github.io/griffe/
-
 website:
   title: "quartodoc"
   page-navigation: true
   navbar:
     left:
-      - file: get-started/overview.qmd
-        text: Get Started
-      - file: examples/
-        text: Examples
-      - file: tutorials/
-        text: Tutorials
       - href: api/
         text: Reference
 
