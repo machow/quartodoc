@@ -1,108 +1,143 @@
+# Overview
 
-# quartodoc
+quartodoc lets you quickly generate python package documentation, using
+markdown and [quarto](https://quarto.org). It is designed as an
+alternative to Sphinx.
 
-Generate python API documentation for quarto.
+Check out the screencast below for a full walkthrough of creating a
+documentation site, or read on for instructions on installation and use.
 
-## Install
+<br>
 
-    pip install quartodoc
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;">
 
-Or for the latest changes:
+<iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+</iframe>
 
-    python3 -m pip install -e git+https://github.com/machow/quartodoc.git#egg=quartodoc
+</div>
+
+<br> <br>
+
+## Installation
+
+``` bash
+python -m pip install quartodoc
+
+# or from github
+python -m pip install git+https://github.com/machow/quartodoc.git
+```
+
+<div>
+
+> **Note**
+>
+> In order to install quarto, see the quarto [get started
+> page](https://quarto.org/docs/get-started/).
+
+</div>
 
 ## Basic use
 
-``` python
-from quartodoc import get_function, MdRenderer
+Getting started with quartodoc takes two steps: configuring a quarto
+website, and generating documentation pages for your library.
 
-# get function object ---
-f_obj = get_function("quartodoc", "get_function")
+First, create a `_quarto.yml` file with the following:
 
-# render ---
-renderer = MdRenderer(header_level = 1)
-print(
-    renderer.to_md(f_obj)
-)
+``` yaml
+project:
+  type: website
+
+# tell quarto to read the generated sidebar
+metadata-files:
+  - _sidebar.yml
+
+
+quartodoc:
+  # the name used to import the package
+  package: quartodoc
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
+  sections:
+    - title: Some functions
+      desc: Functions to inspect docstrings.
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        - get_object
+        - preview
 ```
 
-    # get_function
+Next, run this command to generate your API pages:
 
-    `get_function(module: str, func_name: str, parser: str = 'numpy')`
-
-    Fetch a function.
-
-    ## Parameters
-
-    | Name        | Type   | Description                | Default   |
-    |-------------|--------|----------------------------|-----------|
-    | `module`    | str    | A module name.             | required  |
-    | `func_name` | str    | A function name.           | required  |
-    | `parser`    | str    | A docstring parser to use. | `'numpy'` |
-
-    ## Examples
-
-    ```python
-    >>> get_function("quartodoc", "get_function")
-    <Function('get_function', ...
-    ```
-
-## How it works
-
-quartodoc consists of two pieces:
-
-- **collection**: using the library
-  [griffe](https://github.com/mkdocstrings/griffe) to statically collect
-  information about functions and classes in a program.
-- **docstring parsing**: also handled by griffe, which breaks it into a
-  tree structure.
-- **docstring rendering**: use plum-dispatch on methods like
-  MdRenderer.to_md to decide how to visit and render each piece of the
-  tree (e.g. the examples section, a parameter, etc..).
-
-Here is a quick example of how you can grab a function from griffe and
-walk through it.
-
-``` python
-from griffe.loader import GriffeLoader
-from griffe.docstrings.parsers import Parser
-
-griffe = GriffeLoader(docstring_parser = Parser("numpy"))
-mod = griffe.load_module("quartodoc")
-
-f_obj = mod._modules_collection["quartodoc.get_function"]
+``` bash
+quartodoc build
 ```
 
-``` python
-f_obj.name
+This should create a `reference/` directory with an `index.qmd` and
+documentation pages for listed functions, like `get_object` and
+`preview`.
+
+Finally, preview your website with quarto:
+
+``` bash
+quarto preview
 ```
 
-    'get_function'
+## Rebuilding site
 
-``` python
-docstring = f_obj.docstring.parsed
-docstring
+You can preview your `quartodoc` site using the following commands:
+
+First, watch for changes to the library you are documenting so that your
+docs will automatically re-generate:
+
+``` bash
+quartodoc build --watch
 ```
 
-    [<griffe.docstrings.dataclasses.DocstringSectionText at 0x105a2c310>,
-     <griffe.docstrings.dataclasses.DocstringSectionParameters at 0x10f7961f0>,
-     <griffe.docstrings.dataclasses.DocstringSectionExamples at 0x10f7965b0>]
+Second, preview your site:
 
-Note that quartodoc’s MdRenderer can be called on any part of the parsed
-docstring.
-
-``` python
-from quartodoc import MdRenderer
-
-renderer = MdRenderer()
-
-print(
-    renderer.to_md(docstring[1])
-)
+``` bash
+quarto preview
 ```
 
-    | Name        | Type   | Description                | Default   |
-    |-------------|--------|----------------------------|-----------|
-    | `module`    | str    | A module name.             | required  |
-    | `func_name` | str    | A function name.           | required  |
-    | `parser`    | str    | A docstring parser to use. | `'numpy'` |
+## Looking up objects
+
+Finding python objects to document involves two pieces of configuration:
+
+- the package name.
+- a list of objects for content.
+
+Note that quartodoc can look up anything—whether functions, modules,
+classes, attributes, or methods.
+
+``` yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+      desc: ""
+      contents:
+        - get_object        # function: quartodoc.get_object
+        - ast.preview       # submodule func: quartodoc.ast.preview
+        - MdRenderer        # class: quartodoc.MdRenderer
+        - MdRenderer.render # method: quartodoc.MDRenderer.render
+        - renderers         # module: quartodoc.renderers
+```
+
+The functions listed in `contents` are assumed to be imported from the
+package.
+
+## Learning more
+
+Go [to the next page](./get-started/basic-docs.qmd) to learn how to
+configure quartodoc sites, or check out these handy pages:
+
+- [Examples page](./examples/index.qmd): sites using quartodoc.
+- [Tutorials page](./tutorials/index.qmd): screencasts of building a
+  quartodoc site.
+- [Docstring issues and examples](./get-started/docstring-examples.qmd):
+  common issues when formatting docstrings.
+- [Programming, the big picture](./get-started/dev-big-picture.qmd): the
+  nitty gritty of how quartodoc works, and how to extend it.
