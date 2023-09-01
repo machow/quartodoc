@@ -1,5 +1,5 @@
 ---
-title: "Prep: Auto, blueprint, collect"
+title: "Components: Auto, blueprint, collect"
 jupyter:
   jupytext:
     text_representation:
@@ -14,29 +14,76 @@ jupyter:
 ---
 
 ```{python}
-from quartodoc import Auto, blueprint, collect, preview
+from quartodoc import collect, preview
 from quartodoc import MdRenderer
 from quartodoc import layout
 import yaml
 ```
 
+### `Auto`: Config Options
 
-### Auto discovery of functions, classes, and more
+The `Auto` class contains data about how you wish to render a specific Python object, which you typically set in configuration options via the `quartodoc` section of your `_quarto.yml` file.  In other words, `Auto` is a data structure that represents the configuration options for a specific Python object.
+
+In the [previous](dev-big-picture.qmd) section, be demonstrated how we can find the `Auto` object corresponding to the `MdRenderer` class from our yaml configuration:
+
+We can find the `Auto` object corresponding to the python object from our yaml configuration like this:
 
 ```{python}
-auto = Auto(name = "quartodoc.get_object")
-auto
+import yaml
+from quartodoc import Builder
+
+cfg = yaml.safe_load("""
+quartodoc:
+  package: quartodoc
+  style: pkgdown
+  sections:
+    - title: "Some section"
+      desc: "Some description"
+      contents:
+        - name: MdRenderer
+          members: ["render", "summarize"]
+          children: separate
+""")
+
+builder = Builder.from_quarto_config(cfg)
+auto_from_yml = builder.layout.sections[0].contents[0]
+print(auto_from_yml)
 ```
 
-* auto just represents what we want to do, blueprint has all the logic.
-* explain options like dynamic, show them in blueprint section
+We can see many of the configuration options such as `members`, `name` and `children` as well as other options we didn't specify but are set to their default values.  For example, we didn't set the option for [`dynamic`](basic-content.qmd#dynamic-lookup) but it is set to `false` by default.
 
+However, we don't have to start with `yaml` files to create an `Auto` object.  We can also create an `Auto` object with the fully qualified name of any Python object.  For example, we can create an `Auto` object for the `MdRenderer` class like this:
+```{python}
+from quartodoc import Auto
+auto = Auto(name = "quartodoc.MdRenderer", signature_name = 'short')
+print(auto)
+```
+
+However, since we didn't specify any options, this is not the same `Auto` that we got from the yaml.  For example, the `members` option is not set to `["render", "summarize"]` as it was in the yaml.  Instead, it is set to `None` which means that all members will be included.  We can see this by looking at the `obj` attribute of the `Auto` object:
+
+```{python}
+print(auto.members)
+```
+
+To set this option, we can pass it to the `Auto` constructor:
+
+```{python}
+auto = Auto(name = "quartodoc.MdRenderer", 
+            members = ["render", "summarize"]
+        )
+
+assert auto.members == auto_from_yml.members
+print(auto)
+```
+
+Understanding how `Auto` an object created is helpful in case you need to debug `quartodoc`.  If you find that a configuration option is not being set as you expect, you can create an `Auto` object for the Python object in question and compare it to the `Auto` object that you expect to be created from your yaml configuration.
 
 ## Blueprint: create a renderable doc recipe
 
 ### From Auto
 
 ```{python}
+from quartodoc import blueprint
 doc = blueprint(auto)
 doc
 ```
