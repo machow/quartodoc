@@ -353,7 +353,7 @@ class Doc(_Docable):
         anchor: str = None,
         flat: bool = False,
         signature_name: str = "relative",
-        show_bases: bool = False
+        show_bases: bool = False,
     ):
         if members is None:
             members = []
