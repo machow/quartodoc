@@ -19,10 +19,25 @@ or read on for instructions on installation and use.
 
 <br>
 
+```{python}
+#| echo: false
+#| output: asis
+import os
 
+if "BUILDING_README" in os.environ:
+  print("""
+[![](https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif)](https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed)
+""")
+else:
+  print("""
 <div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+""")
 
-<br>
+```
+
+
+
+
 <br>
 
 ## Installation
@@ -131,9 +146,9 @@ The functions listed in `contents` are assumed to be imported from the package.
 
 ## Learning more
 
-Go [to the next page](./get-started/basic-docs.qmd) to learn how to configure quartodoc sites, or check out these handy pages:
+Go [to the next page](basic-docs.qmd) to learn how to configure quartodoc sites, or check out these handy pages:
 
-* [Examples page](./examples/index.qmd): sites using quartodoc.
-* [Tutorials page](./tutorials/index.qmd): screencasts of building a quartodoc site.
-* [Docstring issues and examples](./get-started/docstring-examples.qmd): common issues when formatting docstrings.
-* [Programming, the big picture](./get-started/dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.
+* [Examples page](/examples/index.qmd): sites using quartodoc.
+* [Tutorials page](/tutorials/index.qmd): screencasts of building a quartodoc site.
+* [Docstring issues and examples](docstring-examples.qmd): common issues when formatting docstrings.
+* [Programming, the big picture](dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.
