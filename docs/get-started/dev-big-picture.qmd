@@ -28,7 +28,7 @@ The code below shows a Builder object being loaded from a `_quarto.yml` config (
 ```{python}
 import yaml
 
-from quartodoc import Builder, preview, blueprint, collect, MdRenderer
+from quartodoc import Builder, blueprint, collect, MdRenderer
 
 cfg = yaml.safe_load("""
 quartodoc:
@@ -48,7 +48,7 @@ builder
 ```
 
 Note that .from_quarto_config used the `style:` field to decide which Builder to create
-(in this case, PkgdownBuilder).
+(in this case, `BuilderPkgdown`).
 
 We can view the config as a [layout.Layout](`quartodoc.layout.Layout`), by looking at the `.layout` attribute.
 
@@ -59,6 +59,7 @@ builder.layout
 This can be a bit difficult to read, so quartodoc implements a [preview](`quartodoc.preview`) function, which spaces things out.
 
 ```{python}
+from quartodoc import preview
 preview(builder.layout)
 ```
 
@@ -69,14 +70,14 @@ a pipe connecting it to each of its arguments.
 * The content entry `MdRenderer` is represented by an [Auto](`quartodoc.Auto`) class.
   This specifies a Python object to look up and document.
 
-We can follow the path in the preview above, to pull out just the contents piece:
+We can follow the path in the preview above, to pull out just this first piece of content containing `MdRenderer`:
 
 ```{python}
 content = builder.layout.sections[0].contents[0]
 preview(content)
 ```
 
-Next, we'll look at `blueprint()`, which processes the layout, including transforming `Auto` objects into more concrete instructions.
+Next, we'll look at `blueprint()`, which processes the layout, including transforming `Auto` objects (like the one representing the `MdRenderer` above) into more concrete instructions.
 
 ## From config to blueprint
 
@@ -96,7 +97,7 @@ Notice two key pieces:
   This element holds everything needed to render this doc, including the class signature
   and parsed docstring.
 
-Importantly, the `.members` attribute specifies how to render the class methods we specified (`.render()` and `.summarize()`).
+Importantly, the `.members` attribute stores how to render the class methods we listed in our configuration yaml, `.render()` and `.summarize()`:
 
 ```{python}
 preview(bp_contents.contents[0].members, max_depth=2)
@@ -112,7 +113,7 @@ Before to building the site, we need to `collect()` all the pages.
 The [collect](`quartodoc.collect`) function pulls out two important pieces of information:
 
 * **pages** - each page to be rendered.
-* **items** - information on where each documented object lives in the site.
+* **items** - information on where each documented object lives in the site, which is used for things like [interlinks](interlinks.qmd).
 
 ```{python}
 pages, items = collect(bp, builder.dir)
@@ -130,21 +131,28 @@ Notice that if you wanted to look up `quartodoc.MdRenderer.render`, the first it
 
 ## Rendering and writing
 
-A `Builder` instantiates a `Renderer` (like [MdRenderer](`quartodoc.MdRenderer`)).
-Use the `.renderer` attribute to access it.
+A `Builder` instantiates a `Renderer` (like [](`~quartodoc.MdRenderer`)).
+Use the `.renderer` attribute to access it:
 
 ```{python}
 builder.renderer
 ```
 
+The `render` method of of the [](`~quartodoc.MdRenderer`) returns a markdown string that can be rendered by Quarto:
 ```{python}
 print(builder.renderer.render(pages[0]))
-
 ```
+
+:::{.callout-note}
+### Cross References
+
+The `{ #quartodoc.MdRenderer.render }` in the output above is extended Quarto markdown that is a [cross reference](https://quarto.org/docs/authoring/cross-references.html).
+
+:::
 
 ## Writing pages
 
-The builder has a number of methods it uses during build.
+The builder has a number of methods it uses while materializing files that will be rendered by Quarto.
 The main method is [.build()](`quartodoc.Builder.build`).
 See the [Builder section of the API](#api-builders) for a list of methods,
 or this [giant build process diagram](/get-started/extra-build-sequence.qmd) for a full breakdown.
