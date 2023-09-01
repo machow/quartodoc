@@ -18,6 +18,8 @@
   
   `tests.example_class.C(self, x, y)`
   
+  
+  
   The short summary.
   
   The extended summary,
@@ -48,6 +50,8 @@
   
   `tests.example_class.C.D()`
   
+  
+  
   A nested class
   
   ## Methods
@@ -68,6 +72,8 @@
   # quartodoc.tests.example_class.C { #quartodoc.tests.example_class.C }
   
   `tests.example_class.C(self, x, y)`
+  
+  
   
   The short summary.
   
@@ -99,6 +105,8 @@
   
   `tests.example_class.C.D()`
   
+  
+  
   A nested class
   
   ## Methods
@@ -120,6 +128,8 @@
   
   `tests.example_class.AttributesTable(self)`
   
+  
+  
   The short summary.
   
   ## Attributes
@@ -136,6 +146,8 @@
   # quartodoc.tests.example { #quartodoc.tests.example }
   
   `tests.example`
+  
+  
   
   A module
   
@@ -154,6 +166,8 @@
   ### AClass { #quartodoc.tests.example.AClass }
   
   `tests.example.AClass()`
+  
+  
   
   A class
   
@@ -194,6 +208,8 @@
   
   `tests.example`
   
+  
+  
   A module
   
   ## Attributes
@@ -211,6 +227,8 @@
   ## AClass { #quartodoc.tests.example.AClass }
   
   `tests.example.AClass()`
+  
+  
   
   A class
   
