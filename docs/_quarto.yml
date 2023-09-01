@@ -101,12 +101,6 @@ quartodoc:
         dynamic: true
       contents:
         - name: MdRenderer
-          children: linked
-        - MdRenderer.render
-        - MdRenderer.render_annotation
-        - MdRenderer.render_header
-        - MdRenderer.signature
-        - MdRenderer.summarize
 
     - title: API Builders
       desc: |
