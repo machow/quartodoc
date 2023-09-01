@@ -1,3 +1,4 @@
+[![CI](https://github.com/machow/quartodoc/actions/workflows/ci.yml/badge.svg)](https://github.com/machow/quartodoc/actions/workflows/ci.yml)
 
 # quartodoc
 
