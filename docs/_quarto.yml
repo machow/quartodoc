@@ -125,7 +125,7 @@ quartodoc:
 
     - title: Inventory links
       desc: |
-        Inventory files map a functions name to its corresponding url in your docs.
+        Inventory files map a function's name to its corresponding url in your docs.
         These functions allow you to create and transform inventory files.
       contents:
         - create_inventory
