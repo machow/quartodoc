@@ -83,9 +83,9 @@ quartodoc:
   render_interlinks: true
   sidebar: "api/_sidebar.yml"
   sections:
-    - title: Preperation Functions
+    - title: Preparation Functions
       desc: |
-        These functions fetch and analyze python objects, including parsing docstrings.
+        These functions fetch and analyze Python objects, including parsing docstrings.
         They prepare a basic representation of your doc site that can be rendered and built.
       contents:
         - Auto
@@ -122,7 +122,6 @@ quartodoc:
         - Builder.write_doc_pages
         - Builder.write_sidebar
         - Builder.create_inventory
-
 
     - title: Inventory links
       desc: |
