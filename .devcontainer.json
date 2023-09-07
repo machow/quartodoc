@@ -13,6 +13,12 @@
       "label": "Jupyter"
     }
   },
+  "vscode": {
+    "extensions": [
+      "ms-toolsai.jupyter",
+      "ms-python.python"
+    ]
+  },
   "onCreateCommand": {
     "prep-python": "python3 -m pip install --upgrade setuptools jupyterlab ipython jupyterlab-quarto -e '.[dev]'"
   }
