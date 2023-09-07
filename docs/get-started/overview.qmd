@@ -128,9 +128,9 @@ The functions listed in `contents` are assumed to be imported from the package.
 
 ## Learning more
 
-Go [to the next page](./get-started/basic-docs.qmd) to learn how to configure quartodoc sites, or check out these handy pages:
+Go [to the next page](/get-started/basic-docs.qmd) to learn how to configure quartodoc sites, or check out these handy pages:
 
-* [Examples page](./examples/index.qmd): sites using quartodoc.
-* [Tutorials page](./tutorials/index.qmd): screencasts of building a quartodoc site.
-* [Docstring issues and examples](./get-started/docstring-examples.qmd): common issues when formatting docstrings.
-* [Programming, the big picture](./get-started/dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.
+* [Examples page](/examples/index.qmd): sites using quartodoc.
+* [Tutorials page](/tutorials/index.qmd): screencasts of building a quartodoc site.
+* [Docstring issues and examples](/get-started/docstring-examples.qmd): common issues when formatting docstrings.
+* [Programming, the big picture](/get-started/dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.
