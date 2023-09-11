@@ -58,7 +58,7 @@
   
   ### some_method { #quartodoc.tests.example_class.C.some_method }
   
-  `tests.example_class.C.some_method(self)`
+  `tests.example_class.C.some_method()`
   
   A method
   '''
@@ -109,7 +109,7 @@
   
   ## some_method { #quartodoc.tests.example_class.C.some_method }
   
-  `tests.example_class.C.some_method(self)`
+  `tests.example_class.C.some_method()`
   
   A method
   '''
