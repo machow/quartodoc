@@ -80,7 +80,7 @@ quartodoc:
   style: pkgdown
   dir: api
   package: quartodoc
-  options:
+  options: &defaults
     show_bases: true
   render_interlinks: true
   sidebar: "api/_sidebar.yml"
@@ -100,6 +100,7 @@ quartodoc:
       desc: |
         Renderers convert parsed docstrings into a target format, like markdown.
       options:
+        <<: *defaults
         dynamic: true
       contents:
         - name: MdRenderer
