@@ -99,6 +99,14 @@ class MdRenderer(Renderer):
             return el.canonical_path
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
+    
+    def _fetch_method_parameters(self, el: dc.Function):
+        # adapted from mkdocstrings-python jinja tempalate
+        if el.parent and el.parent.is_class and len(el.parameters) > 0:
+            if el.parameters[0].name in {"self", "cls"}:
+                return dc.Parameters(*list(el.parameters)[1:])
+        
+        return el.parameters
 
     def _render_table(self, rows, headers):
         table = tabulate(rows, headers=headers, tablefmt="github")
@@ -162,7 +170,7 @@ class MdRenderer(Renderer):
         self, el: Union[dc.Class, dc.Function], source: Optional[dc.Alias] = None
     ):
         name = self._fetch_object_dispname(source or el)
-        pars = self.render(el.parameters)
+        pars = self.render(self._fetch_method_parameters(el))
 
         return f"`{name}({pars})`"
 
