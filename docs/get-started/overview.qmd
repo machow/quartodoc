@@ -10,41 +10,38 @@ jupyter:
 ---
 
 
-quartodoc lets you quickly generate python package documentation,
-using markdown and [quarto](https://quarto.org).
-It is designed as an alternative to Sphinx.
+**quartodoc** lets you quickly generate Python package API reference documentation using Markdown and [Quarto](https://quarto.org).
+quartodoc is designed as an alternative to [Sphinx](https://www.sphinx-doc.org/en/master/).
 
-Check out the screencast below for a full walkthrough of creating a documentation site,
-or read on for instructions on installation and use.
-
-<br>
-
+Check out the below screencast for a walkthrough of creating a documentation site, or read on for instructions.
 
 <div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-<br>
-<br>
 
 ## Installation
 
 ```bash
 python -m pip install quartodoc
+```
+or from GitHub
 
-# or from github
+```bash
 python -m pip install git+https://github.com/machow/quartodoc.git
 ```
 
-:::{.callout-note}
-In order to install quarto, see the quarto [get started page](https://quarto.org/docs/get-started/).
+:::{.callout-important}
+
+### Install Quarto
+
+If you haven't already, you'll need to [install Quarto](https://quarto.org/docs/get-started/) before you can use quartodoc.
 :::
 
 
 ## Basic use
 
-Getting started with quartodoc takes two steps: configuring a quarto website,
-and generating documentation pages for your library.
+Getting started with quartodoc takes two steps: configuring quartodoc, then generating documentation pages for your library.
 
-First, create a `_quarto.yml` file with the following:
+You can configure quartodoc alongside the rest of your Quarto site in the [`_quarto.yml`](https://quarto.org/docs/projects/quarto-projects.html) file you are already using for Quarto.  To [configure quartodoc](basic-docs.qmd#site-configuration), you need to add a `quartodoc` section to the top level your `_quarto.yml` file.  Below is a minimal example of a configuration that documents the `quartodoc` package:
 
 ```yaml
 project:
@@ -56,7 +53,7 @@ metadata-files:
 
 
 quartodoc:
-  # the name used to import the package
+  # the name used to import the package you want to create reference docs for
   package: quartodoc
 
   # write sidebar data to this file
@@ -72,13 +69,13 @@ quartodoc:
         - preview
 ```
 
-Next, run this command to generate your API pages:
+Now that you have configured quartodoc, you can generate the reference API docs with the following command:
 
 ```bash
 quartodoc build
 ```
 
-This should create a `reference/` directory with an `index.qmd` and documentation
+This will create a `reference/` directory with an `index.qmd` and documentation
 pages for listed functions, like `get_object` and `preview`.
 
 Finally, preview your website with quarto:
@@ -105,12 +102,12 @@ quarto preview
 
 ## Looking up objects
 
-Finding python objects to document involves two pieces of configuration:
+Generating API reference docs for Python objects involves two pieces of configuration:
 
-* the package name.
-* a list of objects for content.
+1.  the package name.
+2.  a list of objects for content.
 
-Note that quartodoc can look up anything---whether functions, modules, classes, attributes, or methods.
+quartodoc can look up a wide variety of objects, including functions, modules, classes, attributes, and methods:
 
 ```yaml
 quartodoc:
