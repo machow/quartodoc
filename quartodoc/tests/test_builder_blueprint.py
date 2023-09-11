@@ -183,12 +183,19 @@ def _check_member_names(members, expected):
     [
         ("attributes", {"some_property", "z", "SOME_ATTRIBUTE"}),
         ("classes", {"D"}),
-        ("functions", {"some_method"}),
+        ("functions", {"some_method", "some_class_method"}),
     ],
 )
 def test_blueprint_fetch_members_include_kind_false(kind, removed):
     option = {f"include_{kind}": False}
-    all_members = {"SOME_ATTRIBUTE", "z", "some_property", "some_method", "D"}
+    all_members = {
+        "SOME_ATTRIBUTE",
+        "z",
+        "some_property",
+        "some_method",
+        "D",
+        "some_class_method",
+    }
 
     auto = lo.Auto(name="quartodoc.tests.example_class.C", **option)
     bp = blueprint(auto)
