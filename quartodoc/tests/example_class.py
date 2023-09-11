@@ -29,6 +29,10 @@ class C:
     def some_property(self):
         """A property"""
 
+    @classmethod
+    def some_class_method(cls):
+        """A class method"""
+
     class D:
         """A nested class"""
 
