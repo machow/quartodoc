@@ -13,10 +13,39 @@ jupyter:
 **quartodoc** lets you quickly generate Python package API reference documentation using Markdown and [Quarto](https://quarto.org).
 quartodoc is designed as an alternative to [Sphinx](https://www.sphinx-doc.org/en/master/).
 
+
 Check out the below screencast for a walkthrough of creating a documentation site, or read on for instructions.
 
-<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
+```{python}
+#| echo: false
+#| output: asis
+
+# this code ensures that the proper html for the tutorial screencast is used,
+# depending on whether it's being rendered for the github README, or doc site.
+import os
+
+if "BUILDING_README" in os.environ:
+    # I don't know why, but we need to repeat the Installation header here.
+    # or quarto makes it disappear when we generate the readme
+    print("""
+<p align="center">
+<a href="https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed">
+<img src="https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif" width="75%">
+</a>
+</p>
+
+<br>
+
+## Installation
+""")
+else:
+    print("""
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<br>
+""")
+
+```
 
 ## Installation
 
@@ -41,7 +70,7 @@ If you haven't already, you'll need to [install Quarto](https://quarto.org/docs/
 
 Getting started with quartodoc takes two steps: configuring quartodoc, then generating documentation pages for your library.
 
-You can configure quartodoc alongside the rest of your Quarto site in the [`_quarto.yml`](https://quarto.org/docs/projects/quarto-projects.html) file you are already using for Quarto.  To [configure quartodoc](basic-docs.qmd#site-configuration), you need to add a `quartodoc` section to the top level your `_quarto.yml` file.  Below is a minimal example of a configuration that documents the `quartodoc` package:
+You can configure quartodoc alongside the rest of your Quarto site in the [`_quarto.yml`](https://quarto.org/docs/projects/quarto-projects.html) file you are already using for Quarto.  To [configure quartodoc](./basic-docs.qmd#site-configuration), you need to add a `quartodoc` section to the top level your `_quarto.yml` file.  Below is a minimal example of a configuration that documents the `quartodoc` package:
 
 ```yaml
 project:
@@ -128,9 +157,9 @@ The functions listed in `contents` are assumed to be imported from the package.
 
 ## Learning more
 
-Go [to the next page](./get-started/basic-docs.qmd) to learn how to configure quartodoc sites, or check out these handy pages:
+Go [to the next page](basic-docs.qmd) to learn how to configure quartodoc sites, or check out these handy pages:
 
-* [Examples page](./examples/index.qmd): sites using quartodoc.
-* [Tutorials page](./tutorials/index.qmd): screencasts of building a quartodoc site.
-* [Docstring issues and examples](./get-started/docstring-examples.qmd): common issues when formatting docstrings.
-* [Programming, the big picture](./get-started/dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.
+* [Examples page](/examples/index.qmd): sites using quartodoc.
+* [Tutorials page](/tutorials/index.qmd): screencasts of building a quartodoc site.
+* [Docstring issues and examples](./docstring-examples.qmd): common issues when formatting docstrings.
+* [Programming, the big picture](./dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.
