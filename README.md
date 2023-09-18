@@ -47,10 +47,10 @@ You can configure quartodoc alongside the rest of your Quarto site in
 the
 [`_quarto.yml`](https://quarto.org/docs/projects/quarto-projects.html)
 file you are already using for Quarto. To [configure
-quartodoc](basic-docs.qmd#site-configuration), you need to add a
-`quartodoc` section to the top level your `_quarto.yml` file. Below is a
-minimal example of a configuration that documents the `quartodoc`
-package:
+quartodoc](https://machow.github.io/quartodoc/get-started/basic-docs.html#site-configuration),
+you need to add a `quartodoc` section to the top level your
+`_quarto.yml` file. Below is a minimal example of a configuration that
+documents the `quartodoc` package:
 
 ``` yaml
 project:

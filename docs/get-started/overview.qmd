@@ -70,7 +70,7 @@ If you haven't already, you'll need to [install Quarto](https://quarto.org/docs/
 
 Getting started with quartodoc takes two steps: configuring quartodoc, then generating documentation pages for your library.
 
-You can configure quartodoc alongside the rest of your Quarto site in the [`_quarto.yml`](https://quarto.org/docs/projects/quarto-projects.html) file you are already using for Quarto.  To [configure quartodoc](basic-docs.qmd#site-configuration), you need to add a `quartodoc` section to the top level your `_quarto.yml` file.  Below is a minimal example of a configuration that documents the `quartodoc` package:
+You can configure quartodoc alongside the rest of your Quarto site in the [`_quarto.yml`](https://quarto.org/docs/projects/quarto-projects.html) file you are already using for Quarto.  To [configure quartodoc](./basic-docs.qmd#site-configuration), you need to add a `quartodoc` section to the top level your `_quarto.yml` file.  Below is a minimal example of a configuration that documents the `quartodoc` package:
 
 ```yaml
 project:
@@ -161,5 +161,5 @@ Go [to the next page](basic-docs.qmd) to learn how to configure quartodoc sites,
 
 * [Examples page](/examples/index.qmd): sites using quartodoc.
 * [Tutorials page](/tutorials/index.qmd): screencasts of building a quartodoc site.
-* [Docstring issues and examples](docstring-examples.qmd): common issues when formatting docstrings.
-* [Programming, the big picture](dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.
+* [Docstring issues and examples](./docstring-examples.qmd): common issues when formatting docstrings.
+* [Programming, the big picture](./dev-big-picture.qmd): the nitty gritty of how quartodoc works, and how to extend it.

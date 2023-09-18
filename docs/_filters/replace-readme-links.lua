@@ -10,8 +10,8 @@ function Link(link)
     -- e.g. ./overview.qmd -> {replace_rel_path}/get-started/overview.html
     -- e.g. /index.qmd -> {replace_base_domain}/index.html
     -- e.g. https://example.com -> https://example.com
-    if link.target:match("%.qmd$") then
-        link.target = link.target:gsub("%.qmd$", ".html")
+    if link.target:match("%.qmd$") or link.target:match("%.qmd#.*$") then
+        link.target = link.target:gsub("%.qmd", ".html")
         if link.target:match("^%./") then
             link.target = link.target:gsub("^%./", replace_base_domain .. replace_rel_path .. "/")
         end
