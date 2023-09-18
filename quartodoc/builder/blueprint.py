@@ -117,9 +117,7 @@ def _to_simple_dict(el: "BaseModel"):
 
 
 def _non_default_entries(el: Auto):
-    d = el.dict()
-
-    return {k: d[k] for k in el._fields_specified}
+    return {k: getattr(el, k) for k in el._fields_specified}
 
 
 class BlueprintTransformer(PydanticTransformer):
