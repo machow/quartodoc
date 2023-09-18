@@ -34,8 +34,11 @@ docs-build-examples: docs/examples/single-page docs/examples/pkgdown docs/exampl
 
 docs-build-readme: export BUILDING_README = 1
 docs-build-readme:
+	# note that the input file is named GITHUB.qmd, because quart does not
+	# render files named README.qmd, and it is very cumbersome to work around
+	# this very strange behavior
 	cd docs \
-	  && quarto render get-started/overview.qmd \
+	  && quarto render GITHUB.qmd \
 	     --to gfm \
 		 --output README.md \
 		 --output-dir ..

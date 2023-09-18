@@ -14,8 +14,6 @@ documentation site, or read on for instructions.
 
 </div>
 
-## Installation
-
 ``` bash
 python -m pip install quartodoc
 ```
@@ -140,13 +138,19 @@ package.
 
 ## Learning more
 
-Go [to the next page](basic-docs.qmd) to learn how to configure
-quartodoc sites, or check out these handy pages:
+Go [to the next
+page](https://machow.github.io/quartodoc/get-started/basic-docs.html) to
+learn how to configure quartodoc sites, or check out these handy pages:
 
-- [Examples page](../examples/index.qmd): sites using quartodoc.
-- [Tutorials page](../tutorials/index.qmd): screencasts of building a
-  quartodoc site.
-- [Docstring issues and examples](docstring-examples.qmd): common issues
-  when formatting docstrings.
-- [Programming, the big picture](dev-big-picture.qmd): the nitty gritty
-  of how quartodoc works, and how to extend it.
+- [Examples
+  page](https://machow.github.io/quartodoc/examples/index.html): sites
+  using quartodoc.
+- [Tutorials
+  page](https://machow.github.io/quartodoc/tutorials/index.html):
+  screencasts of building a quartodoc site.
+- [Docstring issues and
+  examples](https://machow.github.io/quartodoc/get-started/docstring-examples.html):
+  common issues when formatting docstrings.
+- [Programming, the big
+  picture](https://machow.github.io/quartodoc/get-started/dev-big-picture.html):
+  the nitty gritty of how quartodoc works, and how to extend it.
