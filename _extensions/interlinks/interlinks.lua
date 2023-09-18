@@ -232,12 +232,14 @@ return {
         Meta = function(meta)
             local json
             local prefix
-            for k, v in pairs(meta.interlinks.sources) do
-                local base_name = quarto.project.offset .. "/_inv/" .. k .. "_objects"
-                json = read_inv_text_or_json(base_name)
-                prefix = pandoc.utils.stringify(v.url)
-                if json ~= nil then
-                    fixup_json(json, prefix)
+            if meta.interlinks and meta.interlinks.sources then
+                for k, v in pairs(meta.interlinks.sources) do
+                    local base_name = quarto.project.offset .. "/_inv/" .. k .. "_objects"
+                    json = read_inv_text_or_json(base_name)
+                    prefix = pandoc.utils.stringify(v.url)
+                    if json ~= nil then
+                        fixup_json(json, prefix)
+                    end
                 end
             end
             json = read_inv_text_or_json(quarto.project.offset .. "/objects")
