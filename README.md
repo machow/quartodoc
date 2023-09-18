@@ -8,9 +8,11 @@ is designed as an alternative to
 Check out the below screencast for a walkthrough of creating a
 documentation site, or read on for instructions.
 
+<p align="center">
 <a href="https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed">
 <img src="https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif" width="75%">
 </a>
+</p>
 
 <br>
 
