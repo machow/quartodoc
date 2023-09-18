@@ -32,11 +32,13 @@ docs/examples/%: examples/%/_site
 
 docs-build-examples: docs/examples/single-page docs/examples/pkgdown docs/examples/auto-package
 
+docs-build-readme: export BUILDING_README = 1
 docs-build-readme:
-	BUILDING_README=1 cd docs \
+	cd docs \
 	  && quarto render get-started/overview.qmd \
 	     --to gfm \
-		 --output README.md
+		 --output README.md \
+		 --output-dir ..
 
 docs-build: docs-build-examples
 	cd docs && quarto add --no-prompt ..
