@@ -26,16 +26,22 @@ Check out the below screencast for a walkthrough of creating a documentation sit
 import os
 
 if "BUILDING_README" in os.environ:
-  print("""
+    # I don't know why, but we need to repeat the Installation header here.
+    # or quarto makes it disappear when we generate the readme
+    print("""
 [![](https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif)](https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed)
+
+<br>
+
+## Installation
 """)
 else:
-  print("""
+    print("""
 <div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<br>
 """)
 
 ```
-
 
 ## Installation
 

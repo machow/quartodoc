@@ -14,6 +14,10 @@ documentation site, or read on for instructions.
 
 </div>
 
+<br>
+
+## Installation
+
 ``` bash
 python -m pip install quartodoc
 ```
