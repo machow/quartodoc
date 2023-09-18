@@ -29,9 +29,9 @@ if "BUILDING_README" in os.environ:
     # I don't know why, but we need to repeat the Installation header here.
     # or quarto makes it disappear when we generate the readme
     print("""
-<div width="50%">
-[![](https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif)](https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed)
-</div>
+<a href="https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed">
+<img src="https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif" width="75%">
+</a>
 
 <br>
 
