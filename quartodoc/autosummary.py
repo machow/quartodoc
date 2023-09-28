@@ -346,7 +346,7 @@ def dynamic_alias(
         else:
             parent_path = mod_name.rsplit(".", 1)[0]
 
-        parent = get_object(parent_path, loader=loader)
+        parent = get_object(parent_path, loader=loader, dynamic=True)
         return dc.Alias(attr_name, obj, parent=parent)
 
 
