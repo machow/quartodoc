@@ -1,5 +1,5 @@
 ---
-title: "Prep: Auto, blueprint, collect"
+title: "Components: Auto, blueprint, collect"
 jupyter:
   jupytext:
     text_representation:
@@ -14,90 +14,209 @@ jupyter:
 ---
 
 ```{python}
-from quartodoc import Auto, blueprint, collect, preview
+from quartodoc import collect, preview
 from quartodoc import MdRenderer
-from quartodoc import layout
 import yaml
 ```
 
+### `Auto`: Config Options
 
-### Auto discovery of functions, classes, and more
+The `Auto` class contains data about how you wish to render a specific Python object, which you typically set in configuration options via the `quartodoc` section of your `_quarto.yml` file.  In other words, `Auto` is a data structure that represents the configuration options for a specific Python object.
+
+In the [previous](dev-big-picture.qmd) section, be demonstrated how we can find the `Auto` object corresponding to the `MdRenderer` class from our yaml configuration:
+
+We can find the `Auto` object corresponding to the python object from our yaml configuration like this:
 
 ```{python}
-auto = Auto(name = "quartodoc.get_object")
-auto
+import yaml
+from quartodoc import Builder
+
+cfg = yaml.safe_load("""
+quartodoc:
+  package: quartodoc
+  style: pkgdown
+  sections:
+    - title: "Some section"
+      desc: "Some description"
+      contents:
+        - name: MdRenderer
+          members: ["render", "summarize"]
+          children: separate
+""")
+
+builder = Builder.from_quarto_config(cfg)
+auto_from_yml = builder.layout.sections[0].contents[0]
+print(auto_from_yml)
 ```
 
-* auto just represents what we want to do, blueprint has all the logic.
-* explain options like dynamic, show them in blueprint section
+We can see many of the configuration options such as `members`, `name` and `children` as well as other options we didn't specify but are set to their default values.  For example, we didn't set the option for [`dynamic`](basic-content.qmd#dynamic-lookup) but it is set to `false` by default.
 
+However, we don't have to start with `yaml` files to create an `Auto` object.  We can also create an `Auto` object with the fully qualified name of any Python object.  For example, we can create an `Auto` object for the `MdRenderer` class like this:
+```{python}
+from quartodoc import Auto
+auto = Auto(name = "quartodoc.MdRenderer", 
+            signature_name = 'short')
+print(auto)
+```
 
-## Blueprint: create a renderable doc recipe
-
-### From Auto
+However, since we didn't specify any options, this is not the same `Auto` that we got from the yaml.  For example, the `members` option is not set to `["render", "summarize"]` as it was in the yaml.  Instead, it is set to `None` which means that all members will be included.  We can see this by looking at the `obj` attribute of the `Auto` object:
 
 ```{python}
+print(auto.members)
+```
+
+To set this option, we can pass it to the `Auto` constructor:
+
+```{python}
+auto = Auto(name = "quartodoc.MdRenderer", 
+            members = ["render", "summarize"]
+        )
+
+assert auto.members == auto_from_yml.members
+print(auto)
+```
+
+Understanding the `Auto` object is helpful for debugging `quartodoc`.  If you find that a configuration option is not being set as you expect, you can create an `Auto` object for the Python object in question and compare it to the `Auto` object that you expect to be created from your yaml configuration.
+
+## `blueprint`: Parse Metadata From Objects
+
+`blueprint` parses all of the metadata about the python object and stores it in a hierarchal tree structure that is convenient for a renderer to transform into a renderable format like HTML or Markdown.  For example, here is the blueprint for the `MdRenderer` class:
+
+```{python}
+from quartodoc import blueprint
 doc = blueprint(auto)
-doc
+preview(doc, max_depth=2)
 ```
+
+To give you a sense of this tree structure, we can look at the `obj.docstring` field of the above blueprint, which contains information about the [Python docstring](https://peps.python.org/pep-0257/):
 
 ```{python}
 preview(doc.obj.docstring, max_depth=2)
 ```
 
-### Layout and Section
+We can see from this output that the parser for the docstring is `numpy`, which means the docstring is expected to be in the [numpy style](https://numpydoc.readthedocs.io/en/latest/format.html). 
+
+Furthermore, we can see from the tree structure that the `DocstringSectionText` is stored as the first element in a list under the `parsed` attribute:
 
 ```{python}
+preview(doc.obj.docstring.parsed[0])
+```
+
+`DocstringSectionText` stores the "text" field of a [numpy style](https://numpydoc.readthedocs.io/en/latest/format.html) docstring, which is the first line of the docstring, which is otherwise known as the [short summary](https://numpydoc.readthedocs.io/en/latest/format.html#short-summary).
+Furthermore, we can see from the output above that the actual text of this short summary is stored in the `value` attribute:
+
+```{python}
+docstr_firstln_value = doc.obj.docstring.parsed[0].value
+print(docstr_firstln_value)
+```
+
+We can check the docstring of `MdRenderer` to see that this is indeed the first line of the docstring:
+
+```{python}
+from inspect import getdoc
+docstr_firstln = getdoc(MdRenderer).splitlines()[0]
+
+# These are the same
+assert docstr_firstln == docstr_firstln_value
+print(docstr_firstln)
+```
+
+## Layout & Sections
+
+The [](`~quartodoc.layout.Layout`) class stores how you wish to organize your documentation.  For example, you may wish to organize your documentation into sections, where each section contains a title, description, and a list of objects to document.  You can create a layout like this:
+
+```{python}
+import yaml
+from quartodoc import Builder
+
+cfg = yaml.safe_load("""
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: "Some section"
+      desc: "Some description"
+      contents:
+        - name: MdRenderer
+    - title: "Another section"
+      desc: "Another description"
+      contents:
+        - Auto
+        - blueprint 
+""")
+
+builder = Builder.from_quarto_config(cfg)
+auto_from_yml = builder.layout.sections[0].contents[0]
+preview(builder.layout, max_depth=3)
+```
+
+As you can see, the `Layout`  stores the sections, which are stored in the `sections` attribute.  Each section contains a `title`, `desc`, and `contents` attribute and is stored in a [](`~quartodoc.layout.Section`) class.  
+
+The `contents` attribute is a list of objects to document.  In this case, the first section contains a single object, the `MdRenderer` class, while the second section contains two objects.  You can read more about Section options [here](basic-docs.qmd#section-options).
+
+In addition to building a layout from a yaml file, you can also build a layout in Python by instantiating the `Layout` class like so:
+
+```{python}
+from quartodoc import Auto, layout
+
+auto = Auto(name = "quartodoc.MdRenderer", 
+            signature_name = 'short')
+
 lay = layout.Layout(
     sections = [
-      layout.Section(title = "A section", desc = "A description", contents = [auto])
+      layout.Section(title = "A section", 
+                      desc = "A description", 
+                      contents = [auto])
     ]
 )
 ```
 
+We can view the layout by calling the `preview` function:
+
+```{python}
+preview(lay, 
+        max_depth=8, 
+        compact=True)
+```
+
+Recall that the `blueprint` function parses all of the metadata about the Python object.  We can see how a blueprint adds additional data pertaining to `MdRenderer`, that wasn't present in the layout above:
+```{python}
+bp_layout = blueprint(lay) 
+preview(bp_layout, 
+        max_depth=8, 
+        compact=True)
+```
+
+
+### Grouping docs on a page
+
+The Layout also calculates how to split your sections into pages based on the options you set in your yaml configuration.  For example, if you set the `children` option to `separate`, then each object in a section will be placed on its own page.  
+
+Let's see the difference between the `separate` and `embedded` options by creating two `Auto` objects for the `MdRenderer` class, one with `children` set to `separate` and the other with `children` set to `embedded`:
+
+```{python}
+auto_sep = layout.Auto(name = "quartodoc.MdRenderer", 
+                       children = "separate")
+auto_emb = layout.Auto(name = "quartodoc.MdRenderer", 
+                       children = "embedded")
+```
+
 
 :::::: {.columns}
 
 ::: {.column}
-
 ```{python}
-# raw layout
-preview(lay, compact=True)
-```
-
-:::
-::: {.column}
-
-```{python}
-bp_layout = blueprint(lay)
-preview(bp_layout, max_depth=5, compact=True)
-```
-
-:::
-
-::::::
-
-### Grouping docs on single Page
-
-### Class members
-
-```{python}
-auto_separate = layout.Auto(name = "quartodoc.MdRenderer", children = "separate")
-auto_embedded = layout.Auto(name = "quartodoc.MdRenderer", children = "embedded")
-```
-
-:::::: {.columns}
-
-::: {.column}
-```{python}
-bp_embedded = blueprint(auto_embedded)
-preview(bp_embedded, max_depth=2)
+bp_emb = blueprint(auto_emb)
+preview(bp_emb, 
+        max_depth=2,
+        compact=True)
 ```
 :::
 ::: {.column}
 ```{python}
-bp_separate = blueprint(auto_separate)
-preview(bp_separate, max_depth=2)
+bp_sep = blueprint(auto_sep)
+preview(bp_sep, 
+        max_depth=2,
+        compact=True)
 ```
 :::
 

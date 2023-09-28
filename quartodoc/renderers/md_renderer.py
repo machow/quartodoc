@@ -3,6 +3,7 @@ from __future__ import annotations
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
+from functools import wraps
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from tabulate import tabulate
@@ -65,14 +66,14 @@ class MdRenderer(Renderer):
         show_signature_annotations: bool = False,
         display_name: str = "relative",
         hook_pre=None,
-        use_interlinks=False,
+        render_interlinks=False,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
         self.display_name = display_name
         self.hook_pre = hook_pre
-        self.use_interlinks = use_interlinks
+        self.render_interlinks = render_interlinks
 
         self.crnt_header_level = self.header_level
 
@@ -86,7 +87,7 @@ class MdRenderer(Renderer):
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
-        if self.display_name == "name":
+        if self.display_name in {"name", "short"}:
             return el.name
         elif self.display_name == "relative":
             return ".".join(el.path.split(".")[1:])
@@ -98,38 +99,70 @@ class MdRenderer(Renderer):
             return el.canonical_path
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
+    
+    def _fetch_method_parameters(self, el: dc.Function):
+        # adapted from mkdocstrings-python jinja tempalate
+        if el.parent and el.parent.is_class and len(el.parameters) > 0:
+            if el.parameters[0].name in {"self", "cls"}:
+                return dc.Parameters(*list(el.parameters)[1:])
+        
+        return el.parameters
 
     def _render_table(self, rows, headers):
         table = tabulate(rows, headers=headers, tablefmt="github")
 
         return table
 
-    def render_annotation(self, el: "str | expr.Name | expr.Expression | None"):
-        """Special hook for rendering a type annotation.
+    # render_annotation method --------------------------------------------------------
 
+    @dispatch
+    def render_annotation(self, el: str) -> str:
+        """Special hook for rendering a type annotation.
         Parameters
         ----------
         el:
             An object representing a type annotation.
-
         """
+        return sanitize(el)
 
-        if isinstance(el, (type(None), str)):
-            return el
+    @dispatch
+    def render_annotation(self, el: None) -> str:
+        return ""
 
+    @dispatch
+    def render_annotation(self, el: expr.Name) -> str:
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        if isinstance(el, expr.Name):
-            return sanitize(el.source)
+        if self.render_interlinks:
+            return f"[{sanitize(el.source)}](`{el.full}`)"
+        
+        return sanitize(el.source)
 
-        return sanitize(el.full)
+    @dispatch
+    def render_annotation(self, el: expr.Expression) -> str:
+        return "".join(map(self.render_annotation, el))
 
     # signature method --------------------------------------------------------
 
     @dispatch
+    def signature(self, el: layout.Doc):
+        orig = self.display_name
+
+        # set signature path, generate signature, then set back
+        # TODO: this is for backwards compatibility with the old approach
+        # of only defining signature over griffe objects, which projects
+        # like shiny currently extend
+        self.display_name = el.signature_name
+        res = self.signature(el.obj)
+        self.display_name = orig
+
+        return res
+
+
+
+    @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
         """Return a string representation of an object's signature."""
-
         return self.signature(el.target, el)
 
     @dispatch
@@ -137,7 +170,7 @@ class MdRenderer(Renderer):
         self, el: Union[dc.Class, dc.Function], source: Optional[dc.Alias] = None
     ):
         name = self._fetch_object_dispname(source or el)
-        pars = self.render(el.parameters)
+        pars = self.render(self._fetch_method_parameters(el))
 
         return f"`{name}({pars})`"
 
@@ -308,27 +341,29 @@ class MdRenderer(Renderer):
                         [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
                     )
 
+
+        str_sig = self.signature(el)
+        sig_part = [str_sig] if self.show_signature else []
+
         body = self.render(el.obj)
-        return "\n\n".join([title, body, *attr_docs, *class_docs, *meth_docs])
+
+
+        return "\n\n".join([title, *sig_part, body, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
-    def render(self, el: layout.DocFunction):
+    def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
         title = self.render_header(el)
 
-        return "\n\n".join([title, self.render(el.obj)])
+        str_sig = self.signature(el)
+        sig_part = [str_sig] if self.show_signature else []
 
-    @dispatch
-    def render(self, el: layout.DocAttribute):
-        title = self.render_header(el)
-        return "\n\n".join([title, self.render(el.obj)])
+        return "\n\n".join([title, *sig_part, self.render(el.obj)])
 
     # render griffe objects ===================================================
 
     @dispatch
     def render(self, el: Union[dc.Object, dc.Alias]):
         """Render high level objects representing functions, classes, etc.."""
-
-        str_sig = self.signature(el)
 
         str_body = []
         if el.docstring is None:
@@ -345,10 +380,7 @@ class MdRenderer(Renderer):
                 else:
                     str_body.append(body)
 
-        if self.show_signature:
-            parts = [str_sig, *str_body]
-        else:
-            parts = [*str_body]
+        parts = [*str_body]
 
         return "\n\n".join(parts)
 
@@ -407,17 +439,19 @@ class MdRenderer(Renderer):
             glob = ""
 
         annotation = self.render_annotation(el.annotation)
+        name = sanitize(el.name)
+
         if self.show_signature_annotations:
             if annotation and has_default:
-                res = f"{glob}{el.name}: {el.annotation} = {el.default}"
+                res = f"{glob}{name}: {annotation} = {el.default}"
             elif annotation:
-                res = f"{glob}{el.name}: {el.annotation}"
+                res = f"{glob}{name}: {annotation}"
         elif has_default:
-            res = f"{glob}{el.name}={el.default}"
+            res = f"{glob}{name}={el.default}"
         else:
-            res = f"{glob}{el.name}"
+            res = f"{glob}{name}"
 
-        return sanitize(res)
+        return res
 
     # docstring parts -------------------------------------------------------------
 
@@ -439,7 +473,6 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringSectionParameters):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
-
         return self._render_table(rows, header)
 
     @dispatch

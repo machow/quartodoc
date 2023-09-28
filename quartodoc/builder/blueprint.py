@@ -25,6 +25,7 @@ from quartodoc.layout import (
     Page,
     Section,
 )
+from quartodoc.parsers import get_parser_defaults
 from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
@@ -118,15 +119,8 @@ def _to_simple_dict(el: "BaseModel"):
     return json.loads(el.json(exclude_unset=True))
 
 
-def _non_default_entries(el: "BaseModel"):
-    field_defaults = {mf.name: mf.default for mf in el.__fields__.values()}
-    set_fields = [
-        k for k, v in el if field_defaults[k] is not v if not isinstance(v, MISSING)
-    ]
-
-    d = el.dict()
-
-    return {k: d[k] for k in set_fields}
+def _non_default_entries(el: Auto):
+    return {k: getattr(el, k) for k in el._fields_specified}
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -134,6 +128,7 @@ class BlueprintTransformer(PydanticTransformer):
         if get_object is None:
             loader = GriffeLoader(
                 docstring_parser=Parser(parser),
+                docstring_options=get_parser_defaults(parser),
                 modules_collection=ModulesCollection(),
                 lines_collection=LinesCollection(),
             )
@@ -300,6 +295,12 @@ class BlueprintTransformer(PydanticTransformer):
 
         # Three cases for structuring child methods ----
 
+        _defaults = {"dynamic": dynamic, "package": path}
+        if el.member_options is not None:
+            member_options = {**_defaults, **_non_default_entries(el.member_options)}
+        else:
+            member_options = _defaults
+
         children = []
         for entry in raw_members:
             # Note that we could have iterated over obj.members, but currently
@@ -313,7 +314,7 @@ class BlueprintTransformer(PydanticTransformer):
             # create Doc element for member ----
             # TODO: when a member is a Class, it is currently created using
             # defaults, and there is no way to override those.
-            doc = self.visit(Auto(name=relative_path, dynamic=dynamic, package=path))
+            doc = self.visit(Auto(name=relative_path, **member_options))
 
             # do no document submodules
             if (
@@ -346,7 +347,11 @@ class BlueprintTransformer(PydanticTransformer):
 
         is_flat = el.children == ChoicesChildren.flat
         return Doc.from_griffe(
-            self._clean_member_path(el.name), obj, members=children, flat=is_flat
+            self._clean_member_path(el.name),
+            obj,
+            children,
+            flat=is_flat,
+            signature_name=el.signature_name,
         )
 
     @staticmethod
@@ -354,7 +359,7 @@ class BlueprintTransformer(PydanticTransformer):
         if el.members is not None:
             return el.members
 
-        options = obj.members
+        options = obj.all_members if el.include_inherited else obj.members
 
         if el.include:
             raise NotImplementedError("include argument currently unsupported.")
@@ -365,11 +370,20 @@ class BlueprintTransformer(PydanticTransformer):
         if not el.include_private:
             options = {k: v for k, v in options.items() if not k.startswith("_")}
 
-        if not el.include_imports:
+        if not el.include_imports and not el.include_inherited:
             options = {k: v for k, v in options.items() if not v.is_alias}
 
         if not el.include_empty:
             options = {k: v for k, v in options.items() if v.docstring is not None}
+
+        if not el.include_attributes:
+            options = {k: v for k, v in options.items() if not v.is_attribute}
+
+        if not el.include_classes:
+            options = {k: v for k, v in options.items() if not v.is_class}
+
+        if not el.include_functions:
+            options = {k: v for k, v in options.items() if not v.is_function}
 
         # for modules, remove any Alias objects, since they were imported from
         # other places. Sphinx has a flag for this behavior, so may be good

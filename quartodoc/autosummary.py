@@ -19,6 +19,7 @@ from pydantic import ValidationError
 
 from .inventory import create_inventory, convert_inventory
 from . import layout
+from .parsers import get_parser_defaults
 from .renderers import Renderer
 from .validation import fmt
 
@@ -59,7 +60,9 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
     <Function('get_function', ...
 
     """
-    griffe = GriffeLoader(docstring_parser=Parser(parser))
+    griffe = GriffeLoader(
+        docstring_parser=Parser(parser), docstring_options=get_parser_defaults(parser)
+    )
     mod = griffe.load_module(module)
 
     f_data = mod.functions[func_name]
@@ -118,6 +121,7 @@ def get_object(
     if loader is None:
         loader = GriffeLoader(
             docstring_parser=Parser(parser),
+            docstring_options=get_parser_defaults(parser),
             modules_collection=ModulesCollection(),
             lines_collection=LinesCollection(),
         )
@@ -378,6 +382,8 @@ class Builder:
         Title of the API index page.
     renderer: Renderer
         The renderer used to convert docstrings (e.g. to markdown).
+    options:
+        Default options to set for all pieces of content (e.g. include_attributes).
     out_index:
         The output path of the index file, used to list all API functions.
     sidebar:
@@ -391,6 +397,12 @@ class Builder:
     dynamic:
         Whether to dynamically load all python objects. By default, objects are
         loaded using static analysis.
+    render_interlinks:
+        Whether to render interlinks syntax inside documented objects. Note that the
+        interlinks filter is required to generate the links in quarto.
+    parser:
+        Docstring parser to use. This correspond to different docstring styles,
+        and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".
 
     """
 
@@ -426,6 +438,7 @@ class Builder:
         package: str,
         # TODO: correct typing
         sections: "list[Any]" = tuple(),
+        options: "dict | None" = None,
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
@@ -436,8 +449,12 @@ class Builder:
         source_dir: "str | None" = None,
         dynamic: bool | None = None,
         parser="numpy",
+        render_interlinks: bool = False,
+        _fast_inventory=False,
     ):
-        self.layout = self.load_layout(sections=sections, package=package)
+        self.layout = self.load_layout(
+            sections=sections, package=package, options=options
+        )
 
         self.package = package
         self.version = None
@@ -447,6 +464,10 @@ class Builder:
         self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
+        if render_interlinks:
+            # this is a top-level option, but lives on the renderer
+            # so we just manually set it there for now.
+            self.renderer.render_interlinks = render_interlinks
 
         if out_index is not None:
             self.out_index = out_index
@@ -455,12 +476,14 @@ class Builder:
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
         self.dynamic = dynamic
 
-    def load_layout(self, sections: dict, package: str):
+        self._fast_inventory = _fast_inventory
+
+    def load_layout(self, sections: dict, package: str, options=None):
         # TODO: currently returning the list of sections, to make work with
         # previous code. We should make Layout a first-class citizen of the
         # process.
         try:
-            return layout.Layout(sections=sections, package=package)
+            return layout.Layout(sections=sections, package=package, options=options)
         except ValidationError as e:
             msg = "Configuration error for YAML:\n - "
             errors = [fmt(err) for err in e.errors() if fmt(err)]
@@ -510,7 +533,16 @@ class Builder:
 
         _log.info("Creating inventory file")
         inv = self.create_inventory(items)
-        convert_inventory(inv, self.out_inventory)
+        if self._fast_inventory:
+            # dump the inventory file directly as text
+            # TODO: copied from __main__.py, should add to inventory.py
+            import sphobjinv as soi
+
+            df = inv.data_file()
+            soi.writebytes(Path(self.out_inventory).with_suffix(".txt"), df)
+
+        else:
+            convert_inventory(inv, self.out_inventory)
 
         # sidebar ----
 
@@ -635,12 +667,18 @@ class Builder:
 
             quarto_cfg = yaml.safe_load(open(quarto_cfg))
 
-        cfg = quarto_cfg["quartodoc"]
+        cfg = quarto_cfg.get("quartodoc")
+        if cfg is None:
+            raise KeyError("No `quartodoc:` section found in your _quarto.yml.")
         style = cfg.get("style", "pkgdown")
-
         cls_builder = cls._registry[style]
 
-        return cls_builder(**{k: v for k, v in cfg.items() if k != "style"})
+        _fast_inventory = quarto_cfg.get("interlinks", {}).get("fast", False)
+
+        return cls_builder(
+            **{k: v for k, v in cfg.items() if k != "style"},
+            _fast_inventory=_fast_inventory,
+        )
 
 
 class BuilderPkgdown(Builder):

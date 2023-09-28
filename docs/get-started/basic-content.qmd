@@ -7,20 +7,20 @@ jupyter:
     name: python3
 ---
 
-Individual content entries (e.g. a function to be documented) can also be customized.
+Individual content entries (e.g. a function to be documented) can be customized.
 For example, if you are documenting a Python class, you may want to include or exclude
 documentation on specific methods on that class.
 
-Specify content options by setting `name: <content name>`, along with any additional options.
+Specify content options by setting `name: <content name>` followed by any additional options.
 
-For example, below is a piece of content, MdRenderer, specified without options.
+For example, below is a single content element, `MdRenderer`, without additional options.
 
 ```yaml
 contents:
   - MdRenderer
 ```
 
-We set it to only document its render method, by setting `name: MdRenderer` followed by the `members` option.
+Instead of documenting the entire `MdRenderer` class, we can only document the `MdRenderer.render` method by setting `name: MdRenderer` followed by the `members` option:
 
 ```yaml
 contents:
@@ -36,10 +36,10 @@ In the following sections, we'll discuss different options for configuring conte
 
 Finding Python objects to document involves two pieces of configuration:
 
-* the package name.
-* a list of objects for content.
+1.  the package name.
+2.  a list of objects for content.
 
-Note that quartodoc can look up anything---whether functions, modules, classes, attributes, or methods.
+quartodoc can look up a wide variety of objects, including functions, modules, classes, attributes, and methods:
 
 ```yaml
 quartodoc:
@@ -55,13 +55,13 @@ quartodoc:
         - renderers         # module: quartodoc.renderers
 ```
 
-The functions listed in `contents` are assumed to be imported from the package.
+The functions listed in `contents` are those that are available for import from the package (`quartodoc` in this instance).
 
 ## Module and class members
 
-Documentation for modules and classes can automatically include their members (e.g. class methods and attributes; everything defined inside a module).
+Documentation for classes and modules can automatically include their members (e.g. class methods and attributes or everything defined inside a module, respectively).
 
-By default, all attributes and functions (including methods on a class) are documented by embedding them inside the module or class documentation.
+By default, all attributes and functions (including methods on a class) are presented in the `embedded` style, which means their documentation is located inside their respective module's or class's documentation.
 
 There are four styles for presenting child members:
 
@@ -82,7 +82,7 @@ res = extract_type(DocstringSectionAttributes, choices.docstring.parsed)[0]
 print(renderer.render(res))
 ```
 
-You can specify a style by setting the `children` option in the config:
+You can specify a style for displaying members by setting the `children` option in the config:
 
 ```yaml
 quartodoc:
@@ -102,12 +102,11 @@ quartodoc:
 
 ## Setting default options
 
-The section above showed how you can set options like `members:` and `children:` on content.
-When specifying API documentation, you may need to specify the same options across multiple pieces of content.
+The section above showed how you can set options like `members:` (which is a list of the items you want to show) and `children:` (the style for presenting `members`) on content.
 
-Use the `options:` field in a section to specify options to apply across all content in that section.
+However, you may desire to set the same options across multiple pieces of content. In this case, you can set default options for a section that applies to all content in that section. You can use the `options:` field to accomplish this.
 
-For example, the config blocks below show how to document multiple classes without their members.
+For example, the config below shows how to document multiple classes _without_ any child members.  On the left, you can see the config without setting the default option, and on the right, you can see the config with the default option set.
 
 :::::: {.columns}
 ::: {.column}
@@ -151,11 +150,11 @@ quartodoc:
 :::
 ::::::
 
-Note that the **with options** block sets `members: []` inside `options`.
-This sets `members: []` as the default for each piece of content.
+By setting `members: []` in the options block, we are telling quartodoc to not include any members for each piece of content.
 
-::: {.callout-tip}
-Options can be given a name, and re-used in multiple sections:
+### Reusing options
+
+Options can be given a name and re-used in multiple sections:
 
 ```yaml
 - title: Some section
@@ -173,7 +172,31 @@ Options can be given a name, and re-used in multiple sections:
 The code above uses `&no-members` to name the options in the first section "no-members",
 then `*no-members` to reference it in the second section.
 The `&` and `*` are called an anchor and alias, respectively, in YAML.
-:::
+
+
+### Where to put options
+
+You can specify options in either the top-level config, or individual Sections.
+
+```yaml
+quartodoc:
+  package: quartodoc
+
+  # set options on the top-level config.
+  # this will apply to all pieces of content.
+  options:
+    include_attributes: false
+  sections:
+    - contents:
+        - MdRenderer
+
+      # set options in an individual section.
+      # in thise case, it resets include_attributes back
+      # to defaulting as true
+      options:
+        include_attributes: true
+        
+```
 
 ## Specifying package path
 

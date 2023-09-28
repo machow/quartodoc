@@ -4,7 +4,7 @@ import griffe.dataclasses as dc
 import logging
 
 from enum import Enum
-from pydantic import BaseModel, Field, Extra
+from pydantic import BaseModel, Field, Extra, PrivateAttr
 
 from typing_extensions import Annotated
 from typing import Literal, Union, Optional
@@ -48,6 +48,7 @@ class Layout(_Structural):
 
     sections: list[Union[SectionElement, Section]] = []
     package: Union[str, None, MISSING] = MISSING()
+    options: Optional["AutoOptions"] = None
 
 
 # SubElements -----------------------------------------------------------------
@@ -208,18 +209,39 @@ class ChoicesChildren(Enum):
     linked = "linked"
 
 
+SignatureOptions = Literal["full", "short", "relative"]
+
+
 class AutoOptions(_Base):
     """Options available for Auto content layout element."""
 
+    signature_name: SignatureOptions = "relative"
     members: Optional[list[str]] = None
     include_private: bool = False
     include_imports: bool = False
     include_empty: bool = False
+    include_inherited: bool = False
+
+    # member types to include ----
+    include_attributes: bool = True
+    include_classes: bool = True
+    include_functions: bool = True
+
+    # other options ----
     include: Optional[str] = None
     exclude: Optional[str] = None
     dynamic: Union[None, bool, str] = None
     children: ChoicesChildren = ChoicesChildren.embedded
     package: Union[str, None, MISSING] = MISSING()
+    member_options: Optional["AutoOptions"] = None
+
+    # for tracking fields users manually specify
+    # so we can tell them apart from defaults
+    _fields_specified: list[str] = PrivateAttr(default=())
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._fields_specified = tuple(kwargs)
 
 
 class Auto(AutoOptions):
@@ -238,6 +260,14 @@ class Auto(AutoOptions):
         Whether to include members that were imported from somewhere else.
     include_empty:
         Whether to include members with no docstring.
+    include_inherited:
+        Whether to include members inherited from a parent class.
+    include_attributes:
+        Whether to include attributes.
+    include_classes:
+        Whether to include classes.
+    include_functions:
+        Whether to include functions.
     include:
         (Not implemented). A list of members to include.
     exclude:
@@ -250,6 +280,8 @@ class Auto(AutoOptions):
         Style for presenting members. Either separate, embedded, or flat.
     package:
         If specified, object lookup will be relative to this path.
+    member_options:
+        Options to apply to members. These can include any of the options above.
 
 
     """
@@ -311,6 +343,7 @@ class Doc(_Docable):
     name: str
     obj: Union[dc.Object, dc.Alias]
     anchor: str
+    signature_name: SignatureOptions = "relative"
 
     class Config:
         arbitrary_types_allowed = True
@@ -324,6 +357,7 @@ class Doc(_Docable):
         members=None,
         anchor: str = None,
         flat: bool = False,
+        signature_name: str = "relative",
     ):
         if members is None:
             members = []
@@ -331,7 +365,12 @@ class Doc(_Docable):
         kind = obj.kind.value
         anchor = obj.path if anchor is None else anchor
 
-        kwargs = {"name": name, "obj": obj, "anchor": anchor}
+        kwargs = {
+            "name": name,
+            "obj": obj,
+            "anchor": anchor,
+            "signature_name": signature_name,
+        }
 
         if kind == "function":
             return DocFunction(**kwargs)
@@ -422,6 +461,7 @@ class Item(BaseModel):
 Layout.update_forward_refs()
 Section.update_forward_refs()
 Page.update_forward_refs()
+AutoOptions.update_forward_refs()
 Auto.update_forward_refs()
 MemberPage.update_forward_refs()
 Interlaced.update_forward_refs()

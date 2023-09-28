@@ -29,6 +29,18 @@ class C:
     def some_property(self):
         """A property"""
 
+    @classmethod
+    def some_class_method(cls):
+        """A class method"""
+
+    class D:
+        """A nested class"""
+
+
+class Child(C):
+    def some_new_method(self):
+        """A new method"""
+
 
 class AttributesTable:
     """The short summary.

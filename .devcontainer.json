@@ -1,0 +1,26 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/python:3",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "prerelease"
+    }
+  },
+  "forwardPorts": [
+    8888
+  ],
+  "portsAttributes": {
+    "8888": {
+      "label": "Jupyter"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  "onCreateCommand": {
+    "prep-python": "python3 -m pip install --upgrade setuptools jupyterlab ipython jupyterlab-quarto -e '.[dev]'"
+  }
+}
