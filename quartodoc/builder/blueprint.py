@@ -55,8 +55,11 @@ def _auto_package(mod: dc.Module, prefix: Optional[str] = None) -> list[Section]
         )
 
     # get module members for content ----
+
+    combined_members = _fetch_all_members(mod)
+
     contents = []
-    for name, member in mod.members.items():
+    for name, member in combined_members.items():
         external_alias = _is_external_alias(member, mod)
         if (
             external_alias
@@ -84,7 +87,34 @@ def _auto_package(mod: dc.Module, prefix: Optional[str] = None) -> list[Section]
     return [Section(title=mod.path, desc=desc, contents=contents)]
 
 
+def _fetch_all_members(mod: dc.Alias | dc.Object):
+    """Return all members of the module, including those imported from other modules."""
+
+    if not mod.is_module:
+        return mod.members
+
+    all_imported_members = _unpack_internal_star_imports(mod)
+    combined_members = {**all_imported_members, **mod.members}
+
+    return combined_members
+
+
+def _unpack_internal_star_imports(mod: dc.Module):
+    star_imports = [v for k, v in mod.members.items() if k.endswith("*")]
+
+    all_imported_members = {}
+    for sub_mod in star_imports:
+        for obj in sub_mod.members.values():
+            if obj.is_exported():
+                all_imported_members[obj.name] = dc.Alias(
+                    obj.name, target=obj, parent=mod
+                )
+
+    return all_imported_members
+
+
 def _is_external_alias(obj: dc.Alias | dc.Object, mod: dc.Module):
+    """Return whether the given object is an alias to an object outside mod's package."""
     package_name = mod.path.split(".")[0]
 
     if not isinstance(obj, dc.Alias):
@@ -359,7 +389,10 @@ class BlueprintTransformer(PydanticTransformer):
         if el.members is not None:
             return el.members
 
-        options = obj.all_members if el.include_inherited else obj.members
+        if obj.is_module:
+            options = _fetch_all_members(obj)
+        else:
+            options = obj.all_members if el.include_inherited else obj.members
 
         if el.include:
             raise NotImplementedError("include argument currently unsupported.")

@@ -111,6 +111,9 @@ def get_object(
         abc
     """
 
+    # TODO: this should live in a helper module
+    from quartodoc.builder.blueprint import _fetch_all_members
+
     if object_name is not None:
         warnings.warn(
             "object_name argument is deprecated in get_object", DeprecationWarning
@@ -149,7 +152,7 @@ def get_object(
 
     # Case 2: static loading an object ----
     f_parent = loader.modules_collection[griffe_path.rsplit(".", 1)[0]]
-    f_data = loader.modules_collection[griffe_path]
+    f_data = _fetch_all_members(f_parent)[griffe_path.rsplit(".", 1)[1]]
 
     # ensure that function methods fetched off of an Alias of a class, have that
     # class Alias as their parent, not the Class itself.
