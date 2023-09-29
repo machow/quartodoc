@@ -164,3 +164,12 @@ def test_render_doc_signature_name(snapshot, renderer):
     res = renderer.render(bp)
 
     assert res == snapshot
+
+
+def test_render_doc_signature_name_alias_of_alias(snapshot, renderer):
+    auto = Auto(name="example.a_nested_alias", package="quartodoc.tests")
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot

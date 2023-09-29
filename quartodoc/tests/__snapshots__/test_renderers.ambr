@@ -268,6 +268,15 @@
   A function
   '''
 # ---
+# name: test_render_doc_signature_name_alias_of_alias
+  '''
+  # example.a_nested_alias { #quartodoc.tests.example.a_nested_alias }
+  
+  `tests.example.a_nested_alias()`
+  
+  A nested alias target
+  '''
+# ---
 # name: test_render_docstring_numpy_linebreaks
   '''
   # f_numpy_with_linebreaks { #quartodoc.tests.example_docstring_styles.f_numpy_with_linebreaks }

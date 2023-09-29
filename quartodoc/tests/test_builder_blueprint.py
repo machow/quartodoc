@@ -133,8 +133,8 @@ def test_blueprint_auto_package(bp):
     assert sections[0].title == "quartodoc.tests.example"
     assert sections[0].desc == "A module"
 
-    # 4 objects documented
-    assert len(sections[0].contents) == 4
+    # 5 objects documented
+    assert len(sections[0].contents) == 5
 
 
 def test_blueprint_layout_options():

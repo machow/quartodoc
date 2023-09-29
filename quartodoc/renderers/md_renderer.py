@@ -163,7 +163,7 @@ class MdRenderer(Renderer):
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
         """Return a string representation of an object's signature."""
-        return self.signature(el.target, el)
+        return self.signature(el.final_target, el)
 
     @dispatch
     def signature(
