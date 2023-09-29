@@ -272,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../get-started/dev-prepare.html" class="sidebar-item-text sidebar-link">Prep: Auto, blueprint, collect</a>
+  <a href="../get-started/dev-prepare.html" class="sidebar-item-text sidebar-link">Components: Auto, blueprint, collect</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -348,12 +348,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Individual content entries (e.g.&nbsp;a function to be documented) can also be customized. For example, if you are documenting a Python class, you may want to include or exclude documentation on specific methods on that class.</p>
-<p>Specify content options by setting <code>name: &lt;content name&gt;</code>, along with any additional options.</p>
-<p>For example, below is a piece of content, MdRenderer, specified without options.</p>
+<p>Individual content entries (e.g.&nbsp;a function to be documented) can be customized. For example, if you are documenting a Python class, you may want to include or exclude documentation on specific methods on that class.</p>
+<p>Specify content options by setting <code>name: &lt;content name&gt;</code> followed by any additional options.</p>
+<p>For example, below is a single content element, <code>MdRenderer</code>, without additional options.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contents</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> MdRenderer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We set it to only document its render method, by setting <code>name: MdRenderer</code> followed by the <code>members</code> option.</p>
+<p>Instead of documenting the entire <code>MdRenderer</code> class, we can only document the <code>MdRenderer.render</code> method by setting <code>name: MdRenderer</code> followed by the <code>members</code> option:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contents</span><span class="kw">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> MdRenderer</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">members</span><span class="kw">:</span></span>
@@ -362,11 +362,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="looking-up-objects" class="level2">
 <h2 class="anchored" data-anchor-id="looking-up-objects">Looking up objects</h2>
 <p>Finding Python objects to document involves two pieces of configuration:</p>
-<ul>
+<ol type="1">
 <li>the package name.</li>
 <li>a list of objects for content.</li>
-</ul>
-<p>Note that quartodoc can look up anything—whether functions, modules, classes, attributes, or methods.</p>
+</ol>
+<p>quartodoc can look up a wide variety of objects, including functions, modules, classes, attributes, and methods:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> quartodoc</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
@@ -378,12 +378,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> MdRenderer</span><span class="co">        # class: quartodoc.MdRenderer</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> MdRenderer.render</span><span class="co"> # method: quartodoc.MDRenderer.render</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> renderers</span><span class="co">         # module: quartodoc.renderers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The functions listed in <code>contents</code> are assumed to be imported from the package.</p>
+<p>The functions listed in <code>contents</code> are those that are available for import from the package (<code>quartodoc</code> in this instance).</p>
 </section>
 <section id="module-and-class-members" class="level2">
 <h2 class="anchored" data-anchor-id="module-and-class-members">Module and class members</h2>
-<p>Documentation for modules and classes can automatically include their members (e.g.&nbsp;class methods and attributes; everything defined inside a module).</p>
-<p>By default, all attributes and functions (including methods on a class) are documented by embedding them inside the module or class documentation.</p>
+<p>Documentation for classes and modules can automatically include their members (e.g.&nbsp;class methods and attributes or everything defined inside a module, respectively).</p>
+<p>By default, all attributes and functions (including methods on a class) are presented in the <code>embedded</code> style, which means their documentation is located inside their respective module’s or class’s documentation.</p>
 <p>There are four styles for presenting child members:</p>
 <table class="table">
 <colgroup>
@@ -421,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>You can specify a style by setting the <code>children</code> option in the config:</p>
+<p>You can specify a style for displaying members by setting the <code>children</code> option in the config:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> quartodoc</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
@@ -437,9 +437,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="setting-default-options" class="level2">
 <h2 class="anchored" data-anchor-id="setting-default-options">Setting default options</h2>
-<p>The section above showed how you can set options like <code>members:</code> and <code>children:</code> on content. When specifying API documentation, you may need to specify the same options across multiple pieces of content.</p>
-<p>Use the <code>options:</code> field in a section to specify options to apply across all content in that section.</p>
-<p>For example, the config blocks below show how to document multiple classes without their members.</p>
+<p>The section above showed how you can set options like <code>members:</code> (which is a list of the items you want to show) and <code>children:</code> (the style for presenting <code>members</code>) on content.</p>
+<p>However, you may desire to set the same options across multiple pieces of content. In this case, you can set default options for a section that applies to all content in that section. You can use the <code>options:</code> field to accomplish this.</p>
+<p>For example, the config below shows how to document multiple classes <em>without</em> any child members. On the left, you can see the config without setting the default option, and on the right, you can see the config with the default option set.</p>
 <div class="columns">
 <div class="column">
 <p><strong>Manual</strong></p>
@@ -470,10 +470,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> Builder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>Note that the <strong>with options</strong> block sets <code>members: []</code> inside <code>options</code>. This sets <code>members: []</code> as the default for each piece of content.</p>
+<p>By setting <code>members: []</code> in the options block, we are telling quartodoc to not include any members for each piece of content.</p>
 <section id="reusing-options" class="level3">
 <h3 class="anchored" data-anchor-id="reusing-options">Reusing options</h3>
-<p>Options can be given a name, and re-used in multiple sections:</p>
+<p>Options can be given a name and re-used in multiple sections:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Some section</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">options</span><span class="kw">:</span><span class="at"> </span><span class="ot">&amp;no-members</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">members</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
