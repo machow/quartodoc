@@ -2,7 +2,10 @@
 
 # flake8: noqa
 
-from quartodoc.tests.example_alias_target import alias_target as a_alias
+from quartodoc.tests.example_alias_target import (
+    alias_target as a_alias,
+    nested_alias_target as a_nested_alias,
+)
 
 
 def a_func():
