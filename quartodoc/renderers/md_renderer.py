@@ -579,7 +579,7 @@ class MdRenderer(Renderer):
     def summarize(self, el):
         """Produce a summary table."""
 
-        raise NotImplementedError("Unsupported type: {type(el)}")
+        raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
     def summarize(self, el: layout.Layout):
