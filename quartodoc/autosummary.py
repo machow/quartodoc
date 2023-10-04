@@ -646,14 +646,12 @@ class Builder:
         d_sidebar = self._generate_sidebar(blueprint)
         yaml.dump(d_sidebar, open(self.sidebar, "w"))
 
-    def _page_to_links(self, el: layout.Page) -> list[str]:
-        # if el.flatten:
-        #     links = []
-        #     for entry in el.contents:
-        #         links.append(f"{self.dir}/{entry.path}{self.out_page_suffix}")
-        #     return links
-
-        return [f"{self.dir}/{el.path}{self.out_page_suffix}"]
+    def _page_to_links(self, el: layout.Page):
+        if self.renderer.display_name == 'name':
+            return [{"href": f"{self.dir}/{el.path}{self.out_page_suffix}",
+                    "text": el.path.split('.')[-1]}]
+        else:
+            return [f"{self.dir}/{el.path}{self.out_page_suffix}"]
 
     # constructors ----
 
