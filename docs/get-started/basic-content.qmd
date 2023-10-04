@@ -173,10 +173,25 @@ The code above uses `&no-members` to name the options in the first section "no-m
 then `*no-members` to reference it in the second section.
 The `&` and `*` are called an anchor and alias, respectively, in YAML.
 
+If you want to extend some options, you can use YAML merge keys:
+
+```yaml
+- options: &short-name
+    display_name: "short"
+- options:
+    <<: *short-name
+    include_functions: false
+    include_attributes: false
+```
+
+In the example above, the `&short-name` options get re-used as part of the second options.
+
 
 ### Where to put options
 
 You can specify options in either the top-level config, or individual Sections.
+Note that if both are set, the options do not get combined.
+Instead, only the options specified at the most specific level are used.
 
 ```yaml
 quartodoc:
@@ -191,12 +206,13 @@ quartodoc:
         - MdRenderer
 
       # set options in an individual section.
-      # in thise case, it resets include_attributes back
-      # to defaulting as true
+      # in thise case, these options are used for this section,
+      # and the options set at the top-level config are not used.
+      # So, include_attributes from the options above is not used.
       options:
-        include_attributes: true
-        
+        signature_name: short
 ```
+
 
 ## Specifying package path
 

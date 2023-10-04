@@ -135,7 +135,7 @@ class MdRenderer(Renderer):
         # unescaped pipes screw up table formatting
         if self.render_interlinks:
             return f"[{sanitize(el.source)}](`{el.full}`)"
-        
+
         return sanitize(el.source)
 
     @dispatch
@@ -157,8 +157,6 @@ class MdRenderer(Renderer):
         self.display_name = orig
 
         return res
-
-
 
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
@@ -283,6 +281,9 @@ class MdRenderer(Renderer):
         attr_docs = []
         meth_docs = []
         class_docs = []
+        bases = ""
+        if el.show_bases and el.obj.is_class and el.obj.bases:
+            bases = f"\n\nBases: `{'`, '.join([x.source for x in el.obj.bases])}`"
 
         if el.members:
             sub_header = "#" * (self.crnt_header_level + 1)
@@ -341,14 +342,14 @@ class MdRenderer(Renderer):
                         [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
                     )
 
-
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
         body = self.render(el.obj)
 
-
-        return "\n\n".join([title, *sig_part, body, *attr_docs, *class_docs, *meth_docs])
+        return "\n\n".join(
+            [title, *sig_part, bases, body, *attr_docs, *class_docs, *meth_docs]
+        )
 
     @dispatch
     def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
