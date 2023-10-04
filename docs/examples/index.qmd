@@ -88,6 +88,13 @@ print(
         href_ref = "https://rstudio.github.io/py-shinyswatch/reference",
         href_source = "https://github.com/rstudio/py-shinyswatch",
     ),
+    gallery_entry(
+        "images/devito-home.jpeg",
+        "https://devitoproject.org",
+        "devito",
+        href_ref = "https://devitoproject.org/api",
+        href_source = "https://github.com/devitocodes/devitoproject.org",
+    ),
     gallery_entry_cta()
   ])
 )
