@@ -78,7 +78,7 @@ class _DocstringSectionPatched(ds.DocstringSection):
         while crnt_match is not None:
             # if the first section comes later in the text, ensure that we
             # create a section for the very beginning
-            if crnt_pos == 0:
+            if crnt_pos == 0 and crnt_match.start() > 0:
                 results.append(("", text[: crnt_match.start()]))
 
             next_pos = crnt_pos + crnt_match.end()
