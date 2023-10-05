@@ -210,6 +210,21 @@ def test_blueprint_fetch_members_include_inherited():
     assert "some_method" in member_names
 
 
+def test_blueprint_fetch_members_dynamic():
+    # Since AClass is imported via star import it has to be dynamically
+    # resolved. This test ensures that the members of AClass also get
+    # loaded correctly.
+    name = "quartodoc.tests.example_star_imports:AClass"
+    auto = lo.Auto(name=name, members=["a_method"], dynamic=True)
+    bp = blueprint(auto)
+
+    method_path = "quartodoc.tests.example_star_imports.AClass.a_method"
+
+    assert len(bp.members) == 1
+    assert bp.members[0].obj.path == method_path
+    assert bp.members[0].obj.parent.path == name.replace(":", ".")
+
+
 def test_blueprint_member_options():
     auto = lo.Auto(
         name="quartodoc.tests.example",
