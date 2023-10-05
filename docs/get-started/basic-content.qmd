@@ -377,12 +377,13 @@ Note these three important pieces of the page entry:
 
 ## All content options
 
+Below is a summary of all the options that can be applied to individual content entries.
+
+
 ```{python}
 #| echo: false
 #| output: asis
 
-# print out the attributes table of ChoicesChildren 
-# this is overkill, but maybe a nice case of dogfooding
 from quartodoc import get_object, MdRenderer, Auto
 from quartodoc.builder.utils import extract_type
 from griffe.docstrings.dataclasses import DocstringSectionAttributes
