@@ -241,9 +241,12 @@ class Auto(AutoOptions):
 
     Attributes
     ----------
-    kind:
     name:
         Name of the object. This should be the path needed to import it.
+    signature_name:
+        Style of name to use in the signature. Can be "relative", "full", or "short".
+        Relative is whatever was used as the name argument, full is the fully qualified
+        path the object, and short is the name of the object (i.e. no periods).
     members:
         A list of members, such as attributes or methods on a class, to document.
     include_private:
@@ -274,7 +277,6 @@ class Auto(AutoOptions):
         If specified, object lookup will be relative to this path.
     member_options:
         Options to apply to members. These can include any of the options above.
-
 
     """
 
