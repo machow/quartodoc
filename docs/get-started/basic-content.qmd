@@ -375,3 +375,22 @@ Note these three important pieces of the page entry:
 * `contents:` - lists out the contents of the page.
 
 
+## All content options
+
+Below is a summary of all the options that can be applied to individual content entries.
+
+
+```{python}
+#| echo: false
+#| output: asis
+
+from quartodoc import get_object, MdRenderer, Auto
+from quartodoc.builder.utils import extract_type
+from griffe.docstrings.dataclasses import DocstringSectionAttributes
+
+renderer = MdRenderer()
+choices = get_object("quartodoc.Auto")
+res = extract_type(DocstringSectionAttributes, choices.docstring.parsed)[0]
+
+print(renderer.render(res))
+```
