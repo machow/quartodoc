@@ -1,5 +1,7 @@
 # Overview
 
+[![CI](https://github.com/machow/quartodoc/actions/workflows/ci.yml/badge.svg)](https://github.com/machow/quartodoc/actions/workflows/ci.yml)
+
 **quartodoc** lets you quickly generate Python package API reference
 documentation using Markdown and [Quarto](https://quarto.org). quartodoc
 is designed as an alternative to
