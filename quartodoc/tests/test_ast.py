@@ -14,7 +14,6 @@ from quartodoc import get_object
         ("See Also\n---", ""),
         ("See Also\n---\n", ""),
         ("See Also\n--------", ""),
-        ("\n\nSee Also\n---\n", ""),
         ("See Also\n---\nbody text", "body text"),
         ("See Also\n---\nbody text", "body text"),
     ],
@@ -27,6 +26,19 @@ def test_transform_docstring_section(el, body):
     assert isinstance(res[0], qast.DocstringSectionSeeAlso)
     assert res[0].title == "See Also"
     assert res[0].value == body
+
+
+def test_transform_docstring_section_multiple():
+    # Note the starting text is not a section header
+    # so this should be split into two sections: short description, and see also.
+    src = ds.DocstringSectionText("A short description\n\nSee Also\n---\n")
+    res = qast._DocstringSectionPatched.transform(src)
+
+    assert len(res) == 2
+    assert res[0].value == "A short description\n\n"
+    assert isinstance(res[1], qast.DocstringSectionSeeAlso)
+    assert res[1].title == "See Also"
+    assert res[1].value == ""
 
 
 @pytest.mark.parametrize(
