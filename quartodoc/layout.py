@@ -414,7 +414,7 @@ ContentElement = Annotated[
 ]
 """Entry in the contents list."""
 
-ContentList = list[Union[ContentElement, Doc, _AutoDefault]]
+ContentList = list[Union[_AutoDefault, ContentElement, Doc]]
 
 # Item ----
 
