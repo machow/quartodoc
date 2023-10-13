@@ -39,6 +39,8 @@ jobs:
           else
             python -m pip install '.[dev]'
           fi
+        env:
+          REQUIREMENTS: ${{ matrix.requirements }}
       - name: Run tests
         run: |
           pytest
