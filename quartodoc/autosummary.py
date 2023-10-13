@@ -15,13 +15,14 @@ from griffe import dataclasses as dc
 from plum import dispatch  # noqa
 from pathlib import Path
 from types import ModuleType
-from pydantic import ValidationError
 
 from .inventory import create_inventory, convert_inventory
 from . import layout
 from .parsers import get_parser_defaults
 from .renderers import Renderer
-from .validation import fmt
+from .validation import fmt_all
+from ._pydantic_compat import ValidationError
+
 
 from typing import Any
 
@@ -485,12 +486,7 @@ class Builder:
         try:
             return layout.Layout(sections=sections, package=package, options=options)
         except ValidationError as e:
-            msg = "Configuration error for YAML:\n - "
-            errors = [fmt(err) for err in e.errors() if fmt(err)]
-            first_error = errors[
-                0
-            ]  # we only want to show one error at a time b/c it is confusing otherwise
-            msg += first_error
+            msg = fmt_all(e)
             raise ValueError(msg) from None
 
     # building ----------------------------------------------------------------

@@ -15,7 +15,7 @@
   
   '''
 # ---
-# name: test_missing_name_contents_2
+# name: test_missing_name_contents
   '''
   Code:
   
@@ -25,7 +25,10 @@
           - title: Section 1
           - title: Section 2
             contents:
+  
+              # name missing here ----
               - children: linked
+  
               - name: MdRenderer
   
   Error:
