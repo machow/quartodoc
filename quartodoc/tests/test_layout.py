@@ -1,7 +1,8 @@
 import pytest
 
-from pydantic import ValidationError
 from quartodoc.layout import Layout, Page, Text, Section  # noqa
+
+from quartodoc._pydantic_compat import ValidationError
 
 
 @pytest.mark.parametrize(

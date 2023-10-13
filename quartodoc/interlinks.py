@@ -18,10 +18,11 @@ import json
 import warnings
 import yaml
 
-from pydantic import BaseModel, Field
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal, Annotated, Union, Optional
+
+from ._pydantic_compat import BaseModel, Field
 
 
 ENV_PROJECT_ROOT: str = "QUARTO_PROJECT_ROOT"

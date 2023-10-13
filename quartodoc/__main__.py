@@ -10,7 +10,7 @@ from watchdog.observers import Observer
 from functools import partial
 from watchdog.events import PatternMatchingEventHandler
 from quartodoc import Builder, convert_inventory
-from pydantic import BaseModel
+from ._pydantic_compat import BaseModel
 
 
 def get_package_path(package_name):
