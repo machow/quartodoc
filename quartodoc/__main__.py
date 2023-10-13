@@ -1,6 +1,7 @@
 import click
 import contextlib
 import os
+import sys
 import time
 import sphobjinv as soi
 import yaml
@@ -115,7 +116,6 @@ class QuartoDocFileChangeHandler(PatternMatchingEventHandler):
 
 def _enable_logs():
     import logging
-    import sys
 
     root = logging.getLogger("quartodoc")
     root.setLevel(logging.INFO)
@@ -181,32 +181,35 @@ def build(config, filter, dry_run, watch, verbose):
     if verbose:
         _enable_logs()
 
+    # allow users to include files like _renderer.py in their quarto docs folder
+    if config != "_quarto.yml":
+        sys.path.append(str(Path(config).parent.absolute()))
+
     builder = Builder.from_quarto_config(config)
     doc_build = partial(builder.build, filter=filter)
 
     if dry_run:
         pass
     else:
-        with chdir(Path(config).parent):
-            if watch:
-                pkg_path = get_package_path(builder.package)
-                print(f"Watching {pkg_path} for changes...")
-                observer = Observer()
-                observer._event_queue.maxsize = 1  # the default is 0 which is infinite, and there isn't a way to set this in the constructor
-                event_handler = QuartoDocFileChangeHandler(callback=doc_build)
-                observer.schedule(event_handler, pkg_path, recursive=True)
-                observer.schedule(event_handler, cfg_path, recursive=True)
-                observer.start()
-                try:
-                    while True:
-                        time.sleep(1)
-                except KeyboardInterrupt:
-                    pass
-                finally:
-                    observer.stop()
-                    observer.join()
-            else:
-                doc_build()
+        if watch:
+            pkg_path = get_package_path(builder.package)
+            print(f"Watching {pkg_path} for changes...")
+            observer = Observer()
+            observer._event_queue.maxsize = 1  # the default is 0 which is infinite, and there isn't a way to set this in the constructor
+            event_handler = QuartoDocFileChangeHandler(callback=doc_build)
+            observer.schedule(event_handler, pkg_path, recursive=True)
+            observer.schedule(event_handler, cfg_path, recursive=True)
+            observer.start()
+            try:
+                while True:
+                    time.sleep(1)
+            except KeyboardInterrupt:
+                pass
+            finally:
+                observer.stop()
+                observer.join()
+        else:
+            doc_build()
 
 
 @click.command(
