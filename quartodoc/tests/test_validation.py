@@ -21,61 +21,7 @@ Error:\n{fmt_value}
 """
 
 
-@pytest.mark.skip("title is now optional")
-def test_missing_title():
-    "Test that missing title raises an error"
-
-    cfg = """
-    quartodoc:
-      package: zzz
-      sections:
-        - desc: "abc"
-          contents:
-            - get_object
-    """
-
-    check_ValueError(cfg)
-    # assert "- Missing field `title` for element 0 in the list for `sections`" in msg
-
-
-@pytest.mark.skip("desc is now optional")
-def test_missing_desc():
-    "Test that a missing description raises an error"
-
-    cfg = """
-    quartodoc:
-      package: zzz
-      sections:
-        - title: "A section"
-          contents:
-            - get_object
-    """
-
-    check_ValueError(cfg)
-    # assert "- Missing field `desc` for element 2 in the list for `sections`" in msg
-
-
-@pytest.mark.skip("contents is now optional")
-def test_missing_name_contents_1():
-    "Test that a missing name in contents raises an error"
-
-    cfg = """
-    quartodoc:
-      package: zzz
-      sections:
-        - title: "A section"
-          contents:
-            - get_object
-    """
-
-    check_ValueError(cfg)
-    # assert (
-    #     "- Missing field `name` for element 0 in the list for `contents` located in element 2 in the list for `sections`"
-    #     in msg
-    # )
-
-
-def test_missing_name_contents_2(snapshot):
+def test_missing_name_contents(snapshot):
     "Test that a missing name in contents raises an error in a different section."
 
     cfg = """
@@ -85,7 +31,10 @@ def test_missing_name_contents_2(snapshot):
         - title: Section 1
         - title: Section 2
           contents:
+
+            # name missing here ----
             - children: linked
+
             - name: MdRenderer
     """
 
