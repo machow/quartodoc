@@ -4,10 +4,10 @@ import griffe.dataclasses as dc
 import logging
 
 from enum import Enum
-from pydantic import BaseModel, Field, Extra, PrivateAttr
-
 from typing_extensions import Annotated
 from typing import Literal, Union, Optional
+
+from ._pydantic_compat import BaseModel, Field, Extra, PrivateAttr
 
 
 _log = logging.getLogger(__name__)

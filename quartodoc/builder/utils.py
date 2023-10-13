@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from contextvars import ContextVar
 from plum import dispatch
-from pydantic import BaseModel
 from typing import Union
 
+from quartodoc._pydantic_compat import BaseModel
 from ._node import Node
 
 

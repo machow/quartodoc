@@ -95,7 +95,9 @@ def test_preview_warn_alias_no_load():
         qast.preview(obj)
 
     msg = record[0].message.args[0]
-    assert "Could not resolve Alias target `pydantic.BaseModel`" in msg
+    assert (
+        "Could not resolve Alias target `quartodoc._pydantic_compat.BaseModel`" in msg
+    )
 
 
 @pytest.mark.parametrize(

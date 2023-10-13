@@ -36,7 +36,7 @@ from typing import overload, TYPE_CHECKING
 _log = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from pydantic import BaseModel
+    from quartodoc._pydantic_compat import BaseModel
 
 
 def _auto_package(mod: dc.Module) -> list[Section]:

@@ -8,8 +8,8 @@ from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from plum import dispatch
 from typing import Union
-from pydantic import BaseModel  # for previewing
 
+from ._pydantic_compat import BaseModel  # for previewing
 
 # Transform and patched-in classes ============================================
 # TODO: annotate transform return types. make sure subtypes inherit from correct
