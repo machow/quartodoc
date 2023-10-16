@@ -436,14 +436,14 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>kind</td>
-<td><a href="https://docs.python.org/3/library/typing.html#typing.Literal">Literal</a>[‘auto’]</td>
-<td></td>
-</tr>
-<tr class="even">
 <td>name</td>
 <td><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></td>
 <td>Name of the object. This should be the path needed to import it.</td>
+</tr>
+<tr class="even">
+<td>signature_name</td>
+<td></td>
+<td>Style of name to use in the signature. Can be “relative”, “full”, or “short”. Relative is whatever was used as the name argument, full is the fully qualified path the object, and short is the name of the object (i.e.&nbsp;no periods).</td>
 </tr>
 <tr class="odd">
 <td>members</td>

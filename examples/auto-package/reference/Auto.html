@@ -128,9 +128,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
 <table class="table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 82%">
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 89%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -141,14 +141,14 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>kind</td>
-<td>Literal[‘auto’]</td>
-<td></td>
-</tr>
-<tr class="even">
 <td>name</td>
 <td>str</td>
 <td>Name of the object. This should be the path needed to import it.</td>
+</tr>
+<tr class="even">
+<td>signature_name</td>
+<td></td>
+<td>Style of name to use in the signature. Can be “relative”, “full”, or “short”. Relative is whatever was used as the name argument, full is the fully qualified path the object, and short is the name of the object (i.e.&nbsp;no periods).</td>
 </tr>
 <tr class="odd">
 <td>members</td>

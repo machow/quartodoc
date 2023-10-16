@@ -325,6 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#page-layout-element" id="toc-page-layout-element" class="nav-link" data-scroll-target="#page-layout-element">Page layout element</a></li>
   </ul></li>
+  <li><a href="#all-content-options" id="toc-all-content-options" class="nav-link" data-scroll-target="#all-content-options">All content options</a></li>
   </ul>
 </nav>
     </div>
@@ -635,9 +636,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>path:</code> - specifies what the name of the page will be in the generated docs. For example, <code>path: some_funcs</code> in the config above produces a file called <code>some_funcs.qmd</code> in the API reference folder.</li>
 <li><code>contents:</code> - lists out the contents of the page.</li>
 </ul>
-
-
 </section>
+</section>
+<section id="all-content-options" class="level2">
+<h2 class="anchored" data-anchor-id="all-content-options">All content options</h2>
+<p>Below is a summary of all the options that can be applied to individual content entries.</p>
+<table class="table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 89%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>name</td>
+<td>str</td>
+<td>Name of the object. This should be the path needed to import it.</td>
+</tr>
+<tr class="even">
+<td>signature_name</td>
+<td></td>
+<td>Style of name to use in the signature. Can be “relative”, “full”, or “short”. Relative is whatever was used as the name argument, full is the fully qualified path the object, and short is the name of the object (i.e.&nbsp;no periods).</td>
+</tr>
+<tr class="odd">
+<td>members</td>
+<td></td>
+<td>A list of members, such as attributes or methods on a class, to document.</td>
+</tr>
+<tr class="even">
+<td>include_private</td>
+<td></td>
+<td>Whether to include members starting with “_”</td>
+</tr>
+<tr class="odd">
+<td>include_imports</td>
+<td></td>
+<td>Whether to include members that were imported from somewhere else.</td>
+</tr>
+<tr class="even">
+<td>include_empty</td>
+<td></td>
+<td>Whether to include members with no docstring.</td>
+</tr>
+<tr class="odd">
+<td>include_inherited</td>
+<td></td>
+<td>Whether to include members inherited from a parent class.</td>
+</tr>
+<tr class="even">
+<td>include_attributes</td>
+<td></td>
+<td>Whether to include attributes.</td>
+</tr>
+<tr class="odd">
+<td>include_classes</td>
+<td></td>
+<td>Whether to include classes.</td>
+</tr>
+<tr class="even">
+<td>include_functions</td>
+<td></td>
+<td>Whether to include functions.</td>
+</tr>
+<tr class="odd">
+<td>include</td>
+<td></td>
+<td>(Not implemented). A list of members to include.</td>
+</tr>
+<tr class="even">
+<td>exclude</td>
+<td></td>
+<td>(Not implemented). A list of members to exclude.</td>
+</tr>
+<tr class="odd">
+<td>dynamic</td>
+<td></td>
+<td>Whether to dynamically load docstring. By default docstrings are loaded using static analysis. dynamic may be a string pointing to another object, to return an alias for that object.</td>
+</tr>
+<tr class="even">
+<td>children</td>
+<td></td>
+<td>Style for presenting members. Either separate, embedded, or flat.</td>
+</tr>
+<tr class="odd">
+<td>package</td>
+<td></td>
+<td>If specified, object lookup will be relative to this path.</td>
+</tr>
+<tr class="even">
+<td>member_options</td>
+<td></td>
+<td>Options to apply to members. These can include any of the options above.</td>
+</tr>
+</tbody>
+</table>
+
+
 </section>
 
 </main> <!-- /main -->
