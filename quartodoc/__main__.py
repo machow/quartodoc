@@ -173,8 +173,9 @@ def build(config, filter, dry_run, watch, verbose):
     """
     Generate API docs based on the given configuration file  (`./_quarto.yml` by default).
     """
-    cfg_path = f"{os.getcwd()}/{config}"
-    if not Path(cfg_path).exists():
+
+    cfg_path = Path(config).absolute()
+    if not cfg_path.exists():
         raise FileNotFoundError(
             f"Configuration file {cfg_path} not found.  Please create one."
         )
@@ -191,25 +192,26 @@ def build(config, filter, dry_run, watch, verbose):
     if dry_run:
         pass
     else:
-        if watch:
-            pkg_path = get_package_path(builder.package)
-            print(f"Watching {pkg_path} for changes...")
-            observer = Observer()
-            observer._event_queue.maxsize = 1  # the default is 0 which is infinite, and there isn't a way to set this in the constructor
-            event_handler = QuartoDocFileChangeHandler(callback=doc_build)
-            observer.schedule(event_handler, pkg_path, recursive=True)
-            observer.schedule(event_handler, cfg_path, recursive=True)
-            observer.start()
-            try:
-                while True:
-                    time.sleep(1)
-            except KeyboardInterrupt:
-                pass
-            finally:
-                observer.stop()
-                observer.join()
-        else:
-            doc_build()
+        with chdir(Path(config).parent):
+            if watch:
+                pkg_path = get_package_path(builder.package)
+                print(f"Watching {pkg_path} for changes...")
+                observer = Observer()
+                observer._event_queue.maxsize = 1  # the default is 0 which is infinite, and there isn't a way to set this in the constructor
+                event_handler = QuartoDocFileChangeHandler(callback=doc_build)
+                observer.schedule(event_handler, pkg_path, recursive=True)
+                observer.schedule(event_handler, cfg_path, recursive=True)
+                observer.start()
+                try:
+                    while True:
+                        time.sleep(1)
+                except KeyboardInterrupt:
+                    pass
+                finally:
+                    observer.stop()
+                    observer.join()
+            else:
+                doc_build()
 
 
 @click.command(
