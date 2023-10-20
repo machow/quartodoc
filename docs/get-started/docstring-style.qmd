@@ -7,7 +7,17 @@ jupyter:
     name: python3
 ---
 
-quartodoc expects numpydoc style for docstrings.
+quartodoc prefers numpy style for docstrings, but can support other styles by configuring parser in your [quartodoc site options](./basic-docs.qmd) of `_quarto.yml`:
+
+```yaml
+quartodoc:
+  parser: google
+```
+
+Currently, google, sphinx, and numpy are supported. Parsing is handled by the tool [griffe](https://github.com/mkdocstrings/griffe).
+
+### Resources
+
 See the [numpydoc sections guide][numpydoc] for more information and examples.
 
 [numpydoc]: https://numpydoc.readthedocs.io/en/latest/format.html#sections
