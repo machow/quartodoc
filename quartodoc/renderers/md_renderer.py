@@ -99,13 +99,13 @@ class MdRenderer(Renderer):
             return el.canonical_path
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
-    
+
     def _fetch_method_parameters(self, el: dc.Function):
         # adapted from mkdocstrings-python jinja tempalate
         if el.parent and el.parent.is_class and len(el.parameters) > 0:
             if el.parameters[0].name in {"self", "cls"}:
                 return dc.Parameters(*list(el.parameters)[1:])
-        
+
         return el.parameters
 
     def _render_table(self, rows, headers):
@@ -135,7 +135,7 @@ class MdRenderer(Renderer):
         # unescaped pipes screw up table formatting
         if self.render_interlinks:
             return f"[{sanitize(el.source)}](`{el.full}`)"
-        
+
         return sanitize(el.source)
 
     @dispatch
@@ -501,6 +501,20 @@ class MdRenderer(Renderer):
             sanitize(el.description or "", allow_markdown=True),
         ]
         return row
+
+    # admonition ----
+    # note this can be a see-also, warnings, or notes section
+    # from the googledoc standard
+    @dispatch
+    def render(self, el: ds.DocstringSectionAdmonition):
+        kind = el.title.lower()
+        if kind in ["notes", "warnings"]:
+            return el.value.description
+        elif kind == "see also":
+            # TODO: attempt to parse See Also sections
+            return convert_rst_link_to_md(el.value.description)
+
+        raise NotImplementedError(f"Unsupported DocstringSectionAdmonition kind: {kind}")
 
     # warnings ----
 

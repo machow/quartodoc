@@ -104,6 +104,19 @@ def test_render_doc_attribute(renderer):
     assert res == ["abc", r"Optional\[\]", "xyz"]
 
 
+def test_render_doc_section_admonition(renderer):
+    section = ds.DocstringSectionAdmonition(
+        kind="see also",
+        text="quartodoc.tests.example: Method for doing a thing",
+        title="See Also",
+    )
+
+    res = renderer.render(section)
+    print(res)
+
+    assert res == "quartodoc.tests.example: Method for doing a thing"
+
+
 @pytest.mark.parametrize("children", ["embedded", "flat"])
 def test_render_doc_module(snapshot, renderer, children):
     bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
