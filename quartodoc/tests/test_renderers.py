@@ -103,6 +103,7 @@ def test_render_doc_attribute(renderer):
 
     assert res == ["abc", r"Optional\[\]", "xyz"]
 
+
 def test_render_doc_section_admonition(renderer):
     section = ds.DocstringSectionAdmonition(
         kind="see also",
