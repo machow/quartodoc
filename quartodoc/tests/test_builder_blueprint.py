@@ -1,12 +1,16 @@
+from functools import partial
+from griffe.exceptions import AliasResolutionError
 from quartodoc import get_object
 from quartodoc import layout as lo
 from quartodoc.builder.blueprint import (
     _non_default_entries,
+    _resolve_alias,
     BlueprintTransformer,
     blueprint,
     WorkaroundKeyError,
 )
 import pytest
+
 
 TEST_MOD = "quartodoc.tests.example"
 
@@ -36,6 +40,17 @@ def lay():
 @pytest.fixture
 def bp():
     return BlueprintTransformer()
+
+
+def test_func_resolve_alias():
+    obj = get_object("quartodoc.tests.example_alias_target.external_alias")
+    assert obj.is_alias
+    with pytest.raises(AliasResolutionError):
+        obj.target
+
+    resolved = _resolve_alias(obj, get_object)
+
+    assert resolved.path == "tabulate.tabulate"
 
 
 def test_non_default_entries_auto():
