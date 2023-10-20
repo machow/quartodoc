@@ -1,5 +1,5 @@
 ---
-title: numpydoc style
+title: Docstring formats
 jupyter:
   kernelspec:
     display_name: Python 3 (ipykernel)
