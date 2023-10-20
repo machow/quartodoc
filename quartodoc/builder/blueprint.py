@@ -8,6 +8,7 @@ from griffe import dataclasses as dc
 from griffe.loader import GriffeLoader
 from griffe.collections import ModulesCollection, LinesCollection
 from griffe.docstrings.parsers import Parser
+from griffe.exceptions import AliasResolutionError
 from functools import partial
 from textwrap import indent
 
@@ -118,6 +119,26 @@ def _to_simple_dict(el: "BaseModel"):
 
 def _non_default_entries(el: Auto):
     return {k: getattr(el, k) for k in el._fields_specified}
+
+
+def _resolve_alias(obj: dc.Alias | dc.Object, get_object):
+    if not isinstance(obj, dc.Alias):
+        return obj
+
+    # attempt to resolve alias, loading external modules when needed ----
+    max_tries = 100
+
+    new_obj = obj
+    for ii in range(max_tries):
+        if not new_obj.is_alias:
+            break
+
+        try:
+            new_obj = new_obj.target
+        except AliasResolutionError as e:
+            new_obj = get_object(e.alias.target_path)
+
+    return new_obj
 
 
 class BlueprintTransformer(PydanticTransformer):
@@ -296,8 +317,9 @@ class BlueprintTransformer(PydanticTransformer):
 
             # do no document submodules
             if (
-                _is_external_alias(doc.obj, obj.package)
-                or doc.obj.kind.value == "module"
+                # _is_external_alias(doc.obj, obj.package)
+                doc.obj.kind.value
+                == "module"
             ):
                 continue
 
@@ -332,12 +354,18 @@ class BlueprintTransformer(PydanticTransformer):
             signature_name=el.signature_name,
         )
 
-    @staticmethod
-    def _fetch_members(el: Auto, obj: dc.Object | dc.Alias):
+    def _fetch_members(self, el: Auto, obj: dc.Object | dc.Alias):
+        # Note that this could be a static method, if we passed in the griffe loader
+
         if el.members is not None:
             return el.members
 
         options = obj.all_members if el.include_inherited else obj.members
+
+        # use the __all__ attribute of modules to filter members
+        # otherwise, all members are included in the initial options
+        if obj.is_module and obj.exports is not None:
+            options = {k: v for k, v in options.items() if v.is_exported}
 
         if el.include:
             raise NotImplementedError("include argument currently unsupported.")
@@ -348,8 +376,13 @@ class BlueprintTransformer(PydanticTransformer):
         if not el.include_private:
             options = {k: v for k, v in options.items() if not k.startswith("_")}
 
-        if not el.include_imports and not el.include_inherited:
+        if not (el.include_imports or el.include_inherited):
             options = {k: v for k, v in options.items() if not v.is_alias}
+
+        # resolve any remaining aliases ----
+        # the reamining filters require attributes on the target object.
+        for obj in options.values():
+            _resolve_alias(obj, self.get_object)
 
         if not el.include_empty:
             options = {k: v for k, v in options.items() if v.docstring is not None}
@@ -362,12 +395,6 @@ class BlueprintTransformer(PydanticTransformer):
 
         if not el.include_functions:
             options = {k: v for k, v in options.items() if not v.is_function}
-
-        # for modules, remove any Alias objects, since they were imported from
-        # other places. Sphinx has a flag for this behavior, so may be good
-        # to do something similar.
-        # if obj.is_module:
-        #    options = {k: v for k, v in options.items() if not v.is_alias}
 
         return sorted(options)
 
