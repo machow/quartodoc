@@ -192,6 +192,10 @@ def build(config, filter, dry_run, watch, verbose):
     if dry_run:
         pass
     else:
+        # add current directory to path, and then temporarily switch directories.
+        # this supports the case where a user is depending on the current directory
+        # for imports
+        sys.path.append(os.getcwd())
         with chdir(Path(config).parent):
             if watch:
                 pkg_path = get_package_path(builder.package)
