@@ -150,8 +150,8 @@ class Header(Block):
     def __str__(self):
         hashes = "#" * self.level
         content = inlinecontent_to_str(self.content)
-        attr = f" {self.attr}" if self.attr else ""
-        return f"{hashes} {content} {{{attr}}}"
+        attr = f" {{{self.attr}}}" if self.attr else ""
+        return f"{hashes} {content}{attr}"
 
 
 CodeBlock_TPL = """
