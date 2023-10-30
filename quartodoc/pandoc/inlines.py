@@ -111,8 +111,8 @@ class Code(Inline):
         Return link as markdown
         """
         content = self.text or ""
-        attr = self.attr or ""
-        return f"`{content}`{{{attr}}}"
+        attr =  f"{{{self.attr}}}" if self.attr else ""
+        return f"`{content}`{attr}"
 
 
 @dataclass
