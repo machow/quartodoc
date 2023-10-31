@@ -11,7 +11,6 @@ from quartodoc.pandoc.components import Attr
 
 __all__ = (
     "Code",
-    "CodeTag",
     "Emph",
     "Inline",
     "Inlines",
@@ -30,7 +29,24 @@ class Inline:
     """
 
     def __str__(self):
-        return ""
+        """
+        Return Inline element as markdown
+        """
+        raise NotImplementedError(
+            f"__str__ method not implemented for: {type(self)}"
+        )
+
+    @property
+    def html(self):
+        """
+        Return Inline element as HTML code
+
+        This method is useful for cases where markdown is not versatile
+        enough for a specific outcome.
+        """
+        raise NotImplementedError(
+            f"html property method not implemented for: {type(self)}"
+        )
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
@@ -114,21 +130,13 @@ class Code(Inline):
         attr =  f"{{{self.attr}}}" if self.attr else ""
         return f"`{content}`{attr}"
 
-
-@dataclass
-class CodeTag(Inline):
-    """
-    Code (inline) rendered as html
-    """
-    text: Optional[str] = None
-    attr: Optional[Attr] = None
-
-    def __str__(self):
+    @property
+    def html(self):
         """
-        Return link as markdown
+        Code (inline) rendered as html
         """
         content = self.text or ""
-        attr = f" {self.attr.as_html()}" if self.attr else ""
+        attr = f" {self.attr.html}" if self.attr else ""
         return f"<code{attr}>{content}</code>"
 
 

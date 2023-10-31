@@ -49,7 +49,9 @@ class Attr:
 
         return " ".join(parts)
 
-    def as_html(self):
+
+    @property
+    def html(self):
         parts = []
 
         if self.identifier:

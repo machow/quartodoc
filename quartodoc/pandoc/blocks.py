@@ -34,7 +34,24 @@ class Block:
     """
 
     def __str__(self):
-        return ""
+        """
+        Return Inline element as markdown
+        """
+        raise NotImplementedError(
+            f"__str__ method not implemented for: {type(self)}"
+        )
+
+    @property
+    def html(self):
+        """
+        Return Inline element as HTML code
+
+        This method is useful for cases where markdown is not versatile
+        enough for a specific outcome.
+        """
+        raise NotImplementedError(
+            f"html property method not implemented for: {type(self)}"
+        )
 
 
 # TypeAlias declared here to avoid forward-references which
