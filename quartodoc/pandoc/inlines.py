@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import collections.abc as abc
 from dataclasses import dataclass
+from pathlib import Path
 from typing import TypeAlias, Optional, Sequence
 
 from quartodoc.pandoc.components import Attr
@@ -12,6 +13,7 @@ from quartodoc.pandoc.components import Attr
 __all__ = (
     "Code",
     "Emph",
+    "Image",
     "Inline",
     "Inlines",
     "Link",
@@ -168,6 +170,28 @@ class Emph(Inline):
         """
         content = inlinecontent_to_str(self.content)
         return f"*{content}*"
+
+
+@dataclass
+class Image(Inline):
+    """
+    Image
+    """
+
+    caption: Optional[str] = None
+    src: Optional[Path | str] = None
+    title: Optional[str] = None
+    attr: Optional[Attr] = None
+
+    def __str__(self):
+        """
+        Return image as markdown
+        """
+        caption = self.caption or ""
+        src = self.src or ""
+        title = f' "{self.title}"' if self.title else ""
+        attr =  f"{{{self.attr}}}" if self.attr else ""
+        return f"![{caption}]({src}{title}){attr}"
 
 
 # Helper functions
