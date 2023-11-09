@@ -59,7 +59,7 @@ class Attr:
 
         if self.classes:
             s = " ".join(c for c in self.classes)
-            parts.append(f'class = "{s}"')
+            parts.append(f'class="{s}"')
 
         if self.attributes:
             parts.append(
