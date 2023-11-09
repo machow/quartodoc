@@ -3,8 +3,9 @@ Specifition is at https://pandoc.org/lua-filters.html#block
 """
 from __future__ import annotations
 
+import itertools
 import typing
-from typing import Optional, TypeAlias, Sequence
+from typing import Literal, Optional, TypeAlias, Sequence
 import collections.abc as abc
 
 from textwrap import indent
@@ -16,10 +17,12 @@ from quartodoc.pandoc.inlines import Inline, Inlines, InlineContent, inlineconte
 __all__ = (
     "Block",
     "Blocks",
+    "BulletList",
     "CodeBlock",
     "DefinitionList",
     "Div",
     "Header",
+    "OrderedList",
     "Para",
     "Plain",
 )
@@ -208,6 +211,38 @@ class CodeBlock(Block):
         return CodeBlock_TPL.format(content=content, attr=attr)
 
 
+@dataclass
+class BulletList(Block):
+    """
+    A bullet list
+    """
+    content: Optional[BlockContent] = None
+
+    def __str__(self):
+        """
+        Return a bullet list as markdown
+        """
+        if not self.content:
+            return ""
+        return blockcontent_to_str_items(self.content, "bullet")
+
+
+@dataclass
+class OrderedList(Block):
+    """
+    An Ordered list
+    """
+    content: Optional[BlockContent] = None
+
+    def __str__(self):
+        """
+        Return an ordered list as markdown
+        """
+        if not self.content:
+            return ""
+        return blockcontent_to_str_items(self.content, "ordered")
+
+
 # Helper functions
 
 def join_block_content(content: Sequence[BlockContent]) -> str:
@@ -236,3 +271,60 @@ def blockcontent_to_str(content: Optional[BlockContent]) -> str:
     else:
         raise TypeError(f"Could not process type: {type(content)}")
 
+
+def blockcontent_to_str_items(
+    content: Optional[BlockContent],
+    kind: Literal["bullet", "ordered"]
+) -> str:
+    """
+    Convert block content to strings of items
+
+    Parameters
+    ----------
+    content:
+        What to convert
+
+    kind:
+        How to mark (prefix) each item in the of content.
+    """
+
+    def fmt(s:str, pfx: str):
+        """
+        Format as a list item with one or more blocks
+        """
+        # Aligns the content in all lines to start in the same column.
+        # e.g. If pfx = "12.", we get output like
+        #
+        # 12. abcd
+        #     efgh
+        #
+        #     ijkl
+        #     mnop
+        if not s:
+            return ""
+        pad = " " * (len(pfx) + 1)
+        return f"{pfx} " + indent(s, pad).lstrip(pad)
+
+    if not content:
+        return ""
+
+    if kind == "bullet":
+        pfx_it  = itertools.cycle("*")
+    else:
+        pfx_it = (f"{i}." for i in itertools.count(1))
+
+    if isinstance(content, (str, Inline, Block)):
+        return fmt(str(content), next(pfx_it))
+    elif isinstance(content, abc.Sequence):
+        # To balance correctness, compactness and readability,
+        # items with content get an empty line between them and
+        # the next item.
+        items = []
+        pad = ""
+        for item in content:
+            s = fmt(str(item), next(pfx_it))
+            pad = f"{SEP}{SEP}" if isinstance(item, Block) else f"{SEP}"
+            items.append(f"{s}{pad}")
+        return "".join(items)[:-len(pad)]
+    else:
+        raise TypeError(f"Could not process type: {type(content)}")
