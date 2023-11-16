@@ -94,7 +94,7 @@ def test_render_doc_attribute(renderer):
     attr = ds.DocstringAttribute(
         name="abc",
         description="xyz",
-        annotation=exp.Expression(exp.Name("Optional", full="Optional"), "[", "]"),
+        annotation=exp.ExprSubscript(exp.ExprName("Optional"), ""),
         value=1,
     )
 

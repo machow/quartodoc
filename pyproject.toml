@@ -32,7 +32,7 @@ dynamic = ["version"]
 requires-python = ">=3.9"
 dependencies = [
     "click",
-    "griffe <= 0.32.3",
+    "griffe >= 0.33",
     "sphobjinv >= 2.3.1",
     "tabulate >= 0.9.0",
     "importlib-metadata >= 5.1.0",
