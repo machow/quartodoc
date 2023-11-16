@@ -6,19 +6,13 @@ from contextlib import contextmanager
 from functools import wraps
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
+from griffe import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
 from typing import Tuple, Union, Optional
 from quartodoc import layout
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
-
-
-try:
-    # Name and Expression were moved to expressions in v0.28
-    from griffe import expressions as expr
-except ImportError:
-    from griffe import dataclasses as expr
 
 
 def _has_attr_section(el: dc.Docstring | None):
@@ -130,16 +124,16 @@ class MdRenderer(Renderer):
         return ""
 
     @dispatch
-    def render_annotation(self, el: expr.Name) -> str:
+    def render_annotation(self, el: expr.ExprName) -> str:
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
         if self.render_interlinks:
-            return f"[{sanitize(el.source)}](`{el.full}`)"
+            return f"[{sanitize(el.name)}](`{el.canonical_path}`)"
 
-        return sanitize(el.source)
+        return sanitize(el.canonical_path)
 
     @dispatch
-    def render_annotation(self, el: expr.Expression) -> str:
+    def render_annotation(self, el: expr.Expr) -> str:
         return "".join(map(self.render_annotation, el))
 
     # signature method --------------------------------------------------------
