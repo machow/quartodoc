@@ -376,7 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>builder <span class="op">=</span> Builder.from_quarto_config(cfg)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>builder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7f8e2967e170&gt;</code></pre>
+<pre><code>&lt;quartodoc.autosummary.BuilderPkgdown at 0x7f3421e7c430&gt;</code></pre>
 </div>
 </div>
 <p>Note that .from_quarto_config used the <code>style:</code> field to decide which Builder to create (in this case, <code>BuilderPkgdown</code>).</p>
@@ -491,13 +491,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       └─contents = █─list
                    └─0 = █─DocClass ...</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
 </div>
 <p>The code below shows a preview of the items.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>preview(items, max_depth<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>preview(items, max_depth<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─list
 ├─0 = █─Item
@@ -535,14 +532,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="rendering-and-writing">Rendering and writing</h2>
 <p>A <code>Builder</code> instantiates a <code>Renderer</code> (like <a href="../api/MdRenderer.html#quartodoc.MdRenderer"><code>MdRenderer</code></a>). Use the <code>.renderer</code> attribute to access it:</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>builder.renderer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>builder.renderer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7f8e2963b8e0&gt;</code></pre>
+<pre><code>&lt;quartodoc.renderers.md_renderer.MdRenderer at 0x7f3421e716f0&gt;</code></pre>
 </div>
 </div>
 <p>The <code>render</code> method of of the <a href="../api/MdRenderer.html#quartodoc.MdRenderer"><code>MdRenderer</code></a> returns a markdown string that can be rendered by Quarto:</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(builder.renderer.render(pages[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(builder.renderer.render(pages[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># render { #quartodoc.MdRenderer.render }
 
