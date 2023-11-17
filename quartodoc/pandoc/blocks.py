@@ -174,10 +174,10 @@ class Header(Block):
         return f"{hashes} {content}{attr}"
 
 
-CodeBlock_TPL = """
+CodeBlock_TPL = """\
 ```{attr}
 {content}
-```
+```\
 """
 
 
