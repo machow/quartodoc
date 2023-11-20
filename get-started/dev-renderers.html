@@ -364,13 +364,10 @@ SECTIONS: A docstring with 4 pieces</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─Alias
 ├─name = 'get_object'
-├─annotation = █─Expression
-│              ├─0 = Name(source='dc', full='griffe.dataclasses')
-│              ├─1 = '.'
-│              └─2 = Name(source='Object', full='griffe.dataclasses.Obj ...
+├─annotation = ExprAttribute(values=[ExprName(name='dc', parent=M ...
 ├─parameters = █─Parameters
 │              ├─0 = █─Parameter
-│              │     ├─annotation = Name(source='str', full='str')
+│              │     ├─annotation = ExprName(name='str', parent=Module(PosixPath('/opt ...
 │              │     ├─kind = &lt;ParameterKind.positional_or_keyword: 'positional  ...
 │              │     ├─name = 'path'
 │              │     └─default = None
@@ -380,7 +377,7 @@ SECTIONS: A docstring with 4 pieces</code></pre>
 │              │     ├─name = 'object_name'
 │              │     └─default = 'None'
 │              ├─2 = █─Parameter
-│              │     ├─annotation = Name(source='str', full='str')
+│              │     ├─annotation = ExprName(name='str', parent=Module(PosixPath('/opt ...
 │              │     ├─kind = &lt;ParameterKind.positional_or_keyword: 'positional  ...
 │              │     ├─name = 'parser'
 │              │     └─default = "'numpy'"
@@ -395,7 +392,7 @@ SECTIONS: A docstring with 4 pieces</code></pre>
 │              │     ├─name = 'dynamic'
 │              │     └─default = 'False'
 │              └─5 = █─Parameter
-│                    ├─annotation = █─Expression ...
+│                    ├─annotation = ExprBinOp(left='None', operator='|', right=ExprNam ...
 │                    ├─kind = &lt;ParameterKind.positional_or_keyword: 'positional  ...
 │                    ├─name = 'loader'
 │                    └─default = 'None'

@@ -486,7 +486,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="quartodoc.create_inventory" class="level1">
 <h1>create_inventory</h1>
-<p><code>create_inventory(project, version, items, uri=lambda s: f'{s.canonical_path}.html', dispname='-')</code></p>
+<p><code>create_inventory(project, version, items, uri=lambda : f'{s.canonical_path}.html', dispname='-')</code></p>
 <p>Return a sphinx inventory file.</p>
 <section id="parameters" class="level2">
 <h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
@@ -522,7 +522,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><code>uri</code></td>
 <td>‘str | Callable[dc.Object, str]’</td>
 <td>Link relative to the docs where the items documentation lives.</td>
-<td><code>lambda s: f'{s.canonical_path}.html'</code></td>
+<td><code>lambda : f'{s.canonical_path}.html'</code></td>
 </tr>
 <tr class="odd">
 <td><code>dispname</code></td>

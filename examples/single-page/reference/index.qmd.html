@@ -187,11 +187,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#quartodoc.Builder" id="toc-quartodoc.Builder" class="nav-link" data-scroll-target="#quartodoc.Builder">Builder</a>
   <ul class="collapse">
   <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   </ul></li>
   <li><a href="#quartodoc.Builder.build" id="toc-quartodoc.Builder.build" class="nav-link" data-scroll-target="#quartodoc.Builder.build">Builder.build</a>
   <ul class="collapse">
-  <li><a href="#parameters-3" id="toc-parameters-3" class="nav-link" data-scroll-target="#parameters-3">Parameters</a></li>
+  <li><a href="#parameters-2" id="toc-parameters-2" class="nav-link" data-scroll-target="#parameters-2">Parameters</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -280,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>dc.Object</td>
+<td>griffe.dataclasses.griffe.dataclasses.Object</td>
 <td>abc</td>
 </tr>
 </tbody>
@@ -410,107 +409,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="methods" class="level3">
-<h3 class="anchored" data-anchor-id="methods">Methods</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.build">build</a></td>
-<td>Build index page, sphinx inventory, and individual doc pages.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.create_inventory">create_inventory</a></td>
-<td>Generate sphinx inventory object.</td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.from_quarto_config">from_quarto_config</a></td>
-<td>Construct a Builder from a configuration object (or yaml file).</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></td>
-<td>Write individual function documentation pages.</td>
-</tr>
-<tr class="odd">
-<td><a href="#quartodoc.Builder.write_index">write_index</a></td>
-<td>Write API index page.</td>
-</tr>
-<tr class="even">
-<td><a href="#quartodoc.Builder.write_sidebar">write_sidebar</a></td>
-<td>Write a yaml config file for API sidebar.</td>
-</tr>
-</tbody>
-</table>
-<section id="quartodoc.Builder.build" class="level4">
-<h4 class="anchored" data-anchor-id="quartodoc.Builder.build">build</h4>
-<p><code>Builder.build(filter='*')</code></p>
-<p>Build index page, sphinx inventory, and individual doc pages.</p>
-<section id="parameters-2" class="level5">
-<h5 class="anchored" data-anchor-id="parameters-2">Parameters</h5>
-<table class="table">
-<colgroup>
-<col style="width: 4%">
-<col style="width: 3%">
-<col style="width: 87%">
-<col style="width: 4%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>filter</code></td>
-<td>str</td>
-<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
-<td><code>'*'</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="quartodoc.Builder.create_inventory" class="level4">
-<h4 class="anchored" data-anchor-id="quartodoc.Builder.create_inventory">create_inventory</h4>
-<p><code>Builder.create_inventory(items)</code></p>
-<p>Generate sphinx inventory object.</p>
-</section>
-<section id="quartodoc.Builder.from_quarto_config" class="level4">
-<h4 class="anchored" data-anchor-id="quartodoc.Builder.from_quarto_config">from_quarto_config</h4>
-<p><code>Builder.from_quarto_config(quarto_cfg)</code></p>
-<p>Construct a Builder from a configuration object (or yaml file).</p>
-</section>
-<section id="quartodoc.Builder.write_doc_pages" class="level4">
-<h4 class="anchored" data-anchor-id="quartodoc.Builder.write_doc_pages">write_doc_pages</h4>
-<p><code>Builder.write_doc_pages(pages, filter)</code></p>
-<p>Write individual function documentation pages.</p>
-</section>
-<section id="quartodoc.Builder.write_index" class="level4">
-<h4 class="anchored" data-anchor-id="quartodoc.Builder.write_index">write_index</h4>
-<p><code>Builder.write_index(blueprint)</code></p>
-<p>Write API index page.</p>
-</section>
-<section id="quartodoc.Builder.write_sidebar" class="level4">
-<h4 class="anchored" data-anchor-id="quartodoc.Builder.write_sidebar">write_sidebar</h4>
-<p><code>Builder.write_sidebar(blueprint)</code></p>
-<p>Write a yaml config file for API sidebar.</p>
-</section>
-</section>
 </section>
 <section id="quartodoc.Builder.build" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.Builder.build">Builder.build</h2>
 <p><code>Builder.build(filter='*')</code></p>
 <p>Build index page, sphinx inventory, and individual doc pages.</p>
-<section id="parameters-3" class="level3">
-<h3 class="anchored" data-anchor-id="parameters-3">Parameters</h3>
+<section id="parameters-2" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-2">Parameters</h3>
 <table class="table">
 <colgroup>
 <col style="width: 4%">

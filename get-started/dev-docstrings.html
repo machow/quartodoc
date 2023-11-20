@@ -367,7 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f_obj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>&lt;Alias('get_object', 'quartodoc.autosummary.get_object')&gt;</code></pre>
+<pre><code>Alias('get_object', 'quartodoc.autosummary.get_object')</code></pre>
 </div>
 </div>
 <p>The result above is a griffe object representing the function <code>quartodoc.get_object</code>, which has two important attributes:</p>
@@ -391,7 +391,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;griffe.dataclasses.Parameters at 0x7eff4cb30190&gt;</code></pre>
+<pre><code>Parameters(Parameter(name='path', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default=None), Parameter(name='object_name', annotation="'str | None'", kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'), Parameter(name='parser', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default="'numpy'"), Parameter(name='load_aliases', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='True'), Parameter(name='dynamic', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='False'), Parameter(name='loader', annotation=ExprBinOp(left='None', operator='|', right=ExprName(name='GriffeLoader', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages/quartodoc/autosummary.py')))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'))</code></pre>
 </div>
 </div>
 </section>
@@ -439,11 +439,11 @@ x:
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7eff54623fa0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7eff4c68ca30&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7eff4c68ed40&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7eff4c68e530&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionReturns at 0x7eff4c68dae0&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8b7cf73310&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f8b820a48b0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f8b7c063ac0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f8b7c063c10&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionReturns at 0x7f8b7c0639a0&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -511,7 +511,7 @@ x:
 │     ├─title = None
 │     └─value = █─list
 │               ├─0 = █─DocstringParameter
-│               │     ├─annotation = Name(source='str', full='str')
+│               │     ├─annotation = ExprName(name='str', parent=Module(PosixPath('/opt ...
 │               │     ├─default = None
 │               │     ├─description = 'An import path to the object. This should have th ...
 │               │     ├─name = 'path'
@@ -523,7 +523,7 @@ x:
 │               │     ├─name = 'object_name'
 │               │     └─value = 'None'
 │               ├─2 = █─DocstringParameter
-│               │     ├─annotation = Name(source='str', full='str')
+│               │     ├─annotation = ExprName(name='str', parent=Module(PosixPath('/opt ...
 │               │     ├─default = "'numpy'"
 │               │     ├─description = 'A docstring parser to use.'
 │               │     ├─name = 'parser'
@@ -556,10 +556,7 @@ x:
       └─value = █─list
                 └─0 = █─DocstringReturn
                       ├─name = 'x'
-                      ├─annotation = █─Expression
-                      │              ├─0 = Name(source='dc', full='griffe.dataclasses')
-                      │              ├─1 = '.'
-                      │              └─2 = Name(source='Object', full='griffe.dataclasses.Obj ...
+                      ├─annotation = ExprAttribute(values=[ExprName(name='dc', parent=M ...
                       └─description = 'abc'</code></pre>
 </div>
 </div>
