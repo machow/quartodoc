@@ -283,23 +283,12 @@ def dynamic_alias(
 
         canonical_path = None
         crnt_part = mod
+        prev_part = _NoParent
         for ii, attr_name in enumerate(splits):
+            # fetch attribute ----
             try:
+                prev_part = crnt_part
                 crnt_part = getattr(crnt_part, attr_name)
-                if not isinstance(crnt_part, ModuleType) and not canonical_path:
-                    if inspect.isclass(crnt_part) or inspect.isfunction(crnt_part):
-                        _mod = getattr(crnt_part, "__module__", None)
-
-                        if _mod is None:
-                            canonical_path = path
-                        else:
-                            canonical_path = _mod + ":" + ".".join(splits[ii:])
-                    else:
-                        canonical_path = path
-                elif isinstance(crnt_part, ModuleType) and ii == (len(splits) - 1):
-                    # final object is module
-                    canonical_path = crnt_part.__name__
-
             except AttributeError:
                 # Fetching the attribute can fail if it is purely a type hint,
                 # and has no value. This can be an issue if you have added a
@@ -318,6 +307,22 @@ def dynamic_alias(
                 raise AttributeError(
                     f"No attribute named `{attr_name}` in the path `{path}`."
                 )
+
+            # update canonical_path ----
+            # this is our belief about where the final object lives (ie. its submodule)
+            try:
+                _qualname = ".".join(splits[ii:])
+                _is_final = ii == (len(splits) - 1)
+                new_canonical_path = _canonical_path(
+                    crnt_part, _qualname, _is_final, prev_part
+                )
+            except AttributeError:
+                new_canonical_path = None
+
+            if new_canonical_path is not None:
+                # Note that previously we kept the first valid canonical path,
+                # but now keep the last.
+                canonical_path = new_canonical_path
 
         if canonical_path is None:
             raise ValueError(f"Cannot find canonical path for `{path}`")
@@ -349,6 +354,31 @@ def dynamic_alias(
 
         parent = get_object(parent_path, loader=loader, dynamic=True)
         return dc.Alias(attr_name, obj, parent=parent)
+
+
+class _NoParent:
+    """Represent the absence of a parent object."""
+
+
+def _canonical_path(crnt_part: object, qualname: str, is_final=False, parent=_NoParent):
+    if not isinstance(crnt_part, ModuleType):
+        # classes and functions ----
+        if inspect.isclass(crnt_part) or inspect.isfunction(crnt_part):
+            _mod = getattr(crnt_part, "__module__", None)
+
+            if _mod is None:
+                return None
+            else:
+                # we can use the object's actual __qualname__ here, which correctly
+                # reports the path for e.g. methods on a class
+                return _mod + ":" + crnt_part.__qualname__
+        elif parent is not _NoParent and isinstance(parent, ModuleType):
+            return parent.__name__ + ":" + qualname
+        else:
+            return None
+    elif isinstance(crnt_part, ModuleType) and is_final:
+        # final object is module
+        return crnt_part.__name__
 
 
 def _is_valueless(obj: dc.Object):

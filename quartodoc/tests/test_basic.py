@@ -114,3 +114,18 @@ def test_get_object_dynamic_module_attr_class_instance():
 
     assert obj.path == "quartodoc.tests.example_dynamic.some_instance"
     assert obj.docstring.value == "Dynamic instance doc"
+
+
+def test_get_object_dynamic_class_method_assigned():
+    # method is assigned to class using
+    # some_method = some_function
+    obj = get_object(
+        "quartodoc.tests.example_alias_target:AClass.some_method", dynamic=True
+    )
+
+    assert isinstance(obj, dc.Alias)
+    assert isinstance(obj.target, dc.Function)
+    assert (
+        obj.target.path
+        == "quartodoc.tests.example_alias_target__nested.nested_alias_target"
+    )
