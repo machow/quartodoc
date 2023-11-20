@@ -136,6 +136,11 @@ class Code(Inline):
     def html(self):
         """
         Code (inline) rendered as html
+
+        Notes
+        -----
+        Generates html as if the `--no-highlight` option as passed
+        to pandoc
         """
         content = self.text or ""
         attr = f" {self.attr.html}" if self.attr else ""

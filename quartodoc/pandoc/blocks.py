@@ -179,6 +179,11 @@ CodeBlock_TPL = """\
 {content}
 ```\
 """
+CodeBlockHTML_TPL = """\
+<pre{attr}>
+<code>{content}</code>
+</pre>\
+"""
 
 
 @dataclass
@@ -209,6 +214,21 @@ class CodeBlock(Block):
             attr = ""
 
         return CodeBlock_TPL.format(content=content, attr=attr)
+
+    @property
+    def html(self):
+        """
+        Code (block) rendered as html
+
+        Notes
+        -----
+        Generates html as if the `--no-highlight` option as passed
+        to pandoc
+        """
+        content = self.content or ""
+        attr = f" {self.attr.html}" if self.attr else ""
+        return CodeBlockHTML_TPL.format(content=content, attr=attr)
+
 
 
 @dataclass
