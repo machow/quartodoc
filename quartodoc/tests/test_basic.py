@@ -129,3 +129,9 @@ def test_get_object_dynamic_class_method_assigned():
         obj.target.path
         == "quartodoc.tests.example_alias_target__nested.nested_alias_target"
     )
+
+
+def test_get_object_dynamic_class_attr_valueless():
+    obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs.z", dynamic=True)
+
+    assert obj.docstring.value == "The z attribute"
