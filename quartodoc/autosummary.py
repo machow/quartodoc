@@ -283,11 +283,22 @@ def dynamic_alias(
 
         canonical_path = None
         crnt_part = mod
-        prev_part = _NoParent
         for ii, attr_name in enumerate(splits):
+            # update canonical_path ----
+            # this is our belief about where the final object lives (ie. its submodule)
+            try:
+                _qualname = ".".join(splits[ii:])
+                new_canonical_path = _canonical_path(crnt_part, _qualname)
+            except AttributeError:
+                new_canonical_path = None
+
+            if new_canonical_path is not None:
+                # Note that previously we kept the first valid canonical path,
+                # but now keep the last.
+                canonical_path = new_canonical_path
+
             # fetch attribute ----
             try:
-                prev_part = crnt_part
                 crnt_part = getattr(crnt_part, attr_name)
             except AttributeError:
                 # Fetching the attribute can fail if it is purely a type hint,
@@ -297,7 +308,6 @@ def dynamic_alias(
                     # See if we can return the static object for a value-less attr
                     try:
                         obj = get_object(canonical_path, loader=loader)
-                        print(obj)
                         if _is_valueless(obj):
                             return obj
                     except Exception as e:
@@ -308,21 +318,18 @@ def dynamic_alias(
                     f"No attribute named `{attr_name}` in the path `{path}`."
                 )
 
-            # update canonical_path ----
-            # this is our belief about where the final object lives (ie. its submodule)
-            try:
-                _qualname = ".".join(splits[ii:])
-                _is_final = ii == (len(splits) - 1)
-                new_canonical_path = _canonical_path(
-                    crnt_part, _qualname, _is_final, prev_part
-                )
-            except AttributeError:
-                new_canonical_path = None
+        # final canonical_path update ----
+        # TODO: this is largely identical to canonical_path update above
+        try:
+            _qualname = ""
+            new_canonical_path = _canonical_path(crnt_part, _qualname)
+        except AttributeError:
+            new_canonical_path = None
 
-            if new_canonical_path is not None:
-                # Note that previously we kept the first valid canonical path,
-                # but now keep the last.
-                canonical_path = new_canonical_path
+        if new_canonical_path is not None:
+            # Note that previously we kept the first valid canonical path,
+            # but now keep the last.
+            canonical_path = new_canonical_path
 
         if canonical_path is None:
             raise ValueError(f"Cannot find canonical path for `{path}`")
@@ -356,11 +363,8 @@ def dynamic_alias(
         return dc.Alias(attr_name, obj, parent=parent)
 
 
-class _NoParent:
-    """Represent the absence of a parent object."""
-
-
-def _canonical_path(crnt_part: object, qualname: str, is_final=False, parent=_NoParent):
+def _canonical_path(crnt_part: object, qualname: str):
+    suffix = (":" + qualname) if qualname else ""
     if not isinstance(crnt_part, ModuleType):
         # classes and functions ----
         if inspect.isclass(crnt_part) or inspect.isfunction(crnt_part):
@@ -371,19 +375,26 @@ def _canonical_path(crnt_part: object, qualname: str, is_final=False, parent=_No
             else:
                 # we can use the object's actual __qualname__ here, which correctly
                 # reports the path for e.g. methods on a class
-                return _mod + ":" + crnt_part.__qualname__
-        elif parent is not _NoParent and isinstance(parent, ModuleType):
-            return parent.__name__ + ":" + qualname
+                qual_parts = [] if not qualname else qualname.split(".")
+                return _mod + ":" + ".".join([crnt_part.__qualname__, *qual_parts])
+        elif isinstance(crnt_part, ModuleType):
+            return crnt_part.__name__ + suffix
         else:
             return None
-    elif isinstance(crnt_part, ModuleType) and is_final:
+    elif isinstance(crnt_part, ModuleType):
         # final object is module
-        return crnt_part.__name__
+        if not qualname:
+            return crnt_part.__name__
+
+        return crnt_part.__name__ + suffix
 
 
 def _is_valueless(obj: dc.Object):
     if isinstance(obj, dc.Attribute):
-        if "class-attribute" in obj.labels and obj.value is None:
+        if (
+            obj.labels.union({"class-attribute", "module-attribute"})
+            and obj.value is None
+        ):
             return True
         elif "instance-attribute" in obj.labels:
             return True

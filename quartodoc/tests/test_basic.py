@@ -1,6 +1,10 @@
+import pytest
+
 from quartodoc import get_object, get_function, MdRenderer
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
+
+# TODO: rename to test_autosummary (or refactor autosummary into parts)
 
 
 def test_get_function():
@@ -89,10 +93,29 @@ def test_get_object_dynamic_class_instance_attr_doc():
     assert obj.members["b"].docstring.value == "The b attribute"
 
 
+@pytest.mark.xfail(reason="The object's docstring (str.__doc__) is currently used :/.")
+def test_get_object_dynamic_mod_instance_attr_doc():
+    obj = get_object("quartodoc.tests.example_dynamic:b", dynamic=True)
+
+    assert obj.docstring.value == "The b module attribute"
+
+
 def test_get_object_dynamic_class_instance_attr_doc_class_attr_valueless():
     obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs", dynamic=True)
 
     assert obj.members["z"].docstring.value == "The z attribute"
+
+
+def test_get_object_dynamic_mod_attr_valueless():
+    obj = get_object("quartodoc.tests.example_dynamic:a", dynamic=True)
+
+    assert obj.docstring.value == "The a module attribute"
+
+
+def test_get_object_dynamic_class_attr_valueless():
+    obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs.z", dynamic=True)
+
+    assert obj.docstring.value == "The z attribute"
 
 
 def test_get_object_dynamic_module_attr_str():
@@ -131,7 +154,37 @@ def test_get_object_dynamic_class_method_assigned():
     )
 
 
-def test_get_object_dynamic_class_attr_valueless():
-    obj = get_object("quartodoc.tests.example_dynamic:InstanceAttrs.z", dynamic=True)
+@pytest.mark.parametrize(
+    "path,dst",
+    [
+        # No path returned, since it's ambiguous for an instance
+        # e.g. class location, vs instance location
+        ("quartodoc.tests.example_dynamic:some_instance", None),
+        # Functions give their submodule location
+        (
+            "quartodoc.tests.example:a_alias",
+            "quartodoc.tests.example_alias_target:alias_target",
+        ),
+        (
+            "quartodoc.tests.example:a_nested_alias",
+            "quartodoc.tests.example_alias_target__nested:nested_alias_target",
+        ),
+        (
+            "quartodoc.tests.example_alias_target:AClass.some_method",
+            "quartodoc.tests.example_alias_target__nested:nested_alias_target",
+        ),
+    ],
+)
+def test_func_canonical_path(path, dst):
+    import importlib
+    from quartodoc.autosummary import _canonical_path
 
-    assert obj.docstring.value == "The z attribute"
+    mod_path, attr_path = path.split(":")
+
+    crnt_part = importlib.import_module(mod_path)
+    for name in attr_path.split("."):
+        crnt_part = getattr(crnt_part, name)
+
+    res = _canonical_path(crnt_part, "")
+
+    assert res == dst
