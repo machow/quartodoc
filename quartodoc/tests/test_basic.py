@@ -154,12 +154,32 @@ def test_get_object_dynamic_class_method_assigned():
     )
 
 
+def test_get_object_dynamic_toplevel_mod_attr(tmp_path):
+    """get_object with dynamic=True works for the top-level module's attributes"""
+    import sys
+
+    # TODO: should us a context handler
+    sys.path.insert(0, str(tmp_path))
+    (tmp_path / "some_mod.py").write_text(
+        '''
+a: int
+"""A module attribute"""
+'''
+    )
+
+    obj = get_object("some_mod:a", dynamic=True)
+    assert obj.docstring.value == "A module attribute"
+
+    sys.path.pop(sys.path.index(str(tmp_path)))
+
+
 @pytest.mark.parametrize(
     "path,dst",
     [
         # No path returned, since it's ambiguous for an instance
         # e.g. class location, vs instance location
-        ("quartodoc.tests.example_dynamic:some_instance", None),
+        ("quartodoc.tests.example:a_attr", None),
+        ("quartodoc.tests.example:AClass.a_attr", None),
         # Functions give their submodule location
         (
             "quartodoc.tests.example:a_alias",
@@ -173,17 +193,27 @@ def test_get_object_dynamic_class_method_assigned():
             "quartodoc.tests.example_alias_target:AClass.some_method",
             "quartodoc.tests.example_alias_target__nested:nested_alias_target",
         ),
+        # More mundane cases
+        ("quartodoc.tests.example", "quartodoc.tests.example"),
+        ("quartodoc.tests.example:a_func", "quartodoc.tests.example:a_func"),
+        ("quartodoc.tests.example:AClass", "quartodoc.tests.example:AClass"),
+        (
+            "quartodoc.tests.example:AClass.a_method",
+            "quartodoc.tests.example:AClass.a_method",
+        ),
     ],
 )
 def test_func_canonical_path(path, dst):
     import importlib
     from quartodoc.autosummary import _canonical_path
 
-    mod_path, attr_path = path.split(":")
+    mod_path, attr_path = path.split(":") if ":" in path else (path, "")
 
     crnt_part = importlib.import_module(mod_path)
-    for name in attr_path.split("."):
-        crnt_part = getattr(crnt_part, name)
+
+    if attr_path:
+        for name in attr_path.split("."):
+            crnt_part = getattr(crnt_part, name)
 
     res = _canonical_path(crnt_part, "")
 

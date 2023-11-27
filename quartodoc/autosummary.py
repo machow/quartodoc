@@ -381,11 +381,8 @@ def _canonical_path(crnt_part: object, qualname: str):
             return crnt_part.__name__ + suffix
         else:
             return None
-    elif isinstance(crnt_part, ModuleType):
+    else:
         # final object is module
-        if not qualname:
-            return crnt_part.__name__
-
         return crnt_part.__name__ + suffix
 
 
