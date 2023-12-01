@@ -3,6 +3,13 @@ from functools import partial
 NOTE = "Notes\n----\nI am a note"
 
 
+a: int
+"""The a module attribute"""
+
+b: str = "2"
+"""The b module attribute"""
+
+
 def f(a, b, c):
     """Return something
 
