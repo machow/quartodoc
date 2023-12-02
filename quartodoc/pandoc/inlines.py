@@ -158,6 +158,9 @@ class Strong(Inline):
         """
         Return link as markdown
         """
+        if not self.content:
+            return ""
+
         content = inlinecontent_to_str(self.content)
         return f"**{content}**"
 
@@ -173,6 +176,9 @@ class Emph(Inline):
         """
         Return link as markdown
         """
+        if not self.content:
+            return ""
+
         content = inlinecontent_to_str(self.content)
         return f"*{content}*"
 
