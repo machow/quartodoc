@@ -52,6 +52,13 @@ class Attr:
 
     @property
     def html(self):
+        """
+        Represent Attr as it would appear in an HTML tag
+
+        e.g.
+
+            id="id1" class="class1 class2" width="50%" height="50%"
+        """
         parts = []
 
         if self.identifier:
@@ -66,3 +73,10 @@ class Attr:
                " ".join(f'{k}="{v}"' for k, v in self.attributes.items())
             )
         return " ".join(parts)
+
+    @property
+    def empty(self) -> bool:
+        """
+        Return True if Attr has no content
+        """
+        return not (self.identifier or self.classes or self.attributes)
