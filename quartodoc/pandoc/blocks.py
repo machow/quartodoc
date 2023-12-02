@@ -60,7 +60,10 @@ class Block:
 # TypeAlias declared here to avoid forward-references which
 # break beartype
 BlockContent: TypeAlias = InlineContent | Block | Sequence[Block]
-DefinitionItem: TypeAlias = tuple[InlineContent, BlockContent]
+ContentItem: TypeAlias = str | Inline | Block
+DefinitionItem: TypeAlias = tuple[
+    InlineContent, ContentItem | Sequence[BlockContent]
+]
 
 
 @dataclass
@@ -97,12 +100,16 @@ class Div(Block):
         return Div_TPL.format(content=content, attr=attr)
 
 
-# Description starts on the 4th column, and subsequent lines will be
+# Definition starts on the 4th column, and subsequent lines will be
 # indented with 4 spaces. This is crucial for proper handling of
-# descriptions with more than one block.
+# definition with more than one block.
 DefinitionItem_TPL = """\
 {term}
-:   {description}
+{definitions}
+"""
+
+Definition_TPL = """
+:   {definition}
 """
 
 
@@ -121,18 +128,26 @@ class DefinitionList(Block):
         if not self.content:
             return ""
 
-        lst = []
-        fmt = DefinitionItem_TPL.format
-        for term, description in self.content:
-            term = inlinecontent_to_str(term)
-            description = blockcontent_to_str(description)
+        tfmt = DefinitionItem_TPL.format
+        dfmt = Definition_TPL.format
+        items = []
+        for term, definitions in self.content:
+            term, defs = inlinecontent_to_str(term), []
 
-            # strip away the indentation on the first line as it
-            # is handled by the template
-            desc = indent(str(description).strip(), INDENT).strip()
-            lst.append(fmt(term=term, description=desc))
+            # Single Definition
+            if isinstance(definitions, (str, Inline, Block)):
+                definitions = [definitions]
 
-        return join_block_content(lst)
+            # Multiple defnitions
+            for definition in definitions:
+                s = blockcontent_to_str(definition)
+                # strip away the indentation on the first line as it
+                # is handled by the template
+                defs.append(dfmt(definition=indent(s, INDENT).strip()))
+
+            items.append(tfmt(term=term, definitions="".join(defs)))
+
+        return join_block_content(items)
 
 
 @dataclass
