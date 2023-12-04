@@ -22,6 +22,8 @@ from .parsers import get_parser_defaults
 from .renderers import Renderer
 from .validation import fmt_all
 from ._pydantic_compat import ValidationError
+from .pandoc.blocks import Blocks, Header
+from .pandoc.components import Attr
 
 
 from typing import Any
@@ -591,7 +593,10 @@ class Builder:
         content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
-        final = f"# {self.title}\n\n{content}"
+        final = str(Blocks([
+            Header(1, self.title, Attr(classes=["doc", "doc-index"])),
+            content
+        ]))
 
         p_index = Path(self.dir) / self.out_index
         p_index.parent.mkdir(exist_ok=True, parents=True)
