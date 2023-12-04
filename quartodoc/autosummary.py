@@ -567,6 +567,7 @@ class Builder:
 
         _log.info("Writing docs pages")
         self.write_doc_pages(pages, filter)
+        self.renderer.pages_written()
 
         # inventory ----
 

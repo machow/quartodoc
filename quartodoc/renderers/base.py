@@ -87,3 +87,13 @@ class Renderer:
     @dispatch
     def render(self, el):
         raise NotImplementedError(f"render method does not support type: {type(el)}")
+
+    def pages_written(self):
+        """
+        Called after all the qmd pages have been render and written to disk
+
+        It is called before the documented items are written to an inventory
+        file. This is a chance for the renderer to add to the documented items
+        and write the pages to them to disk.
+        """
+        ...
