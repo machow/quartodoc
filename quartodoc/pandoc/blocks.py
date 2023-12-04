@@ -12,7 +12,13 @@ from textwrap import indent
 from dataclasses import dataclass
 
 from quartodoc.pandoc.components import Attr
-from quartodoc.pandoc.inlines import Inline, Inlines, InlineContent, inlinecontent_to_str
+from quartodoc.pandoc.inlines import (
+    Inline,
+    Inlines,
+    InlineContent,
+    inlinecontent_to_str,
+    str_as_list_item,
+)
 
 __all__ = (
     "Block",
@@ -56,14 +62,24 @@ class Block:
             f"html property method not implemented for: {type(self)}"
         )
 
+    @property
+    def as_list_item(self):
+        """
+        A block as a list item
+
+        Some block type need special spacing consideration
+        """
+        # To balance correctness, compactness and readability,
+        # block items get an empty line between them and the next
+        # item.
+        return f"{self}\n\n"
+
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
-BlockContent: TypeAlias = InlineContent | Block | Sequence[Block]
 ContentItem: TypeAlias = str | Inline | Block
-DefinitionItem: TypeAlias = tuple[
-    InlineContent, ContentItem | Sequence[BlockContent]
-]
+BlockContent: TypeAlias = ContentItem | Sequence[ContentItem]
+DefinitionItem: TypeAlias = tuple[InlineContent, BlockContent]
 
 
 @dataclass
@@ -79,7 +95,7 @@ class Blocks(Block):
 Div_TPL = """\
 ::: {{{attr}}}
 {content}
-:::
+:::\
 """
 
 @dataclass
@@ -105,7 +121,7 @@ class Div(Block):
 # definition with more than one block.
 DefinitionItem_TPL = """\
 {term}
-{definitions}
+{definitions}\
 """
 
 Definition_TPL = """
@@ -167,10 +183,14 @@ class Para(Block):
     Paragraph
     """
     content: Optional[InlineContent] = None
-
     def __str__(self):
         content = inlinecontent_to_str(self.content)
         return f"{SEP}{content}{SEP}"
+
+    @property
+    def as_list_item(self):
+        content = inlinecontent_to_str(self.content)
+        return f"{content}\n\n"
 
 
 @dataclass
@@ -244,6 +264,9 @@ class CodeBlock(Block):
         attr = f" {self.attr.html}" if self.attr else ""
         return CodeBlockHTML_TPL.format(content=content, attr=attr)
 
+    @property
+    def as_list_item(self):
+        return f"\n{self}\n\n"
 
 
 @dataclass
@@ -337,8 +360,16 @@ def blockcontent_to_str_items(
         #     mnop
         if not s:
             return ""
-        pad = " " * (len(pfx) + 1)
-        return f"{pfx} " + indent(s, pad).lstrip(pad)
+
+        # We avoid having a space after the item bullet/number if
+        # there is no content on that line
+        space = ""
+        indent_size = len(pfx) + 1
+        s_indented = indent(s, " " * indent_size)
+        if s[0] != "\n":
+            space = " "
+            s_indented = s_indented[indent_size:]
+        return f"{pfx}{space}{s_indented}"
 
     if not content:
         return ""
@@ -348,18 +379,16 @@ def blockcontent_to_str_items(
     else:
         pfx_it = (f"{i}." for i in itertools.count(1))
 
-    if isinstance(content, (str, Inline, Block)):
-        return fmt(str(content), next(pfx_it))
+    if isinstance(content, str):
+        return fmt(str_as_list_item(content), next(pfx_it))
+    elif isinstance(content, (Inline, Block)):
+        return fmt(content.as_list_item, next(pfx_it))
     elif isinstance(content, abc.Sequence):
-        # To balance correctness, compactness and readability,
-        # items with content get an empty line between them and
-        # the next item.
-        items = []
-        pad = ""
-        for item in content:
-            s = fmt(str(item), next(pfx_it))
-            pad = f"{SEP}{SEP}" if isinstance(item, Block) else f"{SEP}"
-            items.append(f"{s}{pad}")
-        return "".join(items)[:-len(pad)]
+        it = (
+            str_as_list_item(c) if isinstance(c, str) else c.as_list_item
+            for c in content
+        )
+        items = (fmt(s, next(pfx_it)) for s in it)
+        return "".join(items).strip()
     else:
         raise TypeError(f"Could not process type: {type(content)}")

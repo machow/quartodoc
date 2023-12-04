@@ -50,6 +50,14 @@ class Inline:
             f"html property method not implemented for: {type(self)}"
         )
 
+    @property
+    def as_list_item(self):
+        """
+        An inline as a list item
+        """
+        return str_as_list_item(str(self))
+
+
 # TypeAlias declared here to avoid forward-references which
 # break beartype
 InlineContent: TypeAlias = str | Inline | Sequence[Inline]
@@ -230,3 +238,10 @@ def inlinecontent_to_str(content: Optional[InlineContent]):
         return join_inline_content(content)
     else:
         raise TypeError(f"Could not process type: {type(content)}")
+
+
+def str_as_list_item(s: str) -> str:
+    """
+    How a string becomes a list item
+    """
+    return f"{s}\n"
