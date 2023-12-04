@@ -465,6 +465,8 @@ class Builder:
     title: str
 
     renderer: Renderer
+    items: list[layout.Item]
+    """Documented items by this builder"""
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -555,7 +557,7 @@ class Builder:
         blueprint = blueprint(self.layout, dynamic=self.dynamic, parser=self.parser)
 
         _log.info("Collecting pages and inventory items.")
-        pages, items = collect(blueprint, base_dir=self.dir)
+        pages, self.items = collect(blueprint, base_dir=self.dir)
 
         # writing pages ----
 
@@ -568,7 +570,7 @@ class Builder:
         # inventory ----
 
         _log.info("Creating inventory file")
-        inv = self.create_inventory(items)
+        inv = self.create_inventory(self.items)
         if self._fast_inventory:
             # dump the inventory file directly as text
             # TODO: copied from __main__.py, should add to inventory.py
