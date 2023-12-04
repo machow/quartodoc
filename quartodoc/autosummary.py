@@ -507,6 +507,7 @@ class Builder:
         self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
+        self.renderer.builder = self
         if render_interlinks:
             # this is a top-level option, but lives on the renderer
             # so we just manually set it there for now.

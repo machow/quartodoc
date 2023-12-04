@@ -1,7 +1,10 @@
 import re
+import typing
 
 from plum import dispatch
 
+if typing.TYPE_CHECKING:
+    from ..autosummary import Builder
 
 # utils -----------------------------------------------------------------------
 
@@ -36,6 +39,9 @@ def convert_rst_link_to_md(rst):
 class Renderer:
     style: str
     _registry: "dict[str, Renderer]" = {}
+
+    builder: "Builder"
+    """The builder that uses this renderer for generating docs"""
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
