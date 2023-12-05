@@ -60,7 +60,7 @@ class Inline:
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
-InlineContent: TypeAlias = str | Inline | Sequence[Inline]
+InlineContent: TypeAlias = str | Inline | Sequence[str | Inline]
 
 
 @dataclass
@@ -219,7 +219,7 @@ def join_inline_content(content: Sequence[InlineContent]) -> str:
     """
     Join a sequence of inlines into one string
     """
-    return SEP.join(str(c) for c in content if c)
+    return SEP.join(inlinecontent_to_str(c) for c in content if c)
 
 
 def inlinecontent_to_str(content: Optional[InlineContent]):
