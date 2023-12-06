@@ -3,19 +3,18 @@ Specifition is at https://pandoc.org/lua-filters.html#block
 """
 from __future__ import annotations
 
-import sys
-import itertools
-import typing
 import collections.abc as abc
+import itertools
+import sys
+import typing
 
-from typing import Literal, Optional, Sequence
+from textwrap import indent
+from dataclasses import dataclass
+from typing import Literal, Optional, Sequence, Union
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
     TypeAlias = "TypeAlias"
-
-from textwrap import indent
-from dataclasses import dataclass
 
 from quartodoc.pandoc.components import Attr
 from quartodoc.pandoc.inlines import (
@@ -83,8 +82,8 @@ class Block:
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
-ContentItem: TypeAlias = str | Inline | Block
-BlockContent: TypeAlias = ContentItem | Sequence[ContentItem]
+ContentItem: TypeAlias = Union[str, Inline, Block]
+BlockContent: TypeAlias = Union[ContentItem, Sequence[ContentItem]]
 DefinitionItem: TypeAlias = tuple[InlineContent, BlockContent]
 
 

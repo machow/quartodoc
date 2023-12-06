@@ -8,7 +8,7 @@ import sys
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Union
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
@@ -66,7 +66,7 @@ class Inline:
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
-InlineContent: TypeAlias = str | Inline | Sequence[str | Inline]
+InlineContent: TypeAlias = Union[str, Inline, Union[Sequence[str], Inline]]
 
 
 @dataclass
