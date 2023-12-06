@@ -419,6 +419,8 @@ class Builder:
         Name of API directory.
     title:
         Title of the API index page.
+    description:
+        Description of the API index page. Defaults to no description.
     renderer: Renderer
         The renderer used to convert docstrings (e.g. to markdown).
     options:
@@ -481,6 +483,7 @@ class Builder:
         version: "str | None" = None,
         dir: str = "reference",
         title: str = "Function reference",
+        description: str = None,
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
         sidebar: "str | None" = None,
@@ -499,6 +502,7 @@ class Builder:
         self.version = None
         self.dir = dir
         self.title = title
+        self.description = description
         self.sidebar = sidebar
         self.parser = parser
 
@@ -591,7 +595,11 @@ class Builder:
         content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
-        final = f"# {self.title}\n\n{content}"
+        description = (
+            f"description: {self.description}" if self.description is not None else ""
+        )
+        header = "\n".join(("---", f"title: {self.title}", description, "---"))
+        final = f"{header}\n\n{content}"
 
         p_index = Path(self.dir) / self.out_index
         p_index.parent.mkdir(exist_ok=True, parents=True)
