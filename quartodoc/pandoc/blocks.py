@@ -309,7 +309,7 @@ def join_block_content(content: Sequence[BlockContent]) -> str:
     """
     # Ensure that there are exactly two newlines (i.e. one empty line)
     # between any items.
-    return f"{SEP}{SEP}".join(str(c).rstrip(SEP) for c in content if c)
+    return f"{SEP}{SEP}".join(blockcontent_to_str(c) for c in content if c)
 
 
 def blockcontent_to_str(content: Optional[BlockContent]) -> str:
@@ -323,7 +323,7 @@ def blockcontent_to_str(content: Optional[BlockContent]) -> str:
     if not content:
         return ""
     elif isinstance(content, (str, Inline, Block)):
-        return str(content)
+        return str(content).rstrip(SEP)
     elif isinstance(content, abc.Sequence):
         return join_block_content(content)
     else:

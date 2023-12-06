@@ -62,6 +62,25 @@ e
 :::
 """.strip()
 
+    b = Blocks([Div("a"), Div("b"), [Div("c"), Div("d")]])
+    assert str(b) == """
+::: {}
+a
+:::
+
+::: {}
+b
+:::
+
+::: {}
+c
+:::
+
+::: {}
+d
+:::
+""".strip()
+
 
 def test_bulletlist():
     b = BulletList(["a", "b", "c"])
