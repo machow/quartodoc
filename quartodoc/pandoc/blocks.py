@@ -6,7 +6,6 @@ from __future__ import annotations
 import collections.abc as abc
 import itertools
 import sys
-import typing
 
 from textwrap import indent
 from dataclasses import dataclass
