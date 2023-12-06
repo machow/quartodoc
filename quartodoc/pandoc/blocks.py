@@ -19,7 +19,6 @@ else:
 from quartodoc.pandoc.components import Attr
 from quartodoc.pandoc.inlines import (
     Inline,
-    Inlines,
     InlineContent,
     inlinecontent_to_str,
     str_as_list_item,
