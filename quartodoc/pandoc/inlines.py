@@ -4,9 +4,15 @@ Specifition is at https://pandoc.org/lua-filters.html#inline
 from __future__ import annotations
 
 import collections.abc as abc
+import sys
+
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TypeAlias, Optional, Sequence
+from typing import Optional, Sequence
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = "TypeAlias"
 
 from quartodoc.pandoc.components import Attr
 

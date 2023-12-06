@@ -3,10 +3,16 @@ Specifition is at https://pandoc.org/lua-filters.html#block
 """
 from __future__ import annotations
 
+import sys
 import itertools
 import typing
-from typing import Literal, Optional, TypeAlias, Sequence
 import collections.abc as abc
+
+from typing import Literal, Optional, Sequence
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias
+else:
+    TypeAlias = "TypeAlias"
 
 from textwrap import indent
 from dataclasses import dataclass
