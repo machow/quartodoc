@@ -9,6 +9,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Sequence, Union
+
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
@@ -25,7 +26,7 @@ __all__ = (
     "Link",
     "Span",
     "Str",
-    "Strong"
+    "Strong",
 )
 
 SEP = " "
@@ -40,9 +41,7 @@ class Inline:
         """
         Return Inline element as markdown
         """
-        raise NotImplementedError(
-            f"__str__ method not implemented for: {type(self)}"
-        )
+        raise NotImplementedError(f"__str__ method not implemented for: {type(self)}")
 
     @property
     def html(self):
@@ -74,6 +73,7 @@ class Inlines(Inline):
     """
     Sequence of inline elements
     """
+
     elements: Optional[Sequence[InlineContent]] = None
 
     def __str__(self):
@@ -87,6 +87,7 @@ class Str(Inline):
     """
     A String
     """
+
     content: Optional[str] = None
 
     def __str__(self):
@@ -98,6 +99,7 @@ class Span(Inline):
     """
     A Span
     """
+
     content: Optional[InlineContent] = None
     attr: Optional[Attr] = None
 
@@ -115,6 +117,7 @@ class Link(Inline):
     """
     A Link
     """
+
     content: Optional[InlineContent] = None
     target: Optional[str] = None
     title: Optional[str] = None
@@ -126,7 +129,7 @@ class Link(Inline):
         """
         title = f' "{self.title}"' if self.title else ""
         content = inlinecontent_to_str(self.content)
-        attr =  f"{{{self.attr}}}" if self.attr else ""
+        attr = f"{{{self.attr}}}" if self.attr else ""
         return f"[{content}]({self.target}{title}){attr}"
 
 
@@ -135,6 +138,7 @@ class Code(Inline):
     """
     Code (inline)
     """
+
     text: Optional[str] = None
     attr: Optional[Attr] = None
 
@@ -143,7 +147,7 @@ class Code(Inline):
         Return link as markdown
         """
         content = self.text or ""
-        attr =  f"{{{self.attr}}}" if self.attr else ""
+        attr = f"{{{self.attr}}}" if self.attr else ""
         return f"`{content}`{attr}"
 
     @property
@@ -166,6 +170,7 @@ class Strong(Inline):
     """
     Strongly emphasized text
     """
+
     content: Optional[InlineContent] = None
 
     def __str__(self):
@@ -184,6 +189,7 @@ class Emph(Inline):
     """
     Emphasized text
     """
+
     content: Optional[InlineContent] = None
 
     def __str__(self):
@@ -215,11 +221,12 @@ class Image(Inline):
         caption = self.caption or ""
         src = self.src or ""
         title = f' "{self.title}"' if self.title else ""
-        attr =  f"{{{self.attr}}}" if self.attr else ""
+        attr = f"{{{self.attr}}}" if self.attr else ""
         return f"![{caption}]({src}{title}){attr}"
 
 
 # Helper functions
+
 
 def join_inline_content(content: Sequence[InlineContent]) -> str:
     """

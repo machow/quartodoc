@@ -9,9 +9,7 @@ from dataclasses import dataclass
 if typing.TYPE_CHECKING:
     from typing import Optional, Sequence
 
-__all__ = (
-    "Attr",
-)
+__all__ = ("Attr",)
 
 
 @dataclass
@@ -19,6 +17,7 @@ class Attr:
     """
     Create a new set of attributes (Attr)
     """
+
     identifier: Optional[str] = None
     classes: Optional[Sequence[str]] = None
     attributes: Optional[dict[str, str]] = None
@@ -43,12 +42,9 @@ class Attr:
             parts.append(" ".join(f".{c}" for c in self.classes))
 
         if self.attributes:
-            parts.append(
-                " ".join(f'{k}="{v}"' for k, v in self.attributes.items())
-            )
+            parts.append(" ".join(f'{k}="{v}"' for k, v in self.attributes.items()))
 
         return " ".join(parts)
-
 
     @property
     def html(self):
@@ -69,9 +65,7 @@ class Attr:
             parts.append(f'class="{s}"')
 
         if self.attributes:
-            parts.append(
-               " ".join(f'{k}="{v}"' for k, v in self.attributes.items())
-            )
+            parts.append(" ".join(f'{k}="{v}"' for k, v in self.attributes.items()))
         return " ".join(parts)
 
     @property

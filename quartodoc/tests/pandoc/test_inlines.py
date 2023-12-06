@@ -46,7 +46,7 @@ def test_image():
 
     img = Image(
         src="image.png",
-        attr=Attr(classes=["c1"], attributes={"width": "50%", "height": "60%"})
+        attr=Attr(classes=["c1"], attributes={"width": "50%", "height": "60%"}),
     )
     assert str(img) == '![](image.png){.c1 width="50%" height="60%"}'
 
@@ -84,10 +84,7 @@ def test_span():
     s = Span("a")
     assert str(s) == "[a]{}"
 
-    s = Span(
-        "a",
-        Attr("span-id", classes=["c1", "c2"], attributes={"data-value": "1"})
-    )
+    s = Span("a", Attr("span-id", classes=["c1", "c2"], attributes={"data-value": "1"}))
     assert str(s) == '[a]{#span-id .c1 .c2 data-value="1"}'
 
 
@@ -110,6 +107,6 @@ def test_strong():
 def test_seq_inlinecontent():
     s = Span(
         [Str("a"), Emph("b"), Code("c = 3", Attr(classes=["py"]))],
-        Attr(classes=["c1", "c2"])
+        Attr(classes=["c1", "c2"]),
     )
     assert str(s) == "[a *b* `c = 3`{.py}]{.c1 .c2}"

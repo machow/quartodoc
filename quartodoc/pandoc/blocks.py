@@ -10,6 +10,7 @@ import sys
 from textwrap import indent
 from dataclasses import dataclass
 from typing import Literal, Optional, Sequence, Union
+
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
@@ -50,9 +51,7 @@ class Block:
         """
         Return Inline element as markdown
         """
-        raise NotImplementedError(
-            f"__str__ method not implemented for: {type(self)}"
-        )
+        raise NotImplementedError(f"__str__ method not implemented for: {type(self)}")
 
     @property
     def html(self):
@@ -101,6 +100,7 @@ Div_TPL = """\
 {content}
 :::\
 """
+
 
 @dataclass
 class Div(Block):
@@ -175,6 +175,7 @@ class Plain(Block):
     """
     Plain text (not a paragraph)
     """
+
     content: Optional[InlineContent] = None
 
     def __str__(self):
@@ -186,7 +187,9 @@ class Para(Block):
     """
     Paragraph
     """
+
     content: Optional[InlineContent] = None
+
     def __str__(self):
         content = inlinecontent_to_str(self.content)
         return f"{SEP}{content}{SEP}"
@@ -202,6 +205,7 @@ class Header(Block):
     """
     Header
     """
+
     level: int
     content: Optional[InlineContent] = None
     attr: Optional[Attr] = None
@@ -230,6 +234,7 @@ class CodeBlock(Block):
     """
     Header
     """
+
     content: Optional[str] = None
     attr: Optional[Attr] = None
 
@@ -240,9 +245,9 @@ class CodeBlock(Block):
             # other attributes, use a short form to open it
             # e.g. ```python instead of ``` {.python}
             no_curly_braces = (
-                self.attr.classes and
-                len(self.attr.classes) == 1 and
-                not self.attr.attributes
+                self.attr.classes
+                and len(self.attr.classes) == 1
+                and not self.attr.attributes
             )
 
             if self.attr.classes and no_curly_braces:
@@ -278,6 +283,7 @@ class BulletList(Block):
     """
     A bullet list
     """
+
     content: Optional[BlockContent] = None
 
     def __str__(self):
@@ -294,6 +300,7 @@ class OrderedList(Block):
     """
     An Ordered list
     """
+
     content: Optional[BlockContent] = None
 
     def __str__(self):
@@ -306,6 +313,7 @@ class OrderedList(Block):
 
 
 # Helper functions
+
 
 def join_block_content(content: Sequence[BlockContent]) -> str:
     """
@@ -335,8 +343,7 @@ def blockcontent_to_str(content: Optional[BlockContent]) -> str:
 
 
 def blockcontent_to_str_items(
-    content: Optional[BlockContent],
-    kind: Literal["bullet", "ordered"]
+    content: Optional[BlockContent], kind: Literal["bullet", "ordered"]
 ) -> str:
     """
     Convert block content to strings of items
@@ -350,7 +357,7 @@ def blockcontent_to_str_items(
         How to mark (prefix) each item in the of content.
     """
 
-    def fmt(s:str, pfx: str):
+    def fmt(s: str, pfx: str):
         """
         Format as a list item with one or more blocks
         """
@@ -379,7 +386,7 @@ def blockcontent_to_str_items(
         return ""
 
     if kind == "bullet":
-        pfx_it  = itertools.cycle("*")
+        pfx_it = itertools.cycle("*")
     else:
         pfx_it = (f"{i}." for i in itertools.count(1))
 
