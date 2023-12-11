@@ -507,7 +507,6 @@ class Builder:
         self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
-        self.renderer.builder = self
         if render_interlinks:
             # this is a top-level option, but lives on the renderer
             # so we just manually set it there for now.
@@ -567,7 +566,7 @@ class Builder:
 
         _log.info("Writing docs pages")
         self.write_doc_pages(pages, filter)
-        self.renderer.pages_written()
+        self.renderer._pages_written(self)
 
         # inventory ----
 
