@@ -596,10 +596,9 @@ class Builder:
         content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
-        final = str(Blocks([
-            Header(1, self.title, Attr(classes=["doc", "doc-index"])),
-            content
-        ]))
+        final = str(
+            Blocks([Header(1, self.title, Attr(classes=["doc", "doc-index"])), content])
+        )
 
         p_index = Path(self.dir) / self.out_index
         p_index.parent.mkdir(exist_ok=True, parents=True)
