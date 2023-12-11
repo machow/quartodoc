@@ -22,6 +22,8 @@ from .parsers import get_parser_defaults
 from .renderers import Renderer
 from .validation import fmt_all
 from ._pydantic_compat import ValidationError
+from .pandoc.blocks import Blocks, Header
+from .pandoc.components import Attr
 
 
 from typing import Any
@@ -463,6 +465,8 @@ class Builder:
     title: str
 
     renderer: Renderer
+    items: list[layout.Item]
+    """Documented items by this builder"""
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -553,7 +557,7 @@ class Builder:
         blueprint = blueprint(self.layout, dynamic=self.dynamic, parser=self.parser)
 
         _log.info("Collecting pages and inventory items.")
-        pages, items = collect(blueprint, base_dir=self.dir)
+        pages, self.items = collect(blueprint, base_dir=self.dir)
 
         # writing pages ----
 
@@ -562,11 +566,12 @@ class Builder:
 
         _log.info("Writing docs pages")
         self.write_doc_pages(pages, filter)
+        self.renderer._pages_written(self)
 
         # inventory ----
 
         _log.info("Creating inventory file")
-        inv = self.create_inventory(items)
+        inv = self.create_inventory(self.items)
         if self._fast_inventory:
             # dump the inventory file directly as text
             # TODO: copied from __main__.py, should add to inventory.py
@@ -591,7 +596,9 @@ class Builder:
         content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
-        final = f"# {self.title}\n\n{content}"
+        final = str(
+            Blocks([Header(1, self.title, Attr(classes=["doc", "doc-index"])), content])
+        )
 
         p_index = Path(self.dir) / self.out_index
         p_index.parent.mkdir(exist_ok=True, parents=True)

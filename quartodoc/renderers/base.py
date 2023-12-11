@@ -1,7 +1,10 @@
 import re
+import typing
 
 from plum import dispatch
 
+if typing.TYPE_CHECKING:
+    from ..autosummary import Builder
 
 # utils -----------------------------------------------------------------------
 
@@ -81,3 +84,23 @@ class Renderer:
     @dispatch
     def render(self, el):
         raise NotImplementedError(f"render method does not support type: {type(el)}")
+
+    def _pages_written(self, builder: "Builder"):
+        """
+        Called after all the qmd pages have been render and written to disk
+
+        It is called before the documented items are written to an inventory
+        file. This is a chance for the renderer to add to the documented items
+        and write the pages to them to disk.
+
+        Parameters
+        ----------
+        builder :
+            There builder using this renderer to generate documentation.
+
+        Notes
+        -----
+        This method is provided for experimental purposes and it is not bound
+        to be available for long, or have the same form.
+        """
+        ...
