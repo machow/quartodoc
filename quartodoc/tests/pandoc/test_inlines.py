@@ -87,6 +87,9 @@ def test_span():
     s = Span("a", Attr("span-id", classes=["c1", "c2"], attributes={"data-value": "1"}))
     assert str(s) == '[a]{#span-id .c1 .c2 data-value="1"}'
 
+    s = Span([Span("a"), Span("b"), "c"])
+    assert str(s) == "[[a]{} [b]{} c]{}"
+
 
 def test_str():
     s = Str("a")

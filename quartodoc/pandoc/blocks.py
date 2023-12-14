@@ -20,6 +20,7 @@ from quartodoc.pandoc.components import Attr
 from quartodoc.pandoc.inlines import (
     Inline,
     InlineContent,
+    InlineContentItem,
     inlinecontent_to_str,
     str_as_list_item,
 )
@@ -79,8 +80,8 @@ class Block:
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
-ContentItem: TypeAlias = Union[str, Inline, Block]
-BlockContent: TypeAlias = Union[ContentItem, Sequence[ContentItem]]
+BlockContentItem: TypeAlias = Union[InlineContentItem, Block]
+BlockContent: TypeAlias = Union[BlockContentItem, Sequence[BlockContentItem]]
 DefinitionItem: TypeAlias = tuple[InlineContent, BlockContent]
 
 
