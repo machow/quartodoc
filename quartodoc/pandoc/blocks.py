@@ -157,8 +157,10 @@ class DefinitionList(Block):
             # Single Definition
             if isinstance(definitions, (str, Inline, Block)):
                 definitions = [definitions]
+            elif definitions is None:
+                definitions = [""]
 
-            # Multiple defnitions
+            # Multiple definitions
             for definition in definitions:
                 s = blockcontent_to_str(definition)
                 # strip away the indentation on the first line as it
@@ -398,6 +400,7 @@ def blockcontent_to_str_items(
         it = (
             str_as_list_item(c) if isinstance(c, str) else c.as_list_item
             for c in content
+            if c
         )
         items = (fmt(s, next(pfx_it)) for s in it)
         return "".join(items).strip()

@@ -65,6 +65,12 @@ def test_inlines():
     i = Inlines(["a", Span("b"), Emph("c")])
     assert str(i) == "a [b]{} *c*"
 
+    i = Inlines(["a", None, Span("b"), Emph("c"), None])
+    assert str(i) == "a [b]{} *c*"
+
+    i = Inlines([None, None, None])
+    assert str(i) == ""
+
     i = Inlines(["a", Span("b"), Emph("c"), ["d", Strong("e")]])
     assert str(i) == "a [b]{} *c* d **e**"
 

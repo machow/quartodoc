@@ -65,7 +65,7 @@ class Inline:
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
-InlineContentItem = Union[str, Inline]
+InlineContentItem = Union[str, Inline, None]
 InlineContent: TypeAlias = Union[InlineContentItem, Sequence[InlineContentItem]]
 
 

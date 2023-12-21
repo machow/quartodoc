@@ -86,6 +86,25 @@ d
 """.strip()
     )
 
+    b = Blocks([Div("a"), None, Div("c")])
+    assert (
+        str(b)
+        == """
+::: {}
+a
+:::
+
+::: {}
+c
+:::
+""".strip()
+    )
+
+    b1 = Blocks([None, None])
+    b2 = Blocks(["", "", ""])
+    assert str(b1) == ""
+    assert str(b2) == ""
+
 
 def test_bulletlist():
     b = BulletList(["a", "b", "c"])
@@ -281,6 +300,13 @@ Term 2
     ```
 """.strip()
     )
+
+    # Empty definitions are valid, but require trailling spaces after
+    # the colon
+    d1 = DefinitionList([("Term 1", ""), ("Term 2", "Definition 2")])
+    d2 = DefinitionList([("Term 1", None), ("Term 2", "Definition 2")])
+    assert ":   \n" in str(d1)
+    assert str(d1) == str(d2)
 
 
 def test_div():
