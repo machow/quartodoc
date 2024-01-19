@@ -134,7 +134,10 @@ def _to_clean_dict(inv: soi.Inventory):
 
 @dispatch
 def _create_inventory_item(
-    item: Union[dc.Object, dc.Alias], uri, dispname="-", priority="1",
+    item: Union[dc.Object, dc.Alias],
+    uri,
+    dispname="-",
+    priority="1",
 ) -> soi.DataObjStr:
     target = item
 

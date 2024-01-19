@@ -1,0 +1,14 @@
+---
+title: quartodoc
+replace_base_domain: "https://machow.github.io/quartodoc"
+replace_rel_path: "/get-started"
+filters:
+  - _filters/replace-readme-links.lua
+format: gfm
+---
+
+```{=markdown}
+[![CI](https://github.com/machow/quartodoc/actions/workflows/ci.yml/badge.svg)](https://github.com/machow/quartodoc/actions/workflows/ci.yml)
+```
+
+{{< include get-started/overview.qmd >}}

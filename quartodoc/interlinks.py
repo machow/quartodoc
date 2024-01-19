@@ -18,10 +18,11 @@ import json
 import warnings
 import yaml
 
-from pydantic import BaseModel, Field
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal, Annotated, Union, Optional
+
+from ._pydantic_compat import BaseModel, Field
 
 
 ENV_PROJECT_ROOT: str = "QUARTO_PROJECT_ROOT"
@@ -369,7 +370,6 @@ class Inventories:
 
     @classmethod
     def from_quarto_config(cls, cfg: str | dict, root_dir: str | None = None):
-
         if isinstance(cfg, str):
             if root_dir is None:
                 root_dir = Path(cfg).parent
@@ -391,7 +391,6 @@ class Inventories:
 
         # load other inventories ----
         for doc_name, cfg in sources.items():
-
             fname = doc_name + "_objects.json"
             inv_path = p_root / Path(cache) / fname
 

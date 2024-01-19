@@ -1,8 +1,9 @@
 import pytest
 import griffe.docstrings.dataclasses as ds
+import griffe.expressions as exp
 
 from quartodoc.renderers import MdRenderer
-from quartodoc import get_object
+from quartodoc import layout, get_object, blueprint, Auto
 
 
 @pytest.fixture
@@ -25,7 +26,7 @@ def test_render_param_kwargs_annotated():
 
     assert (
         res
-        == "a: int, b: int = 1, *args: list\\[str\\], c: int, d: int, **kwargs: dict\\[str, str\\]"
+        == "a: int, b: int = 1, *args: list\[str\], c: int, d: int, **kwargs: dict\[str, str\]"
     )
 
 
@@ -60,3 +61,128 @@ def test_render_table_description_interlink(renderer, pair):
 
     res = renderer.render(pars)
     assert interlink in res
+
+
+@pytest.mark.parametrize(
+    "section, dst",
+    [
+        (layout.Section(title="abc"), "## abc"),
+        (layout.Section(subtitle="abc"), "### abc"),
+        (layout.Section(title="abc", desc="zzz"), "## abc\n\nzzz"),
+        (layout.Section(subtitle="abc", desc="zzz"), "### abc\n\nzzz"),
+    ],
+)
+def test_render_summarize_section_title(renderer, section, dst):
+    res = renderer.summarize(section)
+
+    assert res == dst
+
+
+def test_render_summarize_section_contents(renderer):
+    obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
+    section = layout.Section(title="abc", desc="zzz", contents=[obj])
+    res = renderer.summarize(section)
+
+    table = (
+        "| | |\n| --- | --- |\n"
+        "| [a_func](#quartodoc.tests.example.a_func) | A function |"
+    )
+    assert res == f"## abc\n\nzzz\n\n{table}"
+
+
+def test_render_doc_attribute(renderer):
+    attr = ds.DocstringAttribute(
+        name="abc",
+        description="xyz",
+        annotation=exp.ExprSubscript(exp.ExprName("Optional"), ""),
+        value=1,
+    )
+
+    res = renderer.render(attr)
+    print(res)
+
+    assert res == ["abc", r"Optional\[\]", "xyz"]
+
+
+def test_render_doc_section_admonition(renderer):
+    section = ds.DocstringSectionAdmonition(
+        kind="see also",
+        text="quartodoc.tests.example: Method for doing a thing",
+        title="See Also",
+    )
+
+    res = renderer.render(section)
+    print(res)
+
+    assert res == "quartodoc.tests.example: Method for doing a thing"
+
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_module(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_annotations_complex(snapshot):
+    renderer = MdRenderer(render_interlinks=True, show_signature_annotations=True)
+    bp = blueprint(Auto(name="quartodoc.tests.example_signature.a_complex_signature"))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+@pytest.mark.parametrize("children", ["embedded", "flat"])
+def test_render_doc_class(snapshot, renderer, children):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.C", children=children))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_doc_class_attributes_section(snapshot, renderer):
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.AttributesTable"))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+@pytest.mark.parametrize("parser", ["google", "numpy", "sphinx"])
+def test_render_docstring_styles(snapshot, renderer, parser):
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name=f"f_{parser}", package=package)
+    bp = blueprint(auto, parser=parser)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_docstring_numpy_linebreaks(snapshot, renderer):
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_with_linebreaks", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_doc_signature_name(snapshot, renderer):
+    package = "quartodoc.tests"
+    auto = Auto(name="example.a_func", package=package, signature_name="short")
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_doc_signature_name_alias_of_alias(snapshot, renderer):
+    auto = Auto(name="example.a_nested_alias", package="quartodoc.tests")
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot

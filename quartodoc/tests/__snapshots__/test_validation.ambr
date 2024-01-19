@@ -1,0 +1,39 @@
+# serializer version: 1
+# name: test_misplaced_kindpage
+  '''
+  Code:
+  
+      quartodoc:
+        package: zzz
+        sections:
+          - kind: page
+  
+  
+  Error:
+      Configuration error for YAML:
+       - Missing field `path` for element 0 in the list for `sections`, which you need when setting `kind: page`.
+  
+  '''
+# ---
+# name: test_missing_name_contents
+  '''
+  Code:
+  
+      quartodoc:
+        package: zzz
+        sections:
+          - title: Section 1
+          - title: Section 2
+            contents:
+  
+              # name missing here ----
+              - children: linked
+  
+              - name: MdRenderer
+  
+  Error:
+      Configuration error for YAML:
+       - Missing field `name` for element 0 in the list for `contents` located in element 1 in the list for `sections`
+  
+  '''
+# ---

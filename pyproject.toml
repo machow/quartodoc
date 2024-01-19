@@ -2,11 +2,57 @@
 requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools_scm]
+
+[tool.setuptools.packages.find]
+include = ["quartodoc"]
+
 [tool.pytest.ini_options]
-markers = [
+markers = []
+testpaths = ["quartodoc/tests"]
+
+[project]
+name = "quartodoc"
+authors = [{name="Michael Chow", email="michael.chow@posit.co"}]
+license.file = "LICENSE"
+description = "Generate API documentation with Quarto."
+readme = "README.md"
+keywords = ["documentation", "quarto"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11"
 ]
-testpaths = [
-    "quartodoc/tests"
+dynamic = ["version"]
+requires-python = ">=3.9"
+dependencies = [
+    "click",
+    "griffe >= 0.33",
+    "sphobjinv >= 2.3.1",
+    "tabulate >= 0.9.0",
+    "importlib-metadata >= 5.1.0",
+    "importlib-resources >= 5.10.2",
+    "pydantic",
+    "pyyaml",
+    "typing-extensions >= 4.4.0",
+    "watchdog >= 3.0.0",
+    "plum-dispatch < 2.0.0; python_version < '3.10'",
+    "plum-dispatch > 2.0.0; python_version >= '3.10'"
 ]
 
-[tool.setuptools_scm]
+[project.urls]
+homepage = "https://machow.github.io/quartodoc"
+repository = "https://github.com/machow/quartodoc"
+ci = "https://github.com/machow/quartodoc/actions"
+
+
+[project.optional-dependencies]
+dev = ["pytest", "jupyterlab", "jupytext", "syrupy", "pre-commit"]
+
+[project.scripts]
+quartodoc = "quartodoc.__main__:cli"

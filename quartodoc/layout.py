@@ -4,10 +4,10 @@ import griffe.dataclasses as dc
 import logging
 
 from enum import Enum
-from pydantic import BaseModel, Field
-
 from typing_extensions import Annotated
 from typing import Literal, Union, Optional
+
+from ._pydantic_compat import BaseModel, Field, Extra, PrivateAttr
 
 
 _log = logging.getLogger(__name__)
@@ -15,6 +15,9 @@ _log = logging.getLogger(__name__)
 
 class _Base(BaseModel):
     """Any data class that might appear in the quartodoc config."""
+
+    class Config:
+        extra = Extra.forbid
 
 
 class _Structural(_Base):
@@ -43,8 +46,9 @@ class Layout(_Structural):
         The package being documented.
     """
 
-    sections: list[Union[SectionElement, Section]]
+    sections: list[Union[SectionElement, Section]] = []
     package: Union[str, None, MISSING] = MISSING()
+    options: Optional["AutoOptions"] = None
 
 
 # SubElements -----------------------------------------------------------------
@@ -58,6 +62,9 @@ class Section(_Structural):
     kind:
     title:
         Title of the section on the index.
+    subtitle:
+        Subtitle of the section on the index. Note that either title or subtitle,
+        but not both, may be set.
     desc:
         Description of the section on the index.
     package:
@@ -67,10 +74,23 @@ class Section(_Structural):
     """
 
     kind: Literal["section"] = "section"
-    title: str
-    desc: str
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    desc: Optional[str] = None
     package: Union[str, None, MISSING] = MISSING()
-    contents: ContentList
+    contents: ContentList = []
+    options: Optional["AutoOptions"] = None
+
+    def __init__(self, **data):
+        super().__init__(**data)
+
+        # TODO: should these be a custom type? Or can we use pydantic's ValidationError?
+        if self.title is None and self.subtitle is None and not self.contents:
+            raise ValueError(
+                "Section must specify a title, subtitle, or contents field"
+            )
+        elif self.title is not None and self.subtitle is not None:
+            raise ValueError("Section cannot specify both title and subtitle fields.")
 
 
 class SummaryDetails(_Base):
@@ -181,18 +201,68 @@ class ChoicesChildren(Enum):
     linked = "linked"
 
 
-class Auto(_Base):
+SignatureOptions = Literal["full", "short", "relative"]
+
+
+class AutoOptions(_Base):
+    """Options available for Auto content layout element."""
+
+    signature_name: SignatureOptions = "relative"
+    members: Optional[list[str]] = None
+    include_private: bool = False
+    include_imports: bool = False
+    include_empty: bool = False
+    include_inherited: bool = False
+
+    # member types to include ----
+    include_attributes: bool = True
+    include_classes: bool = True
+    include_functions: bool = True
+
+    # other options ----
+    include: Optional[str] = None
+    exclude: Optional[str] = None
+    dynamic: Union[None, bool, str] = None
+    children: ChoicesChildren = ChoicesChildren.embedded
+    package: Union[str, None, MISSING] = MISSING()
+    member_options: Optional["AutoOptions"] = None
+
+    # for tracking fields users manually specify
+    # so we can tell them apart from defaults
+    _fields_specified: list[str] = PrivateAttr(default=())
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._fields_specified = tuple(kwargs)
+
+
+class Auto(AutoOptions):
     """Configure a python object to document (e.g. module, class, function, attribute).
 
     Attributes
     ----------
-    kind:
     name:
         Name of the object. This should be the path needed to import it.
+    signature_name:
+        Style of name to use in the signature. Can be "relative", "full", or "short".
+        Relative is whatever was used as the name argument, full is the fully qualified
+        path the object, and short is the name of the object (i.e. no periods).
     members:
         A list of members, such as attributes or methods on a class, to document.
     include_private:
         Whether to include members starting with "_"
+    include_imports:
+        Whether to include members that were imported from somewhere else.
+    include_empty:
+        Whether to include members with no docstring.
+    include_inherited:
+        Whether to include members inherited from a parent class.
+    include_attributes:
+        Whether to include attributes.
+    include_classes:
+        Whether to include classes.
+    include_functions:
+        Whether to include functions.
     include:
         (Not implemented). A list of members to include.
     exclude:
@@ -205,19 +275,13 @@ class Auto(_Base):
         Style for presenting members. Either separate, embedded, or flat.
     package:
         If specified, object lookup will be relative to this path.
-
+    member_options:
+        Options to apply to members. These can include any of the options above.
 
     """
 
     kind: Literal["auto"] = "auto"
     name: str
-    members: Optional[list[str]] = None
-    include_private: bool = False
-    include: Optional[str] = None
-    exclude: Optional[str] = None
-    dynamic: Union[None, bool, str] = None
-    children: ChoicesChildren = ChoicesChildren.embedded
-    package: Union[str, None, MISSING] = MISSING()
 
 
 # TODO: rename to Default or something
@@ -245,6 +309,7 @@ class Link(_Docable):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
 
 class Doc(_Docable):
@@ -272,9 +337,11 @@ class Doc(_Docable):
     name: str
     obj: Union[dc.Object, dc.Alias]
     anchor: str
+    signature_name: SignatureOptions = "relative"
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
     @classmethod
     def from_griffe(
@@ -284,6 +351,7 @@ class Doc(_Docable):
         members=None,
         anchor: str = None,
         flat: bool = False,
+        signature_name: str = "relative",
     ):
         if members is None:
             members = []
@@ -291,7 +359,12 @@ class Doc(_Docable):
         kind = obj.kind.value
         anchor = obj.path if anchor is None else anchor
 
-        kwargs = {"name": name, "obj": obj, "anchor": anchor}
+        kwargs = {
+            "name": name,
+            "obj": obj,
+            "anchor": anchor,
+            "signature_name": signature_name,
+        }
 
         if kind == "function":
             return DocFunction(**kwargs)
@@ -341,7 +414,7 @@ ContentElement = Annotated[
 ]
 """Entry in the contents list."""
 
-ContentList = list[Union[ContentElement, Doc, _AutoDefault]]
+ContentList = list[Union[_AutoDefault, ContentElement, Doc]]
 
 # Item ----
 
@@ -374,6 +447,7 @@ class Item(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+        extra = Extra.forbid
 
 
 # Update forwared refs --------------------------------------------------------
@@ -381,6 +455,7 @@ class Item(BaseModel):
 Layout.update_forward_refs()
 Section.update_forward_refs()
 Page.update_forward_refs()
+AutoOptions.update_forward_refs()
 Auto.update_forward_refs()
 MemberPage.update_forward_refs()
 Interlaced.update_forward_refs()

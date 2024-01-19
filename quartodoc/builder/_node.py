@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel
+from quartodoc._pydantic_compat import BaseModel
 from typing import Any, Optional
 
 

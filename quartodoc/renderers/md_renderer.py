@@ -3,8 +3,10 @@ from __future__ import annotations
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
+from functools import wraps
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
+from griffe import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
 from typing import Tuple, Union, Optional
@@ -13,19 +15,11 @@ from quartodoc import layout
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
 
 
-try:
-    # Name and Expression were moved to expressions in v0.28
-    from griffe import expressions as expr
-except ImportError:
-    from griffe import dataclasses as expr
-
-
 def _has_attr_section(el: dc.Docstring | None):
     if el is None:
         return False
 
     return any([isinstance(x, ds.DocstringSectionAttributes) for x in el.parsed])
-
 
 
 class MdRenderer(Renderer):
@@ -66,30 +60,28 @@ class MdRenderer(Renderer):
         show_signature_annotations: bool = False,
         display_name: str = "relative",
         hook_pre=None,
-        use_interlinks = False,
-
+        render_interlinks=False,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
         self.display_name = display_name
         self.hook_pre = hook_pre
-        self.use_interlinks = use_interlinks
+        self.render_interlinks = render_interlinks
 
         self.crnt_header_level = self.header_level
 
     @contextmanager
-    def _increment_header(self, n = 1):
+    def _increment_header(self, n=1):
         self.crnt_header_level += n
         try:
             yield
-        finally: 
+        finally:
             self.crnt_header_level -= n
-
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
-        if self.display_name == "name":
+        if self.display_name in {"name", "short"}:
             return el.name
         elif self.display_name == "relative":
             return ".".join(el.path.split(".")[1:])
@@ -101,52 +93,87 @@ class MdRenderer(Renderer):
             return el.canonical_path
 
         raise ValueError(f"Unsupported display_name: `{self.display_name}`")
-    
+
+    def _fetch_method_parameters(self, el: dc.Function):
+        # adapted from mkdocstrings-python jinja tempalate
+        if el.parent and el.parent.is_class and len(el.parameters) > 0:
+            if el.parameters[0].name in {"self", "cls"}:
+                return dc.Parameters(*list(el.parameters)[1:])
+
+        return el.parameters
+
     def _render_table(self, rows, headers):
         table = tabulate(rows, headers=headers, tablefmt="github")
 
         return table
 
-    def render_annotation(self, el: "str | expr.Name | expr.Expression | None"):
-        """Special hook for rendering a type annotation.
+    # render_annotation method --------------------------------------------------------
 
+    @dispatch
+    def render_annotation(self, el: str) -> str:
+        """Special hook for rendering a type annotation.
         Parameters
         ----------
         el:
             An object representing a type annotation.
-            
         """
+        return sanitize(el)
 
-        if isinstance(el, (type(None), str)):
-            return el
+    @dispatch
+    def render_annotation(self, el: None) -> str:
+        return ""
 
+    @dispatch
+    def render_annotation(self, el: expr.ExprName) -> str:
         # TODO: maybe there is a way to get tabulate to handle this?
         # unescaped pipes screw up table formatting
-        if isinstance(el, expr.Name):
-            return sanitize(el.source)
+        if self.render_interlinks:
+            return f"[{sanitize(el.name)}](`{el.canonical_path}`)"
 
-        return sanitize(el.full)
+        return sanitize(el.canonical_path)
+
+    @dispatch
+    def render_annotation(self, el: expr.Expr) -> str:
+        return "".join(map(self.render_annotation, el))
 
     # signature method --------------------------------------------------------
 
     @dispatch
-    def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
+    def signature(self, el: layout.Doc):
         """Return a string representation of an object's signature."""
+        orig = self.display_name
 
-        return self.signature(el.target, el)
+        # set signature path, generate signature, then set back
+        # TODO: this is for backwards compatibility with the old approach
+        # of only defining signature over griffe objects, which projects
+        # like shiny currently extend
+        self.display_name = el.signature_name
+        res = self.signature(el.obj)
+        self.display_name = orig
+
+        return res
+
+
 
     @dispatch
-    def signature(self, el: Union[dc.Class, dc.Function], source: Optional[dc.Alias] = None):
+    def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
+        return self.signature(el.final_target, el)
+
+    @dispatch
+    def signature(
+        self, el: Union[dc.Class, dc.Function], source: Optional[dc.Alias] = None
+    ):
         name = self._fetch_object_dispname(source or el)
-        pars = self.render(el.parameters)
+        pars = self.render(self._fetch_method_parameters(el))
 
         return f"`{name}({pars})`"
 
     @dispatch
-    def signature(self, el: Union[dc.Module, dc.Attribute], source: Optional[dc.Alias] = None):
+    def signature(
+        self, el: Union[dc.Module, dc.Attribute], source: Optional[dc.Alias] = None
+    ):
         name = self._fetch_object_dispname(source or el)
         return f"`{name}`"
-
 
     @dispatch
     def render_header(self, el: layout.Doc):
@@ -158,7 +185,6 @@ class MdRenderer(Renderer):
         _anchor = f"{{ #{el.obj.path} }}"
         return f"{'#' * self.crnt_header_level} {_str_dispname} {_anchor}"
 
-        
     # render method -----------------------------------------------------------
 
     @dispatch
@@ -193,7 +219,7 @@ class MdRenderer(Renderer):
             body = list(map(self.render, el.contents))
 
         return "\n\n".join([section_top, *body])
-    
+
     @dispatch
     def render(self, el: layout.Interlaced):
         # render a sequence of objects with like-sections together.
@@ -215,7 +241,6 @@ class MdRenderer(Renderer):
         if first_doc.obj.docstring is None:
             raise ValueError("The first element of Interlaced must have a docstring.")
 
-        
         str_title = self.render_header(first_doc)
         str_sig = "\n\n".join(map(self.signature, objs))
         str_body = []
@@ -249,13 +274,15 @@ class MdRenderer(Renderer):
     def render(self, el: Union[layout.DocClass, layout.DocModule]):
         title = self.render_header(el)
 
-        extra_parts = []
+        attr_docs = []
         meth_docs = []
+        class_docs = []
+
         if el.members:
             sub_header = "#" * (self.crnt_header_level + 1)
             raw_attrs = [x for x in el.members if x.obj.is_attribute]
             raw_meths = [x for x in el.members if x.obj.is_function]
-
+            raw_classes = [x for x in el.members if x.obj.is_class]
 
             header = "| Name | Description |\n| --- | --- |"
 
@@ -265,51 +292,72 @@ class MdRenderer(Renderer):
             # TODO: for now, we skip making an attribute table on classes, unless
             # they contain an attributes section in the docstring
             if (
-                    raw_attrs
-                    and not _has_attr_section(el.obj.docstring)
-                    and not isinstance(el, layout.DocClass)
-                ):
+                raw_attrs
+                and not _has_attr_section(el.obj.docstring)
+                # TODO: what should backwards compat be?
+                # and not isinstance(el, layout.DocClass)
+            ):
 
                 _attrs_table = "\n".join(map(self.summarize, raw_attrs))
                 attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
-                extra_parts.append(attrs)
+                attr_docs.append(attrs)
+
+            # classes summary table ----
+            if raw_classes:
+                _summary_table = "\n".join(map(self.summarize, raw_classes))
+                section_name = "Classes"
+                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                class_docs.append(objs)
+
+                n_incr = 1 if el.flat else 2
+                with self._increment_header(n_incr):
+                    class_docs.extend(
+                        [
+                            self.render(x)
+                            for x in raw_classes
+                            if isinstance(x, layout.Doc)
+                        ]
+                    )
 
             # method summary table ----
             if raw_meths:
-                _meths_table = "\n".join(map(self.summarize, raw_meths))
+                _summary_table = "\n".join(map(self.summarize, raw_meths))
                 section_name = (
-                    "Methods" if isinstance(el, layout.DocClass)
-                    else "Functions"
+                    "Methods" if isinstance(el, layout.DocClass) else "Functions"
                 )
-                meths = f"{sub_header} {section_name}\n\n{header}\n{_meths_table}"
-                extra_parts.append(meths)
+                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                meth_docs.append(objs)
 
                 # TODO use context manager, or context variable?
                 n_incr = 1 if el.flat else 2
                 with self._increment_header(n_incr):
-                    meth_docs = [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
+                    meth_docs.extend(
+                        [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
+                    )
+
+
+        str_sig = self.signature(el)
+        sig_part = [str_sig] if self.show_signature else []
 
         body = self.render(el.obj)
-        return "\n\n".join([title, body, *extra_parts, *meth_docs])
+
+
+        return "\n\n".join([title, *sig_part, body, *attr_docs, *class_docs, *meth_docs])
 
     @dispatch
-    def render(self, el: layout.DocFunction):
+    def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
         title = self.render_header(el)
 
-        return "\n\n".join([title, self.render(el.obj)])
+        str_sig = self.signature(el)
+        sig_part = [str_sig] if self.show_signature else []
 
-    @dispatch
-    def render(self, el: layout.DocAttribute):
-        title = self.render_header(el)
-        return "\n\n".join([title, self.render(el.obj)])
+        return "\n\n".join([title, *sig_part, self.render(el.obj)])
 
     # render griffe objects ===================================================
 
     @dispatch
     def render(self, el: Union[dc.Object, dc.Alias]):
         """Render high level objects representing functions, classes, etc.."""
-
-        str_sig = self.signature(el)
 
         str_body = []
         if el.docstring is None:
@@ -326,10 +374,7 @@ class MdRenderer(Renderer):
                 else:
                     str_body.append(body)
 
-        if self.show_signature:
-            parts = [str_sig, *str_body]
-        else:
-            parts = [*str_body]
+        parts = [*str_body]
 
         return "\n\n".join(parts)
 
@@ -345,11 +390,16 @@ class MdRenderer(Renderer):
 
         # index for final positionly only args (via /)
         try:
-            pos_only = max([ii for ii, el in enumerate(el) if el.kind == dc.ParameterKind.positional_only])
+            pos_only = max(
+                [
+                    ii
+                    for ii, el in enumerate(el)
+                    if el.kind == dc.ParameterKind.positional_only
+                ]
+            )
         except ValueError:
             pos_only = None
 
-        
         pars = list(map(self.render, el))
 
         # insert a single `*,` argument to represent the shift to kw only arguments,
@@ -357,7 +407,7 @@ class MdRenderer(Renderer):
         if (
             kw_only is not None
             and kw_only > 0
-            and el[kw_only-1].kind != dc.ParameterKind.var_positional
+            and el[kw_only - 1].kind != dc.ParameterKind.var_positional
         ):
             pars.insert(kw_only, sanitize("*"))
 
@@ -383,17 +433,19 @@ class MdRenderer(Renderer):
             glob = ""
 
         annotation = self.render_annotation(el.annotation)
+        name = sanitize(el.name)
+
         if self.show_signature_annotations:
             if annotation and has_default:
-                res = f"{glob}{el.name}: {el.annotation} = {el.default}"
+                res = f"{glob}{name}: {annotation} = {el.default}"
             elif annotation:
-                res = f"{glob}{el.name}: {el.annotation}"
+                res = f"{glob}{name}: {annotation}"
         elif has_default:
-            res = f"{glob}{el.name}={el.default}"
+            res = f"{glob}{name}={el.default}"
         else:
-            res = f"{glob}{el.name}"
+            res = f"{glob}{name}"
 
-        return sanitize(res)
+        return res
 
     # docstring parts -------------------------------------------------------------
 
@@ -415,13 +467,12 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringSectionParameters):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
-
         return self._render_table(rows, header)
 
     @dispatch
     def render(self, el: ds.DocstringParameter) -> Tuple[str]:
         # TODO: if default is not, should return the word "required" (unescaped)
-        default = "required" if el.default is None else escape(el.default)
+        default = "_required_" if el.default is None else escape(el.default)
 
         annotation = self.render_annotation(el.annotation)
         clean_desc = sanitize(el.description, allow_markdown=True)
@@ -438,13 +489,26 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: ds.DocstringAttribute):
-        annotation = self.render_annotation(el.annotation)
         row = [
             sanitize(el.name),
-            self.render_annotation(annotation),
-            sanitize(el.description or "", allow_markdown=True)
+            self.render_annotation(el.annotation),
+            sanitize(el.description or "", allow_markdown=True),
         ]
         return row
+
+    # admonition ----
+    # note this can be a see-also, warnings, or notes section
+    # from the googledoc standard
+    @dispatch
+    def render(self, el: ds.DocstringSectionAdmonition):
+        kind = el.title.lower()
+        if kind in ["notes", "warnings"]:
+            return el.value.description
+        elif kind == "see also":
+            # TODO: attempt to parse See Also sections
+            return convert_rst_link_to_md(el.value.description)
+
+        return el.value.description
 
     # warnings ----
 
@@ -511,7 +575,6 @@ class MdRenderer(Renderer):
     def render(self, el):
         raise NotImplementedError(f"{type(el)}")
 
-    
     # Summarize ===============================================================
     # this method returns a summary description, such as a table summarizing a
     # layout.Section, or a row in the table for layout.Page or layout.DocFunction.
@@ -524,7 +587,7 @@ class MdRenderer(Renderer):
     def summarize(self, el):
         """Produce a summary table."""
 
-        raise NotImplementedError("Unsupported type: {type(el)}")
+        raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
     def summarize(self, el: layout.Layout):
@@ -533,21 +596,33 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(self, el: layout.Section):
-        header = f"## {el.title}\n\n{el.desc}"
+        desc = f"\n\n{el.desc}" if el.desc is not None else ""
+        if el.title is not None:
+            header = f"## {el.title}{desc}"
+        elif el.subtitle is not None:
+            header = f"### {el.subtitle}{desc}"
+        else:
+            header = ""
 
-        thead = "| | |\n| --- | --- |"
+        if el.contents:
+            thead = "| | |\n| --- | --- |"
 
-        rendered = []
-        for child in el.contents:
-            rendered.append(self.summarize(child))
+            rendered = []
+            for child in el.contents:
+                rendered.append(self.summarize(child))
 
-        str_func_table = "\n".join([thead, *rendered])
-        return f"{header}\n\n{str_func_table}"
+            str_func_table = "\n".join([thead, *rendered])
+            return f"{header}\n\n{str_func_table}"
+
+        return header
 
     @dispatch
     def summarize(self, el: layout.Page):
         if el.summary is not None:
-            return self._summary_row(f"[{el.summary.name}]({el.path})", el.summary.desc)
+            # TODO: assumes that files end with .qmd
+            return self._summary_row(
+                f"[{el.summary.name}]({el.path}.qmd)", el.summary.desc
+            )
 
         if len(el.contents) > 1 and not el.flatten:
             raise ValueError(
@@ -562,8 +637,8 @@ class MdRenderer(Renderer):
     @dispatch
     def summarize(self, el: layout.MemberPage):
         # TODO: model should validate these only have a single entry
-        return self.summarize(el.contents[0], el.path, shorten = True)
-    
+        return self.summarize(el.contents[0], el.path, shorten=True)
+
     @dispatch
     def summarize(self, el: layout.Interlaced, *args, **kwargs):
         rows = [self.summarize(doc, *args, **kwargs) for doc in el.contents]
@@ -571,7 +646,9 @@ class MdRenderer(Renderer):
         return "\n".join(rows)
 
     @dispatch
-    def summarize(self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False):
+    def summarize(
+        self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False
+    ):
         if path is None:
             link = f"[{el.name}](#{el.anchor})"
         else:
@@ -583,8 +660,8 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(self, el: layout.Link):
-         description = self.summarize(el.obj)
-         return self._summary_row(f"[](`{el.name}`)", description)
+        description = self.summarize(el.obj)
+        return self._summary_row(f"[](`{el.name}`)", description)
 
     @dispatch
     def summarize(self, obj: Union[dc.Object, dc.Alias]) -> str:

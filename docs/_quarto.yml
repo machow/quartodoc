@@ -4,6 +4,7 @@ project:
   resources:
     - examples/single-page
     - examples/pkgdown
+    - examples/auto-package
 
 metadata-files:
   - api/_sidebar.yml
@@ -27,8 +28,11 @@ website:
         text: Get Started
       - file: examples/
         text: Examples
+      - file: tutorials/
+        text: Tutorials
       - href: api/
         text: Reference
+
     right:
       - icon: github
         href: https://github.com/machow/quartodoc/
@@ -77,11 +81,12 @@ quartodoc:
   style: pkgdown
   dir: api
   package: quartodoc
+  render_interlinks: true
   sidebar: "api/_sidebar.yml"
   sections:
-    - title: Preperation Functions
+    - title: Preparation Functions
       desc: |
-        These functions fetch and analyze python objects, including parsing docstrings.
+        These functions fetch and analyze Python objects, including parsing docstrings.
         They prepare a basic representation of your doc site that can be rendered and built.
       contents:
         - Auto
@@ -93,19 +98,16 @@ quartodoc:
     - title: Docstring Renderers
       desc: |
         Renderers convert parsed docstrings into a target format, like markdown.
+      options:
+        dynamic: true
       contents:
         - name: MdRenderer
           children: linked
-        - name: MdRenderer.render
-          dynamic: true
-        - name: MdRenderer.render_annotation
-          dynamic: true
-        - name: MdRenderer.render_header
-          dynamic: true
-        - name: MdRenderer.signature
-          dynamic: true
-        - name: MdRenderer.summarize
-          dynamic: true
+        - MdRenderer.render
+        - MdRenderer.render_annotation
+        - MdRenderer.render_header
+        - MdRenderer.signature
+        - MdRenderer.summarize
 
     - title: API Builders
       desc: |
@@ -122,47 +124,41 @@ quartodoc:
         - Builder.write_sidebar
         - Builder.create_inventory
 
-
     - title: Inventory links
       desc: |
-        Inventory files map a functions name to its corresponding url in your docs.
+        Inventory files map a function's name to its corresponding url in your docs.
         These functions allow you to create and transform inventory files.
       contents:
         - create_inventory
         - convert_inventory
 
-    - title: "Data models: structural"
+    - title: "Data models"
+
+    - subtitle: "Structural"
       desc: |
         Classes for specifying the broad structure your docs.
       contents:
-        - kind: "page"
-          path: "layouts-structure"
-          flatten: true
-          contents:
-            - layout.Layout
-            - layout.Section
-            - layout.Page
-            - layout.SectionElement
-            - layout.ContentElement
+        - layout.Layout
+        - layout.Section
+        - layout.Page
+        - layout.SectionElement
+        - layout.ContentElement
 
-    - title: "Data models: docable"
+    - subtitle: "Docable"
       desc: |
         Classes representing python objects to be rendered.
       contents:
-        - kind: "page"
-          path: "layouts-docable"
-          flatten: true
-          contents:
-            - name: layout.Doc
-              members: []
-            - layout.DocFunction
-            - layout.DocAttribute
-            - layout.DocModule
-            - layout.DocClass
-            - layout.Link
-            - layout.Item
-            - layout.ChoicesChildren
-    - title: "Data models: docstring patches"
+        - name: layout.Doc
+          members: []
+        - layout.DocFunction
+        - layout.DocAttribute
+        - layout.DocModule
+        - layout.DocClass
+        - layout.Link
+        - layout.Item
+        - layout.ChoicesChildren
+
+    - subtitle: "Docstring patches"
       desc: |
         Most of the classes for representing python objects live
         in [](`griffe.dataclasses`) or [](`griffe.docstrings.dataclasses`).

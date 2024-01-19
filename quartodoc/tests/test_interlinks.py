@@ -55,7 +55,6 @@ def test_ref_from_string(raw, dst):
 
 @pytest.mark.parametrize("entry", spec)
 def test_spec_entry(invs: Inventories, entry: TestSpecEntry):
-
     ref_str, text = parse_md_style_link(entry.input)
     ref_str = ref_str.replace("`", "%60")  # weird, but matches pandoc
 

@@ -21,7 +21,7 @@ examples/%/_site: examples/%/_quarto.yml
 	cd examples/$* \
 		&& quarto add --no-prompt ../.. \
 		&& quarto add --no-prompt quarto-ext/shinylive
-	cd examples/$* && quartodoc build _quarto.yml --verbose
+	cd examples/$* && quartodoc build --config _quarto.yml --verbose
 	cd examples/$* && quartodoc interlinks
 	quarto render $(dir $<)
 
@@ -30,8 +30,20 @@ docs/examples/%: examples/%/_site
 	rm -rf docs/examples/$*
 	cp -rv $< $@
 
-docs-build-examples: docs/examples/single-page docs/examples/pkgdown
+docs-build-examples: docs/examples/single-page docs/examples/pkgdown docs/examples/auto-package
 
+docs-build-readme: export BUILDING_README = 1
+docs-build-readme:
+	# note that the input file is named GITHUB.qmd, because quart does not
+	# render files named README.qmd, and it is very cumbersome to work around
+	# this very strange behavior
+	cd docs \
+	  && quarto render GITHUB.qmd \
+	     --to gfm \
+		 --output README.md \
+		 --output-dir ..
+
+docs-build: export PLUM_SIMPLE_DOC=1
 docs-build: docs-build-examples
 	cd docs && quarto add --no-prompt ..
 	cd docs && quartodoc build
@@ -39,6 +51,3 @@ docs-build: docs-build-examples
 	quarto render docs
 
 test-interlinks: quartodoc/tests/example_interlinks/test.md
-
-requirements-dev.txt:
-	pip-compile setup.cfg --extra dev -o $@

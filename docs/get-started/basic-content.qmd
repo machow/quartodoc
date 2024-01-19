@@ -7,20 +7,20 @@ jupyter:
     name: python3
 ---
 
-Individual content entries (e.g. a function to be documented) can also be customized.
+Individual content entries (e.g. a function to be documented) can be customized.
 For example, if you are documenting a Python class, you may want to include or exclude
 documentation on specific methods on that class.
 
-Specify content options by setting `name: <content name>`, along with any additional options.
+Specify content options by setting `name: <content name>` followed by any additional options.
 
-For example, below is a piece of content, MdRenderer, specified without options.
+For example, below is a single content element, `MdRenderer`, without additional options.
 
 ```yaml
 contents:
   - MdRenderer
 ```
 
-We set it to only document its render method, by setting `name: MdRenderer` followed by the `members` option.
+Instead of documenting the entire `MdRenderer` class, we can only document the `MdRenderer.render` method by setting `name: MdRenderer` followed by the `members` option:
 
 ```yaml
 contents:
@@ -36,10 +36,10 @@ In the following sections, we'll discuss different options for configuring conte
 
 Finding Python objects to document involves two pieces of configuration:
 
-* the package name.
-* a list of objects for content.
+1.  the package name.
+2.  a list of objects for content.
 
-Note that quartodoc can look up anything---whether functions, modules, classes, attributes, or methods.
+quartodoc can look up a wide variety of objects, including functions, modules, classes, attributes, and methods:
 
 ```yaml
 quartodoc:
@@ -55,13 +55,13 @@ quartodoc:
         - renderers         # module: quartodoc.renderers
 ```
 
-The functions listed in `contents` are assumed to be imported from the package.
+The functions listed in `contents` are those that are available for import from the package (`quartodoc` in this instance).
 
 ## Module and class members
 
-Documentation for modules and classes can automatically include their members (e.g. class methods and attributes; everything defined inside a module).
+Documentation for classes and modules can automatically include their members (e.g. class methods and attributes or everything defined inside a module, respectively).
 
-By default, all attributes and functions (including methods on a class) are documented by embedding them inside the module or class documentation.
+By default, all attributes and functions (including methods on a class) are presented in the `embedded` style, which means their documentation is located inside their respective module's or class's documentation.
 
 There are four styles for presenting child members:
 
@@ -82,7 +82,7 @@ res = extract_type(DocstringSectionAttributes, choices.docstring.parsed)[0]
 print(renderer.render(res))
 ```
 
-You can specify a style by setting the `children` option in the config:
+You can specify a style for displaying members by setting the `children` option in the config:
 
 ```yaml
 quartodoc:
@@ -95,8 +95,199 @@ quartodoc:
         # set the children option, so that methods get documented
         # on separate pages. MdRenderer's docs will include a summary
         # table that links to each page.
-        - name: quartodoc.MdRenderer
+        - name: MdRenderer
           children: separate
+```
+
+
+## Setting default options
+
+The section above showed how you can set options like `members:` (which is a list of the items you want to show) and `children:` (the style for presenting `members`) on content.
+
+However, you may desire to set the same options across multiple pieces of content. In this case, you can set default options for a section that applies to all content in that section. You can use the `options:` field to accomplish this.
+
+For example, the config below shows how to document multiple classes _without_ any child members.  On the left, you can see the config without setting the default option, and on the right, you can see the config with the default option set.
+
+:::::: {.columns}
+::: {.column}
+
+**Manual**
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: "Some section"
+
+      # options set manually ---
+      contents:
+        - name: MdRenderer
+          members: []
+        - name: Builder
+          members: []
+```
+
+:::
+::: {.column}
+
+**With options**
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: "Some section"
+
+      # default options ---
+      options:
+        members: []
+      
+      contents:
+        - MdRenderer
+        - Builder
+```
+
+:::
+::::::
+
+By setting `members: []` in the options block, we are telling quartodoc to not include any members for each piece of content.
+
+### Reusing options
+
+Options can be given a name and re-used in multiple sections:
+
+```yaml
+- title: Some section
+  options: &no-members
+    members: []
+  content:
+    - ThingA
+    - ThingB
+- title: Another section
+  options: *no-members
+  content:
+    - ThingC
+```
+
+The code above uses `&no-members` to name the options in the first section "no-members",
+then `*no-members` to reference it in the second section.
+The `&` and `*` are called an anchor and alias, respectively, in YAML.
+
+
+### Where to put options
+
+You can specify options in either the top-level config, or individual Sections.
+
+```yaml
+quartodoc:
+  package: quartodoc
+
+  # set options on the top-level config.
+  # this will apply to all pieces of content.
+  options:
+    include_attributes: false
+  sections:
+    - contents:
+        - MdRenderer
+
+      # set options in an individual section.
+      # in thise case, it resets include_attributes back
+      # to defaulting as true
+      options:
+        include_attributes: true
+        
+```
+
+## Specifying package path
+
+Different levels of configuration let you set the `package` option.
+This controls the package path that quartodoc will try to import control content from.
+
+The example below shows three different places it can be set:
+top-level site config, section config, or in a page element.
+
+```yaml
+# (1) package set on top-level site config
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: ""
+      desc: ""
+      contents:
+        - get_object         # quartodoc.get_object
+    
+    # (2) package set on a section
+    - title: ""
+      desc: ""
+      package: quartodoc.ast
+      contents:
+        - preview            # quartodoc.ast.preview
+
+        # (3) package set on a page
+        - kind: page
+          package: pandas
+          contents:
+            - DataFrame     # pandas.DataFrame
+        
+        # (4) package set on individual content entry
+        - package: pandas
+          name: Series
+```
+
+Use `package: null` to unset the package option. This enables you to specify objects using their full name.
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: ""
+      desc: ""
+      package: null
+      contents:
+        - quartodoc.get_object
+```
+
+
+## Dynamic lookup
+
+By default, quartodoc uses static analysis to look up objects.
+This means it gets information about your docstring without actually running your package's code.
+
+This usually works well, but may get the docstring wrong for those created in an extremely dynamic way (e.g. you manually set the `__doc__` attribute on an object).
+
+In this case, you can set the dynamic option on a piece of content.
+
+```yaml
+contents:
+  - name: get_object
+    dynamic: true
+```
+
+
+## Reference page sub-sections
+
+quartodoc supports two levels of grouping on the reference page.
+Use the `subtitle:` option to add an additional level of grouping.
+
+For example, the code below creates an API reference page with one top-level section ("Some section"),
+with two sub-sections inside it.
+
+
+```yaml
+quartodoc:
+  package: quartodoc
+  sections:
+    - title: Some section
+
+    - subtitle: Stuff A
+      desc: This is subsection A
+      contents:
+        - MdRenderer
+
+    - subtitle: Stuff B
+      desc: This is subsection B
+      contents:
+        - get_object
 ```
 
 ## Grouping on a page
@@ -183,68 +374,62 @@ Note these three important pieces of the page entry:
   `some_funcs.qmd` in the API reference folder.
 * `contents:` - lists out the contents of the page.
 
+## Documenting source files that are not a package
 
+In some cases you might want to create a page for a bunch of Python modules that are not a package.
 
-## Setting default package path
+Say you have a repository that look like this:
 
-Different levels of configuration let you set the `package` option.
-This controls the package path that quartodoc will try to import control content from.
-
-The example below shows three different places it can be set:
-top-level site config, section config, or in a page element.
-
-```yaml
-# (1) package set on top-level site config
-quartodoc:
-  package: quartodoc
-  sections:
-    - title: ""
-      desc: ""
-      contents:
-        - get_object         # quartodoc.get_object
-    
-    # (2) package set on a section
-    - title: ""
-      desc: ""
-      package: quartodoc.ast
-      contents:
-        - preview            # quartodoc.ast.preview
-
-        # (3) package set on a page
-        - kind: page
-          package: pandas
-          contents:
-            - DataFrame     # pandas.DataFrame
-        
-        # (4) package set on individual content entry
-        - package: pandas
-          name: Series
+```
+project
+├── config
+├── data
+├── docs
+├── notebooks
+├── src
 ```
 
-Use `package: null` to unset the package option. This enables you to specify objects using their full name.
+Where `src` is the place where you have your `.py` files and `docs` is where your `_quarto.yml` is.
+
+To make a quartodoc page of this project you have to set the package to `null` and tell Quarto where 
+quartodoc should look. Then you can reference each file as usual with `file.function`.
+
+Example:
 
 ```yaml
 quartodoc:
-  package: quartodoc
+  package: null
+  source_dir: ../src
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
   sections:
-    - title: ""
-      desc: ""
-      package: null
+    - title: Some functions
+      desc: Some description
       contents:
-        - quartodoc.get_object
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        - analysis.plot_my_vars
+        - training.train_and_evaluate
 ```
 
-## Dynamic lookup
+## All content options
 
-By default, quartodoc uses static analysis to look up objects.
-This means it gets information about your docstring without actually running your package's code.
+Below is a summary of all the options that can be applied to individual content entries.
 
-This usually works well, but may get the docstring wrong for those created in an extremely dynamic way (e.g. you manually set the `__doc__` attribute on an object).
 
-In this case, you can set the dynamic option on a piece of content.
+```{python}
+#| echo: false
+#| output: asis
 
-```yaml
-contents:
-  - name: get_object
-    dynamic: true
+from quartodoc import get_object, MdRenderer, Auto
+from quartodoc.builder.utils import extract_type
+from griffe.docstrings.dataclasses import DocstringSectionAttributes
+
+renderer = MdRenderer()
+choices = get_object("quartodoc.Auto")
+res = extract_type(DocstringSectionAttributes, choices.docstring.parsed)[0]
+
+print(renderer.render(res))
 ```
