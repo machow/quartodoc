@@ -107,8 +107,12 @@ class _DocstringSectionPatched(ds.DocstringSection):
 
         results = []
 
+        # griffe < 0.39 w/ numpydoc uses DocstringSectionText for unhandled section
+        # but later versions always use Admonitions. Note it may still use Text
+        # for areas of docstrings not associated with particular sections (e.g. freeform
+        # text betwen a parameters section and the next section).
         if isinstance(el, ds.DocstringSectionText):
-            # griffe < 0.39
+            # handle griffe < 0.39 case
             splits = cls.split_sections(el.value)
             for title, body in splits:
                 sub_cls = cls._registry.get(title.lower(), ds.DocstringSectionText)
