@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from griffe.docstrings import dataclasses as ds
 from griffe import dataclasses as dc
 from plum import dispatch
-from typing import Union
+from typing import Type, Union
 
 from ._pydantic_compat import BaseModel  # for previewing
 
@@ -44,7 +44,7 @@ class DocstringSectionKindPatched(Enum):
 
 
 class _DocstringSectionPatched(ds.DocstringSection):
-    _registry: "dict[Enum, _DocstringSectionPatched]" = {}
+    _registry: "dict[str, Type[_DocstringSectionPatched]]" = {}
 
     def __init__(self, value: str, title: "str | None" = None):
         super().__init__(title)
@@ -102,18 +102,31 @@ class _DocstringSectionPatched(ds.DocstringSection):
         class represents a section like See Also, etc..
         """
 
-        if not isinstance(el, ds.DocstringSectionText):
+        if not isinstance(el, (ds.DocstringSectionText, ds.DocstringSectionAdmonition)):
             return [el]
 
-        splits = cls.split_sections(el.value)
         results = []
-        for title, body in splits:
-            sub_cls = cls._registry.get(title.lower(), ds.DocstringSectionText)
 
-            # note that griffe currently doesn't store the title anywhere,
-            # but we add the exact title here, so we can be flexible about the
-            # sections we parse (e.g. Note instead of Notes) in the future.
-            results.append(sub_cls(body, title))
+        # griffe < 0.39 w/ numpydoc uses DocstringSectionText for unhandled section
+        # but later versions always use Admonitions. Note it may still use Text
+        # for areas of docstrings not associated with particular sections (e.g. freeform
+        # text betwen a parameters section and the next section).
+        if isinstance(el, ds.DocstringSectionText):
+            # handle griffe < 0.39 case
+            splits = cls.split_sections(el.value)
+            for title, body in splits:
+                sub_cls = cls._registry.get(title.lower(), ds.DocstringSectionText)
+
+                # note that griffe currently doesn't store the title anywhere,
+                # but we add the exact title here, so we can be flexible about the
+                # sections we parse (e.g. Note instead of Notes) in the future.
+                results.append(sub_cls(body, title))
+        elif isinstance(el, ds.DocstringSectionAdmonition):
+            sub_cls = cls._registry.get(el.title.lower(), None)
+            if sub_cls:
+                results.append(sub_cls(el.value.contents, el.title))
+            else:
+                results.append(el)
 
         return results or [el]
 
