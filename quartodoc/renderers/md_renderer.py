@@ -140,6 +140,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def signature(self, el: layout.Doc):
+        """Return a string representation of an object's signature."""
         orig = self.display_name
 
         # set signature path, generate signature, then set back
@@ -156,7 +157,6 @@ class MdRenderer(Renderer):
 
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
-        """Return a string representation of an object's signature."""
         return self.signature(el.final_target, el)
 
     @dispatch
