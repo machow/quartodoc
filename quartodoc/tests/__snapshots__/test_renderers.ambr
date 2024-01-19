@@ -307,6 +307,10 @@
   |--------|--------|------------------|------------|
   | `a`    | int    | The a parameter. | _required_ |
   | `b`    | str    | The b parameter. | _required_ |
+  
+  ## Custom Admonition
+  
+  Some text.
   '''
 # ---
 # name: test_render_docstring_styles[numpy]
@@ -323,6 +327,10 @@
   |--------|--------|------------------|------------|
   | `a`    |        | The a parameter. | _required_ |
   | `b`    | str    | The b parameter. | _required_ |
+  
+  ## Custom Admonition
+  
+  Some text.
   '''
 # ---
 # name: test_render_docstring_styles[sphinx]

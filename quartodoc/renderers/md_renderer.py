@@ -508,7 +508,7 @@ class MdRenderer(Renderer):
             # TODO: attempt to parse See Also sections
             return convert_rst_link_to_md(el.value.description)
 
-        raise NotImplementedError(f"Unsupported DocstringSectionAdmonition kind: {kind}")
+        return el.value.description
 
     # warnings ----
 

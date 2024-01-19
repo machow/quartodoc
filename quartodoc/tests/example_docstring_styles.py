@@ -4,6 +4,9 @@ def f_google(a, b: str):
     Args:
         a (int): The a parameter.
         b: The b parameter.
+
+    Custom Admonition:
+        Some text.
     """
 
 
@@ -26,6 +29,9 @@ def f_numpy(a, b: str):
     b:
         The b parameter.
 
+    Custom Admonition
+    -----------------
+    Some text.
     """
 
 
@@ -41,5 +47,4 @@ def f_numpy_with_linebreaks(a, b: str):
 
     b:
         The b parameter.
-
     """
