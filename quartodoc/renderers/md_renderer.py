@@ -140,6 +140,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def signature(self, el: layout.Doc):
+        """Return a string representation of an object's signature."""
         orig = self.display_name
 
         # set signature path, generate signature, then set back
@@ -156,7 +157,6 @@ class MdRenderer(Renderer):
 
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
-        """Return a string representation of an object's signature."""
         return self.signature(el.final_target, el)
 
     @dispatch
@@ -508,7 +508,7 @@ class MdRenderer(Renderer):
             # TODO: attempt to parse See Also sections
             return convert_rst_link_to_md(el.value.description)
 
-        raise NotImplementedError(f"Unsupported DocstringSectionAdmonition kind: {kind}")
+        return el.value.description
 
     # warnings ----
 
