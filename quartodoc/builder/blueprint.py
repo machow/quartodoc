@@ -376,8 +376,15 @@ class BlueprintTransformer(PydanticTransformer):
         if not el.include_private:
             options = {k: v for k, v in options.items() if not k.startswith("_")}
 
-        if not (el.include_imports or el.include_inherited):
+        if not el.include_imports and obj.is_module:
             options = {k: v for k, v in options.items() if not v.is_alias}
+
+        if not el.include_inherited and obj.is_class:
+            # aliases are kept only if their parent is the current obj
+            # i.e. they do not belong to a parent class
+            options = {
+                k: v for k, v in options.items() if (v.parent is obj or not v.is_alias)
+            }
 
         # resolve any remaining aliases ----
         # the reamining filters require attributes on the target object.
