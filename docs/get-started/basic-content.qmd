@@ -374,6 +374,45 @@ Note these three important pieces of the page entry:
   `some_funcs.qmd` in the API reference folder.
 * `contents:` - lists out the contents of the page.
 
+## Documenting source files that are not a package
+
+In some cases you might want to create a page for a bunch of Python modules that are not a package.
+
+Say you have a repository that look like this:
+
+```
+project
+├── config
+├── data
+├── docs
+├── notebooks
+├── src
+```
+
+Where `src` is the place where you have your `.py` files and `docs` is where your `_quarto.yml` is.
+
+To make a quartodoc page of this project you have to set the package to `null` and tell Quarto where 
+quartodoc should look. Then you can reference each file as usual with `file.function`.
+
+Example:
+
+```yaml
+quartodoc:
+  package: null
+  source_dir: ../src
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
+  sections:
+    - title: Some functions
+      desc: Some description
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        - analysis.plot_my_vars
+        - training.train_and_evaluate
+```
 
 ## All content options
 
