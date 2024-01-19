@@ -43,6 +43,7 @@ docs-build-readme:
 		 --output README.md \
 		 --output-dir ..
 
+docs-build: export PLUM_SIMPLE_DOC=1
 docs-build: docs-build-examples
 	cd docs && quarto add --no-prompt ..
 	cd docs && quartodoc build
