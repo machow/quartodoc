@@ -20,6 +20,7 @@ from quartodoc.pandoc.components import Attr
 from quartodoc.pandoc.inlines import (
     Inline,
     InlineContent,
+    InlineContentItem,
     inlinecontent_to_str,
     str_as_list_item,
 )
@@ -79,8 +80,8 @@ class Block:
 
 # TypeAlias declared here to avoid forward-references which
 # break beartype
-ContentItem: TypeAlias = Union[str, Inline, Block]
-BlockContent: TypeAlias = Union[ContentItem, Sequence[ContentItem]]
+BlockContentItem: TypeAlias = Union[InlineContentItem, Block]
+BlockContent: TypeAlias = Union[BlockContentItem, Sequence[BlockContentItem]]
 DefinitionItem: TypeAlias = tuple[InlineContent, BlockContent]
 
 
@@ -156,8 +157,10 @@ class DefinitionList(Block):
             # Single Definition
             if isinstance(definitions, (str, Inline, Block)):
                 definitions = [definitions]
+            elif definitions is None:
+                definitions = [""]
 
-            # Multiple defnitions
+            # Multiple definitions
             for definition in definitions:
                 s = blockcontent_to_str(definition)
                 # strip away the indentation on the first line as it
@@ -397,6 +400,7 @@ def blockcontent_to_str_items(
         it = (
             str_as_list_item(c) if isinstance(c, str) else c.as_list_item
             for c in content
+            if c
         )
         items = (fmt(s, next(pfx_it)) for s in it)
         return "".join(items).strip()
