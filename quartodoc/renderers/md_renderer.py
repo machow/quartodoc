@@ -12,7 +12,7 @@ from plum import dispatch
 from typing import Any, Tuple, Union, Optional
 from quartodoc import layout
 from quartodoc.pandoc.blocks import DefinitionList
-from quartodoc.pandoc.inlines import Span, Attr
+from quartodoc.pandoc.inlines import Span, Attr, Code, Inlines
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
 
@@ -47,9 +47,13 @@ def _name_description(row: list[str | None]):
         else ''
     )
 
+    # TODO: _required_ is set when parsing parameters, but only used
+    # in the table display format, not description lists....
+    # by this stage _required_ is basically a special token to indicate
+    # a required argument.
     part_default = (
-        Span(" = ", Attr(classes=["parameter-default-sep"]))
-        if default is not None
+        Span(f" = {default}", Attr(classes=["parameter-default-sep"]))
+        if default is not None and default != "_required_"
         else ''
     )
 
@@ -57,7 +61,9 @@ def _name_description(row: list[str | None]):
 
     anno_sep = Span(":", Attr(classes=["parameter-annotation-sep"]))
 
-    return (f"{part_name}{anno_sep}{part_anno}{part_default}", part_desc)
+    # TODO: should code wrap the whole thing like this?
+    param = Code(str(Inlines([part_name, anno_sep, part_anno, part_default]))).html
+    return (param, part_desc)
 
 
 
@@ -231,7 +237,9 @@ class MdRenderer(Renderer):
     @dispatch
     def render_header(self, el: ds.DocstringSection) -> str:
         title = el.title or el.kind.value
-        return f"{'#' * self.crnt_header_level} {title.title()}"
+        _classes = [".doc-section", ".doc-section-" + title.replace(" ", "-")]
+        _str_classes = " ".join(_classes)
+        return f"{'#' * self.crnt_header_level} {title.title()} {{ {_str_classes} }}"
 
     # render method -----------------------------------------------------------
 
