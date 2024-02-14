@@ -98,6 +98,25 @@ def test_blueprint_visit_class(bp, dynamic):
 
 
 @pytest.mark.parametrize("dynamic", [False, True])
+def test_blueprint_visit_class_alias(bp, dynamic):
+    path = "quartodoc.tests.example_alias_target:ClassAlias"
+    auto = lo.Auto(name=path, dynamic=dynamic)
+    res = bp.visit(auto)
+
+    assert isinstance(res, lo.DocClass)
+
+    if not dynamic:
+        # currently, griffe doesn't know that the function manually attached
+        # to the class is a function, and not an attribute.
+        assert len(res.members) == 1
+        assert res.members[0].name == "f"
+    else:
+        assert len(res.members) == 2
+        assert res.members[0].name == "f"
+        assert res.members[1].name == "manually_attached"
+
+
+@pytest.mark.parametrize("dynamic", [False, True])
 def test_blueprint_visit_module(bp, dynamic):
     path = "quartodoc.tests.example"
     auto = lo.Auto(name=path, members=["a_func"], dynamic=dynamic)
