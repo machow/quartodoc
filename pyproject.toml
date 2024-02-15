@@ -52,7 +52,7 @@ ci = "https://github.com/machow/quartodoc/actions"
 
 
 [project.optional-dependencies]
-dev = ["pytest", "jupyterlab", "jupytext", "syrupy", "pre-commit"]
+dev = ["pytest<8.0.0", "jupyterlab", "jupytext", "syrupy", "pre-commit"]
 
 [project.scripts]
 quartodoc = "quartodoc.__main__:cli"
