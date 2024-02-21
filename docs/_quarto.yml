@@ -81,6 +81,9 @@ quartodoc:
   dir: api
   package: quartodoc
   render_interlinks: true
+  renderer:
+    style: markdown
+    table_style: description-list
   sidebar: "api/_sidebar.yml"
   sections:
     - title: Preparation Functions
