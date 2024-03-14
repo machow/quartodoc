@@ -9,6 +9,8 @@ from griffe.loader import GriffeLoader
 from griffe.collections import ModulesCollection, LinesCollection
 from griffe.docstrings.parsers import Parser
 from griffe.exceptions import AliasResolutionError
+from griffe.extensions import Extensions
+from griffe_inherited_docstrings import InheritDocstringsExtension
 from functools import partial
 from textwrap import indent
 
@@ -145,6 +147,7 @@ class BlueprintTransformer(PydanticTransformer):
     def __init__(self, get_object=None, parser="numpy"):
         if get_object is None:
             loader = GriffeLoader(
+                extensions=Extensions(InheritDocstringsExtension()),
                 docstring_parser=Parser(parser),
                 docstring_options=get_parser_defaults(parser),
                 modules_collection=ModulesCollection(),

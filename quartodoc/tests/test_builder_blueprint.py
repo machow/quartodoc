@@ -217,7 +217,7 @@ def _check_member_names(members, expected):
     [
         ("attributes", {"some_property", "z", "SOME_ATTRIBUTE"}),
         ("classes", {"D"}),
-        ("functions", {"some_method", "some_class_method"}),
+        ("functions", {"some_method", "another_method", "some_class_method"}),
     ],
 )
 def test_blueprint_fetch_members_include_kind_false(kind, removed):
@@ -227,6 +227,7 @@ def test_blueprint_fetch_members_include_kind_false(kind, removed):
         "z",
         "some_property",
         "some_method",
+        "another_method",
         "D",
         "some_class_method",
     }
@@ -240,8 +241,10 @@ def test_blueprint_fetch_members_include_inherited():
     auto = lo.Auto(name="quartodoc.tests.example_class.Child", include_inherited=True)
     bp = blueprint(auto)
 
-    member_names = set([entry.name for entry in bp.members])
-    assert "some_method" in member_names
+    members = {entry.name: entry for entry in bp.members}
+    assert "some_method" in members
+    assert "another_method" in members
+    assert "Another method" in members["another_method"].obj.docstring.value
 
 
 def test_blueprint_fetch_members_dynamic():

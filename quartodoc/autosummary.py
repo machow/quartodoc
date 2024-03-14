@@ -11,6 +11,8 @@ from griffe.collections import ModulesCollection, LinesCollection
 from griffe.dataclasses import Alias
 from griffe.docstrings.parsers import Parser, parse
 from griffe.docstrings import dataclasses as ds  # noqa
+from griffe.extensions import Extensions
+from griffe_inherited_docstrings import InheritDocstringsExtension
 from griffe import dataclasses as dc
 from plum import dispatch  # noqa
 from pathlib import Path
@@ -123,6 +125,7 @@ def get_object(
 
     if loader is None:
         loader = GriffeLoader(
+            extensions=Extensions(InheritDocstringsExtension()),
             docstring_parser=Parser(parser),
             docstring_options=get_parser_defaults(parser),
             modules_collection=ModulesCollection(),

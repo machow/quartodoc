@@ -54,8 +54,15 @@
   
   | Name | Description |
   | --- | --- |
+  | [another_method](#quartodoc.tests.example_class.C.another_method) | Another method |
   | [some_class_method](#quartodoc.tests.example_class.C.some_class_method) | A class method |
   | [some_method](#quartodoc.tests.example_class.C.some_method) | A method |
+  
+  ### another_method { #quartodoc.tests.example_class.C.another_method }
+  
+  `tests.example_class.C.another_method()`
+  
+  Another method
   
   ### some_class_method { #quartodoc.tests.example_class.C.some_class_method }
   
@@ -112,8 +119,15 @@
   
   | Name | Description |
   | --- | --- |
+  | [another_method](#quartodoc.tests.example_class.C.another_method) | Another method |
   | [some_class_method](#quartodoc.tests.example_class.C.some_class_method) | A class method |
   | [some_method](#quartodoc.tests.example_class.C.some_method) | A method |
+  
+  ## another_method { #quartodoc.tests.example_class.C.another_method }
+  
+  `tests.example_class.C.another_method()`
+  
+  Another method
   
   ## some_class_method { #quartodoc.tests.example_class.C.some_class_method }
   
