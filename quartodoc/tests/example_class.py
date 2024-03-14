@@ -25,6 +25,9 @@ class C:
     def some_method(self):
         """A method"""
 
+    def another_method(self):
+        """Another method"""
+
     @property
     def some_property(self):
         """A property"""
@@ -40,6 +43,10 @@ class C:
 class Child(C):
     def some_new_method(self):
         """A new method"""
+
+    # To test inheriting docstring
+    def another_method(self):
+        ...
 
 
 class AttributesTable:
