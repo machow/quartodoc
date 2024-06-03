@@ -325,6 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#page-layout-element" id="toc-page-layout-element" class="nav-link" data-scroll-target="#page-layout-element">Page layout element</a></li>
   </ul></li>
+  <li><a href="#documenting-source-files-that-are-not-a-package" id="toc-documenting-source-files-that-are-not-a-package" class="nav-link" data-scroll-target="#documenting-source-files-that-are-not-a-package">Documenting source files that are not a package</a></li>
   <li><a href="#all-content-options" id="toc-all-content-options" class="nav-link" data-scroll-target="#all-content-options">All content options</a></li>
   </ul>
 </nav>
@@ -637,6 +638,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>contents:</code> - lists out the contents of the page.</li>
 </ul>
 </section>
+</section>
+<section id="documenting-source-files-that-are-not-a-package" class="level2">
+<h2 class="anchored" data-anchor-id="documenting-source-files-that-are-not-a-package">Documenting source files that are not a package</h2>
+<p>In some cases you might want to create a page for a bunch of Python modules that are not a package.</p>
+<p>Say you have a repository that look like this:</p>
+<pre><code>project
+├── config
+├── data
+├── docs
+├── notebooks
+├── src</code></pre>
+<p>Where <code>src</code> is the place where you have your <code>.py</code> files and <code>docs</code> is where your <code>_quarto.yml</code> is.</p>
+<p>To make a quartodoc page of this project you have to set the package to <code>null</code> and tell Quarto where quartodoc should look. Then you can reference each file as usual with <code>file.function</code>.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">source_dir</span><span class="kw">:</span><span class="at"> ../src</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">  # write sidebar data to this file</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span><span class="at"> _sidebar.yml</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sections</span><span class="kw">:</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Some functions</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">desc</span><span class="kw">:</span><span class="at"> Some description</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">        # the functions being documented in the package.</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">        # you can refer to anything: class methods, modules, etc..</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> analysis.plot_my_vars</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> training.train_and_evaluate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="all-content-options" class="level2">
 <h2 class="anchored" data-anchor-id="all-content-options">All content options</h2>

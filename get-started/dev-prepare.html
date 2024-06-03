@@ -592,11 +592,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             │   █─Docstring ...
             ├─anchor = 'quartodoc.MdRenderer'
             ├─signature_name = 'short'
-            ├─members = █─list
+            ├─members = 
+            │ █─list
+            │ ├─0 = 
+            │ │ █─DocFunction ...
+            │ └─1 = 
+            │   █─DocFunction ...
             └─flat = False</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
 </div>
 </div>
 <section id="grouping-docs-on-a-page" class="level3">
@@ -604,18 +606,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The Layout also calculates how to split your sections into pages based on the options you set in your yaml configuration. For example, if you set the <code>children</code> option to <code>separate</code>, then each object in a section will be placed on its own page.</p>
 <p>Let’s see the difference between the <code>separate</code> and <code>embedded</code> options by creating two <code>Auto</code> objects for the <code>MdRenderer</code> class, one with <code>children</code> set to <code>separate</code> and the other with <code>children</code> set to <code>embedded</code>:</p>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>auto_sep <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                       children <span class="op">=</span> <span class="st">"separate"</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>auto_emb <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                       children <span class="op">=</span> <span class="st">"embedded"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>auto_sep <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                       children <span class="op">=</span> <span class="st">"separate"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>auto_emb <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                       children <span class="op">=</span> <span class="st">"embedded"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column">
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>bp_emb <span class="op">=</span> blueprint(auto_emb)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>preview(bp_emb, </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>bp_emb <span class="op">=</span> blueprint(auto_emb)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>preview(bp_emb, </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─DocClass
 ├─name = 'quartodoc.MdRenderer'
@@ -633,16 +635,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 │ └─docstring = 
 │   █─Docstring ...
 ├─anchor = 'quartodoc.MdRenderer'
-├─members = █─list
+├─members = 
+│ █─list
+│ ├─0 = 
+│ │ █─DocFunction ...
+│ └─1 = 
+│   █─DocFunction ...
 └─flat = False</code></pre>
 </div>
 </div>
 </div><div class="column">
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>bp_sep <span class="op">=</span> blueprint(auto_sep)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>preview(bp_sep, </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>bp_sep <span class="op">=</span> blueprint(auto_sep)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>preview(bp_sep, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─DocClass
 ├─name = 'quartodoc.MdRenderer'
@@ -660,7 +667,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 │ └─docstring = 
 │   █─Docstring ...
 ├─anchor = 'quartodoc.MdRenderer'
-├─members = █─list
+├─members = 
+│ █─list
+│ ├─0 = 
+│ │ █─MemberPage ...
+│ └─1 = 
+│   █─MemberPage ...
 └─flat = False</code></pre>
 </div>
 </div>
@@ -671,9 +683,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="collect-fetch-all-pages-and-items" class="level2">
 <h2 class="anchored" data-anchor-id="collect-fetch-all-pages-and-items">Collect: fetch all pages and items</h2>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>some_page <span class="op">=</span> layout.Page(path <span class="op">=</span> <span class="st">"some_doc_page"</span>, contents <span class="op">=</span> [doc])</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pages, items <span class="op">=</span> collect(some_page, <span class="st">"reference"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>pages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>some_page <span class="op">=</span> layout.Page(path <span class="op">=</span> <span class="st">"some_doc_page"</span>, contents <span class="op">=</span> [doc])</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pages, items <span class="op">=</span> collect(some_page, <span class="st">"reference"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>pages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>[Page(kind='page', path='some_doc_page', package=MISSING(), summary=None, flatten=False, contents=[DocClass(name='quartodoc.MdRenderer', obj=Alias('MdRenderer', 'quartodoc.renderers.MdRenderer'), anchor='quartodoc.MdRenderer', signature_name='relative', kind='class', members=[DocFunction(name='render', obj=Alias('render', 'quartodoc.renderers.md_renderer.MdRenderer.render'), anchor='quartodoc.MdRenderer.render', signature_name='relative', kind='function'), DocFunction(name='summarize', obj=Alias('summarize', 'quartodoc.renderers.md_renderer.MdRenderer.summarize'), anchor='quartodoc.MdRenderer.summarize', signature_name='relative', kind='function')], flat=False)])]</code></pre>
 </div>

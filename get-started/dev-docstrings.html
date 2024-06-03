@@ -391,7 +391,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>Parameters(Parameter(name='path', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default=None), Parameter(name='object_name', annotation="'str | None'", kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'), Parameter(name='parser', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default="'numpy'"), Parameter(name='load_aliases', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='True'), Parameter(name='dynamic', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='False'), Parameter(name='loader', annotation=ExprBinOp(left='None', operator='|', right=ExprName(name='GriffeLoader', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages/quartodoc/autosummary.py')))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'))</code></pre>
+<pre><code>Parameters(Parameter(name='path', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.14/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default=None), Parameter(name='object_name', annotation="'str | None'", kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'), Parameter(name='parser', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.14/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default="'numpy'"), Parameter(name='load_aliases', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='True'), Parameter(name='dynamic', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='False'), Parameter(name='loader', annotation=ExprBinOp(left='None', operator='|', right=ExprName(name='GriffeLoader', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.14/x64/lib/python3.10/site-packages/quartodoc/autosummary.py')))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'))</code></pre>
 </div>
 </div>
 </section>
@@ -439,11 +439,11 @@ x:
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f86bf2e0340&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7f86b4417580&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7f86b4417c70&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7f86b4417af0&gt;,
- &lt;griffe.docstrings.dataclasses.DocstringSectionReturns at 0x7f86b4417b50&gt;]</code></pre>
+<pre><code>[&lt;griffe.docstrings.dataclasses.DocstringSectionText at 0x7efe70291150&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionParameters at 0x7efe70293ca0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionAdmonition at 0x7efe683f4ca0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionExamples at 0x7efe683f4df0&gt;,
+ &lt;griffe.docstrings.dataclasses.DocstringSectionReturns at 0x7efe683f43a0&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
