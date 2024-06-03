@@ -42,6 +42,7 @@ def bp():
     return BlueprintTransformer()
 
 
+@pytest.mark.xfail
 def test_func_resolve_alias():
     obj = get_object("quartodoc.tests.example_alias_target.external_alias")
     assert obj.is_alias

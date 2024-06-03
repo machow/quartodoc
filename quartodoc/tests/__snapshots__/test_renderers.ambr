@@ -3,13 +3,28 @@
   '''
   # quartodoc.tests.example_signature.a_complex_signature { #quartodoc.tests.example_signature.a_complex_signature }
   
-  `tests.example_signature.a_complex_signature(x: [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\])`
+  `tests.example_signature.a_complex_signature(x: [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\], y: [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`))`
   
   ## Parameters
   
   | Name   | Type                                                                                 | Description     | Default    |
   |--------|--------------------------------------------------------------------------------------|-----------------|------------|
   | `x`    | [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\] | The x parameter | _required_ |
+  | `y`    | [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`)                                    | The y parameter | _required_ |
+  '''
+# ---
+# name: test_render_annotations_complex_no_interlinks
+  '''
+  # quartodoc.tests.example_signature.a_complex_signature { #quartodoc.tests.example_signature.a_complex_signature }
+  
+  `tests.example_signature.a_complex_signature(x: list\[C \| int \| None\], y: pathlib.Pathlib)`
+  
+  ## Parameters
+  
+  | Name   | Type                     | Description     | Default    |
+  |--------|--------------------------|-----------------|------------|
+  | `x`    | list\[C \| int \| None\] | The x parameter | _required_ |
+  | `y`    | pathlib.Pathlib          | The y parameter | _required_ |
   '''
 # ---
 # name: test_render_doc_class[embedded]

@@ -130,7 +130,7 @@ class MdRenderer(Renderer):
         if self.render_interlinks:
             return f"[{sanitize(el.name)}](`{el.canonical_path}`)"
 
-        return sanitize(el.canonical_path)
+        return sanitize(el.name)
 
     @dispatch
     def render_annotation(self, el: expr.Expr) -> str:

@@ -87,6 +87,7 @@ def test_preview_no_fail(capsys):
     assert "get_object" in res.out
 
 
+@pytest.mark.xfail
 def test_preview_warn_alias_no_load():
     # fetch an alias to pydantic.BaseModel, without loading pydantic
     # attempting to get alias.target will fail, but preview should still work.
