@@ -1,3 +1,6 @@
+import pathlib
+
+
 def no_annotations(a, b=1, *args, c, d=2, **kwargs):
     """A function with a signature"""
 
@@ -28,10 +31,12 @@ class C:
     ...
 
 
-def a_complex_signature(x: "list[C | int | None]"):
+def a_complex_signature(x: "list[C | int | None]", y: "pathlib.Pathlib"):
     """
     Parameters
     ----------
     x:
         The x parameter
+    y:
+        The y parameter
     """

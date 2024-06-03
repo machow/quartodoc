@@ -133,6 +133,14 @@ def test_render_annotations_complex(snapshot):
     assert res == snapshot
 
 
+def test_render_annotations_complex_no_interlinks(snapshot):
+    renderer = MdRenderer(render_interlinks=False, show_signature_annotations=True)
+    bp = blueprint(Auto(name="quartodoc.tests.example_signature.a_complex_signature"))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
 @pytest.mark.parametrize("children", ["embedded", "flat"])
 def test_render_doc_class(snapshot, renderer, children):
     bp = blueprint(Auto(name="quartodoc.tests.example_class.C", children=children))
