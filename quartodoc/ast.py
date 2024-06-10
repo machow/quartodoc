@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import warnings
 
 from enum import Enum
@@ -276,6 +277,16 @@ def fields(el: object):
         return [field.name for field in _fields(el)]
 
     return None
+
+
+@dispatch
+def fields(el: ast.AST):
+    return el._fields
+
+
+@dispatch
+def fields(el: ast.Attribute | ast.Call | ast.Name):
+    return el._fields + ("col_offset", "end_col_offset")
 
 
 class Formatter:
