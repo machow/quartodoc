@@ -83,7 +83,7 @@ print(
     ),
     gallery_entry(
         "images/shinyswatch-home.jpeg",
-        "https://github.com/posit-dev/py-shinyswatch/",
+        "https://posit-dev.github.io/py-shinyswatch/",
         "Shinyswatch",
         href_ref = "https://posit-dev.github.io/py-shinyswatch/",
         href_source = "https://github.com/posit-dev/py-shinyswatch",
