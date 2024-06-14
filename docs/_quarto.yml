@@ -6,6 +6,7 @@ project:
     - examples/pkgdown
     - examples/auto-package
     - objects.txt
+    - objects-test.txt
 
 metadata-files:
   - api/_sidebar.yml
