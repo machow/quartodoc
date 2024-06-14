@@ -22,7 +22,7 @@ interlinks:
     griffe:
       url: https://mkdocstrings.github.io/griffe/
     qd2:
-      url: https://pr-350--quartodoc.netlify.app/
+      url: https://machow.github.io/quartodoc/
       inv: objects-test.txt
 
 
