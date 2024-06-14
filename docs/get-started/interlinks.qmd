@@ -43,6 +43,9 @@ interlinks:
       url: https://numpy.org/doc/stable/
     python:
       url: https://docs.python.org/3/
+    quartodoc-test:
+      url: https://machow.github.io/quartodoc
+      inv: objects-test.txt
 ```
 
 Notice 2 important pieces in this config:
@@ -50,9 +53,11 @@ Notice 2 important pieces in this config:
 * The `numpy` and `python` fields indicate that we're getting inventories for the
   library numpy, and python builtin libraries.
 * The `url` fields indicate where inventory files can be found.
+* The `inv` field lets you specify the name of the inventory file. By default, it assumes its `objects.inv`.
 
 By default, downloaded inventory files will be saved in the `_inv` folder of your
 documentation directory.
+
 
 ### Experimental fast option
 
@@ -175,6 +180,9 @@ Most sphinx sites name them `object.inv`:
 See the [sphobjinv docs](https://sphobjinv.readthedocs.io/en/stable/) for thorough
 details on these files, and how they're used in sphinx.
 
+:::{.callout-note}
+[objects-test.txt](https://github.com/machow/quartodoc/tree/main/docs/objects-test.txt) is an example file with one entry: [](`qd2.Auto`).
+:::
 
 ## More information
 

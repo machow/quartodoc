@@ -1,0 +1,5 @@
+# Sphinx inventory version 2
+# Project: quartodoc
+# Version: 0.0.9999
+# The remainder of this file is compressed using zlib.
+qd2.Auto py:class 1 api/Auto.html#quartodoc.Auto -
