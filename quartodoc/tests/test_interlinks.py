@@ -1,4 +1,5 @@
 import contextlib
+import sphobjinv
 import pytest
 import yaml
 
@@ -10,6 +11,7 @@ from quartodoc.interlinks import (
     TestSpecEntry,
     parse_md_style_link,
     Link,
+    inventory_from_url,
 )
 from importlib_resources import files
 
@@ -90,3 +92,26 @@ def test_spec_entry(invs: Inventories, entry: TestSpecEntry):
             assert entry.output_text == el.content
     elif entry.output_element:
         assert el == entry.output_element
+
+
+def test_inventory_from_url_local_roundtrip(tmp_path):
+    inv = sphobjinv.Inventory()
+    inv.project = "abc"
+    inv.version = "0.0.1"
+
+    soi_items = [
+        sphobjinv.DataObjStr(
+            name="foo", domain="py", role="method", priority="1", uri="$", dispname="-"
+        )
+    ]
+    inv.objects.extend(soi_items)
+
+    text = inv.data_file()
+    sphobjinv.writebytes(tmp_path / "objects.txt", text)
+    sphobjinv.writebytes(tmp_path / "objects.inv", sphobjinv.compress(text))
+
+    res1 = inventory_from_url("file://" + str(tmp_path / "objects.txt"))
+    res2 = inventory_from_url("file://" + str(tmp_path / "objects.inv"))
+
+    assert isinstance(res1, sphobjinv.Inventory)
+    assert isinstance(res2, sphobjinv.Inventory)

@@ -12,6 +12,7 @@ from functools import partial
 from watchdog.events import PatternMatchingEventHandler
 from quartodoc import Builder, convert_inventory
 from ._pydantic_compat import BaseModel
+from .interlinks import inventory_from_url
 
 
 def get_package_path(package_name):
@@ -258,7 +259,8 @@ def interlinks(config, dry_run, fast):
             continue
 
         url = v["url"] + v.get("inv", "objects.inv")
-        inv = soi.Inventory(url=url)
+
+        inv = inventory_from_url(url)
 
         p_dst = p_root / cache / f"{k}_objects"
         p_dst.parent.mkdir(exist_ok=True, parents=True)

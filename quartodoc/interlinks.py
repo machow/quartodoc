@@ -9,12 +9,13 @@ See quartodoc.tests.test_interlinks for its implementation, and the fully
 loaded specification.
 """
 
-
 from __future__ import annotations
 
 import os
 import itertools
 import json
+import requests
+import sphobjinv
 import warnings
 import yaml
 
@@ -36,6 +37,35 @@ class RefSyntaxError(Exception):
 
 class InvLookupError(Exception):
     """An error looking up an entry from inventory files."""
+
+
+# Save inventories from url ---------------------------------------------------
+# Note that this is the one piece used by quartodoc (whereas everything else
+# in this module is a model of the lua filter behavior).
+
+
+def inventory_from_url(url: str) -> sphobjinv.Inventory:
+    """Return an inventory file by fetching from a url.
+
+    Use the prefix file:// to load the file from disk.
+    """
+
+    if url.startswith("file://"):
+        with open(url.replace("file://", "", 1), "rb") as f:
+            raw_content = f.read()
+    else:
+        r = requests.get(url)
+        r.raise_for_status()
+        raw_content = r.content
+
+    if url.endswith(".inv"):
+        inv = sphobjinv.Inventory(zlib=raw_content)
+    elif url.endswith(".txt"):
+        inv = sphobjinv.Inventory(plaintext=raw_content)
+    else:
+        raise NotImplementedError("Inventories must be .txt or .inv files.")
+
+    return inv
 
 
 # Utility functions -----------------------------------------------------------

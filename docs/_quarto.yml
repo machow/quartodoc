@@ -21,6 +21,9 @@ interlinks:
       url: https://docs.python.org/3/
     griffe:
       url: https://mkdocstrings.github.io/griffe/
+    qd2:
+      url: https://pr-350--quartodoc.netlify.app/
+      inv: objects-test.txt
 
 
 website:
