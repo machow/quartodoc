@@ -5,6 +5,7 @@ project:
     - examples/single-page
     - examples/pkgdown
     - examples/auto-package
+    - objects.txt
 
 metadata-files:
   - api/_sidebar.yml
@@ -13,11 +14,13 @@ filters:
   - "interlinks"
 
 interlinks:
+  fast: true
   sources:
     python:
       url: https://docs.python.org/3/
     griffe:
       url: https://mkdocstrings.github.io/griffe/
+
 
 website:
   title: "quartodoc"
