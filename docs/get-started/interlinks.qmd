@@ -185,3 +185,7 @@ For an overview of the sphinx inventory format, see [the sphobjinv docs](https:/
 
 The rough idea is that this plugin will behave similar to [jupyterbook linking](https://jupyterbook.org/en/stable/content/references.html),
 which supports both some intersphinx syntax, but also markdown syntax.
+
+## Test interlinks cross site
+
+[](`qd2.Auto`)
