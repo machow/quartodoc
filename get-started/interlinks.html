@@ -383,11 +383,15 @@ Note
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numpy</span><span class="kw">:</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://numpy.org/doc/stable/</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">python</span><span class="kw">:</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://docs.python.org/3/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://docs.python.org/3/</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">quartodoc-test</span><span class="kw">:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://machow.github.io/quartodoc</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">inv</span><span class="kw">:</span><span class="at"> objects-test.txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice 2 important pieces in this config:</p>
 <ul>
 <li>The <code>numpy</code> and <code>python</code> fields indicate that we’re getting inventories for the library numpy, and python builtin libraries.</li>
 <li>The <code>url</code> fields indicate where inventory files can be found.</li>
+<li>The <code>inv</code> field lets you specify the name of the inventory file. By default, it assumes its <code>objects.inv</code>.</li>
 </ul>
 <p>By default, downloaded inventory files will be saved in the <code>_inv</code> folder of your documentation directory.</p>
 <section id="experimental-fast-option" class="level3">
@@ -526,6 +530,19 @@ Warning
 <li>python: https://docs.python.org/3/objects.inv</li>
 </ul>
 <p>See the <a href="https://sphobjinv.readthedocs.io/en/stable/">sphobjinv docs</a> for thorough details on these files, and how they’re used in sphinx.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://github.com/machow/quartodoc/tree/main/docs/objects-test.txt">objects-test.txt</a> is an example file with one entry: <a href="https://pr-350–quartodoc.netlify.app/api/Auto.html#quartodoc.Auto"><code>qd2.Auto</code></a>.</p>
+</div>
+</div>
 </section>
 <section id="more-information" class="level2">
 <h2 class="anchored" data-anchor-id="more-information">More information</h2>
