@@ -67,7 +67,7 @@ def _auto_package(mod: dc.Module) -> list[Section]:
             external_alias
             or member.is_module
             or name.startswith("__")
-            or (has_all and not mod.member_is_exported(member))
+            or (has_all and not mod.is_exported(member))
         ):
             continue
 
