@@ -27,6 +27,6 @@ Here is what the sidebar for the [quartodoc reference page](/api) looks like:
 
 <div class="sourceCode">
 <pre class="sourceCode yaml"><code class="sourceCode yaml">
-{{< include /api/_sidebar.yml >}}
+{{{< include /api/_sidebar.yml >}}}
 </code></pre>
 </div>
