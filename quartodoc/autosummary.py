@@ -5,13 +5,11 @@ import logging
 import warnings
 import yaml
 
+from ._griffe_compat import GriffeLoader, ModulesCollection, LinesCollection
+from ._griffe_compat import dataclasses as dc
+from ._griffe_compat import Parser, parse
+
 from fnmatch import fnmatchcase
-from griffe.loader import GriffeLoader
-from griffe.collections import ModulesCollection, LinesCollection
-from griffe.dataclasses import Alias
-from griffe.docstrings.parsers import Parser, parse
-from griffe.docstrings import dataclasses as ds  # noqa
-from griffe import dataclasses as dc
 from plum import dispatch  # noqa
 from pathlib import Path
 from types import ModuleType
@@ -37,7 +35,7 @@ _log = logging.getLogger(__name__)
 
 def parse_function(module: str, func_name: str):
     griffe = GriffeLoader()
-    mod = griffe.load_module(module)
+    mod = griffe.load(module)
 
     f_data = mod.functions[func_name]
 
@@ -66,7 +64,7 @@ def get_function(module: str, func_name: str, parser: str = "numpy") -> dc.Objec
     griffe = GriffeLoader(
         docstring_parser=Parser(parser), docstring_options=get_parser_defaults(parser)
     )
-    mod = griffe.load_module(module)
+    mod = griffe.load(module)
 
     f_data = mod.functions[func_name]
 
@@ -138,7 +136,7 @@ def get_object(
     # note that it is critical for performance that we only do this when necessary.
     root_mod = module.split(".", 1)[0]
     if root_mod not in loader.modules_collection:
-        loader.load_module(module)
+        loader.load(module)
 
     # griffe uses only periods for the path
     griffe_path = f"{module}.{object_path}" if object_path else module
@@ -164,10 +162,10 @@ def get_object(
     # Alias objects can refer to objects imported from other modules.
     # in this case, we need to import the target's module in order to resolve
     # the alias
-    if isinstance(f_data, Alias) and load_aliases:
+    if isinstance(f_data, dc.Alias) and load_aliases:
         target_mod = f_data.target_path.split(".")[0]
         if target_mod != module:
-            loader.load_module(target_mod)
+            loader.load(target_mod)
 
     return f_data
 

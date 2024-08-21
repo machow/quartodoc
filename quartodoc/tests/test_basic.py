@@ -1,8 +1,8 @@
 import pytest
 
 from quartodoc import get_object, get_function, MdRenderer
-from griffe.docstrings import dataclasses as ds
-from griffe import dataclasses as dc
+from quartodoc._griffe_compat import docstrings as ds
+from quartodoc._griffe_compat import dataclasses as dc
 
 # TODO: rename to test_autosummary (or refactor autosummary into parts)
 

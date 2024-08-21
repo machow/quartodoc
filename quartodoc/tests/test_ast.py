@@ -1,9 +1,9 @@
 import quartodoc.ast as qast
 import pytest
 
-from griffe.docstrings import dataclasses as ds
-from griffe import dataclasses as dc
-from griffe.docstrings.parsers import parse_numpy
+from quartodoc._griffe_compat import docstrings as ds
+from quartodoc._griffe_compat import dataclasses as dc
+from quartodoc._griffe_compat import parse_numpy
 
 from quartodoc import get_object
 

@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import warnings
 
+from ._griffe_compat import docstrings as ds
+from ._griffe_compat import dataclasses as dc
+
 from enum import Enum
 from dataclasses import dataclass
-from griffe.docstrings import dataclasses as ds
-from griffe import dataclasses as dc
 from plum import dispatch
 from typing import Type, Union
 
