@@ -98,8 +98,6 @@ jobs:
           python -m pip install shiny shinylive
           python -m pip install --no-deps dascore==0.0.8
       - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: "1.2.475"
       - name: Build docs
         run: |
           make docs-build
