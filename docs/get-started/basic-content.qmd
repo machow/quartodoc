@@ -66,14 +66,14 @@ By default, all attributes and functions (including methods on a class) are pres
 There are four styles for presenting child members:
 
 ```{python}
-#| echo: false
-#| output: asis
+# | echo: false
+# | output: asis
 
-# print out the attributes table of ChoicesChildren 
+# print out the attributes table of ChoicesChildren
 # this is overkill, but maybe a nice case of dogfooding
 from quartodoc import get_object, MdRenderer
 from quartodoc.builder.utils import extract_type
-from griffe.docstrings.dataclasses import DocstringSectionAttributes
+from griffe import DocstringSectionAttributes
 
 renderer = MdRenderer()
 choices = get_object("quartodoc.layout.ChoicesChildren")
@@ -420,12 +420,12 @@ Below is a summary of all the options that can be applied to individual content 
 
 
 ```{python}
-#| echo: false
-#| output: asis
+# | echo: false
+# | output: asis
 
 from quartodoc import get_object, MdRenderer, Auto
 from quartodoc.builder.utils import extract_type
-from griffe.docstrings.dataclasses import DocstringSectionAttributes
+from griffe import DocstringSectionAttributes
 
 renderer = MdRenderer()
 choices = get_object("quartodoc.Auto")

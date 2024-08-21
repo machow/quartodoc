@@ -57,18 +57,19 @@ types of objects.
 ```{python}
 from plum import dispatch
 
-import griffe.dataclasses as dc
-import griffe.docstrings.dataclasses as ds
+from griffe import Alias, Object, Docstring
 
 
 @dispatch
 def render(el: object):
     print(f"Default rendering: {type(el)}")
 
+
 @dispatch
-def render(el: dc.Alias):
+def render(el: Alias):
     print("Alias rendering")
     render(el.parameters)
+
 
 @dispatch
 def render(el: list):
@@ -85,8 +86,7 @@ quartodoc uses tree visitors to render parsed docstrings to formats like markdow
 Tree visitors define how each type of object in the parse tree should be handled.
 
 ```{python}
-import griffe.dataclasses as dc
-import griffe.docstrings.dataclasses as ds
+from griffe import Alias, Object, Docstring
 
 from quartodoc import get_object
 from plum import dispatch
@@ -102,17 +102,17 @@ class SomeRenderer:
         raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
-    def render(self, el: Union[dc.Alias, dc.Object]):
+    def render(self, el: Union[Alias, Object]):
         header = "#" * self.header_level
         str_header = f"{header} {el.name}"
         str_params = f"N PARAMETERS: {len(el.parameters)}"
         str_sections = "SECTIONS: " + self.render(el.docstring)
-        
+
         # return something pretty
         return "\n".join([str_header, str_params, str_sections])
 
     @dispatch
-    def render(self, el: dc.Docstring):
+    def render(self, el: Docstring):
         return f"A docstring with {len(el.parsed)} pieces"
 
 

@@ -55,12 +55,12 @@ res["objects"][0]["children"]["some_package"]["children"]
 ## Running griffe
 
 ```{python}
-from griffe.loader import GriffeLoader
-from griffe.docstrings.parsers import Parser, parse
+from griffe import GriffeLoader
+from griffe import Parser, parse
 
-griffe = GriffeLoader()
+loader = GriffeLoader()
 
-sb2 = griffe.load_module("some_package")
+sb2 = loader.load("some_package")
 
 parse(sb2.functions["some_function"].docstring, Parser.numpy)
 ```
