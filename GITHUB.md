@@ -1,5 +1,5 @@
-Overview
-================
+# Overview
+
 
 [![CI](https://github.com/machow/quartodoc/actions/workflows/ci.yml/badge.svg)](https://github.com/machow/quartodoc/actions/workflows/ci.yml)
 
@@ -11,8 +11,7 @@ is designed as an alternative to
 Check out the below screencast for a walkthrough of creating a
 documentation site, or read on for instructions.
 
-<div
-style="position: relative; padding-bottom: 64.5933014354067%; height: 0;">
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;">
 
 <iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
 </iframe>
@@ -33,15 +32,13 @@ or from GitHub
 python -m pip install git+https://github.com/machow/quartodoc.git
 ```
 
-<div>
-
-> **Install Quarto**
+> [!IMPORTANT]
+>
+> ### Install Quarto
 >
 > If you haven’t already, you’ll need to [install
 > Quarto](https://quarto.org/docs/get-started/) before you can use
 > quartodoc.
-
-</div>
 
 ## Basic use
 
