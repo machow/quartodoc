@@ -35,16 +35,10 @@ def _name_description(row: list[str | None]):
         name, default = None, None
     else:
         raise ValueError(f"Unsupported row length: {len(row)}")
-    
-    part_name = (
-        Span(name, Attr(classes=["parameter-name"]))
-        if name is not None
-        else ''
-    )
+
+    part_name = Span(name, Attr(classes=["parameter-name"])) if name is not None else ""
     part_anno = (
-        Span(anno, Attr(classes=["parameter-annotation"]))
-        if anno is not None
-        else ''
+        Span(anno, Attr(classes=["parameter-annotation"])) if anno is not None else ""
     )
 
     # TODO: _required_ is set when parsing parameters, but only used
@@ -54,7 +48,7 @@ def _name_description(row: list[str | None]):
     part_default = (
         Span(f" = {default}", Attr(classes=["parameter-default-sep"]))
         if default is not None and default != "_required_"
-        else ''
+        else ""
     )
 
     part_desc = desc if desc is not None else ""
@@ -64,8 +58,6 @@ def _name_description(row: list[str | None]):
     # TODO: should code wrap the whole thing like this?
     param = Code(str(Inlines([part_name, anno_sep, part_anno, part_default]))).html
     return (param, part_desc)
-
-
 
 
 class MdRenderer(Renderer):
@@ -107,7 +99,7 @@ class MdRenderer(Renderer):
         display_name: str = "relative",
         hook_pre=None,
         render_interlinks=False,
-        #table_style="description-list",
+        # table_style="description-list",
         table_style="table",
     ):
         self.header_level = header_level
@@ -233,13 +225,13 @@ class MdRenderer(Renderer):
         # e.g. get_object, rather than quartodoc.get_object
         _anchor = f"{{ #{el.obj.path} }}"
         return f"{'#' * self.crnt_header_level} {_str_dispname} {_anchor}"
-    
+
     @dispatch
     def render_header(self, el: ds.DocstringSection) -> str:
         title = el.title or el.kind.value
         _classes = [".doc-section", ".doc-section-" + title.replace(" ", "-")]
         _str_classes = " ".join(_classes)
-        return f"{'#' * self.crnt_header_level} {title.title()} {{ {_str_classes} }}"
+        return f"{'#' * self.crnt_header_level} {title.title()} {{{_str_classes}}}"
 
     # render method -----------------------------------------------------------
 

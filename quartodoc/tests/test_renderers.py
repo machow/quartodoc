@@ -212,7 +212,7 @@ def test_render_doc_signature_name_alias_of_alias(snapshot, renderer):
 )
 def test_render_numpydoc_section_return(snapshot, doc):
     from quartodoc.parsers import get_parser_defaults
-    from griffe.docstrings.parsers import Parser
+    from griffe import Parser
 
     full_doc = (
         f"""Parameters\n---\n{doc}\n\nReturns\n---\n{doc}\n\nAttributes\n---\n{doc}"""
