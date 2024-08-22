@@ -4,11 +4,15 @@ import logging
 import json
 import yaml
 
-from griffe import dataclasses as dc
-from griffe.loader import GriffeLoader
-from griffe.collections import ModulesCollection, LinesCollection
-from griffe.docstrings.parsers import Parser
-from griffe.exceptions import AliasResolutionError
+from .._griffe_compat import dataclasses as dc
+from .._griffe_compat import (
+    GriffeLoader,
+    ModulesCollection,
+    LinesCollection,
+    Parser,
+)
+
+from .._griffe_compat import AliasResolutionError
 from functools import partial
 from textwrap import indent
 
@@ -43,7 +47,7 @@ if TYPE_CHECKING:
 def _auto_package(mod: dc.Module) -> list[Section]:
     """Create default sections for the given package."""
 
-    import griffe.docstrings.dataclasses as ds
+    from quartodoc._griffe_compat import docstrings as ds
 
     has_all = "__all__" in mod.members
 
@@ -63,7 +67,7 @@ def _auto_package(mod: dc.Module) -> list[Section]:
             external_alias
             or member.is_module
             or name.startswith("__")
-            or (has_all and not mod.member_is_exported(member))
+            or (has_all and not member.is_exported)
         ):
             continue
 

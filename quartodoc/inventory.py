@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sphobjinv as soi
 
-from griffe import dataclasses as dc
+from ._griffe_compat import dataclasses as dc
 from plum import dispatch
 from quartodoc import layout
 

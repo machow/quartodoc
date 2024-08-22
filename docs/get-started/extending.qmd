@@ -40,7 +40,7 @@ Then, create the file `reference/index.qmd` to have the form:
 Some custom content.
 
 
-{{< include /reference/_api_index.qmd >}}
+{{{< include /reference/_api_index.qmd >}}}
 
 
 More content stuff.

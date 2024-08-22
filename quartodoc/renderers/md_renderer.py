@@ -4,9 +4,9 @@ import quartodoc.ast as qast
 
 from contextlib import contextmanager
 from functools import wraps
-from griffe.docstrings import dataclasses as ds
-from griffe import dataclasses as dc
-from griffe import expressions as expr
+from .._griffe_compat import docstrings as ds
+from .._griffe_compat import dataclasses as dc
+from .._griffe_compat import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
 from typing import Tuple, Union, Optional
@@ -152,8 +152,6 @@ class MdRenderer(Renderer):
         self.display_name = orig
 
         return res
-
-
 
     @dispatch
     def signature(self, el: dc.Alias, source: Optional[dc.Alias] = None):
@@ -335,14 +333,14 @@ class MdRenderer(Renderer):
                         [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
                     )
 
-
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
         body = self.render(el.obj)
 
-
-        return "\n\n".join([title, *sig_part, body, *attr_docs, *class_docs, *meth_docs])
+        return "\n\n".join(
+            [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
+        )
 
     @dispatch
     def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):

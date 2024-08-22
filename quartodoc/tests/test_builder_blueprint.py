@@ -1,5 +1,5 @@
 from functools import partial
-from griffe.exceptions import AliasResolutionError
+from quartodoc._griffe_compat import AliasResolutionError
 from quartodoc import get_object
 from quartodoc import layout as lo
 from quartodoc.builder.blueprint import (

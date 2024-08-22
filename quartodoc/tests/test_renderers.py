@@ -1,6 +1,6 @@
 import pytest
-import griffe.docstrings.dataclasses as ds
-import griffe.expressions as exp
+from quartodoc._griffe_compat import docstrings as ds
+from quartodoc._griffe_compat import expressions as exp
 
 from quartodoc.renderers import MdRenderer
 from quartodoc import layout, get_object, blueprint, Auto

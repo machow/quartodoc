@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import griffe.dataclasses as dc
+from ._griffe_compat import dataclasses as dc
 import logging
 
 from enum import Enum
