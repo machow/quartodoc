@@ -5,7 +5,7 @@
   
   `tests.example_signature.a_complex_signature(x: [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\], y: [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`))`
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type                                                                                 | Description     | Default    |
   |--------|--------------------------------------------------------------------------------------|-----------------|------------|
@@ -19,7 +19,7 @@
   
   `tests.example_signature.a_complex_signature(x: list\[C \| int \| None\], y: pathlib.Pathlib)`
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type                     | Description     | Default    |
   |--------|--------------------------|-----------------|------------|
@@ -38,7 +38,7 @@
   The extended summary,
   which may be multiple lines.
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type   | Description          | Default    |
   |--------|--------|----------------------|------------|
@@ -96,7 +96,7 @@
   The extended summary,
   which may be multiple lines.
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type   | Description          | Default    |
   |--------|--------|----------------------|------------|
@@ -151,7 +151,7 @@
   
   The short summary.
   
-  ## Attributes
+  ## Attributes {.doc-section .doc-section-attributes}
   
   | Name   | Type   | Description         |
   |--------|--------|---------------------|
@@ -300,7 +300,7 @@
   
   A numpy style docstring.
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type   | Description      | Default    |
   |--------|--------|------------------|------------|
@@ -316,14 +316,14 @@
   
   A google style docstring.
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type   | Description      | Default    |
   |--------|--------|------------------|------------|
   | `a`    | int    | The a parameter. | _required_ |
   | `b`    | str    | The b parameter. | _required_ |
   
-  ## Custom Admonition
+  ## Custom Admonition {.doc-section .doc-section-Custom-Admonition}
   
   Some text.
   '''
@@ -336,14 +336,14 @@
   
   A numpy style docstring.
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type   | Description      | Default    |
   |--------|--------|------------------|------------|
   | `a`    |        | The a parameter. | _required_ |
   | `b`    | str    | The b parameter. | _required_ |
   
-  ## Custom Admonition
+  ## Custom Admonition {.doc-section .doc-section-Custom-Admonition}
   
   Some text.
   '''
@@ -356,7 +356,7 @@
   
   A sphinx style docstring.
   
-  ## Parameters
+  ## Parameters {.doc-section .doc-section-parameters}
   
   | Name   | Type   | Description      | Default    |
   |--------|--------|------------------|------------|
@@ -383,40 +383,40 @@
           A description.
   
   Default
-      # Parameters
+      # Parameters {.doc-section .doc-section-parameters}
   
       | Name   | Type   | Description    | Default    |
       |--------|--------|----------------|------------|
       | `int`  |        | A description. | _required_ |
   
-      # Returns
+      # Returns {.doc-section .doc-section-returns}
   
       | Name   | Type   | Description    |
       |--------|--------|----------------|
       |        | int    | A description. |
   
-      # Attributes
+      # Attributes {.doc-section .doc-section-attributes}
   
       | Name   | Type   | Description    |
       |--------|--------|----------------|
       | int    |        | A description. |
   
   List
-      # Parameters
+      # Parameters {.doc-section .doc-section-parameters}
   
-      [`int`]{.parameter-name}[:]{.parameter-annotation-sep}[]{.parameter-annotation}[ = ]{.parameter-default-sep}
-  
-      :   A description.
-  
-      # Returns
-  
-      []{.parameter-name}[:]{.parameter-annotation-sep}[int]{.parameter-annotation}
+      <code>[`int`]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   
-      # Attributes
+      # Returns {.doc-section .doc-section-returns}
   
-      [int]{.parameter-name}[:]{.parameter-annotation-sep}[]{.parameter-annotation}
+      <code>[]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
+  
+      :   A description.
+  
+      # Attributes {.doc-section .doc-section-attributes}
+  
+      <code>[int]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   '''
@@ -440,40 +440,40 @@
           A description.
   
   Default
-      # Parameters
+      # Parameters {.doc-section .doc-section-parameters}
   
       | Name   | Type   | Description    | Default    |
       |--------|--------|----------------|------------|
       | `name` |        | A description. | _required_ |
   
-      # Returns
+      # Returns {.doc-section .doc-section-returns}
   
       | Name   | Type   | Description    |
       |--------|--------|----------------|
       | name   | int    | A description. |
   
-      # Attributes
+      # Attributes {.doc-section .doc-section-attributes}
   
       | Name   | Type   | Description    |
       |--------|--------|----------------|
       | name   | int    | A description. |
   
   List
-      # Parameters
+      # Parameters {.doc-section .doc-section-parameters}
   
-      [`name`]{.parameter-name}[:]{.parameter-annotation-sep}[]{.parameter-annotation}[ = ]{.parameter-default-sep}
-  
-      :   A description.
-  
-      # Returns
-  
-      [name]{.parameter-name}[:]{.parameter-annotation-sep}[int]{.parameter-annotation}
+      <code>[`name`]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   
-      # Attributes
+      # Returns {.doc-section .doc-section-returns}
   
-      [name]{.parameter-name}[:]{.parameter-annotation-sep}[int]{.parameter-annotation}
+      <code>[name]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
+  
+      :   A description.
+  
+      # Attributes {.doc-section .doc-section-attributes}
+  
+      <code>[name]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
       :   A description.
   '''
