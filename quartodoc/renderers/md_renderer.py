@@ -9,8 +9,10 @@ from .._griffe_compat import dataclasses as dc
 from .._griffe_compat import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
-from typing import Tuple, Union, Optional
+from typing import Any, Tuple, Union, Optional
 from quartodoc import layout
+from quartodoc.pandoc.blocks import DefinitionList
+from quartodoc.pandoc.inlines import Span, Attr
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
 
@@ -20,6 +22,44 @@ def _has_attr_section(el: dc.Docstring | None):
         return False
 
     return any([isinstance(x, ds.DocstringSectionAttributes) for x in el.parsed])
+
+
+def _name_description(row: list[str | None]):
+    if len(row) == 4:
+        name, anno, desc, default = row
+    elif len(row) == 3:
+        name, anno, desc = row
+        default = None
+    elif len(row) == 2:
+        anno, desc = row
+        name, default = None, None
+    else:
+        raise ValueError(f"Unsupported row length: {len(row)}")
+    
+    part_name = (
+        Span(name, Attr(classes=["parameter-name"]))
+        if name is not None
+        else ''
+    )
+    part_anno = (
+        Span(anno, Attr(classes=["parameter-annotation"]))
+        if anno is not None
+        else ''
+    )
+
+    part_default = (
+        Span(" = ", Attr(classes=["parameter-default-sep"]))
+        if default is not None
+        else ''
+    )
+
+    part_desc = desc if desc is not None else ""
+
+    anno_sep = Span(":", Attr(classes=["parameter-annotation-sep"]))
+
+    return (f"{part_name}{anno_sep}{part_anno}{part_default}", part_desc)
+
+
 
 
 class MdRenderer(Renderer):
@@ -61,6 +101,8 @@ class MdRenderer(Renderer):
         display_name: str = "relative",
         hook_pre=None,
         render_interlinks=False,
+        #table_style="description-list",
+        table_style="table",
     ):
         self.header_level = header_level
         self.show_signature = show_signature
@@ -68,6 +110,7 @@ class MdRenderer(Renderer):
         self.display_name = display_name
         self.hook_pre = hook_pre
         self.render_interlinks = render_interlinks
+        self.table_style = table_style
 
         self.crnt_header_level = self.header_level
 
@@ -103,8 +146,10 @@ class MdRenderer(Renderer):
         return el.parameters
 
     def _render_table(self, rows, headers):
-        table = tabulate(rows, headers=headers, tablefmt="github")
+        if self.table_style == "description-list":
+            return str(DefinitionList(list(map(_name_description, rows))))
 
+        table = tabulate(rows, headers=headers, tablefmt="github")
         return table
 
     # render_annotation method --------------------------------------------------------
@@ -174,7 +219,7 @@ class MdRenderer(Renderer):
         return f"`{name}`"
 
     @dispatch
-    def render_header(self, el: layout.Doc):
+    def render_header(self, el: layout.Doc) -> str:
         """Render the header of a docstring, including any anchors."""
         _str_dispname = el.name
 
@@ -182,6 +227,11 @@ class MdRenderer(Renderer):
         # e.g. get_object, rather than quartodoc.get_object
         _anchor = f"{{ #{el.obj.path} }}"
         return f"{'#' * self.crnt_header_level} {_str_dispname} {_anchor}"
+    
+    @dispatch
+    def render_header(self, el: ds.DocstringSection) -> str:
+        title = el.title or el.kind.value
+        return f"{'#' * self.crnt_header_level} {title.title()}"
 
     # render method -----------------------------------------------------------
 
@@ -336,7 +386,8 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        body = self.render(el.obj)
+        with self._increment_header():
+            body = self.render(el.obj)
 
         return "\n\n".join(
             [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
@@ -349,7 +400,10 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        return "\n\n".join([title, *sig_part, self.render(el.obj)])
+        with self._increment_header():
+            body = self.render(el.obj)
+
+        return "\n\n".join([title, *sig_part, body])
 
     # render griffe objects ===================================================
 
@@ -357,20 +411,26 @@ class MdRenderer(Renderer):
     def render(self, el: Union[dc.Object, dc.Alias]):
         """Render high level objects representing functions, classes, etc.."""
 
-        str_body = []
         if el.docstring is None:
-            pass
+            return ""
         else:
-            patched_sections = qast.transform(el.docstring.parsed)
-            for section in patched_sections:
-                title = section.title or section.kind.value
-                body = self.render(section)
+            return self.render(el.docstring)
 
-                if title != "text":
-                    header = f"{'#' * (self.crnt_header_level + 1)} {title.title()}"
-                    str_body.append("\n\n".join([header, body]))
-                else:
-                    str_body.append(body)
+    @dispatch
+    def render(self, el: dc.Docstring):
+        str_body = []
+        patched_sections = qast.transform(el.parsed)
+
+        for section in patched_sections:
+            title = section.title or section.kind.value
+            body: str = self.render(section)
+
+            if title != "text":
+                header = self.render_header(section)
+                # header = f"{'#' * (self.crnt_header_level + 1)} {title.title()}"
+                str_body.append("\n\n".join([header, body]))
+            else:
+                str_body.append(body)
 
         parts = [*str_body]
 
@@ -550,15 +610,21 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
         rows = list(map(self.render, el.value))
-        header = ["Type", "Description"]
+        header = ["Name", "Type", "Description"]
 
         return self._render_table(rows, header)
 
     @dispatch
-    def render(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
+    def render(self, el: ds.DocstringReturn):
         # similar to DocstringParameter, but no name or default
         annotation = self.render_annotation(el.annotation)
-        return (annotation, sanitize(el.description, allow_markdown=True))
+        return (el.name, annotation, sanitize(el.description, allow_markdown=True))
+
+    @dispatch
+    def render(self, el: ds.DocstringRaise):
+        # similar to DocstringParameter, but no name or default
+        annotation = self.render_annotation(el.annotation)
+        return ("", annotation, sanitize(el.description, allow_markdown=True))
 
     # unsupported parts ----
 
