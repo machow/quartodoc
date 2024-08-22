@@ -56,6 +56,11 @@ def test_render_attribute():
     assert MdRenderer().render(a) == "I am an attribute docstring"
 
 
+def test_get_object_stub_pyi():
+    obj = get_object("quartodoc.tests.example_stubs:f")
+    assert obj.parameters[0].annotation.name == "int"
+
+
 def test_get_object_dynamic_module_root():
     obj = get_object("quartodoc", dynamic=True)
     assert isinstance(obj, dc.Module)
