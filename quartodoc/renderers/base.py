@@ -17,6 +17,9 @@ def sanitize(val: str, allow_markdown=False):
     # sanitize common tokens that break tables
     res = val.replace("\n", " ").replace("|", "\\|")
 
+    # sanitize elements that get turned into smart quotes
+    res = res.replace("'", r"\'").replace('"', r"\"")
+
     # sanitize elements that can get interpreted as markdown links
     # or citations
     if not allow_markdown:
