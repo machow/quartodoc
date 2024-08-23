@@ -31,6 +31,7 @@ classifiers = [
 dynamic = ["version"]
 requires-python = ">=3.9"
 dependencies = [
+    "black",
     "click",
     "griffe >= 0.33",
     "sphobjinv >= 2.3.1",

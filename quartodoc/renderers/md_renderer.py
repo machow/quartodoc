@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import black
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
@@ -238,7 +239,13 @@ class MdRenderer(Renderer):
         name = self._fetch_object_dispname(source or el)
         pars = self.render(self._fetch_method_parameters(el))
 
-        return f"`{name}({pars})`"
+        flat_sig = f"{name}({pars})"
+        if len(flat_sig) > 80:
+            sig = black.format_str(flat_sig, mode=black.Mode())
+        else:
+            sig = flat_sig
+
+        return f"```python\n{sig}\n```"
 
     @dispatch
     def signature(
