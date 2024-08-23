@@ -3,16 +3,17 @@ from __future__ import annotations
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
+from dataclasses import dataclass
 from functools import wraps
 from .._griffe_compat import docstrings as ds
 from .._griffe_compat import dataclasses as dc
 from .._griffe_compat import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
-from typing import Any, Tuple, Union, Optional
+from typing import Any, Literal, Tuple, Union, Optional
 from quartodoc import layout
 from quartodoc.pandoc.blocks import DefinitionList
-from quartodoc.pandoc.inlines import Span, Attr, Code, Inlines
+from quartodoc.pandoc.inlines import Span, Strong, Attr, Code, Inlines
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
 
@@ -24,40 +25,64 @@ def _has_attr_section(el: dc.Docstring | None):
     return any([isinstance(x, ds.DocstringSectionAttributes) for x in el.parsed])
 
 
-def _name_description(row: list[str | None]):
-    if len(row) == 4:
-        name, anno, desc, default = row
-    elif len(row) == 3:
-        name, anno, desc = row
-        default = None
-    elif len(row) == 2:
-        anno, desc = row
-        name, default = None, None
-    else:
-        raise ValueError(f"Unsupported row length: {len(row)}")
+@dataclass
+class ParamRow:
+    name: str | None
+    description: str
+    annotation: str | None = None
+    default: str | None = None
 
-    part_name = Span(name, Attr(classes=["parameter-name"])) if name is not None else ""
-    part_anno = (
-        Span(anno, Attr(classes=["parameter-annotation"])) if anno is not None else ""
-    )
+    def to_definition_list(self):
+        name = self.name
+        anno = self.annotation
+        desc = self.description
+        default = sanitize(str(self.default))
 
-    # TODO: _required_ is set when parsing parameters, but only used
-    # in the table display format, not description lists....
-    # by this stage _required_ is basically a special token to indicate
-    # a required argument.
-    part_default = (
-        Span(f" = {default}", Attr(classes=["parameter-default-sep"]))
-        if default is not None and default != "_required_"
-        else ""
-    )
+        part_name = (
+            Span(Strong(name), Attr(classes=["parameter-name"]))
+            if name is not None
+            else ""
+        )
+        part_anno = (
+            Span(anno, Attr(classes=["parameter-annotation"]))
+            if anno is not None
+            else ""
+        )
 
-    part_desc = desc if desc is not None else ""
+        # TODO: _required_ is set when parsing parameters, but only used
+        # in the table display format, not description lists....
+        # by this stage _required_ is basically a special token to indicate
+        # a required argument.
+        if default is not None:
+            part_default_sep = Span(" = ", Attr(classes=["parameter-default-sep"]))
+            part_default = Span(default, Attr(classes=["parameter-default"]))
+        else:
+            part_default_sep = ""
+            part_default = ""
 
-    anno_sep = Span(":", Attr(classes=["parameter-annotation-sep"]))
+        part_desc = desc if desc is not None else ""
 
-    # TODO: should code wrap the whole thing like this?
-    param = Code(str(Inlines([part_name, anno_sep, part_anno, part_default]))).html
-    return (param, part_desc)
+        anno_sep = Span(":", Attr(classes=["parameter-annotation-sep"]))
+
+        # TODO: should code wrap the whole thing like this?
+        param = Code(
+            str(
+                Inlines(
+                    [part_name, anno_sep, part_anno, part_default_sep, part_default]
+                )
+            )
+        ).html
+        return (param, part_desc)
+
+    def to_tuple(self, style: Literal["paramters", "attributes", "returns"]):
+        if style == "parameters":
+            return (self.name, self.annotation, self.description, self.default)
+        elif style == "attributes":
+            return (self.name, self.annotation, self.description)
+        elif style == "returns":
+            return (self.name, self.annotation, self.description)
+
+        raise NotImplementedError(f"Unsupported table style: {style}")
 
 
 class MdRenderer(Renderer):
@@ -143,12 +168,18 @@ class MdRenderer(Renderer):
 
         return el.parameters
 
-    def _render_table(self, rows, headers):
+    def _render_table(
+        self,
+        rows,
+        headers,
+        style: Literal["parameters", "attributes", "returns"] = "parameters",
+    ):
         if self.table_style == "description-list":
-            return str(DefinitionList(list(map(_name_description, rows))))
-
-        table = tabulate(rows, headers=headers, tablefmt="github")
-        return table
+            return str(DefinitionList([row.to_definition_list() for row in rows]))
+        else:
+            row_tuples = [row.to_tuple(style) for row in rows]
+            table = tabulate(row_tuples, headers=headers, tablefmt="github")
+            return table
 
     # render_annotation method --------------------------------------------------------
 
@@ -523,18 +554,15 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: ds.DocstringSectionParameters):
-        rows = list(map(self.render, el.value))
+        rows: "list[ParamRow]" = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
         return self._render_table(rows, header)
 
     @dispatch
-    def render(self, el: ds.DocstringParameter) -> Tuple[str]:
-        # TODO: if default is not, should return the word "required" (unescaped)
-        default = "_required_" if el.default is None else escape(el.default)
-
+    def render(self, el: ds.DocstringParameter) -> ParamRow:
         annotation = self.render_annotation(el.annotation)
         clean_desc = sanitize(el.description, allow_markdown=True)
-        return (escape(el.name), annotation, clean_desc, default)
+        return ParamRow(el.name, clean_desc, annotation=annotation, default=el.default)
 
     # attributes ----
 
@@ -546,13 +574,12 @@ class MdRenderer(Renderer):
         return self._render_table(rows, header)
 
     @dispatch
-    def render(self, el: ds.DocstringAttribute):
-        row = [
-            sanitize(el.name),
-            self.render_annotation(el.annotation),
+    def render(self, el: ds.DocstringAttribute) -> ParamRow:
+        return ParamRow(
+            el.name,
             sanitize(el.description or "", allow_markdown=True),
-        ]
-        return row
+            annotation=self.render_annotation(el.annotation),
+        )
 
     # admonition ----
     # note this can be a see-also, warnings, or notes section
@@ -617,14 +644,20 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: ds.DocstringReturn):
         # similar to DocstringParameter, but no name or default
-        annotation = self.render_annotation(el.annotation)
-        return (el.name, annotation, sanitize(el.description, allow_markdown=True))
+        return ParamRow(
+            el.name,
+            sanitize(el.description, allow_markdown=True),
+            annotation=self.render_annotation(el.annotation),
+        )
 
     @dispatch
-    def render(self, el: ds.DocstringRaise):
+    def render(self, el: ds.DocstringRaise) -> ParamRow:
         # similar to DocstringParameter, but no name or default
-        annotation = self.render_annotation(el.annotation)
-        return ("", annotation, sanitize(el.description, allow_markdown=True))
+        return ParamRow(
+            None,
+            sanitize(el.description, allow_markdown=True),
+            annotation=self.render_annotation(el.annotation),
+        )
 
     # unsupported parts ----
 
