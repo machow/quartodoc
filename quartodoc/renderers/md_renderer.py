@@ -480,7 +480,7 @@ class MdRenderer(Renderer):
     # signature parts -------------------------------------------------------------
 
     @dispatch
-    def render(self, el: dc.Parameters) -> "list[str]":
+    def render(self, el: dc.Parameters) -> "list":
         # index for switch from positional to kw args (via an unnamed *)
         try:
             kw_only = [par.kind for par in el].index(dc.ParameterKind.keyword_only)
