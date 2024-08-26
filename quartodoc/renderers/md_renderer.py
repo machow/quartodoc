@@ -75,13 +75,15 @@ class ParamRow:
         ).html
         return (param, part_desc)
 
-    def to_tuple(self, style: Literal["paramters", "attributes", "returns"]):
+    def to_tuple(self, style: Literal["parameters", "attributes", "returns"]):
+        name = self.name
         if style == "parameters":
-            return (self.name, self.annotation, self.description, self.default)
+            default = "_required_" if self.default is None else escape(self.default)
+            return (name, self.annotation, self.description, default)
         elif style == "attributes":
-            return (self.name, self.annotation, self.description)
+            return (name, self.annotation, self.description)
         elif style == "returns":
-            return (self.name, self.annotation, self.description)
+            return (name, self.annotation, self.description)
 
         raise NotImplementedError(f"Unsupported table style: {style}")
 
@@ -173,7 +175,7 @@ class MdRenderer(Renderer):
         self,
         rows,
         headers,
-        style: Literal["parameters", "attributes", "returns"] = "parameters",
+        style: Literal["parameters", "attributes", "returns"],
     ):
         if self.table_style == "description-list":
             return str(DefinitionList([row.to_definition_list() for row in rows]))
@@ -563,7 +565,7 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringSectionParameters):
         rows: "list[ParamRow]" = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
-        return self._render_table(rows, header)
+        return self._render_table(rows, header, "parameters")
 
     @dispatch
     def render(self, el: ds.DocstringParameter) -> ParamRow:
@@ -578,7 +580,7 @@ class MdRenderer(Renderer):
         header = ["Name", "Type", "Description"]
         rows = list(map(self.render, el.value))
 
-        return self._render_table(rows, header)
+        return self._render_table(rows, header, "attributes")
 
     @dispatch
     def render(self, el: ds.DocstringAttribute) -> ParamRow:
@@ -646,7 +648,7 @@ class MdRenderer(Renderer):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description"]
 
-        return self._render_table(rows, header)
+        return self._render_table(rows, header, "returns")
 
     @dispatch
     def render(self, el: ds.DocstringReturn):
