@@ -241,9 +241,10 @@ class MdRenderer(Renderer):
         name = self._fetch_object_dispname(source or el)
         pars = self.render(self._fetch_method_parameters(el))
 
-        flat_sig = f"{name}({pars})"
+        flat_sig = f"{name}({', '.join(pars)})"
         if len(flat_sig) > 80:
-            sig = black.format_str(flat_sig, mode=black.Mode())
+            indented = [" " * 4 + par for par in pars]
+            sig = "\n".join([f"{name}(", *indented, ")"])
         else:
             sig = flat_sig
 
@@ -479,7 +480,7 @@ class MdRenderer(Renderer):
     # signature parts -------------------------------------------------------------
 
     @dispatch
-    def render(self, el: dc.Parameters):
+    def render(self, el: dc.Parameters) -> "list[str]":
         # index for switch from positional to kw args (via an unnamed *)
         try:
             kw_only = [par.kind for par in el].index(dc.ParameterKind.keyword_only)
@@ -507,15 +508,15 @@ class MdRenderer(Renderer):
             and kw_only > 0
             and el[kw_only - 1].kind != dc.ParameterKind.var_positional
         ):
-            pars.insert(kw_only, sanitize("*"))
+            pars.insert(kw_only, "*")
 
         # insert a single `/, ` argument to represent shift from positional only arguments
         # note that this must come before a single *, so it's okay that both this
         # and block above insert into pars
         if pos_only is not None:
-            pars.insert(pos_only + 1, sanitize("/"))
+            pars.insert(pos_only + 1, "/")
 
-        return ", ".join(pars)
+        return pars
 
     @dispatch
     def render(self, el: dc.Parameter):
@@ -530,8 +531,8 @@ class MdRenderer(Renderer):
         else:
             glob = ""
 
-        annotation = self.render_annotation(el.annotation)
-        name = sanitize(el.name)
+        annotation = el.annotation  # self.render_annotation(el.annotation)
+        name = el.name
 
         if self.show_signature_annotations:
             if annotation and has_default:

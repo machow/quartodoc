@@ -22,7 +22,7 @@ def test_render_param_kwargs(renderer):
     f = get_object("quartodoc.tests.example_signature.no_annotations")
     res = renderer.render(f.parameters)
 
-    assert res == "a, b=1, *args, c, d=2, **kwargs"
+    assert ", ".join(res) == "a, b=1, *args, c, d=2, **kwargs"
 
 
 def test_render_param_kwargs_annotated():
@@ -32,8 +32,8 @@ def test_render_param_kwargs_annotated():
     res = renderer.render(f.parameters)
 
     assert (
-        res
-        == "a: int, b: int = 1, *args: list\[str\], c: int, d: int, **kwargs: dict\[str, str\]"
+        ", ".join(res)
+        == "a: int, b: int = 1, *args: list[str], c: int, d: int, **kwargs: dict[str, str]"
     )
 
 
@@ -50,7 +50,7 @@ def test_render_param_kwonly(src, dst, renderer):
     f = get_object("quartodoc.tests", src)
 
     res = renderer.render(f.parameters)
-    assert res == dst
+    assert ", ".join(res) == dst
 
 
 @pytest.mark.parametrize(
@@ -108,7 +108,9 @@ def test_render_doc_attribute(renderer):
     res = renderer.render(attr)
     print(res)
 
-    assert res == ["abc", r"Optional\[\]", "xyz"]
+    assert res.name == "abc"
+    assert res.annotation == "Optional\[\]"
+    assert res.description == "xyz"
 
 
 def test_render_doc_section_admonition(renderer):
