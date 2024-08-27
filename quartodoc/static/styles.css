@@ -1,9 +1,12 @@
+/* styles for parameter tables, etc.. ----
+*/
+
 .doc-section dt code {
     background: none;
 }
 
 .doc-section dt {
-    background-color: lightyellow;
+    /* background-color: lightyellow; */
     display: block;
 }
 

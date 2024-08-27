@@ -427,6 +427,8 @@ class Builder:
         The output path of the index file, used to list all API functions.
     sidebar:
         The output path for a sidebar yaml config (by default no config generated).
+    css:
+        The output path for the default css styles.
     rewrite_all_pages:
         Whether to rewrite all rendered doc pages, or only those with changes.
     source_dir:
@@ -486,6 +488,7 @@ class Builder:
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
         sidebar: "str | None" = None,
+        css: "str | None" = None,
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
         dynamic: bool | None = None,
@@ -502,6 +505,7 @@ class Builder:
         self.dir = dir
         self.title = title
         self.sidebar = sidebar
+        self.css = css
         self.parser = parser
 
         self.renderer = Renderer.from_config(renderer)
@@ -586,6 +590,12 @@ class Builder:
         if self.sidebar:
             _log.info(f"Writing sidebar yaml to {self.sidebar}")
             self.write_sidebar(blueprint)
+
+        # css ----
+
+        if self.css:
+            _log.info(f"Writing css styles to {self.css}")
+            self.write_css()
 
     def write_index(self, blueprint: layout.Layout):
         """Write API index page."""
@@ -684,6 +694,22 @@ class Builder:
 
         d_sidebar = self._generate_sidebar(blueprint)
         yaml.dump(d_sidebar, open(self.sidebar, "w"))
+
+    def write_css(self):
+        """Write default css styles to a file."""
+        from importlib_resources import files
+        from importlib_metadata import version
+
+        v = version("quartodoc")
+
+        note = (
+            f"/*\nThis file generated automatically by quartodoc version {v}.\n"
+            "Modifications may be overwritten by quartodoc build. If you want to\n"
+            "customize styles, create a new .css file to avoid losing changes.\n"
+            "*/\n\n\n"
+        )
+        with open(files("quartodoc.static") / "styles.css") as f:
+            Path(self.css).write_text(note + f.read())
 
     def _page_to_links(self, el: layout.Page) -> list[str]:
         # if el.flatten:
