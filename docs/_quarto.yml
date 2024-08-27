@@ -90,9 +90,11 @@ quartodoc:
   dir: api
   package: quartodoc
   render_interlinks: true
+  repo_url: https://github.com/machow/quartodoc
   renderer:
     style: markdown
     table_style: description-list
+    show_source_link: true
   sidebar: "api/_sidebar.yml"
   css: "api/_styles-quartodoc.css"
   sections:
