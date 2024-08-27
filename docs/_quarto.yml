@@ -79,7 +79,9 @@ website:
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css:
+      - api/_styles-quartodoc.css
+      - styles.css
     toc: true
 
 
@@ -88,7 +90,11 @@ quartodoc:
   dir: api
   package: quartodoc
   render_interlinks: true
+  renderer:
+    style: markdown
+    table_style: description-list
   sidebar: "api/_sidebar.yml"
+  css: "api/_styles-quartodoc.css"
   sections:
     - title: Preparation Functions
       desc: |

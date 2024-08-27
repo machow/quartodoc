@@ -1,16 +1,20 @@
 from __future__ import annotations
 
+import black
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
+from dataclasses import dataclass
 from functools import wraps
 from .._griffe_compat import docstrings as ds
 from .._griffe_compat import dataclasses as dc
 from .._griffe_compat import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
-from typing import Tuple, Union, Optional
+from typing import Any, Literal, Tuple, Union, Optional
 from quartodoc import layout
+from quartodoc.pandoc.blocks import DefinitionList
+from quartodoc.pandoc.inlines import Span, Strong, Attr, Code, Inlines
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
 
@@ -20,6 +24,68 @@ def _has_attr_section(el: dc.Docstring | None):
         return False
 
     return any([isinstance(x, ds.DocstringSectionAttributes) for x in el.parsed])
+
+
+@dataclass
+class ParamRow:
+    name: str | None
+    description: str
+    annotation: str | None = None
+    default: str | None = None
+
+    def to_definition_list(self):
+        name = self.name
+        anno = self.annotation
+        desc = self.description
+        default = sanitize(str(self.default))
+
+        part_name = (
+            Span(Strong(name), Attr(classes=["parameter-name"]))
+            if name is not None
+            else ""
+        )
+        part_anno = (
+            Span(anno, Attr(classes=["parameter-annotation"]))
+            if anno is not None
+            else ""
+        )
+
+        # TODO: _required_ is set when parsing parameters, but only used
+        # in the table display format, not description lists....
+        # by this stage _required_ is basically a special token to indicate
+        # a required argument.
+        if default is not None:
+            part_default_sep = Span(" = ", Attr(classes=["parameter-default-sep"]))
+            part_default = Span(default, Attr(classes=["parameter-default"]))
+        else:
+            part_default_sep = ""
+            part_default = ""
+
+        part_desc = desc if desc is not None else ""
+
+        anno_sep = Span(":", Attr(classes=["parameter-annotation-sep"]))
+
+        # TODO: should code wrap the whole thing like this?
+        param = Code(
+            str(
+                Inlines(
+                    [part_name, anno_sep, part_anno, part_default_sep, part_default]
+                )
+            )
+        ).html
+        return (param, part_desc)
+
+    def to_tuple(self, style: Literal["parameters", "attributes", "returns"]):
+        name = self.name
+        if style == "parameters":
+            default = "_required_" if self.default is None else escape(self.default)
+            return (name, self.annotation, self.description, default)
+        elif style == "attributes":
+            return (name, self.annotation, self.description)
+        elif style == "returns":
+            return (name, self.annotation, self.description)
+
+        raise NotImplementedError(f"Unsupported table style: {style}")
 
 
 class MdRenderer(Renderer):
@@ -61,6 +127,8 @@ class MdRenderer(Renderer):
         display_name: str = "relative",
         hook_pre=None,
         render_interlinks=False,
+        # table_style="description-list",
+        table_style="table",
     ):
         self.header_level = header_level
         self.show_signature = show_signature
@@ -68,6 +136,7 @@ class MdRenderer(Renderer):
         self.display_name = display_name
         self.hook_pre = hook_pre
         self.render_interlinks = render_interlinks
+        self.table_style = table_style
 
         self.crnt_header_level = self.header_level
 
@@ -102,10 +171,18 @@ class MdRenderer(Renderer):
 
         return el.parameters
 
-    def _render_table(self, rows, headers):
-        table = tabulate(rows, headers=headers, tablefmt="github")
-
-        return table
+    def _render_table(
+        self,
+        rows,
+        headers,
+        style: Literal["parameters", "attributes", "returns"],
+    ):
+        if self.table_style == "description-list":
+            return str(DefinitionList([row.to_definition_list() for row in rows]))
+        else:
+            row_tuples = [row.to_tuple(style) for row in rows]
+            table = tabulate(row_tuples, headers=headers, tablefmt="github")
+            return table
 
     # render_annotation method --------------------------------------------------------
 
@@ -164,7 +241,14 @@ class MdRenderer(Renderer):
         name = self._fetch_object_dispname(source or el)
         pars = self.render(self._fetch_method_parameters(el))
 
-        return f"`{name}({pars})`"
+        flat_sig = f"{name}({', '.join(pars)})"
+        if len(flat_sig) > 80:
+            indented = [" " * 4 + par for par in pars]
+            sig = "\n".join([f"{name}(", *indented, ")"])
+        else:
+            sig = flat_sig
+
+        return f"```python\n{sig}\n```"
 
     @dispatch
     def signature(
@@ -174,7 +258,7 @@ class MdRenderer(Renderer):
         return f"`{name}`"
 
     @dispatch
-    def render_header(self, el: layout.Doc):
+    def render_header(self, el: layout.Doc) -> str:
         """Render the header of a docstring, including any anchors."""
         _str_dispname = el.name
 
@@ -182,6 +266,13 @@ class MdRenderer(Renderer):
         # e.g. get_object, rather than quartodoc.get_object
         _anchor = f"{{ #{el.obj.path} }}"
         return f"{'#' * self.crnt_header_level} {_str_dispname} {_anchor}"
+
+    @dispatch
+    def render_header(self, el: ds.DocstringSection) -> str:
+        title = el.title or el.kind.value
+        _classes = [".doc-section", ".doc-section-" + title.replace(" ", "-")]
+        _str_classes = " ".join(_classes)
+        return f"{'#' * self.crnt_header_level} {title.title()} {{{_str_classes}}}"
 
     # render method -----------------------------------------------------------
 
@@ -336,7 +427,8 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        body = self.render(el.obj)
+        with self._increment_header():
+            body = self.render(el.obj)
 
         return "\n\n".join(
             [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
@@ -349,7 +441,10 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        return "\n\n".join([title, *sig_part, self.render(el.obj)])
+        with self._increment_header():
+            body = self.render(el.obj)
+
+        return "\n\n".join([title, *sig_part, body])
 
     # render griffe objects ===================================================
 
@@ -357,20 +452,26 @@ class MdRenderer(Renderer):
     def render(self, el: Union[dc.Object, dc.Alias]):
         """Render high level objects representing functions, classes, etc.."""
 
-        str_body = []
         if el.docstring is None:
-            pass
+            return ""
         else:
-            patched_sections = qast.transform(el.docstring.parsed)
-            for section in patched_sections:
-                title = section.title or section.kind.value
-                body = self.render(section)
+            return self.render(el.docstring)
 
-                if title != "text":
-                    header = f"{'#' * (self.crnt_header_level + 1)} {title.title()}"
-                    str_body.append("\n\n".join([header, body]))
-                else:
-                    str_body.append(body)
+    @dispatch
+    def render(self, el: dc.Docstring):
+        str_body = []
+        patched_sections = qast.transform(el.parsed)
+
+        for section in patched_sections:
+            title = section.title or section.kind.value
+            body: str = self.render(section)
+
+            if title != "text":
+                header = self.render_header(section)
+                # header = f"{'#' * (self.crnt_header_level + 1)} {title.title()}"
+                str_body.append("\n\n".join([header, body]))
+            else:
+                str_body.append(body)
 
         parts = [*str_body]
 
@@ -379,7 +480,7 @@ class MdRenderer(Renderer):
     # signature parts -------------------------------------------------------------
 
     @dispatch
-    def render(self, el: dc.Parameters):
+    def render(self, el: dc.Parameters) -> "list":
         # index for switch from positional to kw args (via an unnamed *)
         try:
             kw_only = [par.kind for par in el].index(dc.ParameterKind.keyword_only)
@@ -407,15 +508,15 @@ class MdRenderer(Renderer):
             and kw_only > 0
             and el[kw_only - 1].kind != dc.ParameterKind.var_positional
         ):
-            pars.insert(kw_only, sanitize("*"))
+            pars.insert(kw_only, "*")
 
         # insert a single `/, ` argument to represent shift from positional only arguments
         # note that this must come before a single *, so it's okay that both this
         # and block above insert into pars
         if pos_only is not None:
-            pars.insert(pos_only + 1, sanitize("/"))
+            pars.insert(pos_only + 1, "/")
 
-        return ", ".join(pars)
+        return pars
 
     @dispatch
     def render(self, el: dc.Parameter):
@@ -430,8 +531,8 @@ class MdRenderer(Renderer):
         else:
             glob = ""
 
-        annotation = self.render_annotation(el.annotation)
-        name = sanitize(el.name)
+        annotation = el.annotation  # self.render_annotation(el.annotation)
+        name = el.name
 
         if self.show_signature_annotations:
             if annotation and has_default:
@@ -463,18 +564,15 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render(self, el: ds.DocstringSectionParameters):
-        rows = list(map(self.render, el.value))
+        rows: "list[ParamRow]" = list(map(self.render, el.value))
         header = ["Name", "Type", "Description", "Default"]
-        return self._render_table(rows, header)
+        return self._render_table(rows, header, "parameters")
 
     @dispatch
-    def render(self, el: ds.DocstringParameter) -> Tuple[str]:
-        # TODO: if default is not, should return the word "required" (unescaped)
-        default = "_required_" if el.default is None else escape(el.default)
-
+    def render(self, el: ds.DocstringParameter) -> ParamRow:
         annotation = self.render_annotation(el.annotation)
         clean_desc = sanitize(el.description, allow_markdown=True)
-        return (escape(el.name), annotation, clean_desc, default)
+        return ParamRow(el.name, clean_desc, annotation=annotation, default=el.default)
 
     # attributes ----
 
@@ -483,16 +581,15 @@ class MdRenderer(Renderer):
         header = ["Name", "Type", "Description"]
         rows = list(map(self.render, el.value))
 
-        return self._render_table(rows, header)
+        return self._render_table(rows, header, "attributes")
 
     @dispatch
-    def render(self, el: ds.DocstringAttribute):
-        row = [
-            sanitize(el.name),
-            self.render_annotation(el.annotation),
+    def render(self, el: ds.DocstringAttribute) -> ParamRow:
+        return ParamRow(
+            el.name,
             sanitize(el.description or "", allow_markdown=True),
-        ]
-        return row
+            annotation=self.render_annotation(el.annotation),
+        )
 
     # admonition ----
     # note this can be a see-also, warnings, or notes section
@@ -550,15 +647,27 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: Union[ds.DocstringSectionReturns, ds.DocstringSectionRaises]):
         rows = list(map(self.render, el.value))
-        header = ["Type", "Description"]
+        header = ["Name", "Type", "Description"]
 
-        return self._render_table(rows, header)
+        return self._render_table(rows, header, "returns")
 
     @dispatch
-    def render(self, el: Union[ds.DocstringReturn, ds.DocstringRaise]):
+    def render(self, el: ds.DocstringReturn):
         # similar to DocstringParameter, but no name or default
-        annotation = self.render_annotation(el.annotation)
-        return (annotation, sanitize(el.description, allow_markdown=True))
+        return ParamRow(
+            el.name,
+            sanitize(el.description, allow_markdown=True),
+            annotation=self.render_annotation(el.annotation),
+        )
+
+    @dispatch
+    def render(self, el: ds.DocstringRaise) -> ParamRow:
+        # similar to DocstringParameter, but no name or default
+        return ParamRow(
+            None,
+            sanitize(el.description, allow_markdown=True),
+            annotation=self.render_annotation(el.annotation),
+        )
 
     # unsupported parts ----
 

@@ -1,0 +1,15 @@
+/* styles for parameter tables, etc.. ----
+*/
+
+.doc-section dt code {
+    background: none;
+}
+
+.doc-section dt {
+    /* background-color: lightyellow; */
+    display: block;
+}
+
+.doc-section dl dd {
+    margin-left: 3rem;
+}

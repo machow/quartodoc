@@ -1,9 +1,16 @@
 import pytest
+from quartodoc._griffe_compat import dataclasses as dc
 from quartodoc._griffe_compat import docstrings as ds
 from quartodoc._griffe_compat import expressions as exp
 
 from quartodoc.renderers import MdRenderer
 from quartodoc import layout, get_object, blueprint, Auto
+
+from textwrap import indent
+
+
+def indented_sections(**kwargs: str):
+    return "\n\n".join([f"{k}\n" + indent(v, " " * 4) for k, v in kwargs.items()])
 
 
 @pytest.fixture
@@ -15,7 +22,7 @@ def test_render_param_kwargs(renderer):
     f = get_object("quartodoc.tests.example_signature.no_annotations")
     res = renderer.render(f.parameters)
 
-    assert res == "a, b=1, *args, c, d=2, **kwargs"
+    assert ", ".join(res) == "a, b=1, *args, c, d=2, **kwargs"
 
 
 def test_render_param_kwargs_annotated():
@@ -25,8 +32,8 @@ def test_render_param_kwargs_annotated():
     res = renderer.render(f.parameters)
 
     assert (
-        res
-        == "a: int, b: int = 1, *args: list\[str\], c: int, d: int, **kwargs: dict\[str, str\]"
+        ", ".join(res)
+        == "a: int, b: int = 1, *args: list[str], c: int, d: int, **kwargs: dict[str, str]"
     )
 
 
@@ -43,7 +50,7 @@ def test_render_param_kwonly(src, dst, renderer):
     f = get_object("quartodoc.tests", src)
 
     res = renderer.render(f.parameters)
-    assert res == dst
+    assert ", ".join(res) == dst
 
 
 @pytest.mark.parametrize(
@@ -101,7 +108,9 @@ def test_render_doc_attribute(renderer):
     res = renderer.render(attr)
     print(res)
 
-    assert res == ["abc", r"Optional\[\]", "xyz"]
+    assert res.name == "abc"
+    assert res.annotation == "Optional\[\]"
+    assert res.description == "xyz"
 
 
 def test_render_doc_section_admonition(renderer):
@@ -194,3 +203,32 @@ def test_render_doc_signature_name_alias_of_alias(snapshot, renderer):
     res = renderer.render(bp)
 
     assert res == snapshot
+
+
+@pytest.mark.parametrize(
+    "doc",
+    [
+        """name: int\n    A description.""",
+        """int\n    A description.""",
+    ],
+)
+def test_render_numpydoc_section_return(snapshot, doc):
+    from quartodoc.parsers import get_parser_defaults
+    from griffe import Parser
+
+    full_doc = (
+        f"""Parameters\n---\n{doc}\n\nReturns\n---\n{doc}\n\nAttributes\n---\n{doc}"""
+    )
+
+    el = dc.Docstring(
+        value=full_doc, parser=Parser.numpy, parser_options=get_parser_defaults("numpy")
+    )
+
+    assert el.parsed is not None and len(el.parsed) == 3
+
+    res_default = MdRenderer().render(el)
+    res_list = MdRenderer(table_style="description-list").render(el)
+
+    assert snapshot == indented_sections(
+        Code=full_doc, Default=res_default, List=res_list
+    )
