@@ -186,7 +186,7 @@ def _resolve_target(obj: dc.Alias):
     return target
 
 
-def replace_docstring(obj: dc.Object | dc.Alias, f=None):
+def replace_docstring(obj: dc.Object | dc.Alias, f=None, loader=None):
     """Replace (in place) a docstring for a griffe object.
 
     Parameters
@@ -200,6 +200,9 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
     """
     import importlib
 
+    if loader is None:
+        raise NotImplementedError("Loader may not be None.")
+
     if isinstance(obj, dc.Alias):
         obj = _resolve_target(obj)
 
@@ -208,7 +211,7 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
     # also have the effect of updating the class docstring.
     if isinstance(obj, dc.Class):
         for child_obj in obj.members.values():
-            replace_docstring(child_obj)
+            replace_docstring(child_obj, loader=loader)
 
     if f is None:
         mod = importlib.import_module(obj.module.canonical_path)
@@ -237,8 +240,8 @@ def replace_docstring(obj: dc.Object | dc.Alias, f=None):
         lineno=getattr(old, "lineno", None),
         endlineno=getattr(old, "endlineno", None),
         parent=getattr(old, "parent", None),
-        parser=getattr(old, "parser", None),
-        parser_options=getattr(old, "parser_options", None),
+        parser=loader.docstring_parser,
+        parser_options=loader.docstring_options,
     )
 
     obj.docstring = new
@@ -344,7 +347,7 @@ def dynamic_alias(
         obj = get_object(canonical_path, loader=loader)
 
     # use dynamically imported object's docstring
-    replace_docstring(obj, attr)
+    replace_docstring(obj, attr, loader=loader)
 
     if obj.canonical_path == path.replace(":", "."):
         return obj
