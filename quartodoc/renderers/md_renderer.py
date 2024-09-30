@@ -768,7 +768,7 @@ class MdRenderer(Renderer):
     @dispatch
     def summarize(self, el: layout.Link):
         description = self.summarize(el.obj)
-        return self._summary_row(f"[](`{el.name}`)", description)
+        return self._summary_row(f"[](`~{el.name}`)", description)
 
     @dispatch
     def summarize(self, obj: Union[dc.Object, dc.Alias]) -> str:

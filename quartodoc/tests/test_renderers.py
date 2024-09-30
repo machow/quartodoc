@@ -126,7 +126,7 @@ def test_render_doc_section_admonition(renderer):
     assert res == "quartodoc.tests.example: Method for doing a thing"
 
 
-@pytest.mark.parametrize("children", ["embedded", "flat"])
+@pytest.mark.parametrize("children", ["embedded", "flat", "linked"])
 def test_render_doc_module(snapshot, renderer, children):
     bp = blueprint(Auto(name="quartodoc.tests.example", children=children))
     res = renderer.render(bp)
