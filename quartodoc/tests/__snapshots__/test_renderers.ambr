@@ -314,6 +314,33 @@
   A function
   '''
 # ---
+# name: test_render_doc_module[linked]
+  '''
+  # quartodoc.tests.example { #quartodoc.tests.example }
+  
+  `tests.example`
+  
+  A module
+  
+  ## Attributes
+  
+  | Name | Description |
+  | --- | --- |
+  | [](`~quartodoc.tests.example.a_attr`) | An attribute |
+  
+  ## Classes
+  
+  | Name | Description |
+  | --- | --- |
+  | [](`~quartodoc.tests.example.AClass`) | A class |
+  
+  ## Functions
+  
+  | Name | Description |
+  | --- | --- |
+  | [](`~quartodoc.tests.example.a_func`) | A function |
+  '''
+# ---
 # name: test_render_doc_signature_name
   '''
   # example.a_func { #quartodoc.tests.example.a_func }
