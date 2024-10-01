@@ -292,10 +292,11 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render_header(self, el: ds.DocstringSection) -> str:
-        title = _sanitize_title(el.title or el.kind.value)
-        _classes = [".doc-section", ".doc-section-" + title.replace(" ", "-")]
+        title = el.title or el.kind.value.title()
+        anchor_part = _sanitize_title(title.lower())
+        _classes = [".doc-section", f".doc-section-{anchor_part}"]
         _str_classes = " ".join(_classes)
-        return f"{'#' * self.crnt_header_level} {title.title()} {{{_str_classes}}}"
+        return f"{'#' * self.crnt_header_level} {title} {{{_str_classes}}}"
 
     # render method -----------------------------------------------------------
 

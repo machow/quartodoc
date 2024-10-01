@@ -18,6 +18,9 @@ def renderer():
     return MdRenderer()
 
 
+# Smaller parts ----------------------------------------------------------------
+
+
 def test_render_param_kwargs(renderer):
     f = get_object("quartodoc.tests.example_signature.no_annotations")
     res = renderer.render(f.parameters)
@@ -124,6 +127,18 @@ def test_render_doc_section_admonition(renderer):
     print(res)
 
     assert res == "quartodoc.tests.example: Method for doing a thing"
+
+
+def test_render_doc_section_header_anchor(renderer):
+    section = ds.DocstringSection(title="a `chaotic` {.title}")
+
+    dst = "# a `chaotic` {.title} {.doc-section .doc-section-a-chaotic-title}"
+
+    assert renderer.render_header(section) == dst
+
+
+# Big pieces -------------------------------------------------------------------
+# These are mostly snapshots
 
 
 @pytest.mark.parametrize("children", ["embedded", "flat", "linked"])

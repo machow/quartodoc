@@ -398,7 +398,7 @@
   | a      | int    | The a parameter. | _required_ |
   | b      | str    | The b parameter. | _required_ |
   
-  ## Custom Admonition {.doc-section .doc-section-Custom-Admonition}
+  ## Custom Admonition {.doc-section .doc-section-custom-admonition}
   
   Some text.
   '''
@@ -420,7 +420,7 @@
   | a      |        | The a parameter. | _required_ |
   | b      | str    | The b parameter. | _required_ |
   
-  ## Custom Admonition {.doc-section .doc-section-Custom-Admonition}
+  ## Custom Admonition {.doc-section .doc-section-custom-admonition}
   
   Some text.
   '''
