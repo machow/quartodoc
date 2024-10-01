@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import black
+import re
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
@@ -24,6 +25,28 @@ def _has_attr_section(el: dc.Docstring | None):
         return False
 
     return any([isinstance(x, ds.DocstringSectionAttributes) for x in el.parsed])
+
+
+def _sanitize_title(title: str):
+    """Replace characters so that title can be used as an anchor, by
+
+    Approach:
+       * replace spaces with -, then
+       * stripping non alphanumeric characters
+
+    Examples
+    --------
+
+    >>> _sanitize_title("a b c")
+    'a-b-c'
+    >>> _sanitize_title("a b! c")
+    'a-b-c'
+    >>> _sanitize_title("a`b`c{")
+    'abc'
+
+    """
+
+    return re.sub(r"[^a-zA-Z0-9-]+", "", title.replace(" ", "-"))
 
 
 @dataclass
@@ -269,10 +292,11 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render_header(self, el: ds.DocstringSection) -> str:
-        title = el.title or el.kind.value
-        _classes = [".doc-section", ".doc-section-" + title.replace(" ", "-")]
+        title = el.title or el.kind.value.title()
+        anchor_part = _sanitize_title(title.lower())
+        _classes = [".doc-section", f".doc-section-{anchor_part}"]
         _str_classes = " ".join(_classes)
-        return f"{'#' * self.crnt_header_level} {title.title()} {{{_str_classes}}}"
+        return f"{'#' * self.crnt_header_level} {title} {{{_str_classes}}}"
 
     # render method -----------------------------------------------------------
 

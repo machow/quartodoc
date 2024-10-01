@@ -9,7 +9,7 @@ include = ["quartodoc"]
 
 [tool.pytest.ini_options]
 markers = []
-testpaths = ["quartodoc/tests"]
+testpaths = ["quartodoc"]
 
 [project]
 name = "quartodoc"
