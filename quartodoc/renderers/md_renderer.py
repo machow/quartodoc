@@ -16,6 +16,7 @@ from typing import Any, Literal, Tuple, Union, Optional
 from quartodoc import layout
 from quartodoc.pandoc.blocks import DefinitionList
 from quartodoc.pandoc.inlines import Span, Strong, Attr, Code, Inlines
+from quartodoc.repo_info import RepoInfo
 
 from .base import Renderer, escape, sanitize, convert_rst_link_to_md
 
@@ -147,19 +148,22 @@ class MdRenderer(Renderer):
         header_level: int = 1,
         show_signature: bool = True,
         show_signature_annotations: bool = False,
+        show_source_link: bool = False,
         display_name: str = "relative",
         hook_pre=None,
         render_interlinks=False,
-        # table_style="description-list",
         table_style="table",
+        repo_info: "RepoInfo | None" = None,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
         self.show_signature_annotations = show_signature_annotations
+        self.show_source_link = show_source_link
         self.display_name = display_name
         self.hook_pre = hook_pre
         self.render_interlinks = render_interlinks
         self.table_style = table_style
+        self.repo_info = repo_info
 
         self.crnt_header_level = self.header_level
 
@@ -448,8 +452,13 @@ class MdRenderer(Renderer):
                         [self.render(x) for x in raw_meths if isinstance(x, layout.Doc)]
                     )
 
-        str_sig = self.signature(el)
-        sig_part = [str_sig] if self.show_signature else []
+        sig_part: list[str] = []
+
+        if self.show_signature:
+            sig_part.append(self.signature(el))
+
+        if self.show_source_link:
+            sig_part.append(self.source_link(el.obj))
 
         with self._increment_header():
             body = self.render(el.obj)
@@ -463,6 +472,7 @@ class MdRenderer(Renderer):
         title = self.render_header(el)
 
         str_sig = self.signature(el)
+        str_source = el.obj
         sig_part = [str_sig] if self.show_signature else []
 
         with self._increment_header():
@@ -705,6 +715,22 @@ class MdRenderer(Renderer):
     )
     def render(self, el):
         raise NotImplementedError(f"{type(el)}")
+
+    # Source links ============================================================
+
+    def source_link(self, el: "dc.Alias | dc.Object"):
+
+        if self.repo_info is not None:
+            fpath = str(el.relative_package_filepath)
+            url = self.repo_info.source_link(fpath)
+
+            return f'<div class="doc-source"><a title="source for {fpath}" href="{url}">[source]</a></div>'
+
+        raise ValueError(
+            "Unable to produce a link to source file without repo info. "
+            "Either set repo_info= in the renderer, or provide a repo_url in the "
+            "`quartodoc:` section of your _quarto.yml."
+        )
 
     # Summarize ===============================================================
     # this method returns a summary description, such as a table summarizing a

@@ -18,6 +18,7 @@ from .inventory import create_inventory, convert_inventory
 from . import layout
 from .parsers import get_parser_defaults
 from .renderers import Renderer
+from .repo_info import RepoInfo
 from .validation import fmt_all
 from ._pydantic_compat import ValidationError
 from .pandoc.blocks import Blocks, Header
@@ -441,6 +442,9 @@ class Builder:
     render_interlinks:
         Whether to render interlinks syntax inside documented objects. Note that the
         interlinks filter is required to generate the links in quarto.
+    repo_url:
+        URL for the source repository. This is used to generate links from documentation
+        to source code.
     parser:
         Docstring parser to use. This correspond to different docstring styles,
         and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".
@@ -494,6 +498,7 @@ class Builder:
         dynamic: bool | None = None,
         parser="numpy",
         render_interlinks: bool = False,
+        repo_url: str | None = None,
         _fast_inventory=False,
     ):
         self.layout = self.load_layout(
@@ -507,12 +512,17 @@ class Builder:
         self.sidebar = sidebar
         self.css = css
         self.parser = parser
+        self.repo_url = repo_url
 
         self.renderer = Renderer.from_config(renderer)
         if render_interlinks:
             # this is a top-level option, but lives on the renderer
             # so we just manually set it there for now.
             self.renderer.render_interlinks = render_interlinks
+        if repo_url:
+            # also a top-level option set on renderer
+            print("SETTING REPOINFO")
+            self.renderer.repo_info = RepoInfo.from_link(repo_url)
 
         if out_index is not None:
             self.out_index = out_index

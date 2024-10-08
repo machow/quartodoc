@@ -1,6 +1,17 @@
 /* styles for parameter tables, etc.. ----
 */
 
+.doc-source {
+    width: 100%;
+    text-align: right;
+    font-size: smaller;
+}
+
+.doc-source a {
+    text-decoration: none;
+    float: right;
+}
+
 .doc-section dt code {
     background: none;
 }

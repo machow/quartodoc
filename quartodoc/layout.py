@@ -267,6 +267,8 @@ class Auto(AutoOptions):
         (Not implemented). A list of members to include.
     exclude:
         (Not implemented). A list of members to exclude.
+    show_source_link:
+        Whether to show a link to item source code.
     dynamic:
         Whether to dynamically load docstring. By default docstrings are loaded
         using static analysis. dynamic may be a string pointing to another object,
