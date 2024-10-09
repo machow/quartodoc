@@ -19,9 +19,20 @@ quartodoc:
 ```
 
 Note that running `python -m quartodoc build` will now produce a file called `_sidebar.yml`,
-with a [quarto sidebar configuration](https://quarto.org/docs/websites/website-navigation.html#side-navigation).
-The quarto [`metadata-files` option](https://quarto.org/docs/projects/quarto-projects.html#metadata-includes) ensures
+with a [Quarto sidebar configuration](https://quarto.org/docs/websites/website-navigation.html#side-navigation).
+The Quarto [`metadata-files` option](https://quarto.org/docs/projects/quarto-projects.html#metadata-includes) ensures
 it's included with the configuration in `_quarto.yml`.
+
+Additional [sidebar options are available in Quarto](https://quarto.org/docs/websites/website-navigation.html#side-navigation) and can be passed from quartodoc to Quarto via `sidebar_options`:
+
+```yaml
+quartodoc:
+  sidebar: "_sidebar.yml"
+  sidebar_options:
+    style: docked
+    search: true
+    collapse-level: 2
+```
 
 Here is what the sidebar for the [quartodoc reference page](/api) looks like:
 
