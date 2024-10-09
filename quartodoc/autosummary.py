@@ -427,6 +427,10 @@ class Builder:
         The output path of the index file, used to list all API functions.
     sidebar:
         The output path for a sidebar yaml config (by default no config generated).
+    sidebar_options:
+        Additional options to be included in the sidebar definition. See
+        [Side navigation](https://quarto.org/docs/websites/website-navigation.html#side-navigation)
+        in Quarto's documentation for more information.
     css:
         The output path for the default css styles.
     rewrite_all_pages:
@@ -488,6 +492,7 @@ class Builder:
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
         sidebar: "str | None" = None,
+        sidebar_options: "dict | None" = None,
         css: "str | None" = None,
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
@@ -505,6 +510,7 @@ class Builder:
         self.dir = dir
         self.title = title
         self.sidebar = sidebar
+        self.sidebar_options = sidebar_options
         self.css = css
         self.parser = parser
 
@@ -589,7 +595,7 @@ class Builder:
 
         if self.sidebar:
             _log.info(f"Writing sidebar yaml to {self.sidebar}")
-            self.write_sidebar(blueprint)
+            self.write_sidebar(blueprint, self.sidebar_options)
 
         # css ----
 
@@ -659,7 +665,7 @@ class Builder:
 
     # sidebar ----
 
-    def _generate_sidebar(self, blueprint: layout.Layout):
+    def _generate_sidebar(self, blueprint: layout.Layout, options: "dict | None" = None):
         contents = [f"{self.dir}/index{self.out_page_suffix}"]
         in_subsection = False
         crnt_entry = {}
@@ -686,7 +692,11 @@ class Builder:
         if crnt_entry:
             contents.append(crnt_entry)
 
-        entries = [{"id": self.dir, "contents": contents}, {"id": "dummy-sidebar"}]
+        # Create sidebar with user options, ensuring we control `id` and `contents`
+        sidebar = {**(self.sidebar_options or {})}
+        sidebar.update({"id": self.dir, "contents": contents})
+
+        entries = [sidebar,  {"id": "dummy-sidebar"}]
         return {"website": {"sidebar": entries}}
 
     def write_sidebar(self, blueprint: layout.Layout):

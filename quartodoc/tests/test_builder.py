@@ -82,3 +82,30 @@ def test_builder_generate_sidebar(tmp_path, snapshot):
     d_sidebar = builder._generate_sidebar(bp)
 
     assert yaml.dump(d_sidebar) == snapshot
+
+def test_builder_generate_sidebar_options(tmp_path, snapshot):
+    cfg = yaml.safe_load(
+        """
+    quartodoc:
+      package: quartodoc.tests.example
+      sidebar_options:
+        style: docked
+        search: true
+      sections:
+        - title: first section
+          desc: some description
+          contents: [a_func]
+        - title: second section
+          desc: title description
+        - subtitle: a subsection
+          desc: subtitle description
+          contents:
+            - a_attr
+    """
+    )
+
+    builder = Builder.from_quarto_config(cfg)
+    bp = blueprint(builder.layout)
+    d_sidebar = builder._generate_sidebar(bp)
+
+    assert yaml.dump(d_sidebar) == snapshot
