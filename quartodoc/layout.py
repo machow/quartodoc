@@ -221,7 +221,7 @@ class AutoOptions(_Base):
 
     # other options ----
     include: Optional[str] = None
-    exclude: Optional[str] = None
+    exclude: Optional[list[str]] = None
     dynamic: Union[None, bool, str] = None
     children: ChoicesChildren = ChoicesChildren.embedded
     package: Union[str, None, MISSING] = MISSING()
@@ -249,6 +249,7 @@ class Auto(AutoOptions):
         path the object, and short is the name of the object (i.e. no periods).
     members:
         A list of members, such as attributes or methods on a class, to document.
+        If members is specified, no other includes or excludes are applied.
     include_private:
         Whether to include members starting with "_"
     include_imports:
@@ -266,7 +267,8 @@ class Auto(AutoOptions):
     include:
         (Not implemented). A list of members to include.
     exclude:
-        (Not implemented). A list of members to exclude.
+        A list of members to exclude. This is performed last, in order to subtract
+        from the results of options like include_functions.
     dynamic:
         Whether to dynamically load docstring. By default docstrings are loaded
         using static analysis. dynamic may be a string pointing to another object,
