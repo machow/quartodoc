@@ -483,19 +483,19 @@
   List
       # Parameters {.doc-section .doc-section-parameters}
   
-      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   
       # Returns {.doc-section .doc-section-returns}
   
-      <code>[]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
       :   A description.
   
       # Attributes {.doc-section .doc-section-attributes}
   
-      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   '''
@@ -540,19 +540,19 @@
   List
       # Parameters {.doc-section .doc-section-parameters}
   
-      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   
       # Returns {.doc-section .doc-section-returns}
   
-      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
       :   A description.
   
       # Attributes {.doc-section .doc-section-attributes}
   
-      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
       :   A description.
   '''

@@ -77,7 +77,7 @@ class ParamRow:
         # in the table display format, not description lists....
         # by this stage _required_ is basically a special token to indicate
         # a required argument.
-        if default is not None:
+        if self.default is not None:
             part_default_sep = Span(" = ", Attr(classes=["parameter-default-sep"]))
             part_default = Span(default, Attr(classes=["parameter-default"]))
         else:
