@@ -407,7 +407,12 @@ class BlueprintTransformer(PydanticTransformer):
         if el.exclude:
             options = {k: v for k, v in options.items() if k not in el.exclude}
 
-        return sorted(options)
+        if el.member_order == "alphabetical":
+            return sorted(options)
+        elif el.member_order == "source":
+            return list(options)
+        else:
+            raise ValueError(f"Unsupported value of member_order: {el.member_order}")
 
 
 class _PagePackageStripper(PydanticTransformer):

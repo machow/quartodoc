@@ -225,6 +225,7 @@ class AutoOptions(_Base):
     dynamic: Union[None, bool, str] = None
     children: ChoicesChildren = ChoicesChildren.embedded
     package: Union[str, None, MISSING] = MISSING()
+    member_order: Literal["alphabetical", "source"] = "alphabetical"
     member_options: Optional["AutoOptions"] = None
 
     # for tracking fields users manually specify
@@ -277,6 +278,9 @@ class Auto(AutoOptions):
         Style for presenting members. Either separate, embedded, or flat.
     package:
         If specified, object lookup will be relative to this path.
+    member_order:
+        Order to present members in, either "alphabetical" or "source" order.
+        Defaults to alphabetical sorting.
     member_options:
         Options to apply to members. These can include any of the options above.
 

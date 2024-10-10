@@ -284,6 +284,25 @@ def test_blueprint_fetch_members_dynamic():
     assert bp.members[0].obj.parent.path == name.replace(":", ".")
 
 
+@pytest.mark.parametrize("order", ["alphabetical", "source"])
+def test_blueprint_member_order(order):
+    auto = lo.Auto(
+        name="quartodoc.tests.example_class.C",
+        member_order=order,
+        include_functions=True,
+        include_attributes=False,
+        include_classes=False,
+    )
+    bp = blueprint(auto)
+    src_names = [entry.name for entry in bp.members]
+    dst_names = ["some_method", "some_class_method"]
+
+    if order == "alphabetical":
+        dst_names = sorted(dst_names)
+
+    assert src_names == dst_names
+
+
 def test_blueprint_member_options():
     auto = lo.Auto(
         name="quartodoc.tests.example",
