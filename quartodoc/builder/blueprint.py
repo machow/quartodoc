@@ -371,12 +371,6 @@ class BlueprintTransformer(PydanticTransformer):
         if obj.is_module and obj.exports is not None:
             options = {k: v for k, v in options.items() if v.is_exported}
 
-        if el.include:
-            raise NotImplementedError("include argument currently unsupported.")
-
-        if el.exclude:
-            raise NotImplementedError("exclude argument currently unsupported.")
-
         if not el.include_private:
             options = {k: v for k, v in options.items() if not k.startswith("_")}
 
@@ -406,6 +400,12 @@ class BlueprintTransformer(PydanticTransformer):
 
         if not el.include_functions:
             options = {k: v for k, v in options.items() if not v.is_function}
+
+        if el.include:
+            raise NotImplementedError("include argument currently unsupported.")
+
+        if el.exclude:
+            options = {k: v for k, v in options.items() if k not in el.exclude}
 
         if el.member_order == "alphabetical":
             return sorted(options)
