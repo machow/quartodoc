@@ -31,7 +31,7 @@ class C:
     ...
 
 
-def a_complex_signature(x: "list[C | int | None]", y: "pathlib.Pathlib"):
+def a_complex_signature(x: "list[C | int | None]", y: "pathlib.Pathlib", z):
     """
     Parameters
     ----------
@@ -39,4 +39,6 @@ def a_complex_signature(x: "list[C | int | None]", y: "pathlib.Pathlib"):
         The x parameter
     y:
         The y parameter
+    z:
+        The z parameter (unannotated)
     """
