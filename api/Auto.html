@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,6 +104,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="../api/_styles-quartodoc.css">
 <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -483,101 +518,80 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="quartodoc.Auto" class="level1">
 <h1>Auto</h1>
-<p><code>Auto(self, **kwargs)</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Auto(<span class="va">self</span>, <span class="op">**</span>kwargs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Configure a python object to document (e.g.&nbsp;module, class, function, attribute).</p>
-<section id="attributes" class="level2">
-<h2 class="anchored" data-anchor-id="attributes">Attributes</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>name</td>
-<td><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></td>
-<td>Name of the object. This should be the path needed to import it.</td>
-</tr>
-<tr class="even">
-<td>signature_name</td>
-<td></td>
-<td>Style of name to use in the signature. Can be “relative”, “full”, or “short”. Relative is whatever was used as the name argument, full is the fully qualified path the object, and short is the name of the object (i.e.&nbsp;no periods).</td>
-</tr>
-<tr class="odd">
-<td>members</td>
-<td></td>
-<td>A list of members, such as attributes or methods on a class, to document.</td>
-</tr>
-<tr class="even">
-<td>include_private</td>
-<td></td>
-<td>Whether to include members starting with “_”</td>
-</tr>
-<tr class="odd">
-<td>include_imports</td>
-<td></td>
-<td>Whether to include members that were imported from somewhere else.</td>
-</tr>
-<tr class="even">
-<td>include_empty</td>
-<td></td>
-<td>Whether to include members with no docstring.</td>
-</tr>
-<tr class="odd">
-<td>include_inherited</td>
-<td></td>
-<td>Whether to include members inherited from a parent class.</td>
-</tr>
-<tr class="even">
-<td>include_attributes</td>
-<td></td>
-<td>Whether to include attributes.</td>
-</tr>
-<tr class="odd">
-<td>include_classes</td>
-<td></td>
-<td>Whether to include classes.</td>
-</tr>
-<tr class="even">
-<td>include_functions</td>
-<td></td>
-<td>Whether to include functions.</td>
-</tr>
-<tr class="odd">
-<td>include</td>
-<td></td>
-<td>(Not implemented). A list of members to include.</td>
-</tr>
-<tr class="even">
-<td>exclude</td>
-<td></td>
-<td>(Not implemented). A list of members to exclude.</td>
-</tr>
-<tr class="odd">
-<td>dynamic</td>
-<td></td>
-<td>Whether to dynamically load docstring. By default docstrings are loaded using static analysis. dynamic may be a string pointing to another object, to return an alias for that object.</td>
-</tr>
-<tr class="even">
-<td>children</td>
-<td></td>
-<td>Style for presenting members. Either separate, embedded, or flat.</td>
-</tr>
-<tr class="odd">
-<td>package</td>
-<td></td>
-<td>If specified, object lookup will be relative to this path.</td>
-</tr>
-<tr class="even">
-<td>member_options</td>
-<td></td>
-<td>Options to apply to members. These can include any of the options above.</td>
-</tr>
-</tbody>
-</table>
+<section id="attributes" class="level2 doc-section doc-section-attributes">
+<h2 class="doc-section doc-section-attributes anchored" data-anchor-id="attributes">Attributes</h2>
+<dl>
+<dt><code><span class="parameter-name"><strong>name</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span></code></dt>
+<dd>
+<p>Name of the object. This should be the path needed to import it.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>signature_name</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Style of name to use in the signature. Can be "relative", "full", or "short". Relative is whatever was used as the name argument, full is the fully qualified path the object, and short is the name of the object (i.e.&nbsp;no periods).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>members</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>A list of members, such as attributes or methods on a class, to document. If members is specified, no other includes or excludes are applied.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_private</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to include members starting with "_"</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_imports</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to include members that were imported from somewhere else.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_empty</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to include members with no docstring.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_inherited</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to include members inherited from a parent class.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_attributes</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to include attributes.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_classes</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to include classes.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include_functions</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to include functions.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>include</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>(Not implemented). A list of members to include.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>exclude</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>A list of members to exclude. This is performed last, in order to subtract from the results of options like include_functions.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>dynamic</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Whether to dynamically load docstring. By default docstrings are loaded using static analysis. dynamic may be a string pointing to another object, to return an alias for that object.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>children</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Style for presenting members. Either separate, embedded, or flat.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>package</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>If specified, object lookup will be relative to this path.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>member_order</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Order to present members in, either "alphabetical" or "source" order. Defaults to alphabetical sorting.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>member_options</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"></span></code></dt>
+<dd>
+<p>Options to apply to members. These can include any of the options above.</p>
+</dd>
+</dl>
 
 
 </section>

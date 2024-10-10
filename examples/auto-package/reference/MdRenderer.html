@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -158,7 +158,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
   <ul class="collapse">
-  <li><a href="#quartodoc.MdRenderer.render_header" id="toc-quartodoc.MdRenderer.render_header" class="nav-link" data-scroll-target="#quartodoc.MdRenderer.render_header">render_header</a></li>
   <li><a href="#quartodoc.MdRenderer.summarize" id="toc-quartodoc.MdRenderer.summarize" class="nav-link" data-scroll-target="#quartodoc.MdRenderer.summarize">summarize</a></li>
   </ul></li>
   </ul></li>
@@ -173,15 +172,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="quartodoc.MdRenderer" class="level1">
 <h1>MdRenderer</h1>
-<p><code>MdRenderer(self, header_level=1, show_signature=True, show_signature_annotations=False, display_name='relative', hook_pre=None, render_interlinks=False)</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>MdRenderer(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    header_level<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    show_signature<span class="op">=</span><span class="va">True</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    show_signature_annotations<span class="op">=</span><span class="va">False</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    display_name<span class="op">=</span><span class="st">'relative'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    hook_pre<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    render_interlinks<span class="op">=</span><span class="va">False</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    table_style<span class="op">=</span><span class="st">'table'</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Render docstrings to markdown.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<section id="parameters" class="level2 doc-section doc-section-parameters">
+<h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 9%">
+<col style="width: 8%">
 <col style="width: 2%">
-<col style="width: 84%">
+<col style="width: 85%">
 <col style="width: 4%">
 </colgroup>
 <thead>
@@ -194,40 +202,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>header_level</code></td>
+<td>header_level</td>
 <td>int</td>
 <td>The level of the header (e.g.&nbsp;1 is the biggest).</td>
 <td><code>1</code></td>
 </tr>
 <tr class="even">
-<td><code>show_signature</code></td>
+<td>show_signature</td>
 <td>bool</td>
 <td>Whether to show the function signature.</td>
 <td><code>True</code></td>
 </tr>
 <tr class="odd">
-<td><code>show_signature_annotations</code></td>
+<td>show_signature_annotations</td>
 <td>bool</td>
 <td>Whether to show annotations in the function signature.</td>
 <td><code>False</code></td>
 </tr>
 <tr class="even">
-<td><code>display_name</code></td>
+<td>display_name</td>
 <td>str</td>
-<td>The default name shown for documented functions. Either “name”, “relative”, “full”, or “canonical”. These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
+<td>The default name shown for documented functions. Either "name", "relative", "full", or "canonical". These options range from just the function name, to its full path relative to its package, to including the package name, to its the its full path relative to its .__module__.</td>
 <td><code>'relative'</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> MdRenderer, get_object</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> renderer <span class="op">=</span> MdRenderer(header_level<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(renderer.render(f)[:<span class="dv">81</span>])</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">## get_object</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>`get_object(module: <span class="bu">str</span>, object_name: <span class="bu">str</span>, parser: <span class="bu">str</span> <span class="op">=</span> <span class="st">'numpy'</span>)`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="examples" class="level2 doc-section doc-section-examples">
+<h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> MdRenderer, get_object</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> renderer <span class="op">=</span> MdRenderer(header_level<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(renderer.render(f)[:<span class="dv">81</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">## get_object</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>`get_object(module: <span class="bu">str</span>, object_name: <span class="bu">str</span>, parser: <span class="bu">str</span> <span class="op">=</span> <span class="st">'numpy'</span>)`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
@@ -240,23 +248,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="#quartodoc.MdRenderer.render_header">render_header</a></td>
-<td>Render the header of a docstring, including any anchors.</td>
-</tr>
-<tr class="even">
 <td><a href="#quartodoc.MdRenderer.summarize">summarize</a></td>
 <td>Test</td>
 </tr>
 </tbody>
 </table>
-<section id="quartodoc.MdRenderer.render_header" class="level3">
-<h3 class="anchored" data-anchor-id="quartodoc.MdRenderer.render_header">render_header</h3>
-<p><code>MdRenderer.render_header(el)</code></p>
-<p>Render the header of a docstring, including any anchors.</p>
-</section>
 <section id="quartodoc.MdRenderer.summarize" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.MdRenderer.summarize">summarize</h3>
-<p><code>MdRenderer.summarize(obj)</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>MdRenderer.summarize(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Test</p>
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -168,14 +168,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="quartodoc.create_inventory" class="level1">
 <h1>create_inventory</h1>
-<p><code>create_inventory(project, version, items, uri=lambda s: f'{s.canonical_path}.html', dispname='-')</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>create_inventory(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    project</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    version</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    items</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    uri<span class="op">=</span><span class="kw">lambda</span> s: <span class="ss">f'</span><span class="sc">{</span>s<span class="sc">.</span>canonical_path<span class="sc">}</span><span class="ss">.html'</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    dispname<span class="op">=</span><span class="st">'-'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Return a sphinx inventory file.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<section id="parameters" class="level2 doc-section doc-section-parameters">
+<h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 24%">
+<col style="width: 6%">
+<col style="width: 25%">
 <col style="width: 41%">
 <col style="width: 26%">
 </colgroup>
@@ -189,55 +195,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>project</code></td>
+<td>project</td>
 <td>str</td>
 <td>Name of the project (often the package name).</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>version</code></td>
+<td>version</td>
 <td>str</td>
 <td>Version of the project (often the package version).</td>
 <td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><code>items</code></td>
-<td>‘list[dc.Object | dc.Alias]’</td>
+<td>items</td>
+<td>'list[dc.Object | dc.Alias]'</td>
 <td>A docstring parser to use.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>uri</code></td>
-<td>‘str | Callable[dc.Object, str]’</td>
+<td>uri</td>
+<td>'str | Callable[dc.Object, str]'</td>
 <td>Link relative to the docs where the items documentation lives.</td>
 <td><code>lambda s: f'{s.canonical_path}.html'</code></td>
 </tr>
 <tr class="odd">
-<td><code>dispname</code></td>
-<td>‘str | Callable[dc.Object, str]’</td>
+<td>dispname</td>
+<td>'str | Callable[dc.Object, str]'</td>
 <td>Name to be shown when a link to the item is made.</td>
 <td><code>'-'</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"create_inventory"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv <span class="op">=</span> create_inventory(<span class="st">"example"</span>, <span class="st">"0.0"</span>, [f_obj])</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Inventory(project<span class="op">=</span><span class="st">'example'</span>, version<span class="op">=</span><span class="st">'0.0'</span>, source_type<span class="op">=&lt;</span>SourceTypes.Manual: <span class="st">'manual'</span><span class="op">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="examples" class="level2 doc-section doc-section-examples">
+<h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"create_inventory"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv <span class="op">=</span> create_inventory(<span class="st">"example"</span>, <span class="st">"0.0"</span>, [f_obj])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> inv</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Inventory(project<span class="op">=</span><span class="st">'example'</span>, version<span class="op">=</span><span class="st">'0.0'</span>, source_type<span class="op">=&lt;</span>SourceTypes.Manual: <span class="st">'manual'</span><span class="op">&gt;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To preview the inventory, we can convert it to a dictionary:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> _to_clean_dict(inv)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{<span class="st">'project'</span>: <span class="st">'example'</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'version'</span>: <span class="st">'0.0'</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> <span class="st">'count'</span>: <span class="dv">1</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a> <span class="st">'items'</span>: [{<span class="st">'name'</span>: <span class="st">'quartodoc.create_inventory'</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">'domain'</span>: <span class="st">'py'</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">'role'</span>: <span class="st">'function'</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   <span class="st">'priority'</span>: <span class="st">'1'</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">'uri'</span>: <span class="st">'quartodoc.create_inventory.html'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>   <span class="st">'dispname'</span>: <span class="st">'-'</span>}]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> _to_clean_dict(inv)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>{<span class="st">'project'</span>: <span class="st">'example'</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'version'</span>: <span class="st">'0.0'</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="st">'count'</span>: <span class="dv">1</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="st">'items'</span>: [{<span class="st">'name'</span>: <span class="st">'quartodoc.create_inventory'</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">'domain'</span>: <span class="st">'py'</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">'role'</span>: <span class="st">'function'</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="st">'priority'</span>: <span class="st">'1'</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">'uri'</span>: <span class="st">'quartodoc.create_inventory.html'</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   <span class="st">'dispname'</span>: <span class="st">'-'</span>}]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -168,15 +168,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="quartodoc.blueprint" class="level1">
 <h1>blueprint</h1>
-<p><code>blueprint(el, package=None, dynamic=None, parser='numpy')</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>blueprint(el, package<span class="op">=</span><span class="va">None</span>, dynamic<span class="op">=</span><span class="va">None</span>, parser<span class="op">=</span><span class="st">'numpy'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Convert a configuration element to something that is ready to render.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<section id="parameters" class="level2 doc-section doc-section-parameters">
+<h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 9%">
+<col style="width: 7%">
 <col style="width: 11%">
-<col style="width: 69%">
+<col style="width: 70%">
 <col style="width: 10%">
 </colgroup>
 <thead>
@@ -189,19 +189,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>el</code></td>
+<td>el</td>
 <td>_Base</td>
 <td>An element, like layout.Auto, to transform.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>package</code></td>
+<td>package</td>
 <td>str</td>
 <td>A base package name. If specified, this is prepended to the names of any objects.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
-<td><code>dynamic</code></td>
+<td>dynamic</td>
 <td>None | bool</td>
 <td>Whether to dynamically load objects. Defaults to using static analysis.</td>
 <td><code>None</code></td>
@@ -209,14 +209,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> blueprint</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc.layout <span class="im">import</span> Auto</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> blueprint(Auto(name <span class="op">=</span> <span class="st">"quartodoc.get_object"</span>))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>DocFunction(name<span class="op">=</span><span class="st">'quartodoc.get_object'</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> blueprint(Auto(name <span class="op">=</span> <span class="st">"get_object"</span>), package <span class="op">=</span> <span class="st">"quartodoc"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DocFunction(name<span class="op">=</span><span class="st">'get_object'</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="examples" class="level2 doc-section doc-section-examples">
+<h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> blueprint</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc.layout <span class="im">import</span> Auto</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> blueprint(Auto(name <span class="op">=</span> <span class="st">"quartodoc.get_object"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>DocFunction(name<span class="op">=</span><span class="st">'quartodoc.get_object'</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> blueprint(Auto(name <span class="op">=</span> <span class="st">"get_object"</span>), package <span class="op">=</span> <span class="st">"quartodoc"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>DocFunction(name<span class="op">=</span><span class="st">'get_object'</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

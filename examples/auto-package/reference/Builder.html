@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -127,6 +161,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#quartodoc.Builder.build" id="toc-quartodoc.Builder.build" class="nav-link" data-scroll-target="#quartodoc.Builder.build">build</a></li>
   <li><a href="#quartodoc.Builder.create_inventory" id="toc-quartodoc.Builder.create_inventory" class="nav-link" data-scroll-target="#quartodoc.Builder.create_inventory">create_inventory</a></li>
   <li><a href="#quartodoc.Builder.from_quarto_config" id="toc-quartodoc.Builder.from_quarto_config" class="nav-link" data-scroll-target="#quartodoc.Builder.from_quarto_config">from_quarto_config</a></li>
+  <li><a href="#quartodoc.Builder.write_css" id="toc-quartodoc.Builder.write_css" class="nav-link" data-scroll-target="#quartodoc.Builder.write_css">write_css</a></li>
   <li><a href="#quartodoc.Builder.write_doc_pages" id="toc-quartodoc.Builder.write_doc_pages" class="nav-link" data-scroll-target="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></li>
   <li><a href="#quartodoc.Builder.write_index" id="toc-quartodoc.Builder.write_index" class="nav-link" data-scroll-target="#quartodoc.Builder.write_index">write_index</a></li>
   <li><a href="#quartodoc.Builder.write_sidebar" id="toc-quartodoc.Builder.write_sidebar" class="nav-link" data-scroll-target="#quartodoc.Builder.write_sidebar">write_sidebar</a></li>
@@ -143,14 +178,32 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="quartodoc.Builder" class="level1">
 <h1>Builder</h1>
-<p><code>Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy', render_interlinks=False, _fast_inventory=False)</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Builder(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    package</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    sections<span class="op">=</span><span class="bu">tuple</span>()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">dir</span><span class="op">=</span><span class="st">'reference'</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Function reference'</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    renderer<span class="op">=</span><span class="st">'markdown'</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    out_index<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    sidebar<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    css<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    rewrite_all_pages<span class="op">=</span><span class="va">False</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    source_dir<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    dynamic<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    parser<span class="op">=</span><span class="st">'numpy'</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    render_interlinks<span class="op">=</span><span class="va">False</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    _fast_inventory<span class="op">=</span><span class="va">False</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Base class for building API docs.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<section id="parameters" class="level2 doc-section doc-section-parameters">
+<h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 10%">
+<col style="width: 7%">
+<col style="width: 11%">
 <col style="width: 72%">
 <col style="width: 9%">
 </colgroup>
@@ -164,87 +217,93 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>package</code></td>
+<td>package</td>
 <td>str</td>
 <td>The name of the package.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>sections</code></td>
-<td>‘list[Any]’</td>
+<td>sections</td>
+<td>'list[Any]'</td>
 <td>A list of sections, with items to document.</td>
 <td><code>tuple()</code></td>
 </tr>
 <tr class="odd">
-<td><code>version</code></td>
-<td>‘str | None’</td>
+<td>version</td>
+<td>'str | None'</td>
 <td>The package version. By default this attempts to look up the current package version (TODO).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
-<td><code>dir</code></td>
+<td>dir</td>
 <td>str</td>
 <td>Name of API directory.</td>
 <td><code>'reference'</code></td>
 </tr>
 <tr class="odd">
-<td><code>title</code></td>
+<td>title</td>
 <td>str</td>
 <td>Title of the API index page.</td>
 <td><code>'Function reference'</code></td>
 </tr>
 <tr class="even">
-<td><code>renderer</code></td>
-<td>‘dict | Renderer | str’</td>
+<td>renderer</td>
+<td>'dict | Renderer | str'</td>
 <td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
 <td><code>'markdown'</code></td>
 </tr>
 <tr class="odd">
-<td><code>options</code></td>
-<td>‘dict | None’</td>
+<td>options</td>
+<td>'dict | None'</td>
 <td>Default options to set for all pieces of content (e.g.&nbsp;include_attributes).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
-<td><code>out_index</code></td>
+<td>out_index</td>
 <td>str</td>
 <td>The output path of the index file, used to list all API functions.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
-<td><code>sidebar</code></td>
-<td>‘str | None’</td>
+<td>sidebar</td>
+<td>'str | None'</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
-<td><code>rewrite_all_pages</code></td>
+<td>css</td>
+<td>'str | None'</td>
+<td>The output path for the default css styles.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>rewrite_all_pages</td>
 <td></td>
 <td>Whether to rewrite all rendered doc pages, or only those with changes.</td>
 <td><code>False</code></td>
 </tr>
-<tr class="odd">
-<td><code>source_dir</code></td>
-<td>‘str | None’</td>
-<td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
+<tr class="even">
+<td>source_dir</td>
+<td>'str | None'</td>
+<td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a "." to refer to the current directory.</td>
 <td><code>None</code></td>
 </tr>
-<tr class="even">
-<td><code>dynamic</code></td>
+<tr class="odd">
+<td>dynamic</td>
 <td>bool | None</td>
 <td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
 <td><code>None</code></td>
 </tr>
-<tr class="odd">
-<td><code>render_interlinks</code></td>
+<tr class="even">
+<td>render_interlinks</td>
 <td>bool</td>
 <td>Whether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.</td>
 <td><code>False</code></td>
 </tr>
-<tr class="even">
-<td><code>parser</code></td>
+<tr class="odd">
+<td>parser</td>
 <td></td>
-<td>Docstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.</td>
+<td>Docstring parser to use. This correspond to different docstring styles, and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".</td>
 <td><code>'numpy'</code></td>
 </tr>
 </tbody>
@@ -290,14 +349,18 @@ ul.task-list li input[type="checkbox"] {
 <td>Construct a Builder from a configuration object (or yaml file).</td>
 </tr>
 <tr class="even">
+<td><a href="#quartodoc.Builder.write_css">write_css</a></td>
+<td>Write default css styles to a file.</td>
+</tr>
+<tr class="odd">
 <td><a href="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></td>
 <td>Write individual function documentation pages.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="#quartodoc.Builder.write_index">write_index</a></td>
 <td>Write API index page.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="#quartodoc.Builder.write_sidebar">write_sidebar</a></td>
 <td>Write a yaml config file for API sidebar.</td>
 </tr>
@@ -305,15 +368,15 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <section id="quartodoc.Builder.build" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.Builder.build">build</h3>
-<p><code>Builder.build(filter='*')</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Builder.build(<span class="bu">filter</span><span class="op">=</span><span class="st">'*'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Build index page, sphinx inventory, and individual doc pages.</p>
-<section id="parameters-1" class="level4">
-<h4 class="anchored" data-anchor-id="parameters-1">Parameters</h4>
+<section id="parameters-1" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 4%">
 <col style="width: 3%">
-<col style="width: 87%">
+<col style="width: 3%">
+<col style="width: 88%">
 <col style="width: 4%">
 </colgroup>
 <thead>
@@ -326,9 +389,9 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>filter</code></td>
+<td>filter</td>
 <td>str</td>
-<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
+<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file's base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
 <td><code>'*'</code></td>
 </tr>
 </tbody>
@@ -337,27 +400,32 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="quartodoc.Builder.create_inventory" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.Builder.create_inventory">create_inventory</h3>
-<p><code>Builder.create_inventory(items)</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Builder.create_inventory(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Generate sphinx inventory object.</p>
 </section>
 <section id="quartodoc.Builder.from_quarto_config" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.Builder.from_quarto_config">from_quarto_config</h3>
-<p><code>Builder.from_quarto_config(quarto_cfg)</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Builder.from_quarto_config(quarto_cfg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Construct a Builder from a configuration object (or yaml file).</p>
+</section>
+<section id="quartodoc.Builder.write_css" class="level3">
+<h3 class="anchored" data-anchor-id="quartodoc.Builder.write_css">write_css</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Builder.write_css()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Write default css styles to a file.</p>
 </section>
 <section id="quartodoc.Builder.write_doc_pages" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.Builder.write_doc_pages">write_doc_pages</h3>
-<p><code>Builder.write_doc_pages(pages, filter)</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Builder.write_doc_pages(pages, <span class="bu">filter</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Write individual function documentation pages.</p>
 </section>
 <section id="quartodoc.Builder.write_index" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.Builder.write_index">write_index</h3>
-<p><code>Builder.write_index(blueprint)</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Builder.write_index(blueprint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Write API index page.</p>
 </section>
 <section id="quartodoc.Builder.write_sidebar" class="level3">
 <h3 class="anchored" data-anchor-id="quartodoc.Builder.write_sidebar">write_sidebar</h3>
-<p><code>Builder.write_sidebar(blueprint)</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Builder.write_sidebar(blueprint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Write a yaml config file for API sidebar.</p>
 
 

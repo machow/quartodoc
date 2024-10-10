@@ -1,5 +1,47 @@
 [
   {
+    "objectID": "reference/Builder.html",
+    "href": "reference/Builder.html",
+    "title": "Builder",
+    "section": "",
+    "text": "Builder(\n    self\n    package\n    sections=tuple()\n    options=None\n    version=None\n    dir='reference'\n    title='Function reference'\n    renderer='markdown'\n    out_index=None\n    sidebar=None\n    css=None\n    rewrite_all_pages=False\n    source_dir=None\n    dynamic=None\n    parser='numpy'\n    render_interlinks=False\n    _fast_inventory=False\n)\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\n'list[Any]'\nA list of sections, with items to document.\ntuple()\n\n\nversion\n'str | None'\nThe package version. By default this attempts to look up the current package version (TODO).\nNone\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\n'dict | Renderer | str'\nThe renderer used to convert docstrings (e.g. to markdown).\n'markdown'\n\n\noptions\n'dict | None'\nDefault options to set for all pieces of content (e.g. include_attributes).\nNone\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone\n\n\nsidebar\n'str | None'\nThe output path for a sidebar yaml config (by default no config generated).\nNone\n\n\ncss\n'str | None'\nThe output path for the default css styles.\nNone\n\n\nrewrite_all_pages\n\nWhether to rewrite all rendered doc pages, or only those with changes.\nFalse\n\n\nsource_dir\n'str | None'\nA directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a \".\" to refer to the current directory.\nNone\n\n\ndynamic\nbool | None\nWhether to dynamically load all python objects. By default, objects are loaded using static analysis.\nNone\n\n\nrender_interlinks\nbool\nWhether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.\nFalse\n\n\nparser\n\nDocstring parser to use. This correspond to different docstring styles, and can be one of \"google\", \"sphinx\", and \"numpy\". Defaults to \"numpy\".\n'numpy'\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nitems\nDocumented items by this builder\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nbuild\nBuild index page, sphinx inventory, and individual doc pages.\n\n\ncreate_inventory\nGenerate sphinx inventory object.\n\n\nfrom_quarto_config\nConstruct a Builder from a configuration object (or yaml file).\n\n\nwrite_css\nWrite default css styles to a file.\n\n\nwrite_doc_pages\nWrite individual function documentation pages.\n\n\nwrite_index\nWrite API index page.\n\n\nwrite_sidebar\nWrite a yaml config file for API sidebar.\n\n\n\n\n\nBuilder.build(filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file's base name in the API dir (e.g. MdRenderer.render)\n'*'\n\n\n\n\n\n\n\nBuilder.create_inventory(items)\nGenerate sphinx inventory object.\n\n\n\nBuilder.from_quarto_config(quarto_cfg)\nConstruct a Builder from a configuration object (or yaml file).\n\n\n\nBuilder.write_css()\nWrite default css styles to a file.\n\n\n\nBuilder.write_doc_pages(pages, filter)\nWrite individual function documentation pages.\n\n\n\nBuilder.write_index(blueprint)\nWrite API index page.\n\n\n\nBuilder.write_sidebar(blueprint)\nWrite a yaml config file for API sidebar."
+  },
+  {
+    "objectID": "reference/Builder.html#parameters",
+    "href": "reference/Builder.html#parameters",
+    "title": "Builder",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\n'list[Any]'\nA list of sections, with items to document.\ntuple()\n\n\nversion\n'str | None'\nThe package version. By default this attempts to look up the current package version (TODO).\nNone\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\n'dict | Renderer | str'\nThe renderer used to convert docstrings (e.g. to markdown).\n'markdown'\n\n\noptions\n'dict | None'\nDefault options to set for all pieces of content (e.g. include_attributes).\nNone\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone\n\n\nsidebar\n'str | None'\nThe output path for a sidebar yaml config (by default no config generated).\nNone\n\n\ncss\n'str | None'\nThe output path for the default css styles.\nNone\n\n\nrewrite_all_pages\n\nWhether to rewrite all rendered doc pages, or only those with changes.\nFalse\n\n\nsource_dir\n'str | None'\nA directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a \".\" to refer to the current directory.\nNone\n\n\ndynamic\nbool | None\nWhether to dynamically load all python objects. By default, objects are loaded using static analysis.\nNone\n\n\nrender_interlinks\nbool\nWhether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.\nFalse\n\n\nparser\n\nDocstring parser to use. This correspond to different docstring styles, and can be one of \"google\", \"sphinx\", and \"numpy\". Defaults to \"numpy\".\n'numpy'"
+  },
+  {
+    "objectID": "reference/Builder.html#attributes",
+    "href": "reference/Builder.html#attributes",
+    "title": "Builder",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\nitems\nDocumented items by this builder"
+  },
+  {
+    "objectID": "reference/Builder.html#methods",
+    "href": "reference/Builder.html#methods",
+    "title": "Builder",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\nbuild\nBuild index page, sphinx inventory, and individual doc pages.\n\n\ncreate_inventory\nGenerate sphinx inventory object.\n\n\nfrom_quarto_config\nConstruct a Builder from a configuration object (or yaml file).\n\n\nwrite_css\nWrite default css styles to a file.\n\n\nwrite_doc_pages\nWrite individual function documentation pages.\n\n\nwrite_index\nWrite API index page.\n\n\nwrite_sidebar\nWrite a yaml config file for API sidebar.\n\n\n\n\n\nBuilder.build(filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file's base name in the API dir (e.g. MdRenderer.render)\n'*'\n\n\n\n\n\n\n\nBuilder.create_inventory(items)\nGenerate sphinx inventory object.\n\n\n\nBuilder.from_quarto_config(quarto_cfg)\nConstruct a Builder from a configuration object (or yaml file).\n\n\n\nBuilder.write_css()\nWrite default css styles to a file.\n\n\n\nBuilder.write_doc_pages(pages, filter)\nWrite individual function documentation pages.\n\n\n\nBuilder.write_index(blueprint)\nWrite API index page.\n\n\n\nBuilder.write_sidebar(blueprint)\nWrite a yaml config file for API sidebar."
+  },
+  {
+    "objectID": "reference/preview.html",
+    "href": "reference/preview.html",
+    "title": "preview",
+    "section": "",
+    "text": "preview(ast, max_depth=999, compact=False, as_string=False)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n&gt;&gt;&gt; from quartodoc import get_object\n&gt;&gt;&gt; obj = get_object(\"quartodoc\", \"get_object\")\n&gt;&gt;&gt; preview(obj.docstring.parsed)\n...\n&gt;&gt;&gt; preview(obj)\n..."
+  },
+  {
+    "objectID": "reference/preview.html#examples",
+    "href": "reference/preview.html#examples",
+    "title": "preview",
+    "section": "",
+    "text": "&gt;&gt;&gt; from quartodoc import get_object\n&gt;&gt;&gt; obj = get_object(\"quartodoc\", \"get_object\")\n&gt;&gt;&gt; preview(obj.docstring.parsed)\n...\n&gt;&gt;&gt; preview(obj)\n..."
+  },
+  {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
     "title": "Function reference",
@@ -14,18 +56,32 @@
     "text": "These functions inspect and parse docstrings.\n\n\n\nget_object\nFetch a griffe object.\n\n\npreview\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\nBuilder\nBase class for building API docs.\n\n\nBuilder.build\nBuild index page, sphinx inventory, and individual doc pages."
   },
   {
+    "objectID": "reference/Builder.build.html",
+    "href": "reference/Builder.build.html",
+    "title": "Builder.build",
+    "section": "",
+    "text": "Builder.build(filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file's base name in the API dir (e.g. MdRenderer.render)\n'*'"
+  },
+  {
+    "objectID": "reference/Builder.build.html#parameters",
+    "href": "reference/Builder.build.html#parameters",
+    "title": "Builder.build",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file's base name in the API dir (e.g. MdRenderer.render)\n'*'"
+  },
+  {
     "objectID": "reference/get_object.html",
     "href": "reference/get_object.html",
     "title": "get_object",
     "section": "",
-    "text": "get_object(path, object_name=None, parser='numpy', load_aliases=True, dynamic=False, loader=None)\nFetch a griffe object.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n‘str | None’\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\n\n\n\n\npreview: print a user-friendly preview of a griffe object.\n\n\n\n&gt;&gt;&gt; get_function(\"quartodoc\", \"get_function\")\n&lt;Function('get_function', ...\n\n\n\n\n\n\nType\nDescription\n\n\n\n\ndc.Object\nabc"
+    "text": "get_object(\n    path\n    object_name=None\n    parser='numpy'\n    load_aliases=True\n    dynamic=False\n    loader=None\n)\nFetch a griffe object.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n'str | None'\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\n\n\n\n\npreview: print a user-friendly preview of a griffe object.\n\n\n\n&gt;&gt;&gt; get_function(\"quartodoc\", \"get_function\")\n&lt;Function('get_function', ...\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nx\ndc.Object\nabc"
   },
   {
     "objectID": "reference/get_object.html#parameters",
     "href": "reference/get_object.html#parameters",
     "title": "get_object",
     "section": "",
-    "text": "Name\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n‘str | None’\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse"
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n'str | None'\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse"
   },
   {
     "objectID": "reference/get_object.html#see-also",
@@ -46,62 +102,6 @@
     "href": "reference/get_object.html#returns",
     "title": "get_object",
     "section": "",
-    "text": "Type\nDescription\n\n\n\n\ndc.Object\nabc"
-  },
-  {
-    "objectID": "reference/Builder.html",
-    "href": "reference/Builder.html",
-    "title": "Builder",
-    "section": "",
-    "text": "Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy', render_interlinks=False, _fast_inventory=False)\nBase class for building API docs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\n‘list[Any]’\nA list of sections, with items to document.\ntuple()\n\n\nversion\n‘str | None’\nThe package version. By default this attempts to look up the current package version (TODO).\nNone\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\n‘dict | Renderer | str’\nThe renderer used to convert docstrings (e.g. to markdown).\n'markdown'\n\n\noptions\n‘dict | None’\nDefault options to set for all pieces of content (e.g. include_attributes).\nNone\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone\n\n\nsidebar\n‘str | None’\nThe output path for a sidebar yaml config (by default no config generated).\nNone\n\n\nrewrite_all_pages\n\nWhether to rewrite all rendered doc pages, or only those with changes.\nFalse\n\n\nsource_dir\n‘str | None’\nA directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.\nNone\n\n\ndynamic\nbool | None\nWhether to dynamically load all python objects. By default, objects are loaded using static analysis.\nNone\n\n\nrender_interlinks\nbool\nWhether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.\nFalse\n\n\nparser\n\nDocstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.\n'numpy'\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nitems\nDocumented items by this builder\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nbuild\nBuild index page, sphinx inventory, and individual doc pages.\n\n\ncreate_inventory\nGenerate sphinx inventory object.\n\n\nfrom_quarto_config\nConstruct a Builder from a configuration object (or yaml file).\n\n\nwrite_doc_pages\nWrite individual function documentation pages.\n\n\nwrite_index\nWrite API index page.\n\n\nwrite_sidebar\nWrite a yaml config file for API sidebar.\n\n\n\n\n\nBuilder.build(filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g. MdRenderer.render)\n'*'\n\n\n\n\n\n\n\nBuilder.create_inventory(items)\nGenerate sphinx inventory object.\n\n\n\nBuilder.from_quarto_config(quarto_cfg)\nConstruct a Builder from a configuration object (or yaml file).\n\n\n\nBuilder.write_doc_pages(pages, filter)\nWrite individual function documentation pages.\n\n\n\nBuilder.write_index(blueprint)\nWrite API index page.\n\n\n\nBuilder.write_sidebar(blueprint)\nWrite a yaml config file for API sidebar."
-  },
-  {
-    "objectID": "reference/Builder.html#parameters",
-    "href": "reference/Builder.html#parameters",
-    "title": "Builder",
-    "section": "",
-    "text": "Name\nType\nDescription\nDefault\n\n\n\n\npackage\nstr\nThe name of the package.\nrequired\n\n\nsections\n‘list[Any]’\nA list of sections, with items to document.\ntuple()\n\n\nversion\n‘str | None’\nThe package version. By default this attempts to look up the current package version (TODO).\nNone\n\n\ndir\nstr\nName of API directory.\n'reference'\n\n\ntitle\nstr\nTitle of the API index page.\n'Function reference'\n\n\nrenderer\n‘dict | Renderer | str’\nThe renderer used to convert docstrings (e.g. to markdown).\n'markdown'\n\n\noptions\n‘dict | None’\nDefault options to set for all pieces of content (e.g. include_attributes).\nNone\n\n\nout_index\nstr\nThe output path of the index file, used to list all API functions.\nNone\n\n\nsidebar\n‘str | None’\nThe output path for a sidebar yaml config (by default no config generated).\nNone\n\n\nrewrite_all_pages\n\nWhether to rewrite all rendered doc pages, or only those with changes.\nFalse\n\n\nsource_dir\n‘str | None’\nA directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.\nNone\n\n\ndynamic\nbool | None\nWhether to dynamically load all python objects. By default, objects are loaded using static analysis.\nNone\n\n\nrender_interlinks\nbool\nWhether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.\nFalse\n\n\nparser\n\nDocstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.\n'numpy'"
-  },
-  {
-    "objectID": "reference/Builder.html#attributes",
-    "href": "reference/Builder.html#attributes",
-    "title": "Builder",
-    "section": "",
-    "text": "Name\nDescription\n\n\n\n\nitems\nDocumented items by this builder"
-  },
-  {
-    "objectID": "reference/Builder.html#methods",
-    "href": "reference/Builder.html#methods",
-    "title": "Builder",
-    "section": "",
-    "text": "Name\nDescription\n\n\n\n\nbuild\nBuild index page, sphinx inventory, and individual doc pages.\n\n\ncreate_inventory\nGenerate sphinx inventory object.\n\n\nfrom_quarto_config\nConstruct a Builder from a configuration object (or yaml file).\n\n\nwrite_doc_pages\nWrite individual function documentation pages.\n\n\nwrite_index\nWrite API index page.\n\n\nwrite_sidebar\nWrite a yaml config file for API sidebar.\n\n\n\n\n\nBuilder.build(filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g. MdRenderer.render)\n'*'\n\n\n\n\n\n\n\nBuilder.create_inventory(items)\nGenerate sphinx inventory object.\n\n\n\nBuilder.from_quarto_config(quarto_cfg)\nConstruct a Builder from a configuration object (or yaml file).\n\n\n\nBuilder.write_doc_pages(pages, filter)\nWrite individual function documentation pages.\n\n\n\nBuilder.write_index(blueprint)\nWrite API index page.\n\n\n\nBuilder.write_sidebar(blueprint)\nWrite a yaml config file for API sidebar."
-  },
-  {
-    "objectID": "reference/preview.html",
-    "href": "reference/preview.html",
-    "title": "preview",
-    "section": "",
-    "text": "preview(ast, max_depth=999, compact=False, as_string=False)\nPrint a friendly representation of a griffe object (e.g. function, docstring)\n\n\n&gt;&gt;&gt; from quartodoc import get_object\n&gt;&gt;&gt; obj = get_object(\"quartodoc\", \"get_object\")\n&gt;&gt;&gt; preview(obj.docstring.parsed)\n ...\n&gt;&gt;&gt; preview(obj)\n ..."
-  },
-  {
-    "objectID": "reference/preview.html#examples",
-    "href": "reference/preview.html#examples",
-    "title": "preview",
-    "section": "",
-    "text": "&gt;&gt;&gt; from quartodoc import get_object\n&gt;&gt;&gt; obj = get_object(\"quartodoc\", \"get_object\")\n&gt;&gt;&gt; preview(obj.docstring.parsed)\n ...\n&gt;&gt;&gt; preview(obj)\n ..."
-  },
-  {
-    "objectID": "reference/Builder.build.html",
-    "href": "reference/Builder.build.html",
-    "title": "Builder.build",
-    "section": "",
-    "text": "Builder.build(filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g. MdRenderer.render)\n'*'"
-  },
-  {
-    "objectID": "reference/Builder.build.html#parameters",
-    "href": "reference/Builder.build.html#parameters",
-    "title": "Builder.build",
-    "section": "",
-    "text": "Name\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g. MdRenderer.render)\n'*'"
+    "text": "Name\nType\nDescription\n\n\n\n\nx\ndc.Object\nabc"
   }
 ]

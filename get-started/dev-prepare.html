@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -104,6 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../api/_styles-quartodoc.css">
 <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -346,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cda15c3c" class="cell" data-execution_count="1">
+<div id="d033c69e" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> collect, preview</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> MdRenderer</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -356,7 +357,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>Auto</code> class contains data about how you wish to render a specific Python object, which you typically set in configuration options via the <code>quartodoc</code> section of your <code>_quarto.yml</code> file. In other words, <code>Auto</code> is a data structure that represents the configuration options for a specific Python object.</p>
 <p>In the <a href="../get-started/dev-big-picture.html">previous</a> section, be demonstrated how we can find the <code>Auto</code> object corresponding to the <code>MdRenderer</code> class from our yaml configuration:</p>
 <p>We can find the <code>Auto</code> object corresponding to the python object from our yaml configuration like this:</p>
-<div id="03921704" class="cell" data-execution_count="2">
+<div id="0ed3ef60" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> Builder</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -377,29 +378,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>auto_from_yml <span class="op">=</span> builder.layout.sections[<span class="dv">0</span>].contents[<span class="dv">0</span>]</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(auto_from_yml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>signature_name='relative' members=['render', 'summarize'] include_private=False include_imports=False include_empty=False include_inherited=False include_attributes=True include_classes=True include_functions=True include=None exclude=None dynamic=None children=&lt;ChoicesChildren.separate: 'separate'&gt; package=MISSING() member_options=None kind='auto' name='MdRenderer'</code></pre>
+<pre><code>signature_name='relative' members=['render', 'summarize'] include_private=False include_imports=False include_empty=False include_inherited=False include_attributes=True include_classes=True include_functions=True include=None exclude=None dynamic=None children=&lt;ChoicesChildren.separate: 'separate'&gt; package=MISSING() member_order='alphabetical' member_options=None kind='auto' name='MdRenderer'</code></pre>
 </div>
 </div>
 <p>We can see many of the configuration options such as <code>members</code>, <code>name</code> and <code>children</code> as well as other options we didn’t specify but are set to their default values. For example, we didn’t set the option for <a href="../get-started/basic-content.html#dynamic-lookup"><code>dynamic</code></a> but it is set to <code>false</code> by default.</p>
 <p>However, we don’t have to start with <code>yaml</code> files to create an <code>Auto</code> object. We can also create an <code>Auto</code> object with the fully qualified name of any Python object. For example, we can create an <code>Auto</code> object for the <code>MdRenderer</code> class like this:</p>
-<div id="ababc261" class="cell" data-execution_count="3">
+<div id="7f58c453" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> Auto</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            signature_name <span class="op">=</span> <span class="st">'short'</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>signature_name='short' members=None include_private=False include_imports=False include_empty=False include_inherited=False include_attributes=True include_classes=True include_functions=True include=None exclude=None dynamic=None children=&lt;ChoicesChildren.embedded: 'embedded'&gt; package=MISSING() member_options=None kind='auto' name='quartodoc.MdRenderer'</code></pre>
+<pre><code>signature_name='short' members=None include_private=False include_imports=False include_empty=False include_inherited=False include_attributes=True include_classes=True include_functions=True include=None exclude=None dynamic=None children=&lt;ChoicesChildren.embedded: 'embedded'&gt; package=MISSING() member_order='alphabetical' member_options=None kind='auto' name='quartodoc.MdRenderer'</code></pre>
 </div>
 </div>
 <p>However, since we didn’t specify any options, this is not the same <code>Auto</code> that we got from the yaml. For example, the <code>members</code> option is not set to <code>["render", "summarize"]</code> as it was in the yaml. Instead, it is set to <code>None</code> which means that all members will be included. We can see this by looking at the <code>obj</code> attribute of the <code>Auto</code> object:</p>
-<div id="bdbf1019" class="cell" data-execution_count="4">
+<div id="00782797" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(auto.members)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>None</code></pre>
 </div>
 </div>
 <p>To set this option, we can pass it to the <code>Auto</code> constructor:</p>
-<div id="6976d77b" class="cell" data-execution_count="5">
+<div id="abedc598" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>            members <span class="op">=</span> [<span class="st">"render"</span>, <span class="st">"summarize"</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        )</span>
@@ -407,7 +408,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> auto.members <span class="op">==</span> auto_from_yml.members</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>signature_name='relative' members=['render', 'summarize'] include_private=False include_imports=False include_empty=False include_inherited=False include_attributes=True include_classes=True include_functions=True include=None exclude=None dynamic=None children=&lt;ChoicesChildren.embedded: 'embedded'&gt; package=MISSING() member_options=None kind='auto' name='quartodoc.MdRenderer'</code></pre>
+<pre><code>signature_name='relative' members=['render', 'summarize'] include_private=False include_imports=False include_empty=False include_inherited=False include_attributes=True include_classes=True include_functions=True include=None exclude=None dynamic=None children=&lt;ChoicesChildren.embedded: 'embedded'&gt; package=MISSING() member_order='alphabetical' member_options=None kind='auto' name='quartodoc.MdRenderer'</code></pre>
 </div>
 </div>
 <p>Understanding the <code>Auto</code> object is helpful for debugging <code>quartodoc</code>. If you find that a configuration option is not being set as you expect, you can create an <code>Auto</code> object for the Python object in question and compare it to the <code>Auto</code> object that you expect to be created from your yaml configuration.</p>
@@ -415,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="blueprint-parse-metadata-from-objects" class="level2">
 <h2 class="anchored" data-anchor-id="blueprint-parse-metadata-from-objects"><code>blueprint</code>: Parse Metadata From Objects</h2>
 <p><code>blueprint</code> parses all of the metadata about the python object and stores it in a hierarchal tree structure that is convenient for a renderer to transform into a renderable format like HTML or Markdown. For example, here is the blueprint for the <code>MdRenderer</code> class:</p>
-<div id="e73f0caa" class="cell" data-execution_count="6">
+<div id="dababee1" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> blueprint</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> blueprint(auto)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>preview(doc, max_depth<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -438,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>To give you a sense of this tree structure, we can look at the <code>obj.docstring</code> field of the above blueprint, which contains information about the <a href="https://peps.python.org/pep-0257/">Python docstring</a>:</p>
-<div id="f87602bc" class="cell" data-execution_count="7">
+<div id="c434c309" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>preview(doc.obj.docstring, max_depth<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─Docstring
@@ -451,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can see from this output that the parser for the docstring is <code>numpy</code>, which means the docstring is expected to be in the <a href="https://numpydoc.readthedocs.io/en/latest/format.html">numpy style</a>.</p>
 <p>Furthermore, we can see from the tree structure that the <code>DocstringSectionText</code> is stored as the first element in a list under the <code>parsed</code> attribute:</p>
-<div id="fb4c6de0" class="cell" data-execution_count="8">
+<div id="5a7f85e4" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>preview(doc.obj.docstring.parsed[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─DocstringSectionText
@@ -461,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>DocstringSectionText</code> stores the “text” field of a <a href="https://numpydoc.readthedocs.io/en/latest/format.html">numpy style</a> docstring, which is the first line of the docstring, which is otherwise known as the <a href="https://numpydoc.readthedocs.io/en/latest/format.html#short-summary">short summary</a>. Furthermore, we can see from the output above that the actual text of this short summary is stored in the <code>value</code> attribute:</p>
-<div id="6d99eaa9" class="cell" data-execution_count="9">
+<div id="32ebbab8" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>docstr_firstln_value <span class="op">=</span> doc.obj.docstring.parsed[<span class="dv">0</span>].value</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(docstr_firstln_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -469,7 +470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We can check the docstring of <code>MdRenderer</code> to see that this is indeed the first line of the docstring:</p>
-<div id="c97e7009" class="cell" data-execution_count="10">
+<div id="4af9774c" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect <span class="im">import</span> getdoc</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>docstr_firstln <span class="op">=</span> getdoc(MdRenderer).splitlines()[<span class="dv">0</span>]</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -484,7 +485,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="layout-sections" class="level2">
 <h2 class="anchored" data-anchor-id="layout-sections">Layout &amp; Sections</h2>
 <p>The <a href="../api/layout.Layout.html#quartodoc.layout.Layout"><code>Layout</code></a> class stores how you wish to organize your documentation. For example, you may wish to organize your documentation into sections, where each section contains a title, description, and a list of objects to document. You can create a layout like this:</p>
-<div id="5b7e7c0b" class="cell" data-execution_count="11">
+<div id="09643f04" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> Builder</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -523,7 +524,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>As you can see, the <code>Layout</code> stores the sections, which are stored in the <code>sections</code> attribute. Each section contains a <code>title</code>, <code>desc</code>, and <code>contents</code> attribute and is stored in a <a href="../api/layout.Section.html#quartodoc.layout.Section"><code>Section</code></a> class.</p>
 <p>The <code>contents</code> attribute is a list of objects to document. In this case, the first section contains a single object, the <code>MdRenderer</code> class, while the second section contains two objects. You can read more about Section options <a href="../get-started/basic-docs.html#section-options">here</a>.</p>
 <p>In addition to building a layout from a yaml file, you can also build a layout in Python by instantiating the <code>Layout</code> class like so:</p>
-<div id="96b7fdaf" class="cell" data-execution_count="12">
+<div id="f81fd9e0" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> Auto, layout</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
@@ -538,7 +539,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can view the layout by calling the <code>preview</code> function:</p>
-<div id="fcf5bb1e" class="cell" data-execution_count="13">
+<div id="1cf709fb" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>preview(lay, </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">8</span>, </span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        compact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -559,7 +560,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Recall that the <code>blueprint</code> function parses all of the metadata about the Python object. We can see how a blueprint adds additional data pertaining to <code>MdRenderer</code>, that wasn’t present in the layout above:</p>
-<div id="970f912c" class="cell" data-execution_count="14">
+<div id="d6edc0b8" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bp_layout <span class="op">=</span> blueprint(lay) </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>preview(bp_layout, </span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">8</span>, </span>
@@ -599,9 +600,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             ├─signature_name = 'short'
             ├─members = 
             │ █─list
-            │ ├─0 = 
-            │ │ █─DocFunction ...
-            │ └─1 = 
+            │ └─0 = 
             │   █─DocFunction ...
             └─flat = False</code></pre>
 </div>
@@ -610,7 +609,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="grouping-docs-on-a-page">Grouping docs on a page</h3>
 <p>The Layout also calculates how to split your sections into pages based on the options you set in your yaml configuration. For example, if you set the <code>children</code> option to <code>separate</code>, then each object in a section will be placed on its own page.</p>
 <p>Let’s see the difference between the <code>separate</code> and <code>embedded</code> options by creating two <code>Auto</code> objects for the <code>MdRenderer</code> class, one with <code>children</code> set to <code>separate</code> and the other with <code>children</code> set to <code>embedded</code>:</p>
-<div id="86873e73" class="cell" data-execution_count="15">
+<div id="96820ff3" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>auto_sep <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                       children <span class="op">=</span> <span class="st">"separate"</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>auto_emb <span class="op">=</span> layout.Auto(name <span class="op">=</span> <span class="st">"quartodoc.MdRenderer"</span>, </span>
@@ -618,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="columns">
 <div class="column">
-<div id="5e72ba37" class="cell" data-execution_count="16">
+<div id="8299dc7d" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>bp_emb <span class="op">=</span> blueprint(auto_emb)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>preview(bp_emb, </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">2</span>,</span>
@@ -642,15 +641,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ├─anchor = 'quartodoc.MdRenderer'
 ├─members = 
 │ █─list
-│ ├─0 = 
-│ │ █─DocFunction ...
-│ └─1 = 
+│ └─0 = 
 │   █─DocFunction ...
 └─flat = False</code></pre>
 </div>
 </div>
 </div><div class="column">
-<div id="6343230e" class="cell" data-execution_count="17">
+<div id="861b0238" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>bp_sep <span class="op">=</span> blueprint(auto_sep)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>preview(bp_sep, </span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span><span class="dv">2</span>,</span>
@@ -674,9 +671,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ├─anchor = 'quartodoc.MdRenderer'
 ├─members = 
 │ █─list
-│ ├─0 = 
-│ │ █─MemberPage ...
-│ └─1 = 
+│ └─0 = 
 │   █─MemberPage ...
 └─flat = False</code></pre>
 </div>
@@ -687,7 +682,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="collect-fetch-all-pages-and-items" class="level2">
 <h2 class="anchored" data-anchor-id="collect-fetch-all-pages-and-items">Collect: fetch all pages and items</h2>
-<div id="f80fc4b1" class="cell" data-execution_count="18">
+<div id="66088e2b" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>some_page <span class="op">=</span> layout.Page(path <span class="op">=</span> <span class="st">"some_doc_page"</span>, contents <span class="op">=</span> [doc])</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pages, items <span class="op">=</span> collect(some_page, <span class="st">"reference"</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>pages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

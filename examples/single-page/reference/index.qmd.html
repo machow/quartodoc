@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -190,14 +190,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These functions inspect and parse docstrings.</p>
 <section id="quartodoc.get_object" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.get_object">get_object</h2>
-<p><code>get_object(path, object_name=None, parser='numpy', load_aliases=True, dynamic=False, loader=None)</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>get_object(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    object_name<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    parser<span class="op">=</span><span class="st">'numpy'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    load_aliases<span class="op">=</span><span class="va">True</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    dynamic<span class="op">=</span><span class="va">False</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    loader<span class="op">=</span><span class="va">None</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Fetch a griffe object.</p>
-<section id="parameters" class="level3">
-<h3 class="anchored" data-anchor-id="parameters">Parameters</h3>
+<section id="parameters" class="level3 doc-section doc-section-parameters">
+<h3 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 8%">
 <col style="width: 7%">
+<col style="width: 8%">
 <col style="width: 77%">
 <col style="width: 6%">
 </colgroup>
@@ -211,31 +218,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>path</code></td>
+<td>path</td>
 <td>str</td>
 <td>An import path to the object. This should have the form <code>path.to.module:object</code>. For example, <code>quartodoc:get_object</code> or <code>quartodoc:MdRenderer.render</code>.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>object_name</code></td>
-<td>‘str | None’</td>
+<td>object_name</td>
+<td>'str | None'</td>
 <td>(Deprecated). A function name.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
-<td><code>parser</code></td>
+<td>parser</td>
 <td>str</td>
 <td>A docstring parser to use.</td>
 <td><code>'numpy'</code></td>
 </tr>
 <tr class="even">
-<td><code>load_aliases</code></td>
+<td>load_aliases</td>
 <td></td>
 <td>For aliases that were imported from other modules, should we load that module?</td>
 <td><code>True</code></td>
 </tr>
 <tr class="odd">
-<td><code>dynamic</code></td>
+<td>dynamic</td>
 <td></td>
 <td>Whether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.</td>
 <td><code>False</code></td>
@@ -243,26 +250,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="see-also" class="level3">
-<h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+<section id="see-also" class="level3 doc-section doc-section-see-also">
+<h3 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h3>
 <p>preview: print a user-friendly preview of a griffe object.</p>
 </section>
-<section id="examples" class="level3">
-<h3 class="anchored" data-anchor-id="examples">Examples</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> get_function(<span class="st">"quartodoc"</span>, <span class="st">"get_function"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Function(<span class="st">'get_function'</span>, ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="examples" class="level3 doc-section doc-section-examples">
+<h3 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> get_function(<span class="st">"quartodoc"</span>, <span class="st">"get_function"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Function(<span class="st">'get_function'</span>, ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="returns" class="level3">
-<h3 class="anchored" data-anchor-id="returns">Returns</h3>
+<section id="returns" class="level3 doc-section doc-section-returns">
+<h3 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
+<th>Name</th>
 <th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td>x</td>
 <td>dc.Object</td>
 <td>abc</td>
 </tr>
@@ -272,28 +281,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="quartodoc.preview" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.preview">preview</h2>
-<p><code>preview(ast, max_depth=999, compact=False, as_string=False)</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>preview(ast, max_depth<span class="op">=</span><span class="dv">999</span>, compact<span class="op">=</span><span class="va">False</span>, as_string<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Print a friendly representation of a griffe object (e.g.&nbsp;function, docstring)</p>
-<section id="examples-1" class="level3">
-<h3 class="anchored" data-anchor-id="examples-1">Examples</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> get_object</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> preview(obj.docstring.parsed)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> preview(obj)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="examples-1" class="level3 doc-section doc-section-examples">
+<h3 class="doc-section doc-section-examples anchored" data-anchor-id="examples-1">Examples</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> quartodoc <span class="im">import</span> get_object</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> preview(obj.docstring.parsed)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> preview(obj)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="quartodoc.Builder" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.Builder">Builder</h2>
-<p><code>Builder(self, package, sections=tuple(), options=None, version=None, dir='reference', title='Function reference', renderer='markdown', out_index=None, sidebar=None, rewrite_all_pages=False, source_dir=None, dynamic=None, parser='numpy', render_interlinks=False, _fast_inventory=False)</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Builder(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    package</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    sections<span class="op">=</span><span class="bu">tuple</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">dir</span><span class="op">=</span><span class="st">'reference'</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Function reference'</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    renderer<span class="op">=</span><span class="st">'markdown'</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    out_index<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    sidebar<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    css<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    rewrite_all_pages<span class="op">=</span><span class="va">False</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    source_dir<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    dynamic<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    parser<span class="op">=</span><span class="st">'numpy'</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    render_interlinks<span class="op">=</span><span class="va">False</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    _fast_inventory<span class="op">=</span><span class="va">False</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Base class for building API docs.</p>
-<section id="parameters-1" class="level3">
-<h3 class="anchored" data-anchor-id="parameters-1">Parameters</h3>
+<section id="parameters-1" class="level3 doc-section doc-section-parameters">
+<h3 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 8%">
-<col style="width: 10%">
+<col style="width: 7%">
+<col style="width: 11%">
 <col style="width: 72%">
 <col style="width: 9%">
 </colgroup>
@@ -307,87 +334,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>package</code></td>
+<td>package</td>
 <td>str</td>
 <td>The name of the package.</td>
 <td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><code>sections</code></td>
-<td>‘list[Any]’</td>
+<td>sections</td>
+<td>'list[Any]'</td>
 <td>A list of sections, with items to document.</td>
 <td><code>tuple()</code></td>
 </tr>
 <tr class="odd">
-<td><code>version</code></td>
-<td>‘str | None’</td>
+<td>version</td>
+<td>'str | None'</td>
 <td>The package version. By default this attempts to look up the current package version (TODO).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
-<td><code>dir</code></td>
+<td>dir</td>
 <td>str</td>
 <td>Name of API directory.</td>
 <td><code>'reference'</code></td>
 </tr>
 <tr class="odd">
-<td><code>title</code></td>
+<td>title</td>
 <td>str</td>
 <td>Title of the API index page.</td>
 <td><code>'Function reference'</code></td>
 </tr>
 <tr class="even">
-<td><code>renderer</code></td>
-<td>‘dict | Renderer | str’</td>
+<td>renderer</td>
+<td>'dict | Renderer | str'</td>
 <td>The renderer used to convert docstrings (e.g.&nbsp;to markdown).</td>
 <td><code>'markdown'</code></td>
 </tr>
 <tr class="odd">
-<td><code>options</code></td>
-<td>‘dict | None’</td>
+<td>options</td>
+<td>'dict | None'</td>
 <td>Default options to set for all pieces of content (e.g.&nbsp;include_attributes).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
-<td><code>out_index</code></td>
+<td>out_index</td>
 <td>str</td>
 <td>The output path of the index file, used to list all API functions.</td>
 <td><code>None</code></td>
 </tr>
 <tr class="odd">
-<td><code>sidebar</code></td>
-<td>‘str | None’</td>
+<td>sidebar</td>
+<td>'str | None'</td>
 <td>The output path for a sidebar yaml config (by default no config generated).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
-<td><code>rewrite_all_pages</code></td>
+<td>css</td>
+<td>'str | None'</td>
+<td>The output path for the default css styles.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>rewrite_all_pages</td>
 <td></td>
 <td>Whether to rewrite all rendered doc pages, or only those with changes.</td>
 <td><code>False</code></td>
 </tr>
-<tr class="odd">
-<td><code>source_dir</code></td>
-<td>‘str | None’</td>
-<td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a “.” to refer to the current directory.</td>
+<tr class="even">
+<td>source_dir</td>
+<td>'str | None'</td>
+<td>A directory where source files to be documented live. This is only necessary if you are not documenting a package, but collection of scripts. Use a "." to refer to the current directory.</td>
 <td><code>None</code></td>
 </tr>
-<tr class="even">
-<td><code>dynamic</code></td>
+<tr class="odd">
+<td>dynamic</td>
 <td>bool | None</td>
 <td>Whether to dynamically load all python objects. By default, objects are loaded using static analysis.</td>
 <td><code>None</code></td>
 </tr>
-<tr class="odd">
-<td><code>render_interlinks</code></td>
+<tr class="even">
+<td>render_interlinks</td>
 <td>bool</td>
 <td>Whether to render interlinks syntax inside documented objects. Note that the interlinks filter is required to generate the links in quarto.</td>
 <td><code>False</code></td>
 </tr>
-<tr class="even">
-<td><code>parser</code></td>
+<tr class="odd">
+<td>parser</td>
 <td></td>
-<td>Docstring parser to use. This correspond to different docstring styles, and can be one of “google”, “sphinx”, and “numpy”. Defaults to “numpy”.</td>
+<td>Docstring parser to use. This correspond to different docstring styles, and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".</td>
 <td><code>'numpy'</code></td>
 </tr>
 </tbody>
@@ -433,14 +466,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Construct a Builder from a configuration object (or yaml file).</td>
 </tr>
 <tr class="even">
+<td><a href="#quartodoc.Builder.write_css">write_css</a></td>
+<td>Write default css styles to a file.</td>
+</tr>
+<tr class="odd">
 <td><a href="#quartodoc.Builder.write_doc_pages">write_doc_pages</a></td>
 <td>Write individual function documentation pages.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="#quartodoc.Builder.write_index">write_index</a></td>
 <td>Write API index page.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="#quartodoc.Builder.write_sidebar">write_sidebar</a></td>
 <td>Write a yaml config file for API sidebar.</td>
 </tr>
@@ -448,15 +485,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <section id="quartodoc.Builder.build" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.build">build</h4>
-<p><code>Builder.build(filter='*')</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Builder.build(<span class="bu">filter</span><span class="op">=</span><span class="st">'*'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Build index page, sphinx inventory, and individual doc pages.</p>
-<section id="parameters-2" class="level5">
-<h5 class="anchored" data-anchor-id="parameters-2">Parameters</h5>
+<section id="parameters-2" class="level5 doc-section doc-section-parameters">
+<h5 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h5>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 4%">
 <col style="width: 3%">
-<col style="width: 87%">
+<col style="width: 3%">
+<col style="width: 88%">
 <col style="width: 4%">
 </colgroup>
 <thead>
@@ -469,9 +506,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>filter</code></td>
+<td>filter</td>
 <td>str</td>
-<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
+<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file's base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
 <td><code>'*'</code></td>
 </tr>
 </tbody>
@@ -480,42 +517,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="quartodoc.Builder.create_inventory" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.create_inventory">create_inventory</h4>
-<p><code>Builder.create_inventory(items)</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Builder.create_inventory(items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Generate sphinx inventory object.</p>
 </section>
 <section id="quartodoc.Builder.from_quarto_config" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.from_quarto_config">from_quarto_config</h4>
-<p><code>Builder.from_quarto_config(quarto_cfg)</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Builder.from_quarto_config(quarto_cfg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Construct a Builder from a configuration object (or yaml file).</p>
+</section>
+<section id="quartodoc.Builder.write_css" class="level4">
+<h4 class="anchored" data-anchor-id="quartodoc.Builder.write_css">write_css</h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Builder.write_css()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Write default css styles to a file.</p>
 </section>
 <section id="quartodoc.Builder.write_doc_pages" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.write_doc_pages">write_doc_pages</h4>
-<p><code>Builder.write_doc_pages(pages, filter)</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Builder.write_doc_pages(pages, <span class="bu">filter</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Write individual function documentation pages.</p>
 </section>
 <section id="quartodoc.Builder.write_index" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.write_index">write_index</h4>
-<p><code>Builder.write_index(blueprint)</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Builder.write_index(blueprint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Write API index page.</p>
 </section>
 <section id="quartodoc.Builder.write_sidebar" class="level4">
 <h4 class="anchored" data-anchor-id="quartodoc.Builder.write_sidebar">write_sidebar</h4>
-<p><code>Builder.write_sidebar(blueprint)</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Builder.write_sidebar(blueprint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Write a yaml config file for API sidebar.</p>
 </section>
 </section>
 </section>
 <section id="quartodoc.Builder.build" class="level2">
 <h2 class="anchored" data-anchor-id="quartodoc.Builder.build">Builder.build</h2>
-<p><code>Builder.build(filter='*')</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Builder.build(<span class="bu">filter</span><span class="op">=</span><span class="st">'*'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Build index page, sphinx inventory, and individual doc pages.</p>
-<section id="parameters-3" class="level3">
-<h3 class="anchored" data-anchor-id="parameters-3">Parameters</h3>
+<section id="parameters-3" class="level3 doc-section doc-section-parameters">
+<h3 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-3">Parameters</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 4%">
 <col style="width: 3%">
-<col style="width: 87%">
+<col style="width: 3%">
+<col style="width: 88%">
 <col style="width: 4%">
 </colgroup>
 <thead>
@@ -528,9 +570,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>filter</code></td>
+<td>filter</td>
 <td>str</td>
-<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
+<td>A simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file's base name in the API dir (e.g.&nbsp;MdRenderer.render)</td>
 <td><code>'*'</code></td>
 </tr>
 </tbody>

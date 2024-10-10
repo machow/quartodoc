@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -104,6 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../api/_styles-quartodoc.css">
 <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -409,12 +410,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>embedded</td>
 <td></td>
-<td>Embed documentation inside the parent object’s documentation.</td>
+<td>Embed documentation inside the parent object's documentation.</td>
 </tr>
 <tr class="even">
 <td>flat</td>
 <td></td>
-<td>Include documentation after the parent object’s documentation.</td>
+<td>Include documentation after the parent object's documentation.</td>
 </tr>
 <tr class="odd">
 <td>separate</td>
@@ -698,17 +699,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td>signature_name</td>
 <td></td>
-<td>Style of name to use in the signature. Can be “relative”, “full”, or “short”. Relative is whatever was used as the name argument, full is the fully qualified path the object, and short is the name of the object (i.e.&nbsp;no periods).</td>
+<td>Style of name to use in the signature. Can be "relative", "full", or "short". Relative is whatever was used as the name argument, full is the fully qualified path the object, and short is the name of the object (i.e.&nbsp;no periods).</td>
 </tr>
 <tr class="odd">
 <td>members</td>
 <td></td>
-<td>A list of members, such as attributes or methods on a class, to document.</td>
+<td>A list of members, such as attributes or methods on a class, to document. If members is specified, no other includes or excludes are applied.</td>
 </tr>
 <tr class="even">
 <td>include_private</td>
 <td></td>
-<td>Whether to include members starting with “_”</td>
+<td>Whether to include members starting with "_"</td>
 </tr>
 <tr class="odd">
 <td>include_imports</td>
@@ -748,7 +749,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td>exclude</td>
 <td></td>
-<td>(Not implemented). A list of members to exclude.</td>
+<td>A list of members to exclude. This is performed last, in order to subtract from the results of options like include_functions.</td>
 </tr>
 <tr class="odd">
 <td>dynamic</td>
@@ -766,6 +767,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>If specified, object lookup will be relative to this path.</td>
 </tr>
 <tr class="even">
+<td>member_order</td>
+<td></td>
+<td>Order to present members in, either "alphabetical" or "source" order. Defaults to alphabetical sorting.</td>
+</tr>
+<tr class="odd">
 <td>member_options</td>
 <td></td>
 <td>Options to apply to members. These can include any of the options above.</td>
