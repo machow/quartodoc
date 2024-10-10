@@ -565,6 +565,9 @@ class MdRenderer(Renderer):
                 res = f"{glob}{name}: {annotation} = {el.default}"
             elif annotation:
                 res = f"{glob}{name}: {annotation}"
+            else:
+                res = f"{glob}{name}"
+
         elif has_default:
             res = f"{glob}{name}={el.default}"
         else:
