@@ -60,7 +60,7 @@ class ParamRow:
         name = self.name
         anno = self.annotation
         desc = sanitize(self.description, allow_markdown=True)
-        default = sanitize(str(self.default))
+        default = sanitize(str(self.default), escape_quotes=True)
 
         part_name = (
             Span(Strong(name), Attr(classes=["parameter-name"]))
@@ -219,7 +219,7 @@ class MdRenderer(Renderer):
         el:
             An object representing a type annotation.
         """
-        return sanitize(el)
+        return sanitize(el, escape_quotes=True)
 
     @dispatch
     def render_annotation(self, el: None) -> str:

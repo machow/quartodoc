@@ -13,12 +13,15 @@ def escape(val: str):
     return f"`{val}`"
 
 
-def sanitize(val: str, allow_markdown=False):
+def sanitize(val: str, allow_markdown=False, escape_quotes=False):
     # sanitize common tokens that break tables
     res = val.replace("\n", " ").replace("|", "\\|")
 
     # sanitize elements that get turned into smart quotes
-    res = res.replace("'", r"\'").replace('"', r"\"")
+    # this is to avoid defaults that are strings having their
+    # quotes screwed up.
+    if escape_quotes:
+        res = res.replace("'", r"\'").replace('"', r"\"")
 
     # sanitize elements that can get interpreted as markdown links
     # or citations
