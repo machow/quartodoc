@@ -367,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reading-docstrings" class="level2">
 <h2 class="anchored" data-anchor-id="reading-docstrings">Reading docstrings</h2>
 <p>Use the function <a href="../api/#get_object">get_object</a> to read in a docstring from a module.</p>
-<div id="75e8d636" class="cell" data-execution_count="1">
+<div id="47ba6dad" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> get_object, preview</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span>
@@ -385,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="function-name" class="level3">
 <h3 class="anchored" data-anchor-id="function-name">Function name</h3>
-<div id="f6202223" class="cell" data-execution_count="2">
+<div id="56d465a4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f_obj.name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>'get_object'</code></pre>
@@ -394,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="function-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="function-parameters">Function parameters</h3>
-<div id="67c830b2" class="cell" data-execution_count="3">
+<div id="4b01efe2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f_obj.parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Parameters(Parameter(name='path', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default=None), Parameter(name='object_name', annotation="'str | None'", kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'), Parameter(name='parser', annotation=ExprName(name='str', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/site-packages/quartodoc/autosummary.py'))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default="'numpy'"), Parameter(name='load_aliases', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='True'), Parameter(name='dynamic', annotation=None, kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='False'), Parameter(name='loader', annotation=ExprBinOp(left='None', operator='|', right=ExprName(name='GriffeLoader', parent=Module(PosixPath('/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/site-packages/quartodoc/autosummary.py')))), kind=&lt;ParameterKind.positional_or_keyword: 'positional or keyword'&gt;, default='None'))</code></pre>
@@ -403,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="raw-docstring-value" class="level3">
 <h3 class="anchored" data-anchor-id="raw-docstring-value">Raw docstring value</h3>
-<div id="05316f81" class="cell" data-execution_count="4">
+<div id="b2620da7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f_obj.docstring.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fetch a griffe object.
@@ -442,14 +442,14 @@ x:
 </section>
 <section id="parsed-docstring" class="level3">
 <h3 class="anchored" data-anchor-id="parsed-docstring">Parsed docstring</h3>
-<div id="e0f06783" class="cell" data-execution_count="5">
+<div id="d859d644" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f_obj.docstring.parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>[&lt;_griffe.docstrings.models.DocstringSectionText at 0x7fc2b00d6fb0&gt;,
- &lt;_griffe.docstrings.models.DocstringSectionParameters at 0x7fc29c9cdf60&gt;,
- &lt;_griffe.docstrings.models.DocstringSectionAdmonition at 0x7fc29c9cdbd0&gt;,
- &lt;_griffe.docstrings.models.DocstringSectionExamples at 0x7fc29c9cdc30&gt;,
- &lt;_griffe.docstrings.models.DocstringSectionReturns at 0x7fc29c8cc160&gt;]</code></pre>
+<pre><code>[&lt;_griffe.docstrings.models.DocstringSectionText at 0x7f60001e0340&gt;,
+ &lt;_griffe.docstrings.models.DocstringSectionParameters at 0x7f60001e0370&gt;,
+ &lt;_griffe.docstrings.models.DocstringSectionAdmonition at 0x7f60001e02b0&gt;,
+ &lt;_griffe.docstrings.models.DocstringSectionExamples at 0x7f60001e0250&gt;,
+ &lt;_griffe.docstrings.models.DocstringSectionReturns at 0x7f60001e0760&gt;]</code></pre>
 </div>
 </div>
 <p>The docstring into a tree lets us define visitors, which can visit each element and do useful things. For example, print a high-level overview of its structure, or render it to markdown.</p>
@@ -458,14 +458,14 @@ x:
 <section id="previewing-docstrings" class="level2">
 <h2 class="anchored" data-anchor-id="previewing-docstrings">Previewing docstrings</h2>
 <p>Use the preview function to see the overall structure of a parsed docstring.</p>
-<div id="57f955e6" class="cell" data-execution_count="6">
+<div id="ebb883ea" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> quartodoc <span class="im">import</span> get_object, preview</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>f_obj <span class="op">=</span> get_object(<span class="st">"quartodoc"</span>, <span class="st">"get_object"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="raw-docstring" class="level3">
 <h3 class="anchored" data-anchor-id="raw-docstring">Raw docstring</h3>
-<div id="593a0299" class="cell" data-execution_count="7">
+<div id="22bd7671" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f_obj.docstring.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fetch a griffe object.
@@ -504,7 +504,7 @@ x:
 </section>
 <section id="preview" class="level3">
 <h3 class="anchored" data-anchor-id="preview">Preview</h3>
-<div id="b6eb5dda" class="cell" data-execution_count="8">
+<div id="0f957eb9" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>preview(f_obj.docstring.parsed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>█─list
