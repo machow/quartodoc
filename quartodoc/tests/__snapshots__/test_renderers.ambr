@@ -504,60 +504,60 @@
       :   A description.
   '''
 # ---
-# name: test_render_numpydoc_section_return[name: int\n    A description.]
+# name: test_render_numpydoc_section_return[name: int\n    A `"description"`.]
   '''
   Code
       Parameters
       ---
       name: int
-          A description.
+          A `"description"`.
   
       Returns
       ---
       name: int
-          A description.
+          A `"description"`.
   
       Attributes
       ---
       name: int
-          A description.
+          A `"description"`.
   
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
-      | Name   | Type   | Description    | Default    |
-      |--------|--------|----------------|------------|
-      | name   |        | A description. | _required_ |
+      | Name   | Type   | Description        | Default    |
+      |--------|--------|--------------------|------------|
+      | name   |        | A `"description"`. | _required_ |
   
       # Returns {.doc-section .doc-section-returns}
   
-      | Name   | Type   | Description    |
-      |--------|--------|----------------|
-      | name   | int    | A description. |
+      | Name   | Type   | Description        |
+      |--------|--------|--------------------|
+      | name   | int    | A `"description"`. |
   
       # Attributes {.doc-section .doc-section-attributes}
   
-      | Name   | Type   | Description    |
-      |--------|--------|----------------|
-      | name   | int    | A description. |
+      | Name   | Type   | Description        |
+      |--------|--------|--------------------|
+      | name   | int    | A `"description"`. |
   
   List
       # Parameters {.doc-section .doc-section-parameters}
   
       <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
-      :   A description.
+      :   A `"description"`.
   
       # Returns {.doc-section .doc-section-returns}
   
       <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
-      :   A description.
+      :   A `"description"`.
   
       # Attributes {.doc-section .doc-section-attributes}
   
       <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
-      :   A description.
+      :   A `"description"`.
   '''
 # ---
