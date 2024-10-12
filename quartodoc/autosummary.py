@@ -513,8 +513,10 @@ class Builder:
         if len(kwargs) > 0:
             ignored_keys = [f"'{k}'" for k in kwargs.keys()]
             text_options = "option" if len(kwargs) == 1 else "options"
-            warnings.warn(
-                f"Ignoring unknown quartodoc {text_options} {', '.join(ignored_keys)}"
+            raise ValueError(
+                f"Unknown quartodoc {text_options}: {', '.join(ignored_keys)}. "
+                "Please see <https://machow.github.io/quartodoc/get-started/basic-docs.html> "
+                "for quartodoc site configuration options."
             )
 
         self.renderer = Renderer.from_config(renderer)
