@@ -426,11 +426,11 @@ class Builder:
     out_index:
         The output path of the index file, used to list all API functions.
     sidebar:
-        The output path for a sidebar yaml config (by default no config generated).
-    sidebar_options:
-        Additional options to be included in the sidebar definition. See
-        [Side navigation](https://quarto.org/docs/websites/website-navigation.html#side-navigation)
-        in Quarto's documentation for more information.
+        The output path for a sidebar yaml config (by default no config
+        generated). Alternatively, can be a dictionary of [Quarto sidebar
+        options](https://quarto.org/docs/websites/website-navigation.html#side-navigation)
+        with an additional `file` key containing the output path for the sidebar
+        YAML config file (by default `_quartodoc-sidebar.yml` if not specified).
     css:
         The output path for the default css styles.
     rewrite_all_pages:
@@ -491,8 +491,7 @@ class Builder:
         title: str = "Function reference",
         renderer: "dict | Renderer | str" = "markdown",
         out_index: str = None,
-        sidebar: "str | None" = None,
-        sidebar_options: "dict | None" = None,
+        sidebar: "str | dict[str, Any] | None" = None,
         css: "str | None" = None,
         rewrite_all_pages=False,
         source_dir: "str | None" = None,
@@ -509,8 +508,13 @@ class Builder:
         self.version = None
         self.dir = dir
         self.title = title
-        self.sidebar = sidebar
-        self.sidebar_options = sidebar_options
+
+        if isinstance(sidebar, str):
+            sidebar = {"file": sidebar}
+        elif isinstance(sidebar, dict) and "file" not in sidebar:
+            sidebar["file"] = "_quartodoc-sidebar.yml"
+        self.sidebar: "dict[str, Any] | None" = sidebar
+
         self.css = css
         self.parser = parser
 
@@ -594,8 +598,8 @@ class Builder:
         # sidebar ----
 
         if self.sidebar:
-            _log.info(f"Writing sidebar yaml to {self.sidebar}")
-            self.write_sidebar(blueprint, self.sidebar_options)
+            _log.info(f"Writing sidebar yaml to {self.sidebar['file']}")
+            self.write_sidebar(blueprint)
 
         # css ----
 
@@ -665,7 +669,9 @@ class Builder:
 
     # sidebar ----
 
-    def _generate_sidebar(self, blueprint: layout.Layout, options: "dict | None" = None):
+    def _generate_sidebar(
+        self, blueprint: layout.Layout, options: "dict | None" = None
+    ):
         contents = [f"{self.dir}/index{self.out_page_suffix}"]
         in_subsection = False
         crnt_entry = {}
@@ -693,17 +699,47 @@ class Builder:
             contents.append(crnt_entry)
 
         # Create sidebar with user options, ensuring we control `id` and `contents`
-        sidebar = {**(self.sidebar_options or {})}
-        sidebar.update({"id": self.dir, "contents": contents})
+        if self.sidebar is None:
+            sidebar = {}
+        else:
+            sidebar = {k: v for k, v in self.sidebar.items() if k != "file"}
 
-        entries = [sidebar,  {"id": "dummy-sidebar"}]
+        if "id" not in sidebar:
+            sidebar["id"] = self.dir
+
+        if "contents" not in sidebar:
+            sidebar["contents"] = contents
+        else:
+            if not isinstance(sidebar["contents"], list):
+                raise TypeError("`sidebar.contents` must be a list")
+
+            def splice_contents_recursive(sidebar, contents):
+                """Splice quartodoc contents into first element exactly '{{ contents }}'"""
+                if isinstance(sidebar, dict):
+                    for value in sidebar.values():
+                        if splice_contents_recursive(value, contents):
+                            return True
+                elif isinstance(sidebar, list):
+                    for i, item in enumerate(sidebar):
+                        if item == "{{ contents }}":
+                            sidebar[i : i + 1] = contents  # noqa: E203
+                            return True
+                        elif splice_contents_recursive(item, contents):
+                            return True
+                return False
+
+            if not splice_contents_recursive(sidebar["contents"], contents):
+                # otherwise append contents to existing list
+                sidebar["contents"].extend(contents)
+
+        entries = [sidebar, {"id": "dummy-sidebar"}]
         return {"website": {"sidebar": entries}}
 
     def write_sidebar(self, blueprint: layout.Layout):
         """Write a yaml config file for API sidebar."""
 
         d_sidebar = self._generate_sidebar(blueprint)
-        yaml.dump(d_sidebar, open(self.sidebar, "w"))
+        yaml.dump(d_sidebar, open(self.sidebar["file"], "w"))
 
     def write_css(self):
         """Write default css styles to a file."""

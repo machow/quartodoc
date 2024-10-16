@@ -23,15 +23,21 @@
   website:
     sidebar:
     - contents:
-      - reference/index.qmd
+      - href: introduction.qmd
+        text: Introduction
       - contents:
-        - reference/a_func.qmd
-        section: first section
-      - contents:
+        - reference/index.qmd
         - contents:
-          - reference/a_attr.qmd
-          section: a subsection
-        section: second section
+          - reference/a_func.qmd
+          section: first section
+        - contents:
+          - contents:
+            - reference/a_attr.qmd
+            section: a subsection
+          section: second section
+        section: Reference
+      - href: basics-summary.qmd
+        text: Basics
       id: reference
       search: true
       style: docked
