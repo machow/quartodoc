@@ -223,7 +223,7 @@ def test_render_doc_signature_name_alias_of_alias(snapshot, renderer):
 @pytest.mark.parametrize(
     "doc",
     [
-        """name: int\n    A description.""",
+        """name: int\n    A `"description"`.""",
         """int\n    A description.""",
     ],
 )

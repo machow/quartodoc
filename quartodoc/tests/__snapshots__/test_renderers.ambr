@@ -7,15 +7,17 @@
   tests.example_signature.a_complex_signature(
       x: list[C | int | None]
       y: pathlib.Pathlib
+      z
   )
   ```
   
   ## Parameters {.doc-section .doc-section-parameters}
   
-  | Name   | Type                                                                                 | Description     | Default    |
-  |--------|--------------------------------------------------------------------------------------|-----------------|------------|
-  | x      | [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\] | The x parameter | _required_ |
-  | y      | [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`)                                    | The y parameter | _required_ |
+  | Name   | Type                                                                                 | Description                   | Default    |
+  |--------|--------------------------------------------------------------------------------------|-------------------------------|------------|
+  | x      | [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\] | The x parameter               | _required_ |
+  | y      | [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`)                                    | The y parameter               | _required_ |
+  | z      |                                                                                      | The z parameter (unannotated) | _required_ |
   '''
 # ---
 # name: test_render_annotations_complex_no_interlinks
@@ -26,15 +28,17 @@
   tests.example_signature.a_complex_signature(
       x: list[C | int | None]
       y: pathlib.Pathlib
+      z
   )
   ```
   
   ## Parameters {.doc-section .doc-section-parameters}
   
-  | Name   | Type                     | Description     | Default    |
-  |--------|--------------------------|-----------------|------------|
-  | x      | list\[C \| int \| None\] | The x parameter | _required_ |
-  | y      | pathlib.Pathlib          | The y parameter | _required_ |
+  | Name   | Type                     | Description                   | Default    |
+  |--------|--------------------------|-------------------------------|------------|
+  | x      | list\[C \| int \| None\] | The x parameter               | _required_ |
+  | y      | pathlib.Pathlib          | The y parameter               | _required_ |
+  | z      |                          | The z parameter (unannotated) | _required_ |
   '''
 # ---
 # name: test_render_doc_class[embedded]
@@ -483,77 +487,77 @@
   List
       # Parameters {.doc-section .doc-section-parameters}
   
-      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   
       # Returns {.doc-section .doc-section-returns}
   
-      <code>[]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
       :   A description.
   
       # Attributes {.doc-section .doc-section-attributes}
   
-      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**int**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
       :   A description.
   '''
 # ---
-# name: test_render_numpydoc_section_return[name: int\n    A description.]
+# name: test_render_numpydoc_section_return[name: int\n    A `"description"`.]
   '''
   Code
       Parameters
       ---
       name: int
-          A description.
+          A `"description"`.
   
       Returns
       ---
       name: int
-          A description.
+          A `"description"`.
   
       Attributes
       ---
       name: int
-          A description.
+          A `"description"`.
   
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
-      | Name   | Type   | Description    | Default    |
-      |--------|--------|----------------|------------|
-      | name   |        | A description. | _required_ |
+      | Name   | Type   | Description        | Default    |
+      |--------|--------|--------------------|------------|
+      | name   |        | A `"description"`. | _required_ |
   
       # Returns {.doc-section .doc-section-returns}
   
-      | Name   | Type   | Description    |
-      |--------|--------|----------------|
-      | name   | int    | A description. |
+      | Name   | Type   | Description        |
+      |--------|--------|--------------------|
+      | name   | int    | A `"description"`. |
   
       # Attributes {.doc-section .doc-section-attributes}
   
-      | Name   | Type   | Description    |
-      |--------|--------|----------------|
-      | name   | int    | A description. |
+      | Name   | Type   | Description        |
+      |--------|--------|--------------------|
+      | name   | int    | A `"description"`. |
   
   List
       # Parameters {.doc-section .doc-section-parameters}
   
-      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation}</code>
   
-      :   A description.
+      :   A `"description"`.
   
       # Returns {.doc-section .doc-section-returns}
   
-      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
-      :   A description.
+      :   A `"description"`.
   
       # Attributes {.doc-section .doc-section-attributes}
   
-      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+      <code>[**name**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
   
-      :   A description.
+      :   A `"description"`.
   '''
 # ---

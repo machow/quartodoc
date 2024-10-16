@@ -59,8 +59,8 @@ class ParamRow:
     def to_definition_list(self):
         name = self.name
         anno = self.annotation
-        desc = self.description
-        default = sanitize(str(self.default))
+        desc = sanitize(self.description, allow_markdown=True)
+        default = sanitize(str(self.default), escape_quotes=True)
 
         part_name = (
             Span(Strong(name), Attr(classes=["parameter-name"]))
@@ -77,7 +77,7 @@ class ParamRow:
         # in the table display format, not description lists....
         # by this stage _required_ is basically a special token to indicate
         # a required argument.
-        if default is not None:
+        if self.default is not None:
             part_default_sep = Span(" = ", Attr(classes=["parameter-default-sep"]))
             part_default = Span(default, Attr(classes=["parameter-default"]))
         else:
@@ -100,13 +100,15 @@ class ParamRow:
 
     def to_tuple(self, style: Literal["parameters", "attributes", "returns"]):
         name = self.name
+        description = sanitize(self.description, allow_markdown=True)
+
         if style == "parameters":
             default = "_required_" if self.default is None else escape(self.default)
-            return (name, self.annotation, self.description, default)
+            return (name, self.annotation, description, default)
         elif style == "attributes":
-            return (name, self.annotation, self.description)
+            return (name, self.annotation, description)
         elif style == "returns":
-            return (name, self.annotation, self.description)
+            return (name, self.annotation, description)
 
         raise NotImplementedError(f"Unsupported table style: {style}")
 
@@ -217,7 +219,7 @@ class MdRenderer(Renderer):
         el:
             An object representing a type annotation.
         """
-        return sanitize(el)
+        return sanitize(el, escape_quotes=True)
 
     @dispatch
     def render_annotation(self, el: None) -> str:
@@ -563,6 +565,9 @@ class MdRenderer(Renderer):
                 res = f"{glob}{name}: {annotation} = {el.default}"
             elif annotation:
                 res = f"{glob}{name}: {annotation}"
+            else:
+                res = f"{glob}{name}"
+
         elif has_default:
             res = f"{glob}{name}={el.default}"
         else:
@@ -595,8 +600,9 @@ class MdRenderer(Renderer):
     @dispatch
     def render(self, el: ds.DocstringParameter) -> ParamRow:
         annotation = self.render_annotation(el.annotation)
-        clean_desc = sanitize(el.description, allow_markdown=True)
-        return ParamRow(el.name, clean_desc, annotation=annotation, default=el.default)
+        return ParamRow(
+            el.name, el.description, annotation=annotation, default=el.default
+        )
 
     # attributes ----
 
@@ -611,7 +617,7 @@ class MdRenderer(Renderer):
     def render(self, el: ds.DocstringAttribute) -> ParamRow:
         return ParamRow(
             el.name,
-            sanitize(el.description or "", allow_markdown=True),
+            el.description or "",
             annotation=self.render_annotation(el.annotation),
         )
 
@@ -680,7 +686,7 @@ class MdRenderer(Renderer):
         # similar to DocstringParameter, but no name or default
         return ParamRow(
             el.name,
-            sanitize(el.description, allow_markdown=True),
+            el.description,
             annotation=self.render_annotation(el.annotation),
         )
 
@@ -689,7 +695,7 @@ class MdRenderer(Renderer):
         # similar to DocstringParameter, but no name or default
         return ParamRow(
             None,
-            sanitize(el.description, allow_markdown=True),
+            el.description,
             annotation=self.render_annotation(el.annotation),
         )
 

@@ -221,10 +221,11 @@ class AutoOptions(_Base):
 
     # other options ----
     include: Optional[str] = None
-    exclude: Optional[str] = None
+    exclude: Optional[list[str]] = None
     dynamic: Union[None, bool, str] = None
     children: ChoicesChildren = ChoicesChildren.embedded
     package: Union[str, None, MISSING] = MISSING()
+    member_order: Literal["alphabetical", "source"] = "alphabetical"
     member_options: Optional["AutoOptions"] = None
 
     # for tracking fields users manually specify
@@ -249,6 +250,7 @@ class Auto(AutoOptions):
         path the object, and short is the name of the object (i.e. no periods).
     members:
         A list of members, such as attributes or methods on a class, to document.
+        If members is specified, no other includes or excludes are applied.
     include_private:
         Whether to include members starting with "_"
     include_imports:
@@ -266,7 +268,8 @@ class Auto(AutoOptions):
     include:
         (Not implemented). A list of members to include.
     exclude:
-        (Not implemented). A list of members to exclude.
+        A list of members to exclude. This is performed last, in order to subtract
+        from the results of options like include_functions.
     dynamic:
         Whether to dynamically load docstring. By default docstrings are loaded
         using static analysis. dynamic may be a string pointing to another object,
@@ -275,6 +278,9 @@ class Auto(AutoOptions):
         Style for presenting members. Either separate, embedded, or flat.
     package:
         If specified, object lookup will be relative to this path.
+    member_order:
+        Order to present members in, either "alphabetical" or "source" order.
+        Defaults to alphabetical sorting.
     member_options:
         Options to apply to members. These can include any of the options above.
 
