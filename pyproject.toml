@@ -55,6 +55,7 @@ ci = "https://github.com/machow/quartodoc/actions"
 
 [project.optional-dependencies]
 dev = [
+    "griffe-pydantic",
     "pytest<8.0.0",
     "pytest-cov",
     "jupyterlab",
