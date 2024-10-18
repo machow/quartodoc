@@ -35,7 +35,7 @@ from quartodoc import get_object as _get_object
 
 from .utils import PydanticTransformer, ctx_node, WorkaroundKeyError
 
-from typing import overload, TYPE_CHECKING
+from typing import Callable, overload, TYPE_CHECKING
 
 
 _log = logging.getLogger(__name__)
@@ -437,7 +437,11 @@ def blueprint(el: Auto, package: str) -> Doc:
 
 
 def blueprint(
-    el: _Base, package: str = None, dynamic: None | bool = None, parser="numpy"
+    el: _Base,
+    package: str = None,
+    dynamic: None | bool = None,
+    parser="numpy",
+    get_object: "None | Callable" = None,
 ) -> _Base:
     """Convert a configuration element to something that is ready to render.
 
@@ -449,6 +453,8 @@ def blueprint(
         A base package name. If specified, this is prepended to the names of any objects.
     dynamic:
         Whether to dynamically load objects. Defaults to using static analysis.
+    get_object:
+        The function to call to load the item. If specified, parser is ignored.
 
     Examples
     --------
@@ -463,7 +469,7 @@ def blueprint(
 
     """
 
-    trans = BlueprintTransformer(parser=parser)
+    trans = BlueprintTransformer(get_object=get_object, parser=parser)
 
     if package is not None:
         trans.crnt_package = package

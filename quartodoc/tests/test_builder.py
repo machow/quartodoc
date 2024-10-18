@@ -82,3 +82,22 @@ def test_builder_generate_sidebar(tmp_path, snapshot):
     d_sidebar = builder._generate_sidebar(bp)
 
     assert yaml.dump(d_sidebar) == snapshot
+
+
+def test_builder_griffe_extensions():
+    cfg = yaml.safe_load(
+        """
+    quartodoc:
+      package: quartodoc.tests.example_pydantic
+      griffe_extensions:
+        - griffe_pydantic:
+            schema: true
+    """
+    )
+    builder = Builder.from_quarto_config(cfg)
+    obj = builder._get_object("quartodoc.tests.example_pydantic.AModel")
+
+    # TODO: what to check here?
+    assert False
+
+    builder.build()
