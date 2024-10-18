@@ -399,6 +399,38 @@ def _is_valueless(obj: dc.Object):
     return False
 
 
+def _insert_contents(
+    x: dict | list,
+    contents: list,
+    sentinel: str = "{{ contents }}",
+):
+    """Splice `contents` into a list.
+
+    Splices `contents` into the first element in `x` that exactly matches
+    `sentinel`. This functions recurses into dictionaries, but because
+    `contents` is a list, we only look within lists in `x` for the sentinel
+    value where `contents` should be inserted.
+
+    Returns
+    -------
+    :
+       Returns `True` if `contents` was inserted into `x`, otherwise returns
+       `False`. Note that `x` is modified in place.
+    """
+    if isinstance(x, dict):
+        for value in x.values():
+            if _insert_contents(value, contents):
+                return True
+    elif isinstance(x, list):
+        for i, item in enumerate(x):
+            if item == sentinel:
+                x[i : i + 1] = contents  # noqa: E203
+                return True
+            elif _insert_contents(item, contents):
+                return True
+    return False
+
+
 # pkgdown =====================================================================
 
 
@@ -713,22 +745,7 @@ class Builder:
             if not isinstance(sidebar["contents"], list):
                 raise TypeError("`sidebar.contents` must be a list")
 
-            def splice_contents_recursive(sidebar, contents):
-                """Splice quartodoc contents into first element exactly '{{ contents }}'"""
-                if isinstance(sidebar, dict):
-                    for value in sidebar.values():
-                        if splice_contents_recursive(value, contents):
-                            return True
-                elif isinstance(sidebar, list):
-                    for i, item in enumerate(sidebar):
-                        if item == "{{ contents }}":
-                            sidebar[i : i + 1] = contents  # noqa: E203
-                            return True
-                        elif splice_contents_recursive(item, contents):
-                            return True
-                return False
-
-            if not splice_contents_recursive(sidebar["contents"], contents):
+            if not _insert_contents(sidebar["contents"], contents):
                 # otherwise append contents to existing list
                 sidebar["contents"].extend(contents)
 
