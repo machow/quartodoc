@@ -8,8 +8,10 @@ import yaml
 from ._griffe_compat import GriffeLoader, ModulesCollection, LinesCollection
 from ._griffe_compat import dataclasses as dc
 from ._griffe_compat import Parser, parse
+from ._griffe_compat import load_extensions
 
 from fnmatch import fnmatchcase
+from functools import partial
 from plum import dispatch  # noqa
 from pathlib import Path
 from types import ModuleType
@@ -24,7 +26,7 @@ from .pandoc.blocks import Blocks, Header
 from .pandoc.components import Attr
 
 
-from typing import Any
+from typing import Any, Callable
 
 
 _log = logging.getLogger(__name__)
@@ -468,6 +470,9 @@ class Builder:
     items: list[layout.Item]
     """Documented items by this builder"""
 
+    _get_object: "Callable[[str], dc.Object | dc.Alias]"
+    """Internal function called to load each item."""
+
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
 
@@ -494,6 +499,7 @@ class Builder:
         dynamic: bool | None = None,
         parser="numpy",
         render_interlinks: bool = False,
+        griffe_extensions: "list[str | dict[str, dict[str, Any]]] | None" = None,
         _fast_inventory=False,
     ):
         self.layout = self.load_layout(
@@ -507,6 +513,9 @@ class Builder:
         self.sidebar = sidebar
         self.css = css
         self.parser = parser
+        self.griffe_extensions = (
+            load_extensions(*griffe_extensions) if griffe_extensions else None
+        )
 
         self.renderer = Renderer.from_config(renderer)
         if render_interlinks:
@@ -517,11 +526,25 @@ class Builder:
         if out_index is not None:
             self.out_index = out_index
 
+        self._get_object = partial(
+            get_object,
+            loader=self._create_griffe_loader(self.griffe_extensions),
+        )
         self.rewrite_all_pages = rewrite_all_pages
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
         self.dynamic = dynamic
 
         self._fast_inventory = _fast_inventory
+
+    # TODO: annotation
+    def _create_griffe_loader(self, extensions):
+        return GriffeLoader(
+            docstring_parser=Parser(self.parser),
+            docstring_options=get_parser_defaults(self.parser),
+            modules_collection=ModulesCollection(),
+            lines_collection=LinesCollection(),
+            extensions=self.griffe_extensions,
+        )
 
     def load_layout(self, sections: dict, package: str, options=None):
         # TODO: currently returning the list of sections, to make work with
@@ -556,7 +579,13 @@ class Builder:
         # shaping and collection ----
 
         _log.info("Generating blueprint.")
-        blueprint = blueprint(self.layout, dynamic=self.dynamic, parser=self.parser)
+        # TODO: set loader
+        blueprint = blueprint(
+            self.layout,
+            dynamic=self.dynamic,
+            parser=self.parser,
+            get_object=self._get_object,
+        )
 
         _log.info("Collecting pages and inventory items.")
         pages, self.items = collect(blueprint, base_dir=self.dir)

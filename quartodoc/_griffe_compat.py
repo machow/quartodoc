@@ -10,6 +10,8 @@ try:
 
     from griffe import Parser, parse, parse_numpy
     from griffe import AliasResolutionError
+
+    from griffe import load_extensions
 except ImportError:
     from griffe.loader import GriffeLoader
     from griffe.collections import ModulesCollection, LinesCollection
@@ -20,3 +22,5 @@ except ImportError:
 
     from griffe.docstrings.parsers import Parser, parse
     from griffe.exceptions import AliasResolutionError
+
+    from griffe import load_extensions
