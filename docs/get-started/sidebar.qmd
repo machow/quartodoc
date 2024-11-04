@@ -19,14 +19,36 @@ quartodoc:
 ```
 
 Note that running `python -m quartodoc build` will now produce a file called `_sidebar.yml`,
-with a [quarto sidebar configuration](https://quarto.org/docs/websites/website-navigation.html#side-navigation).
-The quarto [`metadata-files` option](https://quarto.org/docs/projects/quarto-projects.html#metadata-includes) ensures
+with a [Quarto sidebar configuration](https://quarto.org/docs/websites/website-navigation.html#side-navigation).
+The Quarto [`metadata-files` option](https://quarto.org/docs/projects/quarto-projects.html#metadata-includes) ensures
 it's included with the configuration in `_quarto.yml`.
 
 Here is what the sidebar for the [quartodoc reference page](/api) looks like:
 
 <div class="sourceCode">
-<pre class="sourceCode yaml"><code class="sourceCode yaml">
-{{{< include /api/_sidebar.yml >}}}
+<pre class="sourceCode yaml"><code class="sourceCode yaml">{{< include /api/_sidebar.yml >}}
 </code></pre>
 </div>
+
+## Customizing the sidebar
+
+`sidebar` can also accept additional [sidebar options from the choices available in Quarto](https://quarto.org/docs/websites/website-navigation.html#side-navigation). These options are passed directly to Quarto, and can be used to customize the sidebar's appearance and behavior, or include additional content. 
+
+When using a dictionary for `sidebar`, use `file` to specify the sidebar file (defaults to `_quartodoc-sidebar.yml` if not provided). You can also provide additional content in the sidebar. Tell quartodoc where to include your package documentation in the sidebar with the `"{{ contents }}"` placeholder.
+
+```yaml
+quartodoc:
+  sidebar: 
+    file: "_sidebar.yml"
+    style: docked
+    search: true
+    collapse-level: 2
+    contents:
+      - text: "Introduction"
+        href: introduction.qmd
+      - section: "Reference"
+        contents:
+          - "{{ contents }}"
+      - text: "Basics"
+        href: basics-summary.qmd
+```

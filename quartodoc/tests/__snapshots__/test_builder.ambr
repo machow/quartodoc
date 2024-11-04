@@ -18,3 +18,30 @@
   
   '''
 # ---
+# name: test_builder_generate_sidebar_options
+  '''
+  website:
+    sidebar:
+    - contents:
+      - href: introduction.qmd
+        text: Introduction
+      - contents:
+        - reference/index.qmd
+        - contents:
+          - reference/a_func.qmd
+          section: first section
+        - contents:
+          - contents:
+            - reference/a_attr.qmd
+            section: a subsection
+          section: second section
+        section: Reference
+      - href: basics-summary.qmd
+        text: Basics
+      id: reference
+      search: true
+      style: docked
+    - id: dummy-sidebar
+  
+  '''
+# ---

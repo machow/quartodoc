@@ -82,3 +82,49 @@ def test_builder_generate_sidebar(tmp_path, snapshot):
     d_sidebar = builder._generate_sidebar(bp)
 
     assert yaml.dump(d_sidebar) == snapshot
+
+
+def test_builder_generate_sidebar_options(tmp_path, snapshot):
+    cfg = yaml.safe_load(
+        """
+    quartodoc:
+      package: quartodoc.tests.example
+      sidebar:
+        style: docked
+        search: true
+        contents:
+          - text: "Introduction"
+            href: introduction.qmd
+          - section: "Reference"
+            contents:
+             - "{{ contents }}"
+          - text: "Basics"
+            href: basics-summary.qmd
+      sections:
+        - title: first section
+          desc: some description
+          contents: [a_func]
+        - title: second section
+          desc: title description
+        - subtitle: a subsection
+          desc: subtitle description
+          contents:
+            - a_attr
+    """
+    )
+
+    builder = Builder.from_quarto_config(cfg)
+    assert builder.sidebar["file"] == "_quartodoc-sidebar.yml"  # default value
+
+    bp = blueprint(builder.layout)
+
+    d_sidebar = builder._generate_sidebar(bp)
+    assert "website" in d_sidebar
+    assert "sidebar" in d_sidebar["website"]
+
+    qd_sidebar = d_sidebar["website"]["sidebar"][0]
+    assert "file" not in qd_sidebar
+    assert qd_sidebar["style"] == "docked"
+    assert qd_sidebar["search"]
+
+    assert yaml.dump(d_sidebar) == snapshot
