@@ -23,12 +23,16 @@ with a [Quarto sidebar configuration](https://quarto.org/docs/websites/website-n
 The Quarto [`metadata-files` option](https://quarto.org/docs/projects/quarto-projects.html#metadata-includes) ensures
 it's included with the configuration in `_quarto.yml`.
 
+::: { .callout-note}
 Here is what the sidebar for the [quartodoc reference page](/api) looks like:
 
-<div class="sourceCode">
-<pre class="sourceCode yaml"><code class="sourceCode yaml">{{< include /api/_sidebar.yml >}}
-</code></pre>
-</div>
+<details>
+```yaml
+{{< include /api/_sidebar.yml >}}
+```
+</details>
+
+:::
 
 ## Customizing the sidebar
 
