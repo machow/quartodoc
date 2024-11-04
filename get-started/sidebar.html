@@ -310,8 +310,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#customizing-the-sidebar" id="toc-customizing-the-sidebar" class="nav-link active" data-scroll-target="#customizing-the-sidebar">Customizing the sidebar</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -346,15 +352,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span><span class="at"> </span><span class="st">"_sidebar.yml"</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  # other options ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that running <code>python -m quartodoc build</code> will now produce a file called <code>_sidebar.yml</code>, with a <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">quarto sidebar configuration</a>. The quarto <a href="https://quarto.org/docs/projects/quarto-projects.html#metadata-includes"><code>metadata-files</code> option</a> ensures it’s included with the configuration in <code>_quarto.yml</code>.</p>
+<p>Note that running <code>python -m quartodoc build</code> will now produce a file called <code>_sidebar.yml</code>, with a <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">Quarto sidebar configuration</a>. The Quarto <a href="https://quarto.org/docs/projects/quarto-projects.html#metadata-includes"><code>metadata-files</code> option</a> ensures it’s included with the configuration in <code>_quarto.yml</code>.</p>
 <p>Here is what the sidebar for the <a href="../api">quartodoc reference page</a> looks like:</p>
 <div class="sourceCode">
-<pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml">
-{{&lt; include /api/_sidebar.yml &gt;}}
+<pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml">{{&lt; include /api/_sidebar.yml &gt;}}
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
 </div>
+<section id="customizing-the-sidebar" class="level2">
+<h2 class="anchored" data-anchor-id="customizing-the-sidebar">Customizing the sidebar</h2>
+<p><code>sidebar</code> can also accept additional <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">sidebar options from the choices available in Quarto</a>. These options are passed directly to Quarto, and can be used to customize the sidebar’s appearance and behavior, or include additional content.</p>
+<p>When using a dictionary for <code>sidebar</code>, use <code>file</code> to specify the sidebar file (defaults to <code>_quartodoc-sidebar.yml</code> if not provided). You can also provide additional content in the sidebar. Tell quartodoc where to include your package documentation in the sidebar with the <code>"{{ contents }}"</code> placeholder.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quartodoc</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">file</span><span class="kw">:</span><span class="at"> </span><span class="st">"_sidebar.yml"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">style</span><span class="kw">:</span><span class="at"> docked</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">search</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">collapse-level</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">contents</span><span class="kw">:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">href</span><span class="kw">:</span><span class="at"> introduction.qmd</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">section</span><span class="kw">:</span><span class="at"> </span><span class="st">"Reference"</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">contents</span><span class="kw">:</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">"{{ contents }}"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"Basics"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">href</span><span class="kw">:</span><span class="at"> basics-summary.qmd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

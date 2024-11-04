@@ -573,9 +573,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>The output path of the index file, used to list all API functions.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>sidebar</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">'str | None'</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>sidebar</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">'str | dict[str, Any] | None'</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>The output path for a sidebar yaml config (by default no config generated).</p>
+<p>The output path for a sidebar yaml config (by default no config generated). Alternatively, can be a dictionary of <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">Quarto sidebar options</a> with an additional <code>file</code> key containing the output path for the sidebar YAML config file (by default <code>_quartodoc-sidebar.yml</code> if not specified).</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>css</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">'str | None'</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>

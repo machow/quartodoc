@@ -362,12 +362,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="top-level-options">Top-level options</h3>
 <p>The <code>quartodoc</code> section takes a <code>style</code> field, specifying which <a href="../api/Builder.html#quartodoc.Builder"><code>quartodoc.Builder</code></a> to use (currently “pkgdown” or “single-page”; see <a href="../examples/">Examples</a>).</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 11%">
-<col style="width: 72%">
-<col style="width: 9%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -427,8 +421,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td>sidebar</td>
-<td>'str | None'</td>
-<td>The output path for a sidebar yaml config (by default no config generated).</td>
+<td>'str | dict[str, Any] | None'</td>
+<td>The output path for a sidebar yaml config (by default no config generated). Alternatively, can be a dictionary of <a href="https://quarto.org/docs/websites/website-navigation.html#side-navigation">Quarto sidebar options</a> with an additional <code>file</code> key containing the output path for the sidebar YAML config file (by default <code>_quartodoc-sidebar.yml</code> if not specified).</td>
 <td><code>None</code></td>
 </tr>
 <tr class="even">
