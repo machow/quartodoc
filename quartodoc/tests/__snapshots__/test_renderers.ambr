@@ -5,9 +5,9 @@
   
   ```python
   tests.example_signature.a_complex_signature(
-      x: list[C | int | None]
-      y: pathlib.Pathlib
-      z
+      x: list[C | int | None],
+      y: pathlib.Pathlib,
+      z,
   )
   ```
   
@@ -26,9 +26,9 @@
   
   ```python
   tests.example_signature.a_complex_signature(
-      x: list[C | int | None]
-      y: pathlib.Pathlib
-      z
+      x: list[C | int | None],
+      y: pathlib.Pathlib,
+      z,
   )
   ```
   

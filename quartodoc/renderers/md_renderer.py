@@ -268,7 +268,7 @@ class MdRenderer(Renderer):
 
         flat_sig = f"{name}({', '.join(pars)})"
         if len(flat_sig) > 80:
-            indented = [" " * 4 + par for par in pars]
+            indented = [" " * 4 + par + "," for par in pars]
             sig = "\n".join([f"{name}(", *indented, ")"])
         else:
             sig = flat_sig
