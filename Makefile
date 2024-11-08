@@ -45,9 +45,9 @@ docs-build-readme:
 
 docs-build: export PLUM_SIMPLE_DOC=1
 docs-build: docs-build-examples
-	cd docs && quarto add --no-prompt ..
-	cd docs && quartodoc build
+	cd docs && quartodoc build --verbose
 	cd docs && quartodoc interlinks
+	cd docs && quarto add --no-prompt ..
 	quarto render docs
 
 test-interlinks: quartodoc/tests/example_interlinks/test.md
