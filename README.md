@@ -59,20 +59,20 @@ project:
 
 # tell quarto to read the generated sidebar
 metadata-files:
-  - api/_sidebar.yml
+  - reference/_sidebar.yml
 
 # tell quarto to read the generated styles
 format:
   css:
-    - api/_styles-quartodoc.css
+    - reference/_styles-quartodoc.css
 
 quartodoc:
   # the name used to import the package you want to create reference docs for
   package: quartodoc
 
   # write sidebar and style data
-  sidebar: api/_sidebar.yml
-  css: api/_styles-quartodoc.css
+  sidebar: reference/_sidebar.yml
+  css: reference/_styles-quartodoc.css
 
   sections:
     - title: Some functions
