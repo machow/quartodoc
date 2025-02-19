@@ -44,7 +44,9 @@ def code_for_imports(mod_code: str, submodules: list[str]) -> str:
         new_expr.module = "griffe"
         res.append(ast.unparse(new_expr))
 
-    return black.format_str("\n".join(res), mode=black.FileMode())
+    return black.format_str(
+        "# flake8: noqa\n\n" + "\n".join(res), mode=black.FileMode()
+    )
 
 
 def generate_griffe_stub(out_path: Path, mod, submodules: list[str]):
@@ -53,7 +55,11 @@ def generate_griffe_stub(out_path: Path, mod, submodules: list[str]):
 
 
 MAPPINGS = {
-    "dataclasses": ["_griffe.models", "_griffe.mixins", "_griffe.enumerations"],
+    "dataclasses": [
+        "_griffe.models",
+        "_griffe.mixins",
+        "_griffe.enumerations",
+    ],
     "docstrings": ["_griffe.docstrings.models"],
     "expressions": ["_griffe.expressions"],
 }
