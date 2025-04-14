@@ -190,7 +190,7 @@ class MdRenderer(Renderer):
 
     def _fetch_method_parameters(self, el: dc.Function):
         # adapted from mkdocstrings-python jinja tempalate
-        if el.parent and el.parent.is_class and len(el.parameters) > 0:
+        if (el.is_class or (el.parent and el.parent.is_class)) and len(el.parameters) > 0:
             if el.parameters[0].name in {"self", "cls"}:
                 return dc.Parameters(*list(el.parameters)[1:])
 
