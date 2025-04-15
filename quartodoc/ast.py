@@ -4,6 +4,7 @@ import warnings
 
 from ._griffe_compat import docstrings as ds
 from ._griffe_compat import dataclasses as dc
+from ._griffe_compat import AliasResolutionError
 
 from enum import Enum
 from dataclasses import dataclass
@@ -210,7 +211,7 @@ def fields(el: dc.Object):
 def fields(el: dc.ObjectAliasMixin):
     try:
         return fields(el.target)
-    except dc.AliasResolutionError:
+    except AliasResolutionError:
         warnings.warn(
             f"Could not resolve Alias target `{el.target_path}`."
             " This often occurs because the module was not loaded (e.g. it is a"
