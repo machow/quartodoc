@@ -11,16 +11,16 @@ local function read_inv_text(filename)
     local project = str:match("# Project: (%S+)")
     local version = str:match("# Version: (%S+)")
 
-    local data = {project = project, version = version, items = {}}
+    local data = { project = project, version = version, items = {} }
 
     local ptn_data =
         "^" ..
-        "(.-)%s+" ..        -- name
-        "([%S:]-):" ..      -- domain
-        "([%S]+)%s+" ..     -- role
-        "(%-?%d+)%s+" ..     -- priority
-        "(%S*)%s+" ..       -- uri
-        "(.-)\r?$"         -- dispname
+        "(.-)%s+" ..     -- name
+        "([%S:]-):" ..   -- domain
+        "([%S]+)%s+" ..  -- role
+        "(%-?%d+)%s+" .. -- priority
+        "(%S*)%s+" ..    -- uri
+        "(.-)\r?$"       -- dispname
 
 
     -- Iterate through each line in the file content
@@ -48,7 +48,6 @@ local function read_inv_text(filename)
 end
 
 local function read_json(filename)
-
     local file = io.open(filename, "r")
     if file == nil then
         return nil
@@ -66,7 +65,6 @@ local function read_inv_text_or_json(base_name)
         -- TODO: refactors so we don't just close the file immediately
         io.close(file)
         json = read_inv_text(base_name .. ".txt")
-
     else
         json = read_json(base_name .. ".json")
     end
@@ -77,7 +75,6 @@ end
 local inventory = {}
 
 local function lookup(search_object)
-
     local results = {}
     for _, inv in ipairs(inventory) do
         for _, item in ipairs(inv.items) do
@@ -98,7 +95,7 @@ local function lookup(search_object)
                 goto continue
             else
                 if search_object.domain or item.domain == "py" then
-                  table.insert(results, item)
+                    table.insert(results, item)
                 end
 
                 goto continue
@@ -122,13 +119,13 @@ local function lookup(search_object)
     return nil
 end
 
-local function mysplit (inputstr, sep)
+local function mysplit(inputstr, sep)
     if sep == nil then
-            sep = "%s"
+        sep = "%s"
     end
-    local t={}
-    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-            table.insert(t, str)
+    local t = {}
+    for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+        table.insert(t, str)
     end
     return t
 end
