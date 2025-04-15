@@ -41,9 +41,6 @@ jobs:
           fi
         env:
           REQUIREMENTS: ${{ matrix.requirements }}
-      - name: Test building starter template
-        run: |
-          make test-overview-template
       - name: Run tests
         run: |
           pytest --cov
@@ -101,6 +98,9 @@ jobs:
           python -m pip install shiny shinylive
           python -m pip install --no-deps dascore==0.0.8
       - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Test building starter template
+        run: |
+          make test-overview-template
       - name: Build docs
         run: |
           make docs-build
