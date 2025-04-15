@@ -41,6 +41,9 @@ jobs:
           fi
         env:
           REQUIREMENTS: ${{ matrix.requirements }}
+      - name: Test building starter template
+        run: |
+          make test-overview-template
       - name: Run tests
         run: |
           pytest --cov
