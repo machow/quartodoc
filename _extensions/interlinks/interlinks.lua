@@ -217,6 +217,32 @@ function Link(link)
     return link
 end
 
+function Code(code)
+    if not autolink then
+        return code
+    end
+
+    -- return code.attr
+    local search = build_search_object("%60" .. code.text .. "%60")
+    local item = lookup(search)
+
+    -- determine replacement, used if no link text specified ----
+    local original_text = pandoc.utils.stringify(code.text)
+    local replacement = search.name
+
+    if search.shortened then
+        local t = mysplit(search.name, ".")
+        replacement = t[#t]
+    end
+
+    if item == nil then
+        quarto.log.warning(code)
+        return code
+    end
+
+    return pandoc.Link(pandoc.Code(replacement), item.uri:gsub("%$$", search.name))
+end
+
 local function fixup_json(json, prefix)
     for _, item in ipairs(json.items) do
         item.uri = prefix .. item.uri
@@ -229,6 +255,11 @@ return {
         Meta = function(meta)
             local json
             local prefix
+            if meta.interlinks and meta.interlinks.autolink then
+                autolink = true
+            else
+                autolink = false
+            end
             if meta.interlinks and meta.interlinks.sources then
                 for k, v in pairs(meta.interlinks.sources) do
                     local base_name = quarto.project.offset .. "/_inv/" .. k .. "_objects"
@@ -246,6 +277,7 @@ return {
         end
     },
     {
-        Link = Link
+        Link = Link,
+        Code = Code
     }
 }
