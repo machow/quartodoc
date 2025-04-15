@@ -71,26 +71,29 @@ Getting started with quartodoc takes two steps: configuring quartodoc, then gene
 
 You can configure quartodoc alongside the rest of your Quarto site in the [`_quarto.yml`](https://quarto.org/docs/projects/quarto-projects.html) file you are already using for Quarto.  To [configure quartodoc](./basic-docs.qmd#site-configuration), you need to add a `quartodoc` section to the top level your `_quarto.yml` file.  Below is a minimal example of a configuration that documents the `quartodoc` package:
 
+<!-- Starter Template -->
+
 ```yaml
 project:
   type: website
 
 # tell quarto to read the generated sidebar
 metadata-files:
-  - api/_sidebar.yml
+  - reference/_sidebar.yml
 
 # tell quarto to read the generated styles
 format:
-  css:
-    - api/_styles-quartodoc.css
+  html:
+    css:
+      - reference/_styles-quartodoc.css
 
 quartodoc:
   # the name used to import the package you want to create reference docs for
   package: quartodoc
 
   # write sidebar and style data
-  sidebar: api/_sidebar.yml
-  css: api/_styles-quartodoc.css
+  sidebar: reference/_sidebar.yml
+  css: reference/_styles-quartodoc.css
 
   sections:
     - title: Some functions

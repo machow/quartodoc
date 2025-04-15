@@ -1,5 +1,6 @@
 # Overview
 
+
 [![CI](https://github.com/machow/quartodoc/actions/workflows/ci.yml/badge.svg)](https://github.com/machow/quartodoc/actions/workflows/ci.yml)
 
 **quartodoc** lets you quickly generate Python package API reference
@@ -11,6 +12,7 @@ Check out the below screencast for a walkthrough of creating a
 documentation site, or read on for instructions.
 
 <p align="center">
+
 <a href="https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed">
 <img src="https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif" width="75%">
 </a>
@@ -30,15 +32,13 @@ or from GitHub
 python -m pip install git+https://github.com/machow/quartodoc.git
 ```
 
-<div>
-
-> **Install Quarto**
+> [!IMPORTANT]
+>
+> ### Install Quarto
 >
 > If you haven’t already, you’ll need to [install
 > Quarto](https://quarto.org/docs/get-started/) before you can use
 > quartodoc.
-
-</div>
 
 ## Basic use
 
@@ -54,21 +54,29 @@ you need to add a `quartodoc` section to the top level your
 `_quarto.yml` file. Below is a minimal example of a configuration that
 documents the `quartodoc` package:
 
+<!-- Starter Template -->
+
 ``` yaml
 project:
   type: website
 
 # tell quarto to read the generated sidebar
 metadata-files:
-  - _sidebar.yml
+  - reference/_sidebar.yml
 
+# tell quarto to read the generated styles
+format:
+  html:
+    css:
+      - reference/_styles-quartodoc.css
 
 quartodoc:
   # the name used to import the package you want to create reference docs for
   package: quartodoc
 
-  # write sidebar data to this file
-  sidebar: _sidebar.yml
+  # write sidebar and style data
+  sidebar: reference/_sidebar.yml
+  css: reference/_styles-quartodoc.css
 
   sections:
     - title: Some functions
