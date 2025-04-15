@@ -1,0 +1,14 @@
+---
+filters:
+  - interlinks.lua
+interlinks:
+  autolink: true
+  #sources:
+  #  test:
+  #    url: https://example.com
+---
+
+* `some_func`
+* `some_func + some_func`
+* `a.b.c`
+* `~a.b.c`
