@@ -46,7 +46,7 @@
   # quartodoc.tests.example_class.C { #quartodoc.tests.example_class.C }
   
   ```python
-  tests.example_class.C(self, x, y)
+  tests.example_class.C(x, y)
   ```
   
   The short summary.
@@ -112,7 +112,7 @@
   # quartodoc.tests.example_class.C { #quartodoc.tests.example_class.C }
   
   ```python
-  tests.example_class.C(self, x, y)
+  tests.example_class.C(x, y)
   ```
   
   The short summary.
@@ -178,7 +178,7 @@
   # quartodoc.tests.example_class.AttributesTable { #quartodoc.tests.example_class.AttributesTable }
   
   ```python
-  tests.example_class.AttributesTable(self)
+  tests.example_class.AttributesTable()
   ```
   
   The short summary.
