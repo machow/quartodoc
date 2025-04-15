@@ -12,6 +12,7 @@ Check out the below screencast for a walkthrough of creating a
 documentation site, or read on for instructions.
 
 <p align="center">
+
 <a href="https://www.loom.com/share/fb4eb736848e470b8409ba46b514e2ed">
 <img src="https://cdn.loom.com/sessions/thumbnails/fb4eb736848e470b8409ba46b514e2ed-00001.gif" width="75%">
 </a>
@@ -53,6 +54,8 @@ you need to add a `quartodoc` section to the top level your
 `_quarto.yml` file. Below is a minimal example of a configuration that
 documents the `quartodoc` package:
 
+<!-- Starter Template -->
+
 ``` yaml
 project:
   type: website
@@ -63,8 +66,9 @@ metadata-files:
 
 # tell quarto to read the generated styles
 format:
-  css:
-    - reference/_styles-quartodoc.css
+  html:
+    css:
+      - reference/_styles-quartodoc.css
 
 quartodoc:
   # the name used to import the package you want to create reference docs for

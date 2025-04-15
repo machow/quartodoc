@@ -50,4 +50,7 @@ docs-build: docs-build-examples
 	cd docs && quarto add --no-prompt ..
 	quarto render docs
 
+test-overview-template:
+	python scripts/build_tmp_starter.py
+
 test-interlinks: quartodoc/tests/example_interlinks/test.md
