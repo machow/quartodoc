@@ -1,3 +1,7 @@
+local inventory = {} -- sphinx inventories
+local autolink       -- set in Meta
+local autolink_ignore_token = "qd-no-link"
+
 local function read_inv_text(filename)
     -- read file
     local file = io.open(filename, "r")
@@ -73,8 +77,6 @@ local function read_inv_text_or_json(base_name)
 end
 
 -- each inventory has entries: project, version, items
-local inventory = {}
-
 local function lookup(search_object)
     local results = {}
     for _, inv in ipairs(inventory) do
@@ -149,6 +151,16 @@ local function copy_replace(original, key, new_value)
     copy[key] = new_value
 
     return copy
+end
+
+local function contains(list, value)
+    -- check if list contains a value
+    for i, v in ipairs(list) do
+        if v == value then
+            return true
+        end
+    end
+    return false
 end
 
 local function prepend_aliases(aliases)
@@ -265,7 +277,7 @@ function Link(link)
 end
 
 function Code(code)
-    if not autolink then
+    if (not autolink) or contains(code.classes, autolink_ignore_token) then
         return code
     end
 
@@ -314,6 +326,7 @@ return {
                 autolink = false
             end
 
+            local aliases
             if meta.interlinks and meta.interlinks.aliases then
                 aliases = meta.interlinks.aliases
             else

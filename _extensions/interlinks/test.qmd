@@ -13,6 +13,7 @@ interlinks:
 * `some_func`
 * `some_func()`
 * `some_func(a=1)`
+* `some_func()`{.qd-no-link}
 * `some_func + some_func`
 * `a.b.c`
 * `~a.b.c`
