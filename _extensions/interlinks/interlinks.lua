@@ -72,6 +72,7 @@ local function read_inv_text_or_json(base_name)
     return json
 end
 
+-- each inventory has entries: project, version, items
 local inventory = {}
 
 local function lookup(search_object)
@@ -135,6 +136,52 @@ local function normalize_role(role)
         return "function"
     end
     return role
+end
+
+local function copy_replace(original, key, new_value)
+    -- First create a copy of the table
+    local copy = {}
+    for k, v in pairs(original) do
+        copy[k] = v
+    end
+
+    -- Then replace the specific value
+    copy[key] = new_value
+
+    return copy
+end
+
+local function prepend_aliases(aliases)
+    -- if str up to first period starts with an alias, then
+    -- replace it with the full name.
+    -- For example, suppose we have the alias quartodoc -> qd
+    -- e.g. qd.Auto -> quartodoc.Auto
+    -- e.g. qda.Auto -> qda.Auto
+
+    local new_inv = {}
+    new_inv["project"] = "aliases"
+    new_inv["version"] = "0.0.9999" -- I have not begun to think about version...
+    new_inv["items"] = {}
+
+    for full, alias in pairs(aliases) do
+        for _, inv in ipairs(inventory) do
+            for _, item in ipairs(inv.items) do
+                if string.sub(item.name, 1, string.len(full) + 1) == (full .. ".") then
+                    -- replace full .. "." with alias .. "."
+                    local prefix
+                    if not alias or alias == "" then
+                        prefix = ""
+                    else
+                        -- TODO: ensure alias doesn't end with period
+                        prefix = alias .. "."
+                    end
+                    local new_name = prefix .. string.sub(item.name, string.len(full) + 2)
+                    table.insert(new_inv.items, copy_replace(item, "name", new_name))
+                end
+            end
+        end
+    end
+    table.insert(inventory, new_inv)
 end
 
 local function build_search_object(str)
@@ -222,28 +269,31 @@ function Code(code)
         return code
     end
 
+    -- allow text to be simple function call
+    -- e.g. my_func() -> my_func
+    -- e.g. a.b.call() -> a.b.call
+    local text
+    if code.text:match("%(%s*%)") then
+        text = code.text:gsub("%(%s*%)", "")
+    else
+        text = code.text
+    end
+
+
     -- return code.attr
-    local search = build_search_object("%60" .. code.text .. "%60")
+    local search = build_search_object("%60" .. text .. "%60")
     local item = lookup(search)
 
     -- determine replacement, used if no link text specified ----
-    local original_text = pandoc.utils.stringify(code.text)
-    local replacement = search.name
-
-    if search.shortened then
-        local t = mysplit(search.name, ".")
-        replacement = t[#t]
-    end
-
     if item == nil then
         quarto.log.warning(code)
         return code
     end
 
-    return pandoc.Link(pandoc.Code(replacement), item.uri:gsub("%$$", search.name))
+    return pandoc.Link(code, item.uri:gsub("%$$", search.name))
 end
 
-local function fixup_json(json, prefix)
+local function fixup_json(json, prefix, attach)
     for _, item in ipairs(json.items) do
         item.uri = prefix .. item.uri
     end
@@ -255,11 +305,22 @@ return {
         Meta = function(meta)
             local json
             local prefix
+            local aliases
+
+            -- set globals from config
             if meta.interlinks and meta.interlinks.autolink then
                 autolink = true
             else
                 autolink = false
             end
+
+            if meta.interlinks and meta.interlinks.aliases then
+                aliases = meta.interlinks.aliases
+            else
+                aliases = {}
+            end
+
+            -- process sources
             if meta.interlinks and meta.interlinks.sources then
                 for k, v in pairs(meta.interlinks.sources) do
                     local base_name = quarto.project.offset .. "/_inv/" .. k .. "_objects"
@@ -274,6 +335,8 @@ return {
             if json ~= nil then
                 fixup_json(json, "/")
             end
+
+            prepend_aliases(aliases)
         end
     },
     {

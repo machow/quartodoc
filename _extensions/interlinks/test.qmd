@@ -3,12 +3,19 @@ filters:
   - interlinks.lua
 interlinks:
   autolink: true
+  aliases:
+    quartodoc: null
   #sources:
   #  test:
   #    url: https://example.com
 ---
 
 * `some_func`
+* `some_func()`
+* `some_func(a=1)`
 * `some_func + some_func`
 * `a.b.c`
 * `~a.b.c`
+* `a.b.c()`
+* `quartodoc.Auto()`
+* `Auto()`
