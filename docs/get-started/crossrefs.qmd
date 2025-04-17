@@ -7,6 +7,26 @@ jupyter:
     name: python3
 ---
 
+This page describes the different ways that quartodoc can link to other pages,
+where each style of link is used, and how to set them up.
+
+Here are the key details covered on this page:
+
+* Link to a page (.qmd file) using the path to the file.
+* Link to a function name by using the [interlinks filter's](./interlinks.qmd) special syntaxes.
+* Link type annotations in documented functions by enabling the [interlinks filter](./interlinks.qmd).
+
+:::{.callout-tip title="Guide pages on each linking style"}
+
+Here are some examples of different linking styles and their corresponding guide pages.
+
+| Link syntax | Example | Guide page |
+| --- | --- | --- |
+| Qmd path  | ``[get_object](/reference/get_object.qmd)`` | [Quarto - markdown basics](https://quarto.org/docs/authoring/markdown-basics.html#links-images) |
+| Interlink (full) | ``[](`quartodoc.get_object`)`` | [Interlinks filter](./interlinks.qmd) |
+| Interlink (autolink) | `` `quartodoc.get_object` `` | [Interlinks filter - autolink mode](./interlinks-autolink.qmd) |
+:::
+
 ## Linking by path
 
 You can use [quarto's markdown linking syntax](https://quarto.org/docs/authoring/markdown-basics.html#links-images)
@@ -48,5 +68,9 @@ on turning type annotations into links.
 
 ## Type annotations in docstrings
 
-This is planned, but currently unimplemented. See [this issue](https://github.com/machow/quartodoc/issues/22)
-on turning type annotations into links.
+Creating links from type annotations for a function and their reference pages is supported via the interlinks filter. See the [Rendering Interlinks in API Docs](./interlinks.qmd#rendering-interlinks-in-api-docs) section on the interlinks page for more.
+
+Essentially, interlinking type annotations requires:
+
+* Setting the quartodoc `render_interlinks` config option to `true`.
+* Enabling the [interlinks filter](./interlinks.qmd).
