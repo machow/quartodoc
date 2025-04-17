@@ -56,9 +56,13 @@ website:
             - get-started/basic-content.qmd
             - get-started/basic-building.qmd
             - get-started/crossrefs.qmd
-            - get-started/interlinks.qmd
             - get-started/sidebar.qmd
             - get-started/extending.qmd
+
+        - section: Interlinking
+          contents:
+            - get-started/interlinks.qmd
+            - get-started/interlinks-autolink.qmd
 
         - section: "Docstrings"
           contents:
