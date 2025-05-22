@@ -181,11 +181,11 @@ local function prepend_aliases(aliases)
                 if string.sub(item.name, 1, string.len(full) + 1) == (full .. ".") then
                     -- replace full .. "." with alias .. "."
                     local prefix
-                    if not alias or alias == "" then
+                    if not alias or pandoc.utils.stringify(alias) == "" then
                         prefix = ""
                     else
                         -- TODO: ensure alias doesn't end with period
-                        prefix = alias .. "."
+                        prefix = pandoc.utils.stringify(alias) .. "."
                     end
                     local new_name = prefix .. string.sub(item.name, string.len(full) + 2)
                     table.insert(new_inv.items, copy_replace(item, "name", new_name))
