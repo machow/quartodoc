@@ -14,6 +14,7 @@ documentation site, or read on for instructions.
 <div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;">
 
 <iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=31db7652-43c6-4474-bab3-19dea2170775" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+
 </iframe>
 
 </div>
@@ -54,26 +55,29 @@ you need to add a `quartodoc` section to the top level your
 `_quarto.yml` file. Below is a minimal example of a configuration that
 documents the `quartodoc` package:
 
+<!-- Starter Template -->
+
 ``` yaml
 project:
   type: website
 
 # tell quarto to read the generated sidebar
 metadata-files:
-  - api/_sidebar.yml
+  - reference/_sidebar.yml
 
 # tell quarto to read the generated styles
 format:
-  css:
-    - api/_styles-quartodoc.css
+  html:
+    css:
+      - reference/_styles-quartodoc.css
 
 quartodoc:
   # the name used to import the package you want to create reference docs for
   package: quartodoc
 
   # write sidebar and style data
-  sidebar: api/_sidebar.yml
-  css: api/_styles-quartodoc.css
+  sidebar: reference/_sidebar.yml
+  css: reference/_styles-quartodoc.css
 
   sections:
     - title: Some functions
