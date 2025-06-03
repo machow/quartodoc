@@ -163,7 +163,26 @@ local function contains(list, value)
     return false
 end
 
-local function prepend_aliases(aliases)
+local function flatten_alias_list(list)
+    -- flatten a list of lists into a single list,
+    -- where each entry has the form {key, subvalue}}
+    -- e.g.
+    --   input: {key1 = {subval1, subval2}, key2 = subval3}
+    --   output: {{key1, subval1}, {key1, subval2}, {key2, subval3}}
+    local flat = {}
+    for key, sublist in pairs(list) do
+        if type(sublist) == "table" then
+            for _, subvalue in ipairs(sublist) do
+                table.insert(flat, { key, subvalue })
+            end
+        else
+            table.insert(flat, { key, sublist })
+        end
+    end
+    return flat
+end
+
+local function prepend_aliases(flat_aliases)
     -- if str up to first period starts with an alias, then
     -- replace it with the full name.
     -- For example, suppose we have the alias quartodoc -> qd
@@ -175,7 +194,9 @@ local function prepend_aliases(aliases)
     new_inv["version"] = "0.0.9999" -- I have not begun to think about version...
     new_inv["items"] = {}
 
-    for full, alias in pairs(aliases) do
+    for _, name_pair in pairs(flat_aliases) do
+        local full = name_pair[1]
+        local alias = name_pair[2]
         for _, inv in ipairs(inventory) do
             for _, item in ipairs(inv.items) do
                 if string.sub(item.name, 1, string.len(full) + 1) == (full .. ".") then
@@ -281,12 +302,17 @@ function Code(code)
         return code
     end
 
-    -- allow text to be simple function call
+    -- allow text for lookup to be simple function call
+    -- and also support shortened syntax (~~ prefix)
     -- e.g. my_func() -> my_func
     -- e.g. a.b.call() -> a.b.call
+    -- e.g. ~~my_func() -> my_func
     local text
+
+    -- detect and remove shortening syntax (~~ prefix)
+    local is_shortened = code.text:sub(1, 2) == "~~"
     if code.text:match("%(%s*%)") then
-        text = code.text:gsub("%(%s*%)", "")
+        text = code.text:gsub("^~~", ""):gsub("%(%s*%)", "")
     else
         text = code.text
     end
@@ -300,6 +326,17 @@ function Code(code)
     if item == nil then
         quarto.log.warning(code)
         return code
+    end
+
+    -- shorten text if shortening syntax used
+    if is_shortened then
+        -- keep text after last period (.)
+        local split = mysplit(code.text:gsub("^~~", ""), ".")
+        if #split > 0 then
+            code.text = split[#split]
+        else
+            code.text = code.text:sub(1, 2)
+        end
     end
 
     return pandoc.Link(code, item.uri:gsub("%$$", search.name))
@@ -349,7 +386,7 @@ return {
                 fixup_json(json, "/")
             end
 
-            prepend_aliases(aliases)
+            prepend_aliases(flatten_alias_list(aliases))
         end
     },
     {
