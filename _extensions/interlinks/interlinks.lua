@@ -311,10 +311,11 @@ function Code(code)
 
     -- detect and remove shortening syntax (~~ prefix)
     local is_shortened = code.text:sub(1, 2) == "~~"
-    if code.text:match("%(%s*%)") then
-        text = code.text:gsub("^~~", ""):gsub("%(%s*%)", "")
+    local unprefixed = code.text:gsub("^~~", "")
+    if unprefixed:match("%(%s*%)") then
+        text = unprefixed:gsub("%(%s*%)", "")
     else
-        text = code.text
+        text = unprefixed
     end
 
 
@@ -325,17 +326,18 @@ function Code(code)
     -- determine replacement, used if no link text specified ----
     if item == nil then
         quarto.log.warning(code)
+        code.text = unprefixed
         return code
     end
 
     -- shorten text if shortening syntax used
     if is_shortened then
         -- keep text after last period (.)
-        local split = mysplit(code.text:gsub("^~~", ""), ".")
+        local split = mysplit(unprefixed, ".")
         if #split > 0 then
             code.text = split[#split]
         else
-            code.text = code.text:sub(1, 2)
+            code.text = unprefixed
         end
     end
 
