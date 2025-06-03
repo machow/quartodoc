@@ -16,6 +16,9 @@ filters:
 
 interlinks:
   fast: true
+  autolink: true
+  aliases:
+    quartodoc: [null, qd]
   sources:
     python:
       url: https://docs.python.org/3/

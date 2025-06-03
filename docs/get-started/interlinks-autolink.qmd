@@ -17,12 +17,19 @@ interlinks:
   # enable autolink mode
   autolink: true
   # aliases allow you to refer to functions
-  # without their module name.
+  # without their module name, or using a shortened name
   aliases:
-    quartodoc: null
+    quartodoc: [null, qd]
 ```
 
 Note that in addition to enabling autolink mode, the `_quarto.yml` above uses `aliases:` to allow you to refer to `quartodoc` functions, without needing the module name. For example, using `get_object` instead of `quartodoc.get_object`.
+
+| link style | link syntax | result |
+| --- | --- | --- |
+| full path | `` `quartodoc.get_object()` `` | `quartodoc.get_object()` |
+| alias (qd) | `` `qd.get_object()` `` | `qd.get_object()` | 
+| alias (null) | `` `get_object()` `` | `get_object()` |
+| shortening (`~~`) | `` `~~quartodoc.get_object()` `` | `~~quartodoc.get_object()` |
 
 ## What gets autolinked?
 
