@@ -2,6 +2,12 @@ local inventory = {} -- sphinx inventories
 local autolink       -- set in Meta
 local autolink_ignore_token = "qd-no-link"
 
+local function _debug_log(text, debug)
+    if debug then
+        quarto.log.warning(text)
+    end
+end
+
 local function read_inv_text(filename)
     -- read file
     local file = io.open(filename, "r")
@@ -77,7 +83,7 @@ local function read_inv_text_or_json(base_name)
 end
 
 -- each inventory has entries: project, version, items
-local function lookup(search_object)
+local function lookup(search_object, debug)
     local results = {}
     for _, inv in ipairs(inventory) do
         for _, item in ipairs(inv.items) do
@@ -112,11 +118,12 @@ local function lookup(search_object)
         return results[1]
     end
     if #results > 1 then
-        quarto.log.warning("Found multiple matches for " .. search_object.name .. ", using the first match.")
+        _debug_log("Found multiple matches for " .. search_object.name .. ", using the first match.", debug)
         return results[1]
     end
     if #results == 0 then
-        quarto.log.warning("Found no matches for object:\n", search_object)
+        _debug_log("Found no matches for object:\n", debug)
+        _debug_log(search_object, debug)
     end
 
     return nil
@@ -217,7 +224,7 @@ local function prepend_aliases(flat_aliases)
     table.insert(inventory, new_inv)
 end
 
-local function build_search_object(str)
+local function build_search_object(str, debug)
     local starts_with_colon = str:sub(1, 1) == ":"
     local search = {}
     if starts_with_colon then
@@ -240,7 +247,7 @@ local function build_search_object(str)
             search.role = normalize_role(t[3])
             search.name = t[4]:match("%%60(.*)%%60")
         else
-            quarto.log.warning("couldn't parse this link: " .. str)
+            _debug_log("couldn't parse this link: " .. str, debug)
             return {}
         end
     else
@@ -248,7 +255,7 @@ local function build_search_object(str)
     end
 
     if search.name == nil then
-        quarto.log.warning("couldn't parse this link: " .. str)
+        _debug_log("couldn't parse this link: " .. str, debug)
         return {}
     end
 
@@ -326,7 +333,6 @@ function Code(code)
 
     -- determine replacement, used if no link text specified ----
     if item == nil then
-        quarto.log.warning(code)
         code.text = unprefixed
         return code
     end

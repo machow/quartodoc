@@ -33,10 +33,6 @@ Note that in addition to enabling autolink mode, the `_quarto.yml` above uses `a
 | short dot (`~~.`) | `` `~~.quartodoc.get_object()` `` | `~~.quartodoc.get_object()` |
 | unmatched link | `` `~~unmatched_func()` `` | `unmatched_func()` |
 
-
-
-
-
 ## What gets autolinked?
 
 Any inline code that resembles a item name in [interlink syntax](./interlinks.qmd#link-formats) will be autolinked.
