@@ -1,0 +1,78 @@
+---
+title: Interlinks filter - autolink mode
+---
+
+Autolink mode enables you to convert inline code, like `` `get_object()` ``, into a link to the function's reference page. It is an interlinks filter setting, enabled by setting `autolink: true`.
+
+## Basic use
+
+Here is a basic example of enabling autolink mode in your `_quarto.yml` file:
+
+```yaml
+filters:
+  # requires running quarto add machow/quartodoc
+  - interlinks
+
+interlinks:
+  # enable autolink mode
+  autolink: true
+  # aliases allow you to refer to functions
+  # without their module name, or using a shortened name
+  aliases:
+    quartodoc: [null, qd]
+```
+
+Note that in addition to enabling autolink mode, the `_quarto.yml` above uses `aliases:` to allow you to refer to `quartodoc` functions, without needing the module name. For example, using `get_object` instead of `quartodoc.get_object`.
+
+| link style | link syntax | result |
+| --- | --- | --- |
+| full path | `` `quartodoc.get_object()` `` | `quartodoc.get_object()` |
+| alias (qd) | `` `qd.get_object()` `` | `qd.get_object()` | 
+| alias (null) | `` `get_object()` `` | `get_object()` |
+| shortening (`~~`) | `` `~~quartodoc.get_object()` `` | `~~quartodoc.get_object()` |
+| short dot (`~~.`) | `` `~~.quartodoc.get_object()` `` | `~~.quartodoc.get_object()` |
+| unmatched link | `` `~~unmatched_func()` `` | `unmatched_func()` |
+
+## What gets autolinked?
+
+Any inline code that resembles a item name in [interlink syntax](./interlinks.qmd#link-formats) will be autolinked.
+In addition, autolink mode supports names with parentheses at the end.
+Below are some examples.
+
+Linked:
+
+* `` `a.b.c` ``
+* `` `a.b.c()` ``
+
+Not linked:
+
+* `` `a.b.c(x=1)` ``
+* `` `a.b.c + a.b.c` ``
+* `` `-a.b.c` ``
+
+## Disable autolink on item
+
+Use the `qd-no-link` class to disable autolinking on a single piece of code. For example, `` `some_func()`{.qd-no-link} ``.
+
+## Disable autolink on page
+
+Set autolink to false in the YAML top-matter for a page, in order to disable autolinking on that page.
+
+```
+---
+interlinks:
+    autolink: false
+---
+
+Autolink won't apply here: `some_func()`
+
+or here: `another_func()`
+```
+
+This works because quarto uses the YAML top-matter to override your `_quarto.yml` settings.
+Technically, it merges your `_quarto.yml` and top-matter settings together, by doing the following:
+
+* Take `_quarto.yml` settings.
+* Override with any new top-matter settings.
+  - dictionary items replace each other (e.g. `autolink: false` replaces old setting).
+  - list items are appended.

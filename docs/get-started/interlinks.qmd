@@ -127,6 +127,22 @@ quarto preview
 | rst | shortened | `` :ref:`~quartodoc.get_object` `` | :ref:`~quartodoc.get_object` |
 -->
 
+## Link aliases
+
+Use `interlinks.aliases` in `_quarto.yml` to refer to functions without their module name (or using a shortened version of it).
+
+For example the following config sets aliases for `quartodoc` and `pandas`:
+
+```yaml
+interlinks:
+  aliases:
+    quartodoc: null
+    pandas: pd
+```
+
+In this case, you can refer to `quartodoc.get_object` as `get_object`, and `pandas.DataFrame` as `pd.DataFrame`.
+
+
 ## Link filtering syntax
 
 Sometimes multiple documentation sites use the same target (e.g. function) names.
