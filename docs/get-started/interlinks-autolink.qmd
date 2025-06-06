@@ -30,7 +30,12 @@ Note that in addition to enabling autolink mode, the `_quarto.yml` above uses `a
 | alias (qd) | `` `qd.get_object()` `` | `qd.get_object()` | 
 | alias (null) | `` `get_object()` `` | `get_object()` |
 | shortening (`~~`) | `` `~~quartodoc.get_object()` `` | `~~quartodoc.get_object()` |
+| short dot (`~~.`) | `` `~~.quartodoc.get_object()` `` | `~~.quartodoc.get_object()` |
 | unmatched link | `` `~~unmatched_func()` `` | `unmatched_func()` |
+
+
+
+
 
 ## What gets autolinked?
 

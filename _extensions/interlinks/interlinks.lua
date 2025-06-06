@@ -311,7 +311,8 @@ function Code(code)
 
     -- detect and remove shortening syntax (~~ prefix)
     local is_shortened = code.text:sub(1, 2) == "~~"
-    local unprefixed = code.text:gsub("^~~", "")
+    local is_short_dot = code.text:sub(1, 3) == "~~."
+    local unprefixed = code.text:gsub("^~~%.?", "")
     if unprefixed:match("%(%s*%)") then
         text = unprefixed:gsub("%(%s*%)", "")
     else
@@ -335,11 +336,17 @@ function Code(code)
         -- keep text after last period (.)
         local split = mysplit(unprefixed, ".")
         if #split > 0 then
-            code.text = split[#split]
+            local new_name = split[#split]
+            if is_short_dot then
+                -- if shortened with dot, keep the dot
+                new_name = "." .. new_name
+            end
+            code.text = new_name
         else
             code.text = unprefixed
         end
     end
+
 
     return pandoc.Link(code, item.uri:gsub("%$$", search.name))
 end
