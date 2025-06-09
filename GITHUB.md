@@ -97,8 +97,9 @@ quartodoc build
 ```
 
 This will create a `reference/` directory with an `index.qmd` and
-documentation pages for listed functions, like `get_object` and
-`preview`.
+documentation pages for listed functions, like
+[`get_object`](./api/get_object.html#quartodoc.get_object "0") and
+[`preview`](./api/preview.html#quartodoc.preview "0").
 
 Finally, preview your website with quarto:
 

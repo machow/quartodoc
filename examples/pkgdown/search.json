@@ -1,40 +1,5 @@
 [
   {
-    "objectID": "reference/get_object.html",
-    "href": "reference/get_object.html",
-    "title": "get_object",
-    "section": "",
-    "text": "get_object(\n    path,\n    object_name=None,\n    parser='numpy',\n    load_aliases=True,\n    dynamic=False,\n    loader=None,\n)\nFetch a griffe object.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n'str | None'\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\n\n\n\n\npreview: print a user-friendly preview of a griffe object.\n\n\n\n&gt;&gt;&gt; get_function(\"quartodoc\", \"get_function\")\n&lt;Function('get_function', ...\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nx\ndc.Object\nabc"
-  },
-  {
-    "objectID": "reference/get_object.html#parameters",
-    "href": "reference/get_object.html#parameters",
-    "title": "get_object",
-    "section": "",
-    "text": "Name\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n'str | None'\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse"
-  },
-  {
-    "objectID": "reference/get_object.html#see-also",
-    "href": "reference/get_object.html#see-also",
-    "title": "get_object",
-    "section": "",
-    "text": "preview: print a user-friendly preview of a griffe object."
-  },
-  {
-    "objectID": "reference/get_object.html#examples",
-    "href": "reference/get_object.html#examples",
-    "title": "get_object",
-    "section": "",
-    "text": "&gt;&gt;&gt; get_function(\"quartodoc\", \"get_function\")\n&lt;Function('get_function', ..."
-  },
-  {
-    "objectID": "reference/get_object.html#returns",
-    "href": "reference/get_object.html#returns",
-    "title": "get_object",
-    "section": "",
-    "text": "Name\nType\nDescription\n\n\n\n\nx\ndc.Object\nabc"
-  },
-  {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
     "title": "Function reference",
@@ -89,6 +54,41 @@
     "title": "Builder",
     "section": "",
     "text": "Name\nDescription\n\n\n\n\nbuild\nBuild index page, sphinx inventory, and individual doc pages.\n\n\ncreate_inventory\nGenerate sphinx inventory object.\n\n\nfrom_quarto_config\nConstruct a Builder from a configuration object (or yaml file).\n\n\nwrite_css\nWrite default css styles to a file.\n\n\nwrite_doc_pages\nWrite individual function documentation pages.\n\n\nwrite_index\nWrite API index page.\n\n\nwrite_sidebar\nWrite a yaml config file for API sidebar.\n\n\n\n\n\nBuilder.build(filter='*')\nBuild index page, sphinx inventory, and individual doc pages.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfilter\nstr\nA simple pattern, that may include * as a wildcard. If specified, only doc paths for objects with matching names will be written. Path is the file’s base name in the API dir (e.g. MdRenderer.render)\n'*'\n\n\n\n\n\n\n\nBuilder.create_inventory(items)\nGenerate sphinx inventory object.\n\n\n\nBuilder.from_quarto_config(quarto_cfg)\nConstruct a Builder from a configuration object (or yaml file).\n\n\n\nBuilder.write_css()\nWrite default css styles to a file.\n\n\n\nBuilder.write_doc_pages(pages, filter)\nWrite individual function documentation pages.\n\n\n\nBuilder.write_index(blueprint)\nWrite API index page.\n\n\n\nBuilder.write_sidebar(blueprint)\nWrite a yaml config file for API sidebar."
+  },
+  {
+    "objectID": "reference/get_object.html",
+    "href": "reference/get_object.html",
+    "title": "get_object",
+    "section": "",
+    "text": "get_object(\n    path,\n    object_name=None,\n    parser='numpy',\n    load_aliases=True,\n    dynamic=False,\n    loader=None,\n)\nFetch a griffe object.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n'str | None'\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse\n\n\n\n\n\n\npreview: print a user-friendly preview of a griffe object.\n\n\n\n&gt;&gt;&gt; get_function(\"quartodoc\", \"get_function\")\n&lt;Function('get_function', ...\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nx\ndc.Object\nabc"
+  },
+  {
+    "objectID": "reference/get_object.html#parameters",
+    "href": "reference/get_object.html#parameters",
+    "title": "get_object",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\npath\nstr\nAn import path to the object. This should have the form path.to.module:object. For example, quartodoc:get_object or quartodoc:MdRenderer.render.\nrequired\n\n\nobject_name\n'str | None'\n(Deprecated). A function name.\nNone\n\n\nparser\nstr\nA docstring parser to use.\n'numpy'\n\n\nload_aliases\n\nFor aliases that were imported from other modules, should we load that module?\nTrue\n\n\ndynamic\n\nWhether to dynamically import object. Useful if docstring is not hard-coded, but was set on object by running python code.\nFalse"
+  },
+  {
+    "objectID": "reference/get_object.html#see-also",
+    "href": "reference/get_object.html#see-also",
+    "title": "get_object",
+    "section": "",
+    "text": "preview: print a user-friendly preview of a griffe object."
+  },
+  {
+    "objectID": "reference/get_object.html#examples",
+    "href": "reference/get_object.html#examples",
+    "title": "get_object",
+    "section": "",
+    "text": "&gt;&gt;&gt; get_function(\"quartodoc\", \"get_function\")\n&lt;Function('get_function', ..."
+  },
+  {
+    "objectID": "reference/get_object.html#returns",
+    "href": "reference/get_object.html#returns",
+    "title": "get_object",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\nx\ndc.Object\nabc"
   },
   {
     "objectID": "reference/Builder.build.html",

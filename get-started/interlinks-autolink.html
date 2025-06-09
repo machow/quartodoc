@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>index – pkgdown example</title>
+<title>Interlinks filter - autolink mode – quartodoc</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,6 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../get-started/docstring-style.html" rel="next">
+<link href="../get-started/interlinks.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -39,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d0eee84908effde45992ddd4914ebb36.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-905433ffa22618bb005779f2b23c5ce0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,9 +106,11 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="../api/_styles-quartodoc.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -79,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">pkgdown example</span>
+    <span class="navbar-title">quartodoc</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -89,17 +128,25 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://machow.github.io/quartodoc/"> 
-<span class="menu-text">quartodoc home</span></a>
+    <a class="nav-link active" href="../get-started/overview.html" aria-current="page"> 
+<span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../reference/index.html" aria-current="page"> 
+    <a class="nav-link" href="../examples/"> 
+<span class="menu-text">Examples</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../tutorials/"> 
+<span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../api/"> 
 <span class="menu-text">Reference</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/machow/quartodoc/tree/main/examples/pkgdown"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/machow/quartodoc/"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -109,57 +156,312 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../get-started/interlinks.html">Interlinking</a></li><li class="breadcrumb-item"><a href="../get-started/interlinks-autolink.html">Interlinks filter - autolink mode</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Basic Use</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/basic-docs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Configuring site</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/basic-content.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Configuring content</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/basic-building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Building and debugging docs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/crossrefs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linking to pages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/sidebar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sidebar navigation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/extending.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">More customization</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interlinking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/interlinks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interlinks filter</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/interlinks-autolink.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Interlinks filter - autolink mode</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Docstrings</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/docstring-style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Docstring formats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/docstring-examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Common issues and examples</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/dev-big-picture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The big picture: Builder</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/dev-prepare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Components: Auto, blueprint, collect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/dev-docstrings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inspecting docstrings</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/dev-renderers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rendering docstrings</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Extra Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/extra-build-sequence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Build sequence diagram</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
-  <ul class="collapse">
-  <li><a href="#some-functions" id="toc-some-functions" class="nav-link" data-scroll-target="#some-functions">Some functions</a></li>
-  </ul></li>
+  <li><a href="#basic-use" id="toc-basic-use" class="nav-link active" data-scroll-target="#basic-use">Basic use</a></li>
+  <li><a href="#what-gets-autolinked" id="toc-what-gets-autolinked" class="nav-link" data-scroll-target="#what-gets-autolinked">What gets autolinked?</a></li>
+  <li><a href="#disable-autolink-on-item" id="toc-disable-autolink-on-item" class="nav-link" data-scroll-target="#disable-autolink-on-item">Disable autolink on item</a></li>
+  <li><a href="#disable-autolink-on-page" id="toc-disable-autolink-on-page" class="nav-link" data-scroll-target="#disable-autolink-on-page">Disable autolink on page</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../get-started/interlinks.html">Interlinking</a></li><li class="breadcrumb-item"><a href="../get-started/interlinks-autolink.html">Interlinks filter - autolink mode</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Interlinks filter - autolink mode</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="function-reference" class="level1 doc doc-index">
-<h1 class="doc doc-index">Function reference</h1>
-<section id="some-functions" class="level2">
-<h2 class="anchored" data-anchor-id="some-functions">Some functions</h2>
-<p>These functions inspect and parse docstrings.</p>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Autolink mode enables you to convert inline code, like <code>`get_object()`</code>, into a link to the function’s reference page. It is an interlinks filter setting, enabled by setting <code>autolink: true</code>.</p>
+<section id="basic-use" class="level2">
+<h2 class="anchored" data-anchor-id="basic-use">Basic use</h2>
+<p>Here is a basic example of enabling autolink mode in your <code>_quarto.yml</code> file:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">  # requires running quarto add machow/quartodoc</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> interlinks</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">interlinks</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  # enable autolink mode</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">autolink</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  # aliases allow you to refer to functions</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  # without their module name, or using a shortened name</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">aliases</span><span class="kw">:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">quartodoc</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="ch">null</span><span class="kw">,</span><span class="at"> qd</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that in addition to enabling autolink mode, the <code>_quarto.yml</code> above uses <code>aliases:</code> to allow you to refer to <code>quartodoc</code> functions, without needing the module name. For example, using <a href="../api/get_object.html#quartodoc.get_object" title="0"><code>get_object</code></a> instead of <a href="../api/get_object.html#quartodoc.get_object" title="0"><code>quartodoc.get_object</code></a>.</p>
 <table class="caption-top table">
+<thead>
+<tr class="header">
+<th>link style</th>
+<th>link syntax</th>
+<th>result</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="../reference/get_object.html#quartodoc.get_object">get_object</a></td>
-<td>Fetch a griffe object.</td>
+<td>full path</td>
+<td><code>`quartodoc.get_object()`</code></td>
+<td><a href="../api/get_object.html#quartodoc.get_object" title="0"><code>quartodoc.get_object()</code></a></td>
 </tr>
 <tr class="even">
-<td><a href="../reference/preview.html#quartodoc.preview">preview</a></td>
-<td>Print a friendly representation of a griffe object (e.g.&nbsp;function, docstring)</td>
+<td>alias (qd)</td>
+<td><code>`qd.get_object()`</code></td>
+<td><a href="../api/get_object.html#quartodoc.get_object" title="0"><code>qd.get_object()</code></a></td>
 </tr>
 <tr class="odd">
-<td><a href="../reference/Builder.html#quartodoc.Builder">Builder</a></td>
-<td>Base class for building API docs.</td>
+<td>alias (null)</td>
+<td><code>`get_object()`</code></td>
+<td><a href="../api/get_object.html#quartodoc.get_object" title="0"><code>get_object()</code></a></td>
 </tr>
 <tr class="even">
-<td><a href="../reference/Builder.build.html#quartodoc.Builder.build">Builder.build</a></td>
-<td>Build index page, sphinx inventory, and individual doc pages.</td>
+<td>shortening (<code></code>)</td>
+<td><code>`~~quartodoc.get_object()`</code></td>
+<td><a href="../api/get_object.html#quartodoc.get_object" title="0"><code>get_object()</code></a></td>
+</tr>
+<tr class="odd">
+<td>short dot (<code></code>)</td>
+<td><code>`~~.quartodoc.get_object()`</code></td>
+<td><a href="../api/get_object.html#quartodoc.get_object" title="0"><code>.get_object()</code></a></td>
+</tr>
+<tr class="even">
+<td>unmatched link</td>
+<td><code>`~~unmatched_func()`</code></td>
+<td><code>unmatched_func()</code></td>
 </tr>
 </tbody>
 </table>
-
-
 </section>
+<section id="what-gets-autolinked" class="level2">
+<h2 class="anchored" data-anchor-id="what-gets-autolinked">What gets autolinked?</h2>
+<p>Any inline code that resembles a item name in <a href="../get-started/interlinks.html#link-formats">interlink syntax</a> will be autolinked. In addition, autolink mode supports names with parentheses at the end. Below are some examples.</p>
+<p>Linked:</p>
+<ul>
+<li><code>`a.b.c`</code></li>
+<li><code>`a.b.c()`</code></li>
+</ul>
+<p>Not linked:</p>
+<ul>
+<li><code>`a.b.c(x=1)`</code></li>
+<li><code>`a.b.c + a.b.c`</code></li>
+<li><code>`-a.b.c`</code></li>
+</ul>
+</section>
+<section id="disable-autolink-on-item" class="level2">
+<h2 class="anchored" data-anchor-id="disable-autolink-on-item">Disable autolink on item</h2>
+<p>Use the <code>qd-no-link</code> class to disable autolinking on a single piece of code. For example, <code>`some_func()`{.qd-no-link}</code>.</p>
+</section>
+<section id="disable-autolink-on-page" class="level2">
+<h2 class="anchored" data-anchor-id="disable-autolink-on-page">Disable autolink on page</h2>
+<p>Set autolink to false in the YAML top-matter for a page, in order to disable autolinking on that page.</p>
+<pre><code>---
+interlinks:
+    autolink: false
+---
+
+Autolink won't apply here: `some_func()`
+
+or here: `another_func()`</code></pre>
+<p>This works because quarto uses the YAML top-matter to override your <code>_quarto.yml</code> settings. Technically, it merges your <code>_quarto.yml</code> and top-matter settings together, by doing the following:</p>
+<ul>
+<li>Take <code>_quarto.yml</code> settings.</li>
+<li>Override with any new top-matter settings.
+<ul>
+<li>dictionary items replace each other (e.g.&nbsp;<code>autolink: false</code> replaces old setting).</li>
+<li>list items are appended.</li>
+</ul></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -562,6 +864,18 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../get-started/interlinks.html" class="pagination-link" aria-label="Interlinks filter">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Interlinks filter</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../get-started/docstring-style.html" class="pagination-link" aria-label="Docstring formats">
+        <span class="nav-page-text">Docstring formats</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
