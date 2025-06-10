@@ -112,7 +112,7 @@ def test_render_doc_attribute(renderer):
     print(res)
 
     assert res.name == "abc"
-    assert res.annotation == "Optional\[\]"
+    assert res.annotation == f"Optional\[\]"
     assert res.description == "xyz"
 
 
