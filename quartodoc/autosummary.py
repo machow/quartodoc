@@ -20,8 +20,7 @@ from .parsers import get_parser_defaults
 from .renderers import Renderer
 from .validation import fmt_all
 from ._pydantic_compat import ValidationError
-from .pandoc.blocks import Blocks, Header
-from .pandoc.components import Attr
+from .pandoc.blocks import Blocks, Meta
 
 
 from typing import Any
@@ -450,7 +449,8 @@ class Builder:
     dir:
         Name of API directory.
     title:
-        Title of the API index page.
+        Title of the API index page. This is sets the title in the yaml topmatter.
+        Set title to None to not produce any topmatter at all.
     renderer: Renderer
         The renderer used to convert docstrings (e.g. to markdown).
     options:
@@ -646,9 +646,12 @@ class Builder:
         content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
-        final = str(
-            Blocks([Header(1, self.title, Attr(classes=["doc", "doc-index"])), content])
-        )
+        if self.title is not None:
+            meta = [Meta({"title": self.title})]
+        else:
+            meta = []
+
+        final = str(Blocks([*meta, content]))
 
         p_index = Path(self.dir) / self.out_index
         p_index.parent.mkdir(exist_ok=True, parents=True)

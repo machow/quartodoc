@@ -5,16 +5,12 @@ from __future__ import annotations
 
 import collections.abc as abc
 import itertools
-import sys
+import yaml
 
 from textwrap import indent
 from dataclasses import dataclass
-from typing import Literal, Optional, Sequence, Union
-
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    TypeAlias = "TypeAlias"
+from typing import Literal, Optional, Sequence, Union, Any
+from typing_extensions import TypeAlias
 
 from quartodoc.pandoc.components import Attr
 from quartodoc.pandoc.inlines import (
@@ -200,6 +196,23 @@ class Para(Block):
     def as_list_item(self):
         content = inlinecontent_to_str(self.content)
         return f"{content}\n\n"
+
+
+@dataclass
+class Meta(Block):
+    """
+    A metadata block
+    """
+
+    metadata: dict[str, Any]
+
+    def __str__(self):
+        """
+        Return metadata as markdown
+        """
+
+        str_yaml = yaml.safe_dump(self.metadata)
+        return f"---\n{str_yaml}\n---"
 
 
 @dataclass
