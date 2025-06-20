@@ -211,7 +211,7 @@ class Meta(Block):
         Return metadata as markdown
         """
 
-        str_yaml = yaml.safe_dump(self.metadata)
+        str_yaml = yaml.safe_dump(self.metadata, sort_keys=False)
         return f"---\n{str_yaml}\n---"
 
 
