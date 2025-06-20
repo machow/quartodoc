@@ -789,7 +789,7 @@ class Builder:
     # constructors ----
 
     @classmethod
-    def from_quarto_config(cls, quarto_cfg: "str | dict"):
+    def from_quarto_config(cls, quarto_cfg: "str | dict") -> Builder:
         """Construct a Builder from a configuration object (or yaml file)."""
 
         # TODO: validation / config model loading
