@@ -9,6 +9,7 @@ from quartodoc.pandoc.blocks import (
     DefinitionList,
     Div,
     Header,
+    Meta,
     OrderedList,
     Para,
     Plain,
@@ -337,6 +338,11 @@ def test_header():
 
     h = Header(2, "A", Attr("header-id", classes=["c1", "c2"]))
     assert str(h) == "## A {#header-id .c1 .c2}"
+
+
+def test_meta():
+    m = Meta({"title": "AAA", "author": "BBB"})
+    assert str(m) == """---\ntitle: AAA\nauthor: BBB\n\n---"""
 
 
 def test_orderedlist():

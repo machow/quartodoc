@@ -128,3 +128,24 @@ def test_builder_generate_sidebar_options(tmp_path, snapshot):
     assert qd_sidebar["search"]
 
     assert yaml.dump(d_sidebar) == snapshot
+
+
+def test_builder_no_title_no_topmatter(tmp_path):
+    cfg = yaml.safe_load(
+        """
+    quartodoc:
+      package: quartodoc.tests.example
+      title: null
+      sections:
+        - title: first section
+          contents: [a_func]
+    """
+    )
+
+    builder = Builder.from_quarto_config(cfg)
+    builder.dir = str(tmp_path)
+    bp = blueprint(builder.layout)
+    builder.write_index(bp)
+
+    index = (Path(tmp_path) / "index.qmd").read_text()
+    assert not index.startswith("---")
