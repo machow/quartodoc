@@ -1,18 +1,16 @@
 from __future__ import annotations
 
-import black
 import re
 import quartodoc.ast as qast
 
 from contextlib import contextmanager
 from dataclasses import dataclass
-from functools import wraps
 from .._griffe_compat import docstrings as ds
 from .._griffe_compat import dataclasses as dc
 from .._griffe_compat import expressions as expr
 from tabulate import tabulate
 from plum import dispatch
-from typing import Any, Literal, Tuple, Union, Optional
+from typing import Literal, Union, Optional
 from quartodoc import layout
 from quartodoc.pandoc.blocks import DefinitionList
 from quartodoc.pandoc.inlines import Span, Strong, Attr, Code, Inlines
@@ -190,7 +188,9 @@ class MdRenderer(Renderer):
 
     def _fetch_method_parameters(self, el: dc.Function):
         # adapted from mkdocstrings-python jinja tempalate
-        if (el.is_class or (el.parent and el.parent.is_class)) and len(el.parameters) > 0:
+        if (el.is_class or (el.parent and el.parent.is_class)) and len(
+            el.parameters
+        ) > 0:
             if el.parameters[0].name in {"self", "cls"}:
                 return dc.Parameters(*list(el.parameters)[1:])
 
@@ -407,12 +407,10 @@ class MdRenderer(Renderer):
             # TODO: for now, we skip making an attribute table on classes, unless
             # they contain an attributes section in the docstring
             if (
-                raw_attrs
-                and not _has_attr_section(el.obj.docstring)
+                raw_attrs and not _has_attr_section(el.obj.docstring)
                 # TODO: what should backwards compat be?
                 # and not isinstance(el, layout.DocClass)
             ):
-
                 _attrs_table = "\n".join(map(self.summarize, raw_attrs))
                 attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
                 attr_docs.append(attrs)
@@ -699,13 +697,30 @@ class MdRenderer(Renderer):
             annotation=self.render_annotation(el.annotation),
         )
 
+    # yields ----
+
+    @dispatch
+    def render(self, el: ds.DocstringSectionYields):
+        rows = list(map(self.render, el.value))
+        header = ["Name", "Type", "Description"]
+
+        return self._render_table(rows, header, "returns")
+
+    @dispatch
+    def render(self, el: ds.DocstringYield) -> ParamRow:
+        # similar to DocstringReturn, but for yields
+        return ParamRow(
+            el.name,
+            el.description,
+            annotation=self.render_annotation(el.annotation),
+        )
+
     # unsupported parts ----
 
     @dispatch.multi(
         (ds.DocstringAdmonition,),
         (ds.DocstringDeprecated,),
         (ds.DocstringWarn,),
-        (ds.DocstringYield,),
         (ds.DocstringReceive,),
         (ds.DocstringAttribute,),
     )
