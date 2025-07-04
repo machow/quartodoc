@@ -136,6 +136,14 @@ Second, preview your site:
 quarto preview
 ```
 
+::: {.callout-tip}
+The two commands to build and preview can be combined:
+
+```bash
+quartodoc build --watch & quarto preview & jobs
+```
+:::
+
 ## Looking up objects
 
 Generating API reference docs for Python objects involves two pieces of configuration:
