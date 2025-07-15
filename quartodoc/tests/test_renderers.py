@@ -247,3 +247,62 @@ def test_render_numpydoc_section_return(snapshot, doc):
     assert snapshot == indented_sections(
         Code=full_doc, Default=res_default, List=res_list
     )
+
+
+@pytest.mark.parametrize(
+    "doc",
+    [
+        """name: int\n    A `"description"`.""",
+        """int\n    A description.""",
+        """err_code : int\n    Non-zero value indicates error code, or zero on success.\nerr_msg : str or None\n    Human readable error message, or None on success.""",
+    ],
+)
+def test_render_numpydoc_section_yields(snapshot, doc):
+    from quartodoc.parsers import get_parser_defaults
+    from griffe import Parser
+
+    full_doc = (
+        f"""Parameters\n---\n{doc}\n\nYields\n---\n{doc}\n\nAttributes\n---\n{doc}"""
+    )
+
+    el = dc.Docstring(
+        value=full_doc, parser=Parser.numpy, parser_options=get_parser_defaults("numpy")
+    )
+
+    assert el.parsed is not None and len(el.parsed) == 3
+
+    res_default = MdRenderer().render(el)
+    res_list = MdRenderer(table_style="description-list").render(el)
+
+    assert snapshot == indented_sections(
+        Code=full_doc, Default=res_default, List=res_list
+    )
+
+
+@pytest.mark.parametrize(
+    "doc",
+    [
+        """name (int): A description.""",
+        """int: A description.""",
+    ],
+)
+def test_render_google_section_yields(snapshot, doc):
+    from quartodoc.parsers import get_parser_defaults
+    from griffe import Parser
+
+    full_doc = f"""Args:\n    {doc}\n\nYields:\n    {doc}\n\nAttributes:\n    {doc}"""
+
+    el = dc.Docstring(
+        value=full_doc,
+        parser=Parser.google,
+        parser_options=get_parser_defaults("google"),
+    )
+
+    assert el.parsed is not None and len(el.parsed) == 3
+
+    res_default = MdRenderer().render(el)
+    res_list = MdRenderer(table_style="description-list").render(el)
+
+    assert snapshot == indented_sections(
+        Code=full_doc, Default=res_default, List=res_list
+    )
