@@ -129,6 +129,9 @@ class MdRenderer(Renderer):
         "full", or "canonical". These options range from just the function name, to its
         full path relative to its package, to including the package name, to its
         the its full path relative to its .__module__.
+    desc_first: bool
+        Whether to place the description (first line of docstring) before the
+        object name and signature. Default is False.
 
     Examples
     --------
@@ -154,6 +157,7 @@ class MdRenderer(Renderer):
         render_interlinks=False,
         # table_style="description-list",
         table_style="table",
+        desc_first: bool = False,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
@@ -162,6 +166,7 @@ class MdRenderer(Renderer):
         self.hook_pre = hook_pre
         self.render_interlinks = render_interlinks
         self.table_style = table_style
+        self.desc_first = desc_first
 
         self.crnt_header_level = self.header_level
 
