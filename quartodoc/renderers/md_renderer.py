@@ -511,12 +511,34 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        with self._increment_header():
-            body = self.render(el.obj)
+        # Check for desc_first on the element first, then fall back to renderer default
+        desc_first = getattr(el, 'desc_first', None)
+        if desc_first is None:
+            desc_first = self.desc_first
+        
+        if desc_first:
+            # Extract first paragraph as description
+            desc = self._extract_description(el.obj)
+            
+            with self._increment_header():
+                # Render body without first paragraph
+                body = self._render_without_first_paragraph(el.obj)
+            
+            # Reorder to get description, title, signature, rest of body, members
+            if desc:
+                # If body is not empty, include it; otherwise, don't include it
+                parts = ([desc, title, *sig_part, body, *attr_docs, *class_docs, *meth_docs] if body 
+                         else [desc, title, *sig_part, *attr_docs, *class_docs, *meth_docs])
+            else:
+                # Case with no description extracted
+                parts = [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
+        else:
+            with self._increment_header():
+                body = self.render(el.obj)
+            
+            parts = [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
 
-        return "\n\n".join(
-            [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
-        )
+        return "\n\n".join(parts)
 
     @dispatch
     def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
