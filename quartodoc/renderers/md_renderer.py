@@ -527,9 +527,11 @@ class MdRenderer(Renderer):
             
             # Reorder to get title, description, signature, rest of body, members
             if desc:
+                # Wrap description in a div with class for styling
+                desc_wrapped = f'::: {{.lead}}\n{desc}\n:::'
                 # If body is not empty, include it; otherwise, don't include it
-                parts = ([title, desc, *sig_part, body, *attr_docs, *class_docs, *meth_docs] if body 
-                         else [title, desc, *sig_part, *attr_docs, *class_docs, *meth_docs])
+                parts = ([title, desc_wrapped, *sig_part, body, *attr_docs, *class_docs, *meth_docs] if body 
+                         else [title, desc_wrapped, *sig_part, *attr_docs, *class_docs, *meth_docs])
             else:
                 # Case with no description extracted
                 parts = [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
@@ -563,7 +565,9 @@ class MdRenderer(Renderer):
             
             # Reorder: title, description, signature, rest of body
             if desc:
-                parts = [title, desc, *sig_part, body] if body else [title, desc, *sig_part]
+                # Wrap description in a div with class for styling
+                desc_wrapped = f'::: {{.lead}}\n{desc}\n:::'
+                parts = [title, desc_wrapped, *sig_part, body] if body else [title, desc_wrapped, *sig_part]
             else:
                 parts = [title, *sig_part, body]
         else:
