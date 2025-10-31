@@ -227,6 +227,7 @@ class AutoOptions(_Base):
     package: Union[str, None, MISSING] = MISSING()
     member_order: Literal["alphabetical", "source"] = "alphabetical"
     member_options: Optional["AutoOptions"] = None
+    desc_first: bool = False
 
     # for tracking fields users manually specify
     # so we can tell them apart from defaults
@@ -344,6 +345,7 @@ class Doc(_Docable):
     obj: Union[dc.Object, dc.Alias]
     anchor: str
     signature_name: SignatureOptions = "relative"
+    desc_first: Optional[bool] = None
 
     class Config:
         arbitrary_types_allowed = True
@@ -358,6 +360,7 @@ class Doc(_Docable):
         anchor: str = None,
         flat: bool = False,
         signature_name: str = "relative",
+        desc_first: Optional[bool] = None,
     ):
         if members is None:
             members = []
@@ -370,6 +373,7 @@ class Doc(_Docable):
             "obj": obj,
             "anchor": anchor,
             "signature_name": signature_name,
+            "desc_first": desc_first,
         }
 
         if kind == "function":
