@@ -547,10 +547,31 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        with self._increment_header():
-            body = self.render(el.obj)
+        # Check for desc_first on the element first, then fall back to renderer default
+        desc_first = getattr(el, 'desc_first', None)
+        if desc_first is None:
+            desc_first = self.desc_first
+        
+        if desc_first:
+            # Extract first paragraph as description
+            desc = self._extract_description(el.obj)
+            
+            with self._increment_header():
+                # Render body without the first paragraph
+                body = self._render_without_first_paragraph(el.obj)
+            
+            # Reorder: description, title, signature, rest of body
+            if desc:
+                parts = [desc, title, *sig_part, body] if body else [desc, title, *sig_part]
+            else:
+                parts = [title, *sig_part, body]
+        else:
+            with self._increment_header():
+                body = self.render(el.obj)
+            
+            parts = [title, *sig_part, body]
 
-        return "\n\n".join([title, *sig_part, body])
+        return "\n\n".join(parts)
 
     # render griffe objects ===================================================
 
