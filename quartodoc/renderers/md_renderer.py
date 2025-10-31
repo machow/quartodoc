@@ -178,6 +178,24 @@ class MdRenderer(Renderer):
         finally:
             self.crnt_header_level -= n
 
+    def _extract_description(self, el: Union[dc.Object, dc.Alias]) -> Optional[str]:
+        if el.docstring is None:
+            return None
+            
+        patched_sections = qast.transform(el.docstring.parsed)
+        
+        for section in patched_sections:
+            title = section.title or section.kind.value
+            if title == "text":
+                # Get the raw text value from the section
+                text = section.value if hasattr(section, 'value') else ""
+                if text:
+                    # Split on double newline to get first paragraph
+                    paragraphs = text.split('\n\n')
+                    return paragraphs[0].strip() if paragraphs else None
+        
+        return None
+
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
         if self.display_name in {"name", "short"}:
