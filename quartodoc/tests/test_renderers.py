@@ -247,3 +247,23 @@ def test_render_numpydoc_section_return(snapshot, doc):
     assert snapshot == indented_sections(
         Code=full_doc, Default=res_default, List=res_list
     )
+
+
+# desc_first tests ------------------------------------------------------------
+
+
+def test_render_desc_first_function():
+    auto = Auto(name="a_func", package="quartodoc.tests.example", desc_first=True)
+    bp = blueprint(auto)
+    
+    renderer = MdRenderer()
+    result = renderer.render(bp)
+    
+    # The result should have: description, then title, then signature, then rest
+    desc_pos = result.find("A function")
+    title_pos = result.find("# a_func")
+    
+    assert desc_pos != -1
+    assert title_pos != -1
+    assert desc_pos < title_pos
+
