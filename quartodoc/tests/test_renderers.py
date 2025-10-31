@@ -267,3 +267,51 @@ def test_render_desc_first_function():
     assert title_pos != -1
     assert desc_pos < title_pos
 
+
+def test_render_desc_first_false():
+    auto = Auto(name="a_func", package="quartodoc.tests.example", desc_first=False)
+    bp = blueprint(auto)
+    
+    renderer = MdRenderer()
+    result = renderer.render(bp)
+    
+    # The result should have: title, signature, then description
+    desc_pos = result.find("A function")
+    title_pos = result.find("# a_func")
+
+    assert desc_pos != -1
+    assert title_pos != -1
+    assert title_pos < desc_pos
+
+
+def test_render_desc_first_class():
+    auto = Auto(name="AClass", package="quartodoc.tests.example", desc_first=True)
+    bp = blueprint(auto)
+    
+    renderer = MdRenderer()
+    result = renderer.render(bp)
+    
+    # Check that "A class" (description) appears before "# AClass" (title)
+    desc_pos = result.find("A class")
+    title_pos = result.find("# AClass")
+
+    assert desc_pos != -1
+    assert title_pos != -1
+    assert desc_pos < title_pos
+
+
+def test_render_desc_first_renderer_default():
+    auto = Auto(name="a_func", package="quartodoc.tests.example")
+    bp = blueprint(auto)
+    
+    # Renderer with desc_first=True as default
+    renderer = MdRenderer(desc_first=True)
+    result = renderer.render(bp)
+    
+    # Check that description comes before title
+    desc_pos = result.find("A function")
+    title_pos = result.find("# a_func")
+
+    assert desc_pos != -1
+    assert title_pos != -1
+    assert desc_pos < title_pos
