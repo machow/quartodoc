@@ -130,8 +130,9 @@ class MdRenderer(Renderer):
         full path relative to its package, to including the package name, to its
         the its full path relative to its .__module__.
     desc_first: bool
-        Whether to place the description (first line of docstring) before the
-        object name and signature. Default is False.
+        Whether to place the description (first paragraph of docstring) after the
+        object name and before the signature. When True, the order is: title,
+        description, signature, remaining content. Default is False.
 
     Examples
     --------
@@ -524,11 +525,11 @@ class MdRenderer(Renderer):
                 # Render body without first paragraph
                 body = self._render_without_first_paragraph(el.obj)
             
-            # Reorder to get description, title, signature, rest of body, members
+            # Reorder to get title, description, signature, rest of body, members
             if desc:
                 # If body is not empty, include it; otherwise, don't include it
-                parts = ([desc, title, *sig_part, body, *attr_docs, *class_docs, *meth_docs] if body 
-                         else [desc, title, *sig_part, *attr_docs, *class_docs, *meth_docs])
+                parts = ([title, desc, *sig_part, body, *attr_docs, *class_docs, *meth_docs] if body 
+                         else [title, desc, *sig_part, *attr_docs, *class_docs, *meth_docs])
             else:
                 # Case with no description extracted
                 parts = [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
@@ -560,9 +561,9 @@ class MdRenderer(Renderer):
                 # Render body without the first paragraph
                 body = self._render_without_first_paragraph(el.obj)
             
-            # Reorder: description, title, signature, rest of body
+            # Reorder: title, description, signature, rest of body
             if desc:
-                parts = [desc, title, *sig_part, body] if body else [desc, title, *sig_part]
+                parts = [title, desc, *sig_part, body] if body else [title, desc, *sig_part]
             else:
                 parts = [title, *sig_part, body]
         else:
