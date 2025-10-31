@@ -350,12 +350,20 @@ class BlueprintTransformer(PydanticTransformer):
             children.append(res)
 
         is_flat = el.children == ChoicesChildren.flat
+        
+        # Only pass desc_first if it was explicitly set by the user
+        kwargs = {
+            "flat": is_flat,
+            "signature_name": el.signature_name,
+        }
+        if "desc_first" in el._fields_specified:
+            kwargs["desc_first"] = el.desc_first
+        
         return Doc.from_griffe(
             el.name,
             obj,
             children,
-            flat=is_flat,
-            signature_name=el.signature_name,
+            **kwargs
         )
 
     def _fetch_members(self, el: Auto, obj: dc.Object | dc.Alias):
