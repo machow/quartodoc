@@ -259,13 +259,13 @@ def test_render_desc_first_function():
     renderer = MdRenderer()
     result = renderer.render(bp)
     
-    # The result should have: description, then title, then signature, then rest
+    # The result should have: title, then description, then signature, then rest
     desc_pos = result.find("A function")
     title_pos = result.find("# a_func")
     
     assert desc_pos != -1
     assert title_pos != -1
-    assert desc_pos < title_pos
+    assert title_pos < desc_pos
 
 
 def test_render_desc_first_false():
@@ -291,13 +291,13 @@ def test_render_desc_first_class():
     renderer = MdRenderer()
     result = renderer.render(bp)
     
-    # Check that "A class" (description) appears before "# AClass" (title)
+    # Check that "# AClass" (title) appears before "A class" (description)
     desc_pos = result.find("A class")
     title_pos = result.find("# AClass")
 
     assert desc_pos != -1
     assert title_pos != -1
-    assert desc_pos < title_pos
+    assert title_pos < desc_pos
 
 
 def test_render_desc_first_renderer_default():
@@ -308,10 +308,10 @@ def test_render_desc_first_renderer_default():
     renderer = MdRenderer(desc_first=True)
     result = renderer.render(bp)
     
-    # Check that description comes before title
+    # Check that title comes before description
     desc_pos = result.find("A function")
     title_pos = result.find("# a_func")
 
     assert desc_pos != -1
     assert title_pos != -1
-    assert desc_pos < title_pos
+    assert title_pos < desc_pos
