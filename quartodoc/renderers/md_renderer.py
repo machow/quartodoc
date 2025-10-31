@@ -196,6 +196,41 @@ class MdRenderer(Renderer):
         
         return None
 
+    def _render_without_first_paragraph(self, el: Union[dc.Object, dc.Alias]) -> str:
+        if el.docstring is None:
+            return ""
+        
+        str_body = []
+        patched_sections = qast.transform(el.docstring.parsed)
+        first_text_seen = False
+        
+        for section in patched_sections:
+            title = section.title or section.kind.value
+            
+            # Handle the first text section specially
+            if title == "text" and not first_text_seen:
+                first_text_seen = True
+                # Get remaining paragraphs after the first one
+                text = section.value if hasattr(section, 'value') else ""
+                if text:
+                    paragraphs = text.split('\n\n')
+                    if len(paragraphs) > 1:
+                        # Join remaining paragraphs and add them
+                        remaining = '\n\n'.join(paragraphs[1:]).strip()
+                        if remaining:
+                            str_body.append(remaining)
+                continue
+            
+            body: str = self.render(section)
+
+            if title != "text":
+                header = self.render_header(section)
+                str_body.append("\n\n".join([header, body]))
+            else:
+                str_body.append(body)
+
+        return "\n\n".join(str_body)
+
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
         if self.display_name in {"name", "short"}:
