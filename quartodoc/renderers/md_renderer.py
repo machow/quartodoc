@@ -129,6 +129,10 @@ class MdRenderer(Renderer):
         "full", or "canonical". These options range from just the function name, to its
         full path relative to its package, to including the package name, to its
         the its full path relative to its .__module__.
+    desc_first: bool
+        Whether to place the description (first paragraph of docstring) after the
+        object name and before the signature. When True, the order is: title,
+        description, signature, remaining content. Default is False.
 
     Examples
     --------
@@ -154,6 +158,7 @@ class MdRenderer(Renderer):
         render_interlinks=False,
         # table_style="description-list",
         table_style="table",
+        desc_first: bool = False,
     ):
         self.header_level = header_level
         self.show_signature = show_signature
@@ -162,6 +167,7 @@ class MdRenderer(Renderer):
         self.hook_pre = hook_pre
         self.render_interlinks = render_interlinks
         self.table_style = table_style
+        self.desc_first = desc_first
 
         self.crnt_header_level = self.header_level
 
@@ -172,6 +178,59 @@ class MdRenderer(Renderer):
             yield
         finally:
             self.crnt_header_level -= n
+
+    def _extract_description(self, el: Union[dc.Object, dc.Alias]) -> Optional[str]:
+        if el.docstring is None:
+            return None
+            
+        patched_sections = qast.transform(el.docstring.parsed)
+        
+        for section in patched_sections:
+            title = section.title or section.kind.value
+            if title == "text":
+                # Get the raw text value from the section
+                text = section.value if hasattr(section, 'value') else ""
+                if text:
+                    # Split on double newline to get first paragraph
+                    paragraphs = text.split('\n\n')
+                    return paragraphs[0].strip() if paragraphs else None
+        
+        return None
+
+    def _render_without_first_paragraph(self, el: Union[dc.Object, dc.Alias]) -> str:
+        if el.docstring is None:
+            return ""
+        
+        str_body = []
+        patched_sections = qast.transform(el.docstring.parsed)
+        first_text_seen = False
+        
+        for section in patched_sections:
+            title = section.title or section.kind.value
+            
+            # Handle the first text section specially
+            if title == "text" and not first_text_seen:
+                first_text_seen = True
+                # Get remaining paragraphs after the first one
+                text = section.value if hasattr(section, 'value') else ""
+                if text:
+                    paragraphs = text.split('\n\n')
+                    if len(paragraphs) > 1:
+                        # Join remaining paragraphs and add them
+                        remaining = '\n\n'.join(paragraphs[1:]).strip()
+                        if remaining:
+                            str_body.append(remaining)
+                continue
+            
+            body: str = self.render(section)
+
+            if title != "text":
+                header = self.render_header(section)
+                str_body.append("\n\n".join([header, body]))
+            else:
+                str_body.append(body)
+
+        return "\n\n".join(str_body)
 
     def _fetch_object_dispname(self, el: "dc.Alias | dc.Object"):
         # TODO: copied from Builder, should move into util function
@@ -453,12 +512,36 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        with self._increment_header():
-            body = self.render(el.obj)
+        # Check for desc_first on the element first, then fall back to renderer default
+        desc_first = getattr(el, 'desc_first', None)
+        if desc_first is None:
+            desc_first = self.desc_first
+        
+        if desc_first:
+            # Extract first paragraph as description
+            desc = self._extract_description(el.obj)
+            
+            with self._increment_header():
+                # Render body without first paragraph
+                body = self._render_without_first_paragraph(el.obj)
+            
+            # Reorder to get title, description, signature, rest of body, members
+            if desc:
+                # Wrap description in a div with inline styles
+                desc_wrapped = f'::: {{.lead style="font-style: italic; margin-top: -10px;"}}\n{desc}\n:::'
+                # If body is not empty, include it; otherwise, don't include it
+                parts = ([title, desc_wrapped, *sig_part, body, *attr_docs, *class_docs, *meth_docs] if body 
+                         else [title, desc_wrapped, *sig_part, *attr_docs, *class_docs, *meth_docs])
+            else:
+                # Case with no description extracted
+                parts = [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
+        else:
+            with self._increment_header():
+                body = self.render(el.obj)
+            
+            parts = [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
 
-        return "\n\n".join(
-            [title, *sig_part, body, *attr_docs, *class_docs, *meth_docs]
-        )
+        return "\n\n".join(parts)
 
     @dispatch
     def render(self, el: Union[layout.DocFunction, layout.DocAttribute]):
@@ -467,10 +550,33 @@ class MdRenderer(Renderer):
         str_sig = self.signature(el)
         sig_part = [str_sig] if self.show_signature else []
 
-        with self._increment_header():
-            body = self.render(el.obj)
+        # Check for desc_first on the element first, then fall back to renderer default
+        desc_first = getattr(el, 'desc_first', None)
+        if desc_first is None:
+            desc_first = self.desc_first
+        
+        if desc_first:
+            # Extract first paragraph as description
+            desc = self._extract_description(el.obj)
+            
+            with self._increment_header():
+                # Render body without the first paragraph
+                body = self._render_without_first_paragraph(el.obj)
+            
+            # Reorder: title, description, signature, rest of body
+            if desc:
+                # Wrap description in a div with inline styles
+                desc_wrapped = f'::: {{.lead style="font-size: 1rem; font-style: italic; margin-top: -10px; line-height: 1;"}}\n{desc}\n:::'
+                parts = [title, desc_wrapped, *sig_part, body] if body else [title, desc_wrapped, *sig_part]
+            else:
+                parts = [title, *sig_part, body]
+        else:
+            with self._increment_header():
+                body = self.render(el.obj)
+            
+            parts = [title, *sig_part, body]
 
-        return "\n\n".join([title, *sig_part, body])
+        return "\n\n".join(parts)
 
     # render griffe objects ===================================================
 
