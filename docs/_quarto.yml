@@ -78,6 +78,7 @@ website:
             - get-started/dev-prepare.qmd
             - get-started/dev-docstrings.qmd
             - get-started/dev-renderers.qmd
+            - get-started/dev-snippets.qmd
         - section: "Extra Topics"
           contents:
             - get-started/extra-build-sequence.qmd
