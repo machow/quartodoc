@@ -50,3 +50,32 @@ doc = Docstring(
 
 print(MdRenderer().render(doc))
 ```
+
+## Build a small quarto config
+
+```{python}
+import yaml
+
+from quartodoc import Builder, blueprint, collect, MdRenderer
+
+cfg = yaml.safe_load(
+    """
+quartodoc:
+  package: quartodoc
+  style: pkgdown
+  sections:
+    - title: "Some section"
+      desc: "Some description"
+      contents:
+        - name: MdRenderer
+          members: ["render", "summarize"]
+          children: separate
+"""
+)
+
+b = Builder.from_quarto_config(cfg)
+
+# b.build()   # full build, with api reference files, etc..
+# bp = blueprint(b.layout, dynamic=b.dynamic, parser=b.parser) # load items
+# collect(bp) # generate inventory
+```
