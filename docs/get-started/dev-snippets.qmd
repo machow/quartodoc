@@ -1,0 +1,81 @@
+---
+title: Common snippets
+jupyter: python3
+---
+
+Developing quartodoc often means debugging how various Class, function, and docstring components get rendered to quarto-flavored markdown. The sections provide snippets for quickly rendering pieces.
+
+## Rendering a function
+
+```{python}
+import inspect
+from quartodoc import Auto, blueprint, MdRenderer
+
+
+def my_func(x: int, y: str = "yo"):
+    """Some func"""
+
+
+with open("tmp_mod.py", "w") as f:
+    f.write(inspect.getsource(my_func))
+
+bp = blueprint(Auto(name="tmp_mod.my_func"))
+print(MdRenderer().render(bp))
+```
+
+## Rendering a docstring
+
+```{python}
+from griffe import Docstring
+from griffe import Parser
+from quartodoc import preview, MdRenderer
+from quartodoc.parsers import get_parser_defaults
+
+docstring = """
+Parameters
+----------
+x :
+    The x parameter
+
+    - Detail 1
+    - Detail 2
+"""
+
+# a griffe Docstring object
+doc = Docstring(
+    value=docstring,
+    parser=Parser.numpy,
+    parser_options=get_parser_defaults("numpy"),
+)
+
+print(MdRenderer().render(doc))
+```
+
+## Build a small quarto config
+
+```{python}
+import yaml
+
+from quartodoc import Builder, blueprint, collect, MdRenderer
+
+cfg = yaml.safe_load(
+    """
+quartodoc:
+  package: quartodoc
+  style: pkgdown
+  sections:
+    - title: "Some section"
+      desc: "Some description"
+      contents:
+        - name: MdRenderer
+          members: ["render", "summarize"]
+          children: separate
+"""
+)
+
+b = Builder.from_quarto_config(cfg)
+
+# b.build()   # full build, with api reference files, etc..
+# bp = blueprint(b.layout, dynamic=b.dynamic, parser=b.parser) # load items
+# collect(bp) # generate inventory
+```
