@@ -480,6 +480,11 @@ class Builder:
     parser:
         Docstring parser to use. This correspond to different docstring styles,
         and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".
+    index_topmatter : dict, optional
+        Custom YAML frontmatter for the API index page. When provided, this
+        completely overrides the `title` configuration. Set to an empty dict
+        to generate an empty frontmatter block. Default is None, which falls
+        back to using the `title` parameter.
 
     """
 
@@ -530,6 +535,7 @@ class Builder:
         dynamic: bool | None = None,
         parser="numpy",
         render_interlinks: bool = False,
+        index_topmatter: "dict[str, Any] | None" = None,
         _fast_inventory=False,
     ):
         self.layout = self.load_layout(
@@ -558,6 +564,8 @@ class Builder:
 
         if out_index is not None:
             self.out_index = out_index
+
+        self.index_topmatter = index_topmatter
 
         self.rewrite_all_pages = rewrite_all_pages
         self.source_dir = str(Path(source_dir).absolute()) if source_dir else None
@@ -646,9 +654,15 @@ class Builder:
         content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
-        if self.title is not None:
+        # handle index topmatter
+        if self.index_topmatter is not None:
+            # index_topmatter overrides title
+            meta = [Meta(self.index_topmatter)]
+        elif self.title is not None:
+            # Fall back to title-only frontmatter
             meta = [Meta({"title": self.title})]
         else:
+            # No frontmatter at all
             meta = []
 
         final = str(Blocks([*meta, content]))
@@ -806,8 +820,15 @@ class Builder:
 
         _fast_inventory = quarto_cfg.get("interlinks", {}).get("fast", False)
 
+        # Convert dash to underscore for all config keys (YAML uses dashes, Python uses underscores)
+        config_args = {}
+        for k, v in cfg.items():
+            if k != "style":
+                # Replace dashes with underscores for Python parameter names
+                config_args[k.replace("-", "_")] = v
+
         return cls_builder(
-            **{k: v for k, v in cfg.items() if k != "style"},
+            **config_args,
             _fast_inventory=_fast_inventory,
         )
 
