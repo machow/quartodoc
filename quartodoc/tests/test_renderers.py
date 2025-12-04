@@ -353,3 +353,63 @@ def test_render_google_section_yields(snapshot, doc):
     assert snapshot == indented_sections(
         Code=full_doc, Default=res_default, List=res_list
     )
+
+
+def test_render_class_with_description_list_toc(snapshot):
+    """Test rendering a class with description list for members TOC."""
+    renderer = MdRenderer(table_style_tocs="description-list")
+    bp = blueprint(Auto(name="quartodoc.tests.example_class.C", children="embedded"))
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_api_index_with_description_list(snapshot):
+    """Test rendering an API index with description list style."""
+    renderer = MdRenderer(table_style_index="description-list")
+
+    # Create a simple layout with a section containing multiple items
+    section = layout.Section(
+        title="API Reference",
+        desc="Example API documentation",
+        contents=[
+            blueprint(Auto(name="quartodoc.tests.example.a_func")),
+            blueprint(Auto(name="quartodoc.tests.example_class.C")),
+            blueprint(Auto(name="quartodoc.tests.example.a_attr")),
+        ]
+    )
+
+    res = renderer.summarize(section)
+
+    assert res == snapshot
+
+
+def test_render_doc_summarize_toc_table_vs_description_list(snapshot):
+    """Test summarizing a Doc object with both table and description list styles."""
+    # Test both styles to show the difference
+    renderer_table = MdRenderer(table_style_tocs="table")
+    renderer_list = MdRenderer(table_style_tocs="description-list")
+
+    # Get a class with methods to summarize
+    doc = blueprint(Auto(name="quartodoc.tests.example_class.C"))
+
+    # Get the TOC summaries (collect SummaryRow objects)
+    rows = [renderer_table.summarize(child, path=None) for child in doc.members]
+
+    # Render using both styles
+    res_table = renderer_table._render_summary_table(
+        rows,
+        style_param="table",
+        include_headers=True
+    )
+
+    res_list = renderer_list._render_summary_table(
+        rows,
+        style_param="description-list",
+        include_headers=False  # description lists don't use headers
+    )
+
+    assert snapshot == indented_sections(
+        Table=res_table,
+        DescriptionList=res_list
+    )
