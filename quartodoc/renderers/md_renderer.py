@@ -495,7 +495,7 @@ class MdRenderer(Renderer):
                 # and not isinstance(el, layout.DocClass)
             ):
                 # Collect SummaryRow objects and render as TOC
-                attr_rows = [self.summarize_toc(attr) for attr in raw_attrs]
+                attr_rows = [self.summarize(attr) for attr in raw_attrs]
                 _attrs_table = self._render_summary_table(attr_rows, self.table_style_tocs, include_headers=True)
                 attrs = f"{sub_header} Attributes\n\n{_attrs_table}"
                 attr_docs.append(attrs)
@@ -503,7 +503,7 @@ class MdRenderer(Renderer):
             # classes summary table ----
             if raw_classes:
                 # Collect SummaryRow objects and render as TOC
-                class_rows = [self.summarize_toc(cls) for cls in raw_classes]
+                class_rows = [self.summarize(cls) for cls in raw_classes]
                 _summary_table = self._render_summary_table(class_rows, self.table_style_tocs, include_headers=True)
                 section_name = "Classes"
                 objs = f"{sub_header} {section_name}\n\n{_summary_table}"
@@ -522,7 +522,7 @@ class MdRenderer(Renderer):
             # method summary table ----
             if raw_meths:
                 # Collect SummaryRow objects and render as TOC
-                meth_rows = [self.summarize_toc(meth) for meth in raw_meths]
+                meth_rows = [self.summarize(meth) for meth in raw_meths]
                 _summary_table = self._render_summary_table(meth_rows, self.table_style_tocs, include_headers=True)
                 section_name = (
                     "Methods" if isinstance(el, layout.DocClass) else "Functions"
@@ -823,34 +823,13 @@ class MdRenderer(Renderer):
     def _summary_row(self, link, description):
         return SummaryRow(link=link, description=sanitize(description, allow_markdown=True))
 
-    # Index summarization methods (for main index page) ----------------------
+    # Summarization methods ---------------------------------------------------
 
     @dispatch
     def summarize(self, el):
-        """Produce a summary table for the index."""
+        """Produce a summary table."""
 
         raise NotImplementedError(f"Unsupported type: {type(el)}")
-
-    # TOC summarization methods (for doc page TOCs) --------------------------
-
-    @dispatch
-    def summarize_toc(self, el):
-        """Produce a summary table for TOC sections."""
-
-        raise NotImplementedError(f"Unsupported type: {type(el)}")
-
-    @dispatch
-    def summarize_toc(self, el: layout.Doc):
-        """Summarize a Doc for TOC display."""
-        link = f"[{el.name}](#{el.anchor})"
-        description = self.summarize(el.obj)
-        return self._summary_row(link, description)
-
-    @dispatch
-    def summarize_toc(self, el: layout.Link):
-        """Summarize a Link for TOC display."""
-        description = self.summarize(el.obj)
-        return self._summary_row(f"[](`~{el.name}`)", description)
 
     @dispatch
     def summarize(self, el: layout.Layout):
@@ -919,6 +898,8 @@ class MdRenderer(Renderer):
     def summarize(
         self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False
     ):
+        # When path is None, we're being called directly from render() for TOC
+        # When path is provided, we're being called from Page for index
         if path is None:
             link = f"[{el.name}](#{el.anchor})"
         else:

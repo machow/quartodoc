@@ -117,13 +117,13 @@ def test_render_summarize_section_description_list():
 
 
 def test_render_summarize_toc_description_list():
-    """Test summarize_toc with description list style for TOCs."""
+    """Test summarize with description list style for TOCs."""
     renderer = MdRenderer(table_style_tocs="description-list")
     obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
 
-    # Test TOC summarization of a Doc object
+    # Test TOC summarization of a Doc object (path=None indicates TOC context)
     doc = obj  # blueprint returns a Doc object
-    row = renderer.summarize_toc(doc)
+    row = renderer.summarize(doc)
 
     # Check that it returns a SummaryRow
     from quartodoc.renderers.md_renderer import SummaryRow
