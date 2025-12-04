@@ -127,6 +127,46 @@ class SummaryRow:
         return f"| {self.link} | {self.description} |"
 
 
+def _parse_summary_result(result):
+    """Parse a summary result into a list of SummaryRow objects.
+
+    Handles both SummaryRow objects and string representations for backward compatibility.
+
+    Parameters
+    ----------
+    result : SummaryRow or str
+        The result from a summarize() call.
+
+    Returns
+    -------
+    list[SummaryRow]
+        List of SummaryRow objects.
+    """
+    rows = []
+    if isinstance(result, SummaryRow):
+        rows.append(result)
+    elif isinstance(result, str):
+        # If it's already a formatted string, parse it back to SummaryRow
+        # This handles nested cases
+        if result.startswith("|"):
+            # It's a table row, extract link and description
+            parts = result.split("|")
+            if len(parts) >= 3:
+                link = parts[1].strip()
+                desc = parts[2].strip()
+                rows.append(SummaryRow(link=link, description=desc))
+        else:
+            # Multiple rows joined, split and process each
+            for line in result.split("\n"):
+                if line.startswith("|"):
+                    parts = line.split("|")
+                    if len(parts) >= 3:
+                        link = parts[1].strip()
+                        desc = parts[2].strip()
+                        rows.append(SummaryRow(link=link, description=desc))
+    return rows
+
+
 class MdRenderer(Renderer):
     """Render docstrings to markdown.
 
@@ -229,7 +269,8 @@ class MdRenderer(Renderer):
             table = tabulate(row_tuples, headers=headers, tablefmt="github")
             return table
 
-    def _render_summary_table(self, rows, style_param, include_headers=False):
+    @staticmethod
+    def _render_summary_table(rows, style_param, include_headers=False):
         """Render summary rows as table or description list.
 
         Parameters
@@ -808,28 +849,7 @@ class MdRenderer(Renderer):
             rows = []
             for child in el.contents:
                 result = self.summarize(child, is_index=is_index)
-                # Handle both SummaryRow objects and strings (for backward compatibility)
-                if isinstance(result, SummaryRow):
-                    rows.append(result)
-                elif isinstance(result, str):
-                    # If it's already a formatted string, parse it back to SummaryRow
-                    # This handles nested cases
-                    if result.startswith("|"):
-                        # It's a table row, extract link and description
-                        parts = result.split("|")
-                        if len(parts) >= 3:
-                            link = parts[1].strip()
-                            desc = parts[2].strip()
-                            rows.append(SummaryRow(link=link, description=desc))
-                    else:
-                        # Multiple rows joined, split and process each
-                        for line in result.split("\n"):
-                            if line.startswith("|"):
-                                parts = line.split("|")
-                                if len(parts) >= 3:
-                                    link = parts[1].strip()
-                                    desc = parts[2].strip()
-                                    rows.append(SummaryRow(link=link, description=desc))
+                rows.extend(_parse_summary_result(result))
 
             # Determine which style to use
             style_param = self.table_style_index if is_index else self.table_style_tocs
