@@ -100,6 +100,53 @@ def test_render_summarize_section_contents(renderer):
     assert res == f"## abc\n\nzzz\n\n{table}"
 
 
+def test_render_summarize_section_description_list():
+    """Test summarize with description list style for index."""
+    renderer = MdRenderer(table_style_index="description-list")
+    obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
+    section = layout.Section(title="abc", desc="zzz", contents=[obj])
+    res = renderer.summarize(section, is_index=True)
+
+    # Description list format
+    expected = (
+        "## abc\n\nzzz\n\n"
+        "[a_func](#quartodoc.tests.example.a_func)\n\n"
+        ":   A function"
+    )
+    assert res == expected
+
+
+def test_render_summarize_section_toc_description_list():
+    """Test summarize with description list style for TOCs."""
+    renderer = MdRenderer(table_style_tocs="description-list")
+    obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
+    section = layout.Section(title="abc", desc="zzz", contents=[obj])
+    res = renderer.summarize(section, is_index=False)
+
+    # Description list format
+    expected = (
+        "## abc\n\nzzz\n\n"
+        "[a_func](#quartodoc.tests.example.a_func)\n\n"
+        ":   A function"
+    )
+    assert res == expected
+
+
+def test_summary_row():
+    """Test SummaryRow dataclass methods."""
+    from quartodoc.renderers.md_renderer import SummaryRow
+
+    row = SummaryRow(link="[test](test.html)", description="Test description")
+
+    # Test to_tuple
+    assert row.to_tuple() == "| [test](test.html) | Test description |"
+
+    # Test to_definition_list
+    term, definition = row.to_definition_list()
+    assert term == "[test](test.html)"
+    assert definition == "Test description"
+
+
 def test_render_doc_attribute(renderer):
     attr = ds.DocstringAttribute(
         name="abc",
