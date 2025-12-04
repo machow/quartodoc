@@ -654,7 +654,7 @@ class Builder:
         content = self.renderer.summarize(blueprint)
         _log.info(f"Writing index to directory: {self.dir}")
 
-        # New logic for handling topmatter
+        # handle index topmatter
         if self.index_topmatter is not None:
             # index_topmatter overrides title
             meta = [Meta(self.index_topmatter)]
