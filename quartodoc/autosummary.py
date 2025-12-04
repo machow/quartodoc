@@ -480,7 +480,8 @@ class Builder:
     parser:
         Docstring parser to use. This correspond to different docstring styles,
         and can be one of "google", "sphinx", and "numpy". Defaults to "numpy".
-
+    kwargs:
+        Additional options are ignored with a warning for forwards compatibility.
     """
 
     # builder dispatching ----
@@ -531,6 +532,7 @@ class Builder:
         parser="numpy",
         render_interlinks: bool = False,
         _fast_inventory=False,
+        **kwargs: Any
     ):
         self.layout = self.load_layout(
             sections=sections, package=package, options=options
@@ -549,6 +551,15 @@ class Builder:
 
         self.css = css
         self.parser = parser
+
+        if len(kwargs) > 0:
+            ignored_keys = [f"'{k}'" for k in kwargs.keys()]
+            text_options = "option" if len(kwargs) == 1 else "options"
+            raise ValueError(
+                f"Unknown quartodoc {text_options}: {', '.join(ignored_keys)}. "
+                "Please see <https://machow.github.io/quartodoc/get-started/basic-docs.html> "
+                "for quartodoc site configuration options."
+            )
 
         self.renderer = Renderer.from_config(renderer)
         if render_interlinks:

@@ -58,6 +58,22 @@ def test_builder_auto_options():
     builder = Builder.from_quarto_config(cfg)
     assert builder.layout.options.members == ["a_func", "a_attr"]
 
+def test_builder_error_unknown_options():
+    cfg = yaml.safe_load(
+        """
+    quartodoc:
+      package: quartodoc
+      this_is_not_a_real_option: true
+      options:
+        members: [a_func, a_attr]
+      sections:
+        - contents: [quartodoc.tests.example]
+    """
+    )
+
+    with pytest.raises(ValueError):
+      Builder.from_quarto_config(cfg)
+
 
 def test_builder_generate_sidebar(tmp_path, snapshot):
     cfg = yaml.safe_load(
