@@ -820,15 +820,12 @@ class Builder:
 
         _fast_inventory = quarto_cfg.get("interlinks", {}).get("fast", False)
 
-        # Convert dash to underscore for index-topmatter
+        # Convert dash to underscore for all config keys (YAML uses dashes, Python uses underscores)
         config_args = {}
         for k, v in cfg.items():
             if k != "style":
-                # Convert index-topmatter to index_topmatter
-                if k == "index-topmatter":
-                    config_args["index_topmatter"] = v
-                else:
-                    config_args[k] = v
+                # Replace dashes with underscores for Python parameter names
+                config_args[k.replace("-", "_")] = v
 
         return cls_builder(
             **config_args,
