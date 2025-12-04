@@ -656,7 +656,7 @@ class Builder:
 
         # New logic for handling topmatter
         if self.index_topmatter is not None:
-            # index_topmatter overrides title completely
+            # index_topmatter overrides title
             meta = [Meta(self.index_topmatter)]
         elif self.title is not None:
             # Fall back to title-only frontmatter
