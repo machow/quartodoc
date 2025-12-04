@@ -105,7 +105,7 @@ def test_render_summarize_section_description_list():
     renderer = MdRenderer(table_style_index="description-list")
     obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
     section = layout.Section(title="abc", desc="zzz", contents=[obj])
-    res = renderer.summarize(section, is_index=True)
+    res = renderer.summarize(section)
 
     # Description list format
     expected = (
@@ -116,20 +116,20 @@ def test_render_summarize_section_description_list():
     assert res == expected
 
 
-def test_render_summarize_section_toc_description_list():
-    """Test summarize with description list style for TOCs."""
+def test_render_summarize_toc_description_list():
+    """Test summarize_toc with description list style for TOCs."""
     renderer = MdRenderer(table_style_tocs="description-list")
     obj = blueprint(layout.Auto(name="a_func", package="quartodoc.tests.example"))
-    section = layout.Section(title="abc", desc="zzz", contents=[obj])
-    res = renderer.summarize(section, is_index=False)
 
-    # Description list format
-    expected = (
-        "## abc\n\nzzz\n\n"
-        "[a_func](#quartodoc.tests.example.a_func)\n\n"
-        ":   A function"
-    )
-    assert res == expected
+    # Test TOC summarization of a Doc object
+    doc = obj  # blueprint returns a Doc object
+    row = renderer.summarize_toc(doc)
+
+    # Check that it returns a SummaryRow
+    from quartodoc.renderers.md_renderer import SummaryRow
+    assert isinstance(row, SummaryRow)
+    assert row.link == "[a_func](#quartodoc.tests.example.a_func)"
+    assert row.description == "A function"
 
 
 def test_summary_row():

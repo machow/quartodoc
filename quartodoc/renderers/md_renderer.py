@@ -495,7 +495,7 @@ class MdRenderer(Renderer):
                 # and not isinstance(el, layout.DocClass)
             ):
                 # Collect SummaryRow objects and render as TOC
-                attr_rows = [self.summarize(attr, is_index=False) for attr in raw_attrs]
+                attr_rows = [self.summarize_toc(attr) for attr in raw_attrs]
                 _attrs_table = self._render_summary_table(attr_rows, self.table_style_tocs, include_headers=True)
                 attrs = f"{sub_header} Attributes\n\n{_attrs_table}"
                 attr_docs.append(attrs)
@@ -503,7 +503,7 @@ class MdRenderer(Renderer):
             # classes summary table ----
             if raw_classes:
                 # Collect SummaryRow objects and render as TOC
-                class_rows = [self.summarize(cls, is_index=False) for cls in raw_classes]
+                class_rows = [self.summarize_toc(cls) for cls in raw_classes]
                 _summary_table = self._render_summary_table(class_rows, self.table_style_tocs, include_headers=True)
                 section_name = "Classes"
                 objs = f"{sub_header} {section_name}\n\n{_summary_table}"
@@ -522,7 +522,7 @@ class MdRenderer(Renderer):
             # method summary table ----
             if raw_meths:
                 # Collect SummaryRow objects and render as TOC
-                meth_rows = [self.summarize(meth, is_index=False) for meth in raw_meths]
+                meth_rows = [self.summarize_toc(meth) for meth in raw_meths]
                 _summary_table = self._render_summary_table(meth_rows, self.table_style_tocs, include_headers=True)
                 section_name = (
                     "Methods" if isinstance(el, layout.DocClass) else "Functions"
@@ -823,19 +823,42 @@ class MdRenderer(Renderer):
     def _summary_row(self, link, description):
         return SummaryRow(link=link, description=sanitize(description, allow_markdown=True))
 
+    # Index summarization methods (for main index page) ----------------------
+
     @dispatch
     def summarize(self, el):
-        """Produce a summary table."""
+        """Produce a summary table for the index."""
+
+        raise NotImplementedError(f"Unsupported type: {type(el)}")
+
+    # TOC summarization methods (for doc page TOCs) --------------------------
+
+    @dispatch
+    def summarize_toc(self, el):
+        """Produce a summary table for TOC sections."""
 
         raise NotImplementedError(f"Unsupported type: {type(el)}")
 
     @dispatch
-    def summarize(self, el: layout.Layout, is_index: bool = True):
-        rendered_sections = [self.summarize(section, is_index=is_index) for section in el.sections]
+    def summarize_toc(self, el: layout.Doc):
+        """Summarize a Doc for TOC display."""
+        link = f"[{el.name}](#{el.anchor})"
+        description = self.summarize(el.obj)
+        return self._summary_row(link, description)
+
+    @dispatch
+    def summarize_toc(self, el: layout.Link):
+        """Summarize a Link for TOC display."""
+        description = self.summarize(el.obj)
+        return self._summary_row(f"[](`~{el.name}`)", description)
+
+    @dispatch
+    def summarize(self, el: layout.Layout):
+        rendered_sections = [self.summarize(section) for section in el.sections]
         return "\n\n".join(rendered_sections)
 
     @dispatch
-    def summarize(self, el: layout.Section, is_index: bool = True):
+    def summarize(self, el: layout.Section):
         desc = f"\n\n{el.desc}" if el.desc is not None else ""
         if el.title is not None:
             header = f"## {el.title}{desc}"
@@ -848,18 +871,17 @@ class MdRenderer(Renderer):
             # Collect SummaryRow objects
             rows = []
             for child in el.contents:
-                result = self.summarize(child, is_index=is_index)
+                result = self.summarize(child)
                 rows.extend(_parse_summary_result(result))
 
-            # Determine which style to use
-            style_param = self.table_style_index if is_index else self.table_style_tocs
-            str_func_table = self._render_summary_table(rows, style_param)
+            # Use index style for index summaries
+            str_func_table = self._render_summary_table(rows, self.table_style_index)
             return f"{header}\n\n{str_func_table}"
 
         return header
 
     @dispatch
-    def summarize(self, el: layout.Page, is_index: bool = True):
+    def summarize(self, el: layout.Page):
         if el.summary is not None:
             # TODO: assumes that files end with .qmd
             return self._summary_row(
@@ -875,7 +897,7 @@ class MdRenderer(Renderer):
         else:
             rows = []
             for entry in el.contents:
-                result = self.summarize(entry, el.path, is_index=is_index)
+                result = self.summarize(entry, el.path)
                 if isinstance(result, SummaryRow):
                     rows.append(result.to_tuple())
                 else:
@@ -883,9 +905,9 @@ class MdRenderer(Renderer):
             return "\n".join(rows)
 
     @dispatch
-    def summarize(self, el: layout.MemberPage, is_index: bool = True):
+    def summarize(self, el: layout.MemberPage):
         # TODO: model should validate these only have a single entry
-        return self.summarize(el.contents[0], el.path, shorten=True, is_index=is_index)
+        return self.summarize(el.contents[0], el.path, shorten=True)
 
     @dispatch
     def summarize(self, el: layout.Interlaced, *args, **kwargs):
@@ -895,7 +917,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(
-        self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False, is_index: bool = True
+        self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False
     ):
         if path is None:
             link = f"[{el.name}](#{el.anchor})"
@@ -907,7 +929,7 @@ class MdRenderer(Renderer):
         return self._summary_row(link, description)
 
     @dispatch
-    def summarize(self, el: layout.Link, is_index: bool = True):
+    def summarize(self, el: layout.Link):
         description = self.summarize(el.obj)
         return self._summary_row(f"[](`~{el.name}`)", description)
 
