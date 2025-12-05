@@ -13,11 +13,11 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
-  | Name   | Type                                                                                 | Description                   | Default    |
-  |--------|--------------------------------------------------------------------------------------|-------------------------------|------------|
-  | x      | [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\] | The x parameter               | _required_ |
-  | y      | [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`)                                    | The y parameter               | _required_ |
-  | z      |                                                                                      | The z parameter (unannotated) | _required_ |
+  | Name   | Type                                                                                           | Description                   | Default    |
+  |--------|------------------------------------------------------------------------------------------------|-------------------------------|------------|
+  | x      | [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| [None](`None`)\] | The x parameter               | _required_ |
+  | y      | [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`)                                              | The y parameter               | _required_ |
+  | z      |                                                                                                | The z parameter (unannotated) | _required_ |
   '''
 # ---
 # name: test_render_annotations_complex_no_interlinks
