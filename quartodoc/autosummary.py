@@ -600,8 +600,9 @@ class Builder:
 
         if self.source_dir:
             import sys
-
-            sys.path.append(self.source_dir)
+            
+            if self.source_dir != sys.path[0]:
+                sys.path.insert(0, self.source_dir)
 
         # shaping and collection ----
 
