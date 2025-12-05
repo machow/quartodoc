@@ -111,6 +111,62 @@ class ParamRow:
         raise NotImplementedError(f"Unsupported table style: {style}")
 
 
+@dataclass
+class SummaryRow:
+    """Represents a row in a summary table."""
+    link: str
+    description: str
+
+    def to_definition_list(self):
+        """Convert to definition list format (term, definition)."""
+        desc = self.description if self.description else ""
+        return (self.link, desc)
+
+    def to_tuple(self):
+        """Convert to table row format."""
+        return f"| {self.link} | {self.description} |"
+
+
+def _parse_summary_result(result):
+    """Parse a summary result into a list of SummaryRow objects.
+
+    Handles both SummaryRow objects and string representations for backward compatibility.
+
+    Parameters
+    ----------
+    result : SummaryRow or str
+        The result from a summarize() call.
+
+    Returns
+    -------
+    list[SummaryRow]
+        List of SummaryRow objects.
+    """
+    rows = []
+    if isinstance(result, SummaryRow):
+        rows.append(result)
+    elif isinstance(result, str):
+        # If it's already a formatted string, parse it back to SummaryRow
+        # This handles nested cases
+        if result.startswith("|"):
+            # It's a table row, extract link and description
+            parts = result.split("|")
+            if len(parts) >= 3:
+                link = parts[1].strip()
+                desc = parts[2].strip()
+                rows.append(SummaryRow(link=link, description=desc))
+        else:
+            # Multiple rows joined, split and process each
+            for line in result.split("\n"):
+                if line.startswith("|"):
+                    parts = line.split("|")
+                    if len(parts) >= 3:
+                        link = parts[1].strip()
+                        desc = parts[2].strip()
+                        rows.append(SummaryRow(link=link, description=desc))
+    return rows
+
+
 class MdRenderer(Renderer):
     """Render docstrings to markdown.
 
@@ -152,6 +208,8 @@ class MdRenderer(Renderer):
         render_interlinks=False,
         # table_style="description-list",
         table_style="table",
+        table_style_index="table",
+        table_style_tocs="table",
     ):
         self.header_level = header_level
         self.show_signature = show_signature
@@ -160,6 +218,8 @@ class MdRenderer(Renderer):
         self.hook_pre = hook_pre
         self.render_interlinks = render_interlinks
         self.table_style = table_style
+        self.table_style_index = table_style_index
+        self.table_style_tocs = table_style_tocs
 
         self.crnt_header_level = self.header_level
 
@@ -208,6 +268,29 @@ class MdRenderer(Renderer):
             row_tuples = [row.to_tuple(style) for row in rows]
             table = tabulate(row_tuples, headers=headers, tablefmt="github")
             return table
+
+    @staticmethod
+    def _render_summary_table(rows, style_param, include_headers=False):
+        """Render summary rows as table or description list.
+
+        Parameters
+        ----------
+        rows : list[SummaryRow]
+            List of SummaryRow objects to render.
+        style_param : str
+            Either "table" or "description-list".
+        include_headers : bool
+            Whether to include Name/Description headers (for TOC tables).
+        """
+        if style_param == "description-list":
+            return str(DefinitionList([row.to_definition_list() for row in rows]))
+        else:
+            if include_headers:
+                thead = "| Name | Description |\n| --- | --- |"
+            else:
+                thead = "| | |\n| --- | --- |"
+            table_rows = [row.to_tuple() for row in rows]
+            return "\n".join([thead, *table_rows])
 
     # render_annotation method --------------------------------------------------------
 
@@ -411,15 +494,19 @@ class MdRenderer(Renderer):
                 # TODO: what should backwards compat be?
                 # and not isinstance(el, layout.DocClass)
             ):
-                _attrs_table = "\n".join(map(self.summarize, raw_attrs))
-                attrs = f"{sub_header} Attributes\n\n{header}\n{_attrs_table}"
+                # Collect SummaryRow objects and render as TOC
+                attr_rows = [self.summarize(attr) for attr in raw_attrs]
+                _attrs_table = self._render_summary_table(attr_rows, self.table_style_tocs, include_headers=True)
+                attrs = f"{sub_header} Attributes\n\n{_attrs_table}"
                 attr_docs.append(attrs)
 
             # classes summary table ----
             if raw_classes:
-                _summary_table = "\n".join(map(self.summarize, raw_classes))
+                # Collect SummaryRow objects and render as TOC
+                class_rows = [self.summarize(cls) for cls in raw_classes]
+                _summary_table = self._render_summary_table(class_rows, self.table_style_tocs, include_headers=True)
                 section_name = "Classes"
-                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                objs = f"{sub_header} {section_name}\n\n{_summary_table}"
                 class_docs.append(objs)
 
                 n_incr = 1 if el.flat else 2
@@ -434,11 +521,13 @@ class MdRenderer(Renderer):
 
             # method summary table ----
             if raw_meths:
-                _summary_table = "\n".join(map(self.summarize, raw_meths))
+                # Collect SummaryRow objects and render as TOC
+                meth_rows = [self.summarize(meth) for meth in raw_meths]
+                _summary_table = self._render_summary_table(meth_rows, self.table_style_tocs, include_headers=True)
                 section_name = (
                     "Methods" if isinstance(el, layout.DocClass) else "Functions"
                 )
-                objs = f"{sub_header} {section_name}\n\n{header}\n{_summary_table}"
+                objs = f"{sub_header} {section_name}\n\n{_summary_table}"
                 meth_docs.append(objs)
 
                 # TODO use context manager, or context variable?
@@ -731,9 +820,10 @@ class MdRenderer(Renderer):
     # this method returns a summary description, such as a table summarizing a
     # layout.Section, or a row in the table for layout.Page or layout.DocFunction.
 
-    @staticmethod
-    def _summary_row(link, description):
-        return f"| {link} | {sanitize(description, allow_markdown=True)} |"
+    def _summary_row(self, link, description):
+        return SummaryRow(link=link, description=sanitize(description, allow_markdown=True))
+
+    # Summarization methods ---------------------------------------------------
 
     @dispatch
     def summarize(self, el):
@@ -743,7 +833,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def summarize(self, el: layout.Layout):
-        rendered_sections = list(map(self.summarize, el.sections))
+        rendered_sections = [self.summarize(section) for section in el.sections]
         return "\n\n".join(rendered_sections)
 
     @dispatch
@@ -757,13 +847,14 @@ class MdRenderer(Renderer):
             header = ""
 
         if el.contents:
-            thead = "| | |\n| --- | --- |"
-
-            rendered = []
+            # Collect SummaryRow objects
+            rows = []
             for child in el.contents:
-                rendered.append(self.summarize(child))
+                result = self.summarize(child)
+                rows.extend(_parse_summary_result(result))
 
-            str_func_table = "\n".join([thead, *rendered])
+            # Use index style for index summaries
+            str_func_table = self._render_summary_table(rows, self.table_style_index)
             return f"{header}\n\n{str_func_table}"
 
         return header
@@ -783,7 +874,13 @@ class MdRenderer(Renderer):
             )
 
         else:
-            rows = [self.summarize(entry, el.path) for entry in el.contents]
+            rows = []
+            for entry in el.contents:
+                result = self.summarize(entry, el.path)
+                if isinstance(result, SummaryRow):
+                    rows.append(result.to_tuple())
+                else:
+                    rows.append(result)
             return "\n".join(rows)
 
     @dispatch
@@ -801,6 +898,8 @@ class MdRenderer(Renderer):
     def summarize(
         self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False
     ):
+        # When path is None, we're being called directly from render() for TOC
+        # When path is provided, we're being called from Page for index
         if path is None:
             link = f"[{el.name}](#{el.anchor})"
         else:
