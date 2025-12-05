@@ -127,6 +127,7 @@ def test_render_summarize_toc_description_list():
 
     # Check that it returns a SummaryRow
     from quartodoc.renderers.md_renderer import SummaryRow
+
     assert isinstance(row, SummaryRow)
     assert row.link == "[a_func](#quartodoc.tests.example.a_func)"
     assert row.description == "A function"
@@ -376,7 +377,7 @@ def test_render_api_index_with_description_list(snapshot):
             blueprint(Auto(name="quartodoc.tests.example.a_func")),
             blueprint(Auto(name="quartodoc.tests.example_class.C")),
             blueprint(Auto(name="quartodoc.tests.example.a_attr")),
-        ]
+        ],
     )
 
     res = renderer.summarize(section)
@@ -398,18 +399,13 @@ def test_render_doc_summarize_toc_table_vs_description_list(snapshot):
 
     # Render using both styles
     res_table = renderer_table._render_summary_table(
-        rows,
-        style_param="table",
-        include_headers=True
+        rows, style_param="table", include_headers=True
     )
 
     res_list = renderer_list._render_summary_table(
         rows,
         style_param="description-list",
-        include_headers=False  # description lists don't use headers
+        include_headers=False,  # description lists don't use headers
     )
 
-    assert snapshot == indented_sections(
-        Table=res_table,
-        DescriptionList=res_list
-    )
+    assert snapshot == indented_sections(Table=res_table, DescriptionList=res_list)
