@@ -84,16 +84,16 @@ class ParamRow:
 
         part_desc = desc if desc is not None else ""
 
-        anno_sep = Span(":", Attr(classes=["parameter-annotation-sep"]))
+        # Only include the colon separator if there's a name
+        if name is not None:
+            anno_sep = Span(":", Attr(classes=["parameter-annotation-sep"]))
+            parts = [part_name, anno_sep, part_anno, part_default_sep, part_default]
+        else:
+            # No name means no colon separator (e.g., for Raises)
+            parts = [part_anno, part_default_sep, part_default]
 
         # TODO: should code wrap the whole thing like this?
-        param = Code(
-            str(
-                Inlines(
-                    [part_name, anno_sep, part_anno, part_default_sep, part_default]
-                )
-            )
-        ).html
+        param = Code(str(Inlines(parts))).html
         return (param, part_desc)
 
     def to_tuple(self, style: Literal["parameters", "attributes", "returns"]):
@@ -266,7 +266,21 @@ class MdRenderer(Renderer):
         if self.table_style == "description-list":
             return str(DefinitionList([row.to_definition_list() for row in rows]))
         else:
-            row_tuples = [row.to_tuple(style) for row in rows]
+            # Check if any rows have names - if not, omit the Name column
+            # Note: Parameters always have names, but Returns/Raises may not
+            has_names = any(row.name is not None for row in rows)
+
+            if not has_names and style == "returns" and headers[0] == "Name":
+                # Omit Name column when no items have names (e.g., Raises section)
+                headers = headers[1:]  # Remove "Name" from headers
+                row_tuples = [
+                    (row.annotation, sanitize(row.description, allow_markdown=True))
+                    for row in rows
+                ]
+            else:
+                # Standard rendering with all columns
+                row_tuples = [row.to_tuple(style) for row in rows]
+
             table = tabulate(row_tuples, headers=headers, tablefmt="grid")
             return table
 
@@ -774,6 +788,7 @@ class MdRenderer(Renderer):
         rows = list(map(self.render, el.value))
         header = ["Name", "Type", "Description"]
 
+        # _render_table will dynamically omit the Name column if no rows have names
         return self._render_table(rows, header, "returns")
 
     @dispatch

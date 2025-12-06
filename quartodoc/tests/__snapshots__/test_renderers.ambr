@@ -659,6 +659,184 @@
   +--------+--------+------------------+------------+
   '''
 # ---
+# name: test_render_full_numpydoc
+  '''
+  # full_numpydoc_function { #quartodoc.tests.example_docstring_full.full_numpydoc_function }
+  
+  ```python
+  tests.example_docstring_full.full_numpydoc_function(
+      x,
+      y=None,
+      *args,
+      option=False,
+      **kwargs,
+  )
+  ```
+  
+  A one-line summary.
+  
+  An extended summary that provides more detail about what this
+  function does. This demonstrates the full range of numpydoc
+  sections that are supported.
+  
+  ## Parameters {.doc-section .doc-section-parameters}
+  
+  | Name     | Type   | Description                    | Default    |
+  |----------|--------|--------------------------------|------------|
+  | x        | int    | The first parameter.           | _required_ |
+  | y        | str    | The second parameter.          | `None`     |
+  | *args    | float  | Variable positional arguments. | `()`       |
+  | option   | bool   | A keyword-only parameter.      | `False`    |
+  | **kwargs | dict   | Variable keyword arguments.    | `{}`       |
+  
+  ## Returns {.doc-section .doc-section-returns}
+  
+  | Name   | Type   | Description                              |
+  |--------|--------|------------------------------------------|
+  | result | int    | The computed result with name and type.  |
+  |        | list   | A secondary return value with only type. |
+  
+  ## Yields {.doc-section .doc-section-yields}
+  
+  | Name   | Type   | Description              |
+  |--------|--------|--------------------------|
+  | value  | str    | Generated string values. |
+  
+  ## Raises {.doc-section .doc-section-raises}
+  
+  | Type       | Description           |
+  |------------|-----------------------|
+  | ValueError | If x is negative.     |
+  | TypeError  | If y is not a string. |
+  
+  ## See Also {.doc-section .doc-section-see-also}
+  
+  other_function : Related functionality.
+  module.another_function : Another related function.
+  
+  ## Notes {.doc-section .doc-section-notes}
+  
+  I am a note.
+  
+  ## References {.doc-section .doc-section-references}
+  
+  .. [1] Author Name, "Paper Title", Journal, 2024. TODO
+  
+  ## Examples {.doc-section .doc-section-examples}
+  
+  Basic usage:
+  
+  ```python
+  >>> full_numpydoc_function(1, "test")
+  (42, [1, 2, 3])
+  ```
+  
+  With optional parameters:
+  
+  ```python
+  >>> full_numpydoc_function(1, option=True)
+  (42, [])
+  ```
+  '''
+# ---
+# name: test_render_full_numpydoc_description_list
+  '''
+  # full_numpydoc_function { #quartodoc.tests.example_docstring_full.full_numpydoc_function }
+  
+  ```python
+  tests.example_docstring_full.full_numpydoc_function(
+      x,
+      y=None,
+      *args,
+      option=False,
+      **kwargs,
+  )
+  ```
+  
+  A one-line summary.
+  
+  An extended summary that provides more detail about what this
+  function does. This demonstrates the full range of numpydoc
+  sections that are supported.
+  
+  ## Parameters {.doc-section .doc-section-parameters}
+  
+  <code>[**x**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
+  
+  :   The first parameter.
+  
+  <code>[**y**]{.parameter-name} [:]{.parameter-annotation-sep} [str]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+  
+  :   The second parameter.
+  
+  <code>[***args**]{.parameter-name} [:]{.parameter-annotation-sep} [float]{.parameter-annotation} [ = ]{.parameter-default-sep} [()]{.parameter-default}</code>
+  
+  :   Variable positional arguments.
+  
+  <code>[**option**]{.parameter-name} [:]{.parameter-annotation-sep} [bool]{.parameter-annotation} [ = ]{.parameter-default-sep} [False]{.parameter-default}</code>
+  
+  :   A keyword-only parameter.
+  
+  <code>[****kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [dict]{.parameter-annotation} [ = ]{.parameter-default-sep} [{}]{.parameter-default}</code>
+  
+  :   Variable keyword arguments.
+  
+  ## Returns {.doc-section .doc-section-returns}
+  
+  <code>[**result**]{.parameter-name} [:]{.parameter-annotation-sep} [int]{.parameter-annotation}</code>
+  
+  :   The computed result with name and type.
+  
+  <code>[]{.parameter-name} [:]{.parameter-annotation-sep} [list]{.parameter-annotation}</code>
+  
+  :   A secondary return value with only type.
+  
+  ## Yields {.doc-section .doc-section-yields}
+  
+  <code>[**value**]{.parameter-name} [:]{.parameter-annotation-sep} [str]{.parameter-annotation}</code>
+  
+  :   Generated string values.
+  
+  ## Raises {.doc-section .doc-section-raises}
+  
+  <code>[ValueError]{.parameter-annotation}</code>
+  
+  :   If x is negative.
+  
+  <code>[TypeError]{.parameter-annotation}</code>
+  
+  :   If y is not a string.
+  
+  ## See Also {.doc-section .doc-section-see-also}
+  
+  other_function : Related functionality.
+  module.another_function : Another related function.
+  
+  ## Notes {.doc-section .doc-section-notes}
+  
+  I am a note.
+  
+  ## References {.doc-section .doc-section-references}
+  
+  .. [1] Author Name, "Paper Title", Journal, 2024. TODO
+  
+  ## Examples {.doc-section .doc-section-examples}
+  
+  Basic usage:
+  
+  ```python
+  >>> full_numpydoc_function(1, "test")
+  (42, [1, 2, 3])
+  ```
+  
+  With optional parameters:
+  
+  ```python
+  >>> full_numpydoc_function(1, option=True)
+  (42, [])
+  ```
+  '''
+# ---
 # name: test_render_google_section_yields[int: A description.]
   '''
   Code
