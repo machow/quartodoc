@@ -15,7 +15,14 @@ def escape(val: str):
 
 def sanitize(val: str, allow_markdown=False, escape_quotes=False):
     # sanitize common tokens that break tables
-    res = val.replace("\n", " ").replace("|", "\\|")
+    # Note: grid tables support newlines. We preserve them if there are
+    # double newlines (paragraph breaks, lists), otherwise collapse to spaces
+    has_double_newline = "\n\n" in val
+
+    if has_double_newline:
+        res = val.replace("|", "\\|")
+    else:
+        res = val.replace("\n", " ").replace("|", "\\|")
 
     # sanitize elements that get turned into smart quotes
     # this is to avoid defaults that are strings having their

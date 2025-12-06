@@ -249,6 +249,28 @@ def test_render_docstring_numpy_linebreaks(snapshot, renderer):
     assert res == snapshot
 
 
+def test_render_docstring_numpy_markdown_list(snapshot, renderer):
+    """Test that grid-style tables support markdown lists with newlines in descriptions."""
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_markdown_list", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_docstring_numpy_single_newline(snapshot, renderer):
+    """Test that single newlines are collapsed to spaces (old behavior)."""
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_single_newline", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
 def test_render_doc_signature_name(snapshot, renderer):
     package = "quartodoc.tests"
     auto = Auto(name="example.a_func", package=package, signature_name="short")

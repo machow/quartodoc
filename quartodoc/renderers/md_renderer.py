@@ -114,6 +114,7 @@ class ParamRow:
 @dataclass
 class SummaryRow:
     """Represents a row in a summary table."""
+
     link: str
     description: str
 
@@ -280,7 +281,7 @@ class MdRenderer(Renderer):
                 # Standard rendering with all columns
                 row_tuples = [row.to_tuple(style) for row in rows]
 
-            table = tabulate(row_tuples, headers=headers, tablefmt="github")
+            table = tabulate(row_tuples, headers=headers, tablefmt="grid")
             return table
 
     @staticmethod
@@ -504,13 +505,16 @@ class MdRenderer(Renderer):
             # TODO: for now, we skip making an attribute table on classes, unless
             # they contain an attributes section in the docstring
             if (
-                raw_attrs and not _has_attr_section(el.obj.docstring)
+                raw_attrs
+                and not _has_attr_section(el.obj.docstring)
                 # TODO: what should backwards compat be?
                 # and not isinstance(el, layout.DocClass)
             ):
                 # Collect SummaryRow objects and render as TOC
                 attr_rows = [self.summarize(attr) for attr in raw_attrs]
-                _attrs_table = self._render_summary_table(attr_rows, self.table_style_tocs, include_headers=True)
+                _attrs_table = self._render_summary_table(
+                    attr_rows, self.table_style_tocs, include_headers=True
+                )
                 attrs = f"{sub_header} Attributes\n\n{_attrs_table}"
                 attr_docs.append(attrs)
 
@@ -518,7 +522,9 @@ class MdRenderer(Renderer):
             if raw_classes:
                 # Collect SummaryRow objects and render as TOC
                 class_rows = [self.summarize(cls) for cls in raw_classes]
-                _summary_table = self._render_summary_table(class_rows, self.table_style_tocs, include_headers=True)
+                _summary_table = self._render_summary_table(
+                    class_rows, self.table_style_tocs, include_headers=True
+                )
                 section_name = "Classes"
                 objs = f"{sub_header} {section_name}\n\n{_summary_table}"
                 class_docs.append(objs)
@@ -537,7 +543,9 @@ class MdRenderer(Renderer):
             if raw_meths:
                 # Collect SummaryRow objects and render as TOC
                 meth_rows = [self.summarize(meth) for meth in raw_meths]
-                _summary_table = self._render_summary_table(meth_rows, self.table_style_tocs, include_headers=True)
+                _summary_table = self._render_summary_table(
+                    meth_rows, self.table_style_tocs, include_headers=True
+                )
                 section_name = (
                     "Methods" if isinstance(el, layout.DocClass) else "Functions"
                 )
@@ -836,7 +844,9 @@ class MdRenderer(Renderer):
     # layout.Section, or a row in the table for layout.Page or layout.DocFunction.
 
     def _summary_row(self, link, description):
-        return SummaryRow(link=link, description=sanitize(description, allow_markdown=True))
+        return SummaryRow(
+            link=link, description=sanitize(description, allow_markdown=True)
+        )
 
     # Summarization methods ---------------------------------------------------
 

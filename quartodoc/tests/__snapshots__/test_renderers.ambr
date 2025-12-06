@@ -13,11 +13,15 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------------------------------------------------------------------------------------+-------------------------------+------------+
   | Name   | Type                                                                                 | Description                   | Default    |
-  |--------|--------------------------------------------------------------------------------------|-------------------------------|------------|
+  +========+======================================================================================+===============================+============+
   | x      | [list](`list`)\[[C](`quartodoc.tests.example_signature.C`) \| [int](`int`) \| None\] | The x parameter               | _required_ |
+  +--------+--------------------------------------------------------------------------------------+-------------------------------+------------+
   | y      | [pathlib](`pathlib`).[Pathlib](`pathlib.Pathlib`)                                    | The y parameter               | _required_ |
+  +--------+--------------------------------------------------------------------------------------+-------------------------------+------------+
   | z      |                                                                                      | The z parameter (unannotated) | _required_ |
+  +--------+--------------------------------------------------------------------------------------+-------------------------------+------------+
   '''
 # ---
 # name: test_render_annotations_complex_no_interlinks
@@ -34,11 +38,15 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------------------------+-------------------------------+------------+
   | Name   | Type                     | Description                   | Default    |
-  |--------|--------------------------|-------------------------------|------------|
+  +========+==========================+===============================+============+
   | x      | list\[C \| int \| None\] | The x parameter               | _required_ |
+  +--------+--------------------------+-------------------------------+------------+
   | y      | pathlib.Pathlib          | The y parameter               | _required_ |
+  +--------+--------------------------+-------------------------------+------------+
   | z      |                          | The z parameter (unannotated) | _required_ |
+  +--------+--------------------------+-------------------------------+------------+
   '''
 # ---
 # name: test_render_api_index_with_description_list
@@ -75,10 +83,13 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------+----------------------+------------+
   | Name   | Type   | Description          | Default    |
-  |--------|--------|----------------------|------------|
+  +========+========+======================+============+
   | x      | str    | Uses signature type. | _required_ |
+  +--------+--------+----------------------+------------+
   | y      | int    | Uses manual type.    | _required_ |
+  +--------+--------+----------------------+------------+
   
   ## Attributes
   
@@ -150,10 +161,13 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------+----------------------+------------+
   | Name   | Type   | Description          | Default    |
-  |--------|--------|----------------------|------------|
+  +========+========+======================+============+
   | x      | str    | Uses signature type. | _required_ |
+  +--------+--------+----------------------+------------+
   | y      | int    | Uses manual type.    | _required_ |
+  +--------+--------+----------------------+------------+
   
   ## Attributes
   
@@ -216,10 +230,13 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------+----------------------+------------+
   | Name   | Type   | Description          | Default    |
-  |--------|--------|----------------------|------------|
+  +========+========+======================+============+
   | x      | str    | Uses signature type. | _required_ |
+  +--------+--------+----------------------+------------+
   | y      | int    | Uses manual type.    | _required_ |
+  +--------+--------+----------------------+------------+
   
   ## Attributes
   
@@ -279,11 +296,15 @@
   
   ## Attributes {.doc-section .doc-section-attributes}
   
+  +--------+--------+---------------------+
   | Name   | Type   | Description         |
-  |--------|--------|---------------------|
+  +========+========+=====================+
   | x      | str    | Uses signature type |
+  +--------+--------+---------------------+
   | y      | int    | Uses manual type    |
+  +--------+--------+---------------------+
   | z      | float  | Defined in init     |
+  +--------+--------+---------------------+
   '''
 # ---
 # name: test_render_doc_module[embedded]
@@ -511,10 +532,60 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------+------------------+------------+
   | Name   | Type   | Description      | Default    |
-  |--------|--------|------------------|------------|
+  +========+========+==================+============+
   | a      |        | The a parameter. | _required_ |
+  +--------+--------+------------------+------------+
   | b      | str    | The b parameter. | _required_ |
+  +--------+--------+------------------+------------+
+  '''
+# ---
+# name: test_render_docstring_numpy_markdown_list
+  '''
+  # f_numpy_markdown_list { #quartodoc.tests.example_docstring_styles.f_numpy_markdown_list }
+  
+  ```python
+  tests.example_docstring_styles.f_numpy_markdown_list(data, options)
+  ```
+  
+  A function with markdown list in parameter description.
+  
+  ## Parameters {.doc-section .doc-section-parameters}
+  
+  +---------+--------+----------------------------------------+------------+
+  | Name    | Type   | Description                            | Default    |
+  +=========+========+========================================+============+
+  | data    |        | The data parameter with markdown list: | _required_ |
+  |         |        |                                        |            |
+  |         |        | - First item                           |            |
+  |         |        | - Second item                          |            |
+  |         |        | - Third item                           |            |
+  +---------+--------+----------------------------------------+------------+
+  | options | dict   | Configuration options with list:       | _required_ |
+  |         |        |                                        |            |
+  |         |        | - `option1`: First option              |            |
+  |         |        | - `option2`: Second option             |            |
+  +---------+--------+----------------------------------------+------------+
+  '''
+# ---
+# name: test_render_docstring_numpy_single_newline
+  '''
+  # f_numpy_single_newline { #quartodoc.tests.example_docstring_styles.f_numpy_single_newline }
+  
+  ```python
+  tests.example_docstring_styles.f_numpy_single_newline(text)
+  ```
+  
+  A function with single newlines in description.
+  
+  ## Parameters {.doc-section .doc-section-parameters}
+  
+  +--------+--------+---------------------------------------------------------------------------------------------------------------------------+------------+
+  | Name   | Type   | Description                                                                                                               | Default    |
+  +========+========+===========================================================================================================================+============+
+  | text   | str    | This is a long description that spans multiple lines but uses single newlines. It should be collapsed into a single line. | _required_ |
+  +--------+--------+---------------------------------------------------------------------------------------------------------------------------+------------+
   '''
 # ---
 # name: test_render_docstring_styles[google]
@@ -529,10 +600,13 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------+------------------+------------+
   | Name   | Type   | Description      | Default    |
-  |--------|--------|------------------|------------|
+  +========+========+==================+============+
   | a      | int    | The a parameter. | _required_ |
+  +--------+--------+------------------+------------+
   | b      | str    | The b parameter. | _required_ |
+  +--------+--------+------------------+------------+
   
   ## Custom Admonition {.doc-section .doc-section-custom-admonition}
   
@@ -551,10 +625,13 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------+------------------+------------+
   | Name   | Type   | Description      | Default    |
-  |--------|--------|------------------|------------|
+  +========+========+==================+============+
   | a      |        | The a parameter. | _required_ |
+  +--------+--------+------------------+------------+
   | b      | str    | The b parameter. | _required_ |
+  +--------+--------+------------------+------------+
   
   ## Custom Admonition {.doc-section .doc-section-custom-admonition}
   
@@ -573,10 +650,13 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +--------+--------+------------------+------------+
   | Name   | Type   | Description      | Default    |
-  |--------|--------|------------------|------------|
+  +========+========+==================+============+
   | a      | int    | The a parameter. | _required_ |
+  +--------+--------+------------------+------------+
   | b      | str    | The b parameter. | _required_ |
+  +--------+--------+------------------+------------+
   '''
 # ---
 # name: test_render_full_numpydoc
@@ -601,33 +681,47 @@
   
   ## Parameters {.doc-section .doc-section-parameters}
   
+  +----------+--------+--------------------------------+------------+
   | Name     | Type   | Description                    | Default    |
-  |----------|--------|--------------------------------|------------|
+  +==========+========+================================+============+
   | x        | int    | The first parameter.           | _required_ |
+  +----------+--------+--------------------------------+------------+
   | y        | str    | The second parameter.          | `None`     |
+  +----------+--------+--------------------------------+------------+
   | *args    | float  | Variable positional arguments. | `()`       |
+  +----------+--------+--------------------------------+------------+
   | option   | bool   | A keyword-only parameter.      | `False`    |
+  +----------+--------+--------------------------------+------------+
   | **kwargs | dict   | Variable keyword arguments.    | `{}`       |
+  +----------+--------+--------------------------------+------------+
   
   ## Returns {.doc-section .doc-section-returns}
   
+  +--------+--------+------------------------------------------+
   | Name   | Type   | Description                              |
-  |--------|--------|------------------------------------------|
+  +========+========+==========================================+
   | result | int    | The computed result with name and type.  |
+  +--------+--------+------------------------------------------+
   |        | list   | A secondary return value with only type. |
+  +--------+--------+------------------------------------------+
   
   ## Yields {.doc-section .doc-section-yields}
   
+  +--------+--------+--------------------------+
   | Name   | Type   | Description              |
-  |--------|--------|--------------------------|
+  +========+========+==========================+
   | value  | str    | Generated string values. |
+  +--------+--------+--------------------------+
   
   ## Raises {.doc-section .doc-section-raises}
   
+  +------------+-----------------------+
   | Type       | Description           |
-  |------------|-----------------------|
+  +============+=======================+
   | ValueError | If x is negative.     |
+  +------------+-----------------------+
   | TypeError  | If y is not a string. |
+  +------------+-----------------------+
   
   ## See Also {.doc-section .doc-section-see-also}
   
@@ -772,21 +866,27 @@
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
+      +--------+--------+----------------+------------+
       | Name   | Type   | Description    | Default    |
-      |--------|--------|----------------|------------|
+      +========+========+================+============+
       | int    |        | A description. | _required_ |
+      +--------+--------+----------------+------------+
   
       # Yields {.doc-section .doc-section-yields}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       | int    |        | A description. |
+      +--------+--------+----------------+
   
       # Attributes {.doc-section .doc-section-attributes}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       | int    |        | A description. |
+      +--------+--------+----------------+
   
   List
       # Parameters {.doc-section .doc-section-parameters}
@@ -823,21 +923,27 @@
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
+      +--------+--------+----------------+------------+
       | Name   | Type   | Description    | Default    |
-      |--------|--------|----------------|------------|
+      +========+========+================+============+
       | name   | int    | A description. | _required_ |
+      +--------+--------+----------------+------------+
   
       # Yields {.doc-section .doc-section-yields}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       | name   | int    | A description. |
+      +--------+--------+----------------+
   
       # Attributes {.doc-section .doc-section-attributes}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       | name   | int    | A description. |
+      +--------+--------+----------------+
   
   List
       # Parameters {.doc-section .doc-section-parameters}
@@ -880,21 +986,27 @@
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
+      +--------+--------+----------------+------------+
       | Name   | Type   | Description    | Default    |
-      |--------|--------|----------------|------------|
+      +========+========+================+============+
       | int    |        | A description. | _required_ |
+      +--------+--------+----------------+------------+
   
       # Returns {.doc-section .doc-section-returns}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       |        | int    | A description. |
+      +--------+--------+----------------+
   
       # Attributes {.doc-section .doc-section-attributes}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       | int    |        | A description. |
+      +--------+--------+----------------+
   
   List
       # Parameters {.doc-section .doc-section-parameters}
@@ -937,21 +1049,27 @@
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
+      +--------+--------+--------------------+------------+
       | Name   | Type   | Description        | Default    |
-      |--------|--------|--------------------|------------|
+      +========+========+====================+============+
       | name   |        | A `"description"`. | _required_ |
+      +--------+--------+--------------------+------------+
   
       # Returns {.doc-section .doc-section-returns}
   
+      +--------+--------+--------------------+
       | Name   | Type   | Description        |
-      |--------|--------|--------------------|
+      +========+========+====================+
       | name   | int    | A `"description"`. |
+      +--------+--------+--------------------+
   
       # Attributes {.doc-section .doc-section-attributes}
   
+      +--------+--------+--------------------+
       | Name   | Type   | Description        |
-      |--------|--------|--------------------|
+      +========+========+====================+
       | name   | int    | A `"description"`. |
+      +--------+--------+--------------------+
   
   List
       # Parameters {.doc-section .doc-section-parameters}
@@ -1000,24 +1118,33 @@
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
+      +----------+-------------+----------------------------------------------------------+------------+
       | Name     | Type        | Description                                              | Default    |
-      |----------|-------------|----------------------------------------------------------|------------|
+      +==========+=============+==========================================================+============+
       | err_code | int         | Non-zero value indicates error code, or zero on success. | _required_ |
+      +----------+-------------+----------------------------------------------------------+------------+
       | err_msg  | str or None | Human readable error message, or None on success.        | _required_ |
+      +----------+-------------+----------------------------------------------------------+------------+
   
       # Yields {.doc-section .doc-section-yields}
   
+      +----------+-------------+----------------------------------------------------------+
       | Name     | Type        | Description                                              |
-      |----------|-------------|----------------------------------------------------------|
+      +==========+=============+==========================================================+
       | err_code | int         | Non-zero value indicates error code, or zero on success. |
+      +----------+-------------+----------------------------------------------------------+
       | err_msg  | str or None | Human readable error message, or None on success.        |
+      +----------+-------------+----------------------------------------------------------+
   
       # Attributes {.doc-section .doc-section-attributes}
   
+      +----------+-------------+----------------------------------------------------------+
       | Name     | Type        | Description                                              |
-      |----------|-------------|----------------------------------------------------------|
+      +==========+=============+==========================================================+
       | err_code | int         | Non-zero value indicates error code, or zero on success. |
+      +----------+-------------+----------------------------------------------------------+
       | err_msg  | str or None | Human readable error message, or None on success.        |
+      +----------+-------------+----------------------------------------------------------+
   
   List
       # Parameters {.doc-section .doc-section-parameters}
@@ -1072,21 +1199,27 @@
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
+      +--------+--------+----------------+------------+
       | Name   | Type   | Description    | Default    |
-      |--------|--------|----------------|------------|
+      +========+========+================+============+
       | int    |        | A description. | _required_ |
+      +--------+--------+----------------+------------+
   
       # Yields {.doc-section .doc-section-yields}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       |        | int    | A description. |
+      +--------+--------+----------------+
   
       # Attributes {.doc-section .doc-section-attributes}
   
+      +--------+--------+----------------+
       | Name   | Type   | Description    |
-      |--------|--------|----------------|
+      +========+========+================+
       | int    |        | A description. |
+      +--------+--------+----------------+
   
   List
       # Parameters {.doc-section .doc-section-parameters}
@@ -1129,21 +1262,27 @@
   Default
       # Parameters {.doc-section .doc-section-parameters}
   
+      +--------+--------+--------------------+------------+
       | Name   | Type   | Description        | Default    |
-      |--------|--------|--------------------|------------|
+      +========+========+====================+============+
       | name   |        | A `"description"`. | _required_ |
+      +--------+--------+--------------------+------------+
   
       # Yields {.doc-section .doc-section-yields}
   
+      +--------+--------+--------------------+
       | Name   | Type   | Description        |
-      |--------|--------|--------------------|
+      +========+========+====================+
       | name   | int    | A `"description"`. |
+      +--------+--------+--------------------+
   
       # Attributes {.doc-section .doc-section-attributes}
   
+      +--------+--------+--------------------+
       | Name   | Type   | Description        |
-      |--------|--------|--------------------|
+      +========+========+====================+
       | name   | int    | A `"description"`. |
+      +--------+--------+--------------------+
   
   List
       # Parameters {.doc-section .doc-section-parameters}
