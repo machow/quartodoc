@@ -53,7 +53,10 @@ repository = "https://github.com/machow/quartodoc"
 ci = "https://github.com/machow/quartodoc/actions"
 
 
-[project.optional-dependencies]
+[project.scripts]
+quartodoc = "quartodoc.__main__:cli"
+
+[dependency-groups]
 dev = [
     "pytest<8.0.0",
     "pytest-cov",
@@ -62,6 +65,3 @@ dev = [
     "syrupy",
     "pre-commit"
 ]
-
-[project.scripts]
-quartodoc = "quartodoc.__main__:cli"
