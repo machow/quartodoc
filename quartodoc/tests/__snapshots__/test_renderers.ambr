@@ -541,6 +541,53 @@
   +--------+--------+------------------+------------+
   '''
 # ---
+# name: test_render_docstring_numpy_markdown_list
+  '''
+  # f_numpy_markdown_list { #quartodoc.tests.example_docstring_styles.f_numpy_markdown_list }
+  
+  ```python
+  tests.example_docstring_styles.f_numpy_markdown_list(data, options)
+  ```
+  
+  A function with markdown list in parameter description.
+  
+  ## Parameters {.doc-section .doc-section-parameters}
+  
+  +---------+--------+----------------------------------------+------------+
+  | Name    | Type   | Description                            | Default    |
+  +=========+========+========================================+============+
+  | data    |        | The data parameter with markdown list: | _required_ |
+  |         |        |                                        |            |
+  |         |        | - First item                           |            |
+  |         |        | - Second item                          |            |
+  |         |        | - Third item                           |            |
+  +---------+--------+----------------------------------------+------------+
+  | options | dict   | Configuration options with list:       | _required_ |
+  |         |        |                                        |            |
+  |         |        | - `option1`: First option              |            |
+  |         |        | - `option2`: Second option             |            |
+  +---------+--------+----------------------------------------+------------+
+  '''
+# ---
+# name: test_render_docstring_numpy_single_newline
+  '''
+  # f_numpy_single_newline { #quartodoc.tests.example_docstring_styles.f_numpy_single_newline }
+  
+  ```python
+  tests.example_docstring_styles.f_numpy_single_newline(text)
+  ```
+  
+  A function with single newlines in description.
+  
+  ## Parameters {.doc-section .doc-section-parameters}
+  
+  +--------+--------+---------------------------------------------------------------------------------------------------------------------------+------------+
+  | Name   | Type   | Description                                                                                                               | Default    |
+  +========+========+===========================================================================================================================+============+
+  | text   | str    | This is a long description that spans multiple lines but uses single newlines. It should be collapsed into a single line. | _required_ |
+  +--------+--------+---------------------------------------------------------------------------------------------------------------------------+------------+
+  '''
+# ---
 # name: test_render_docstring_styles[google]
   '''
   # f_google { #quartodoc.tests.example_docstring_styles.f_google }
