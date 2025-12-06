@@ -380,6 +380,95 @@ class MdRenderer(Renderer):
         return f"`{name}`"
 
     @dispatch
+    def _signature_summary(
+        self,
+        el: layout.Doc,
+        mode: Literal["full", "parens"]
+    ) -> str:
+        """Generate a short signature summary for index/TOC tables.
+
+        Parameters
+        ----------
+        el : layout.Doc
+            The documented element
+        mode : str
+            Either "full" (show all params) or "parens" (just empty parens)
+
+        Returns
+        -------
+        str
+            Signature summary like "(path, [object_name, parser, ...])" or "()"
+        """
+        if mode == "parens":
+            return "()"
+
+        obj = el.obj
+
+        # Get parameters based on object type
+        if obj.is_class:
+            if "__init__" in obj.members:
+                params = self._fetch_method_parameters(obj.members["__init__"])
+            else:
+                return "()"
+        elif obj.is_function:
+            params = self._fetch_method_parameters(obj)
+        else:
+            return ""  # Attributes and modules don't have signatures
+
+        if not params:
+            return "()"
+
+        # Build parameter list
+        required_params = []
+        optional_params = []
+
+        for param in params:
+            # Skip self/cls
+            if param.name in {"self", "cls"}:
+                continue
+
+            # Format parameter name
+            if param.kind == dc.ParameterKind.var_positional:
+                name = "*" + param.name
+            elif param.kind == dc.ParameterKind.var_keyword:
+                name = "**" + param.name
+            else:
+                name = param.name
+
+            # Categorize as required or optional
+            if param.required:
+                required_params.append(name)
+            else:
+                optional_params.append(name)
+
+        # Build final signature with truncation
+        MAX_PARAMS = 3  # Show max 3 params before truncating
+
+        parts = []
+
+        # Add required params (up to MAX_PARAMS)
+        if required_params:
+            if len(required_params) > MAX_PARAMS:
+                parts.extend(required_params[:MAX_PARAMS-1])
+                parts.append("...")
+            else:
+                parts.extend(required_params)
+
+        # Add optional params in brackets
+        if optional_params:
+            if parts and len(parts) >= MAX_PARAMS:
+                # Already at limit, just show [...]
+                parts.append("[...]")
+            elif len(optional_params) > 2:
+                # Show first optional then ...
+                parts.append(f"[{optional_params[0]}, ...]")
+            else:
+                # Show all optional params
+                parts.append("[" + ", ".join(optional_params) + "]")
+
+        return "(" + ", ".join(parts) + ")"
+
+    @dispatch
     def render_header(self, el: layout.Doc) -> str:
         """Render the header of a docstring, including any anchors."""
         _str_dispname = el.name
@@ -913,13 +1002,20 @@ class MdRenderer(Renderer):
     def summarize(
         self, el: layout.Doc, path: Optional[str] = None, shorten: bool = False
     ):
+        # Build display name with signature if configured
+        # Only show signature on index (path is not None), not on TOC tables (path is None)
+        display_name = el.name
+        if el.signature_summary and path is not None:
+            sig_summary = self._signature_summary(el, el.signature_summary)
+            display_name = f"{el.name}{sig_summary}"
+
         # When path is None, we're being called directly from render() for TOC
         # When path is provided, we're being called from Page for index
         if path is None:
-            link = f"[{el.name}](#{el.anchor})"
+            link = f"[{display_name}](#{el.anchor})"
         else:
             # TODO: assumes that files end with .qmd
-            link = f"[{el.name}]({path}.qmd#{el.anchor})"
+            link = f"[{display_name}]({path}.qmd#{el.anchor})"
 
         description = self.summarize(el.obj)
         return self._summary_row(link, description)

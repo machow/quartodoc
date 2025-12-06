@@ -356,6 +356,7 @@ class BlueprintTransformer(PydanticTransformer):
             children,
             flat=is_flat,
             signature_name=el.signature_name,
+            signature_summary=el.signature_summary,
         )
 
     def _fetch_members(self, el: Auto, obj: dc.Object | dc.Alias):
