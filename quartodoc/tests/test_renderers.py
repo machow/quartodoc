@@ -475,3 +475,112 @@ def test_render_full_numpydoc_description_list(snapshot):
     res = renderer.render(bp)
 
     assert res == snapshot
+
+
+# Signature summary tests ------------------------------------------------------
+
+
+def test_signature_summary_parens_mode(renderer):
+    """Test that 'parens' mode returns just ()"""
+    package = "quartodoc.tests.example_signature"
+    auto = Auto(name="no_annotations", package=package)
+    bp = blueprint(auto)
+
+    result = renderer._signature_summary(bp, "parens")
+    assert result == "()"
+
+
+def test_signature_summary_full_mode_simple(renderer):
+    """Test 'full' mode with a simple function signature"""
+    package = "quartodoc.tests.example_signature"
+    # pos_only has signature: (x, /, a, b=2)
+    auto = Auto(name="pos_only", package=package)
+    bp = blueprint(auto)
+
+    result = renderer._signature_summary(bp, "full")
+    # x and a are required, b is optional
+    assert result == "(x, a, [b])"
+
+
+def test_signature_summary_full_mode_mixed_params(renderer):
+    """Test 'full' mode with mixed required and optional parameters"""
+    package = "quartodoc.tests.example_signature"
+    # no_annotations has: (a, b=1, *args, c, d=2, **kwargs)
+    auto = Auto(name="no_annotations", package=package)
+    bp = blueprint(auto)
+
+    result = renderer._signature_summary(bp, "full")
+    # a and c are required, b, d, *args, **kwargs are optional
+    assert result == "(a, c, [b, ...])"
+
+
+def test_signature_summary_full_mode_var_args(renderer):
+    """Test 'full' mode with *args and **kwargs"""
+    package = "quartodoc.tests.example_signature"
+    # early_args has: (x, *args, a, b=2, **kwargs)
+    auto = Auto(name="early_args", package=package)
+    bp = blueprint(auto)
+
+    result = renderer._signature_summary(bp, "full")
+    # x and a are required
+    assert result == "(x, a, [*args, ...])"
+
+
+def test_signature_summary_no_params(renderer):
+    """Test signature summary with function that has no parameters"""
+    package = "quartodoc.tests.example_signature"
+    auto = Auto(name="C", package=package)  # Class with no __init__
+    bp = blueprint(auto)
+
+    result = renderer._signature_summary(bp, "full")
+    assert result == "()"
+
+
+def test_summarize_with_signature_summary_full(renderer):
+    """Test that summarize includes signature when signature_summary='full'"""
+    package = "quartodoc.tests.example_signature"
+    auto = Auto(name="pos_only", package=package, signature_summary="full")
+    bp = blueprint(auto)
+
+    result = renderer.summarize(bp, path="test")
+    # Should include the signature in the link text
+    assert "pos_only(x, a, [b])" in result.link
+
+
+def test_summarize_with_signature_summary_parens(renderer):
+    """Test that summarize includes () when signature_summary='parens'"""
+    package = "quartodoc.tests.example_signature"
+    auto = Auto(name="pos_only", package=package, signature_summary="parens")
+    bp = blueprint(auto)
+
+    result = renderer.summarize(bp, path="test")
+    # Should include () in the link text
+    assert "pos_only()" in result.link
+
+
+def test_summarize_without_signature_summary(renderer):
+    """Test that summarize doesn't include signature when signature_summary is None"""
+    package = "quartodoc.tests.example_signature"
+    auto = Auto(name="pos_only", package=package)  # No signature_summary
+    bp = blueprint(auto)
+
+    result = renderer.summarize(bp, path="test")
+    # Should NOT include any parentheses in the link
+    assert "pos_only]" in result.link  # Just the closing bracket of markdown link
+    assert "pos_only(" not in result.link
+
+
+def test_summarize_signature_only_on_index_not_toc(renderer):
+    """Test that signatures appear on index but not on TOC tables"""
+    package = "quartodoc.tests.example_signature"
+    auto = Auto(name="pos_only", package=package, signature_summary="full")
+    bp = blueprint(auto)
+
+    # Test index (path is provided) - should include signature
+    result_index = renderer.summarize(bp, path="test")
+    assert "pos_only(x, a, [b])" in result_index.link
+
+    # Test TOC (path is None) - should NOT include signature
+    result_toc = renderer.summarize(bp, path=None)
+    assert "pos_only]" in result_toc.link
+    assert "pos_only(" not in result_toc.link

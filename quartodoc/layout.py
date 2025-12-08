@@ -202,12 +202,14 @@ class ChoicesChildren(Enum):
 
 
 SignatureOptions = Literal["full", "short", "relative"]
+SignatureSummaryOptions = Literal["full", "parens", None]
 
 
 class AutoOptions(_Base):
     """Options available for Auto content layout element."""
 
     signature_name: SignatureOptions = "relative"
+    signature_summary: SignatureSummaryOptions = None
     members: Optional[list[str]] = None
     include_private: bool = False
     include_imports: bool = False
@@ -344,6 +346,7 @@ class Doc(_Docable):
     obj: Union[dc.Object, dc.Alias]
     anchor: str
     signature_name: SignatureOptions = "relative"
+    signature_summary: SignatureSummaryOptions = None
 
     class Config:
         arbitrary_types_allowed = True
@@ -358,6 +361,7 @@ class Doc(_Docable):
         anchor: str = None,
         flat: bool = False,
         signature_name: str = "relative",
+        signature_summary: str = None,
     ):
         if members is None:
             members = []
@@ -370,6 +374,7 @@ class Doc(_Docable):
             "obj": obj,
             "anchor": anchor,
             "signature_name": signature_name,
+            "signature_summary": signature_summary,
         }
 
         if kind == "function":
