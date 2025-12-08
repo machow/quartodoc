@@ -8,10 +8,10 @@ README.md: README.qmd
 # which contains a full example for the interlinks filter to be tested
 
 $(EXAMPLE_INTERLINKS): scripts/filter-spec/generate_files.py
-	python3 $<
+	uv run python $<
 
 $(EXAMPLE_INTERLINKS)/test.qmd: scripts/filter-spec/generate_test_qmd.py
-	python3 $<
+	uv run python $<
 
 $(EXAMPLE_INTERLINKS)/test.md: $(EXAMPLE_INTERLINKS)/test.qmd _extensions/interlinks/interlinks.lua
 	cd $(EXAMPLE_INTERLINKS) && quarto render test.qmd --to gfm
@@ -21,8 +21,8 @@ examples/%/_site: examples/%/_quarto.yml
 	cd examples/$* \
 		&& quarto add --no-prompt ../.. \
 		&& quarto add --no-prompt quarto-ext/shinylive
-	cd examples/$* && quartodoc build --config _quarto.yml --verbose
-	cd examples/$* && quartodoc interlinks
+	cd examples/$* && uv run quartodoc build --config _quarto.yml --verbose
+	cd examples/$* && uv run quartodoc interlinks
 	quarto render $(dir $<)
 
 
@@ -45,12 +45,12 @@ docs-build-readme:
 
 docs-build: export PLUM_SIMPLE_DOC=1
 docs-build: docs-build-examples
-	cd docs && quartodoc build --verbose
-	cd docs && quartodoc interlinks
+	cd docs && uv run quartodoc build --verbose
+	cd docs && uv run quartodoc interlinks
 	cd docs && quarto add --no-prompt ..
 	quarto render docs
 
 test-overview-template:
-	python scripts/build_tmp_starter.py
+	uv run python scripts/build_tmp_starter.py
 
 test-interlinks: quartodoc/tests/example_interlinks/test.md
