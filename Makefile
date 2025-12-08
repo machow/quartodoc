@@ -18,8 +18,6 @@ $(EXAMPLE_INTERLINKS)/test.md: $(EXAMPLE_INTERLINKS)/test.qmd _extensions/interl
 
 
 
-docs-build-examples: docs/examples/single-page docs/examples/pkgdown docs/examples/auto-package
-
 docs-build-readme: export BUILDING_README = 1
 docs-build-readme:
 	# note that the input file is named GITHUB.qmd, because quart does not
@@ -32,7 +30,7 @@ docs-build-readme:
 		 --output-dir ..
 
 docs-build: export PLUM_SIMPLE_DOC=1
-docs-build: docs-build-examples
+docs-build: 
 	cd docs && uv run quartodoc build --verbose
 	cd docs && uv run quartodoc interlinks
 	cd docs && quarto add --no-prompt ..
