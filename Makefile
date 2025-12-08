@@ -47,8 +47,8 @@ docs-build: export PLUM_SIMPLE_DOC=1
 docs-build: docs-build-examples
 	cd docs && uv run quartodoc build --verbose
 	cd docs && uv run quartodoc interlinks
-	cd docs && uv run quarto add --no-prompt ..
-	quarto render docs
+	cd docs && quarto add --no-prompt ..
+	uv run quarto render docs
 
 test-overview-template:
 	uv run python scripts/build_tmp_starter.py
