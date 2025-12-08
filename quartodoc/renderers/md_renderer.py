@@ -312,7 +312,7 @@ class MdRenderer(Renderer):
                 # Render as markdown link like other types
                 return f"[None](`None`)"
             else:
-                # Render with backticks for consistency with other types
+                # Render without backticks like any instance (e.g. 1, "a")
                 return "None"
 
         # For structural strings (brackets, operators, etc.), use existing logic
