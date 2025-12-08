@@ -311,16 +311,23 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render_annotation(self, el: str) -> str:
-        """Special hook for rendering a type annotation.
-        Parameters
-        ----------
-        el:
-            An object representing a type annotation.
-        """
+        """Special hook for rendering a type annotation."""
+        # Special case for None - it's used as shorthand for NoneType in type annotations
+        # e.g., "int | None" is common for Optional types
+        if el == "None":
+            if self.render_interlinks:
+                # Render as markdown link like other types
+                return f"[None](`None`)"
+            else:
+                # Render without backticks like any instance (e.g. 1, "a")
+                return "None"
+
+        # For structural strings (brackets, operators, etc.), use existing logic
         return sanitize(el, escape_quotes=True)
 
     @dispatch
     def render_annotation(self, el: None) -> str:
+        # this is used to indicate no annotation, not the literal None
         return ""
 
     @dispatch
