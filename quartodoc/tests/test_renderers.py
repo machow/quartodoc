@@ -270,6 +270,28 @@ def test_render_docstring_numpy_linebreaks(snapshot, renderer):
     assert res == snapshot
 
 
+def test_render_docstring_numpy_markdown_list(snapshot, renderer):
+    """Test that grid-style tables support markdown lists with newlines in descriptions."""
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_markdown_list", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_docstring_numpy_single_newline(snapshot, renderer):
+    """Test that single newlines are collapsed to spaces (old behavior)."""
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_single_newline", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
 def test_render_doc_signature_name(snapshot, renderer):
     package = "quartodoc.tests"
     auto = Auto(name="example.a_func", package=package, signature_name="short")
@@ -430,3 +452,26 @@ def test_render_doc_summarize_toc_table_vs_description_list(snapshot):
     )
 
     assert snapshot == indented_sections(Table=res_table, DescriptionList=res_list)
+
+
+def test_render_full_numpydoc(snapshot, renderer):
+    """Test rendering a function with comprehensive numpydoc sections."""
+    package = "quartodoc.tests.example_docstring_full"
+    auto = Auto(name="full_numpydoc_function", package=package)
+    bp = blueprint(auto, parser="numpy")
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_full_numpydoc_description_list(snapshot):
+    """Test rendering a function with comprehensive numpydoc sections using description list style."""
+    renderer = MdRenderer(table_style="description-list")
+    package = "quartodoc.tests.example_docstring_full"
+    auto = Auto(name="full_numpydoc_function", package=package)
+    bp = blueprint(auto, parser="numpy")
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
