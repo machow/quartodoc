@@ -1,5 +1,0 @@
-## build { #build }
-
-`build(self)`
-
-Build index page, sphinx inventory, and individual doc pages.

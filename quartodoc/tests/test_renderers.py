@@ -213,6 +213,27 @@ def test_render_annotations_complex_no_interlinks(snapshot):
     assert res == snapshot
 
 
+def test_render_annotation_none():
+    """Test rendering of None in type annotations.
+
+    None is special in type annotations - it's used as shorthand for NoneType
+    in annotations like 'int | None'. It should be rendered consistently with
+    other types like int and str.
+    """
+    renderer_with_links = MdRenderer(render_interlinks=True)
+    renderer_no_links = MdRenderer(render_interlinks=False)
+
+    # Test None with interlinks: should be markdown link
+    with_links = renderer_with_links.render_annotation("None")
+    assert (
+        with_links == "[None](`None`)"
+    ), "None with interlinks should be markdown link"
+
+    # Test None without interlinks: should have backticks
+    without_links = renderer_no_links.render_annotation("None")
+    assert without_links == "None", "None without interlinks should have no backticks"
+
+
 @pytest.mark.parametrize("children", ["embedded", "flat"])
 def test_render_doc_class(snapshot, renderer, children):
     bp = blueprint(Auto(name="quartodoc.tests.example_class.C", children=children))
@@ -242,6 +263,28 @@ def test_render_docstring_styles(snapshot, renderer, parser):
 def test_render_docstring_numpy_linebreaks(snapshot, renderer):
     package = "quartodoc.tests.example_docstring_styles"
     auto = Auto(name="f_numpy_with_linebreaks", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_docstring_numpy_markdown_list(snapshot, renderer):
+    """Test that grid-style tables support markdown lists with newlines in descriptions."""
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_markdown_list", package=package)
+    bp = blueprint(auto)
+
+    res = renderer.render(bp)
+
+    assert res == snapshot
+
+
+def test_render_docstring_numpy_single_newline(snapshot, renderer):
+    """Test that single newlines are collapsed to spaces (old behavior)."""
+    package = "quartodoc.tests.example_docstring_styles"
+    auto = Auto(name="f_numpy_single_newline", package=package)
     bp = blueprint(auto)
 
     res = renderer.render(bp)

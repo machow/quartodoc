@@ -24,12 +24,12 @@ classifiers = [
     "Operating System :: Unix",
     "Operating System :: MacOS",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11"
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12"
 ]
 dynamic = ["version"]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "black",
     "click",
@@ -43,8 +43,7 @@ dependencies = [
     "requests",
     "typing-extensions >= 4.4.0",
     "watchdog >= 3.0.0",
-    "plum-dispatch < 2.0.0; python_version < '3.10'",
-    "plum-dispatch > 2.0.0; python_version >= '3.10'"
+    "plum-dispatch > 2.0.0"
 ]
 
 [project.urls]
@@ -53,7 +52,10 @@ repository = "https://github.com/machow/quartodoc"
 ci = "https://github.com/machow/quartodoc/actions"
 
 
-[project.optional-dependencies]
+[project.scripts]
+quartodoc = "quartodoc.__main__:cli"
+
+[dependency-groups]
 dev = [
     "pytest<8.0.0",
     "pytest-cov",
@@ -62,6 +64,3 @@ dev = [
     "syrupy",
     "pre-commit"
 ]
-
-[project.scripts]
-quartodoc = "quartodoc.__main__:cli"
