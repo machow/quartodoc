@@ -48,3 +48,34 @@ def f_numpy_with_linebreaks(a, b: str):
     b:
         The b parameter.
     """
+
+
+def f_numpy_markdown_list(data, options: dict):
+    """A function with markdown list in parameter description.
+
+    Parameters
+    ----------
+    data: str
+        The data parameter with markdown list:
+
+        - First item
+        - Second item
+        - Third item
+    options:
+        Configuration options with list:
+
+        - `option1`: First option
+        - `option2`: Second option
+    """
+
+
+def f_numpy_single_newline(text: str):
+    """A function with single newlines in description.
+
+    Parameters
+    ----------
+    text: str
+        This is a long description that spans
+        multiple lines but uses single newlines.
+        It should be collapsed into a single line.
+    """
