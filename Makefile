@@ -30,7 +30,7 @@ docs-build-readme:
 		 --output-dir ..
 
 docs-build: export PLUM_SIMPLE_DOC=1
-docs-build: 
+docs-build:
 	cd docs && uv run quartodoc build --verbose
 	cd docs && uv run quartodoc interlinks
 	cd docs && quarto add --no-prompt ..
