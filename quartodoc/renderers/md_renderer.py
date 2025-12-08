@@ -311,14 +311,7 @@ class MdRenderer(Renderer):
 
     @dispatch
     def render_annotation(self, el: str) -> str:
-        """Special hook for rendering a type annotation.
-        Parameters
-        ----------
-        el:
-            An object representing a type annotation. Can be a structural string
-            (like '[', ']', ' | '), literal contents, or "None" when None is used
-            as in "x: int | None".
-        """
+        """Special hook for rendering a type annotation."""
         # Special case for None - it's used as shorthand for NoneType in type annotations
         # e.g., "int | None" is common for Optional types
         if el == "None":
