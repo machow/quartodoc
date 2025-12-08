@@ -17,18 +17,6 @@ $(EXAMPLE_INTERLINKS)/test.md: $(EXAMPLE_INTERLINKS)/test.qmd _extensions/interl
 	cd $(EXAMPLE_INTERLINKS) && quarto render test.qmd --to gfm
 
 
-examples/%/_site: examples/%/_quarto.yml
-	cd examples/$* \
-		&& quarto add --no-prompt ../.. \
-		&& quarto add --no-prompt quarto-ext/shinylive
-	cd examples/$* && uv run quartodoc build --config _quarto.yml --verbose
-	cd examples/$* && uv run quartodoc interlinks
-	quarto render $(dir $<)
-
-
-docs/examples/%: examples/%/_site
-	rm -rf docs/examples/$*
-	cp -rv $< $@
 
 docs-build-examples: docs/examples/single-page docs/examples/pkgdown docs/examples/auto-package
 
