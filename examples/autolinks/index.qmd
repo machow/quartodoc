@@ -1,0 +1,13 @@
+---
+title: Autolink example
+---
+
+```python
+from great_tables import GT, exibble
+
+(
+    GT(exibble)
+    .tab_header("I am a header")
+    .tab_source_note("I am a source not")
+)
+```
