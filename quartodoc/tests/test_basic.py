@@ -28,10 +28,26 @@ def test_replace_docstring():
     from quartodoc.autosummary import get_object, replace_docstring
     from quartodoc.tests.example_dynamic import f
 
+    # TODO: expose a default loader factory, etc..
+    from quartodoc._griffe_compat import (
+        GriffeLoader,
+        Parser,
+        ModulesCollection,
+        LinesCollection,
+    )
+    from quartodoc.parsers import get_parser_defaults
+
+    loader = GriffeLoader(
+        docstring_parser=Parser("numpy"),
+        docstring_options=get_parser_defaults("numpy"),
+        modules_collection=ModulesCollection(),
+        lines_collection=LinesCollection(),
+    )
+
     obj = get_object("quartodoc", "tests.example_dynamic.f")
     old = obj.docstring
 
-    replace_docstring(obj, f)
+    replace_docstring(obj, f, loader=loader)
     assert obj.docstring is not old
 
     # just check the end of the piece dynamically added to docstring, since
