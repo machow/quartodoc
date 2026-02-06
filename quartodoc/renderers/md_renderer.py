@@ -390,7 +390,7 @@ class MdRenderer(Renderer):
     @dispatch
     def render_header(self, el: layout.Doc) -> str:
         """Render the header of a docstring, including any anchors."""
-        _str_dispname = el.name
+        _str_dispname = str(el.name).replace("_", "\\_")
 
         # TODO: support anchors that are not fully qualified paths?
         # e.g. get_object, rather than quartodoc.get_object
