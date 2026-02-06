@@ -394,7 +394,8 @@ class MdRenderer(Renderer):
 
         # TODO: support anchors that are not fully qualified paths?
         # e.g. get_object, rather than quartodoc.get_object
-        _anchor = f"{{ #{el.obj.path} }}"
+        anchor_part = _sanitize_title(str(el.obj.path).lower())
+        _anchor = f"{{ #{anchor_part} }}"
         return f"{'#' * self.crnt_header_level} {_str_dispname} {_anchor}"
 
     @dispatch
