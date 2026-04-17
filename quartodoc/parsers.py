@@ -1,6 +1,5 @@
 DEFAULT_OPTIONS = {
     "numpy": {
-        "allow_section_blank_line": True,
     }
 }
 
