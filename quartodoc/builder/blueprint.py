@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import importlib.util
 import logging
 import json
 import yaml
+
+from collections import OrderedDict
+from pathlib import Path
+from typing import Iterable, List, Optional, Set
 
 from .._griffe_compat import dataclasses as dc
 from .._griffe_compat import (
@@ -42,6 +47,47 @@ _log = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from quartodoc._pydantic_compat import BaseModel
+
+
+def _identify_files_to_document(
+    path: Path,
+    file_patterns: List[str],
+    ignore: Optional[Iterable[str]] = None,
+) -> Set[Path]:
+    reversed_patterns = file_patterns.copy()
+    reversed_patterns.reverse()
+
+    files_to_document: dict = OrderedDict()
+    for pattern in reversed_patterns:
+        for file in path.rglob(pattern=pattern):
+            files_to_document[file.with_suffix("")] = file
+    result = set(files_to_document.values())
+
+    if ignore:
+        for pattern in ignore:
+            result = result.difference(set(path.glob(pattern=pattern)))
+
+    return {p.resolve() for p in result}
+
+
+def _auto_contents_from_package(package_name: str) -> list[Auto]:
+    """Return Auto entries for every .py file in *package_name*, excluding __init__ files."""
+    spec = importlib.util.find_spec(package_name)
+    if spec is None or not spec.submodule_search_locations:
+        return []
+
+    pkg_path = Path(list(spec.submodule_search_locations)[0])
+    files = _identify_files_to_document(
+        pkg_path,
+        file_patterns=["*.py"],
+        ignore=["**/__init__.py", "**/__pycache__/**"],
+    )
+
+    contents = []
+    for file in sorted(files):
+        parts = list(file.relative_to(pkg_path).with_suffix("").parts)
+        contents.append(Auto(name=".".join(parts)))
+    return contents
 
 
 def _auto_package(mod: dc.Module) -> list[Section]:
@@ -245,6 +291,36 @@ class BlueprintTransformer(PydanticTransformer):
             return super().enter(new_el)
 
         return super().enter(el)
+
+    @dispatch
+    def enter(self, el: Section):
+        if el.contents:
+            # Already have contents: still recurse so child Auto entries get
+            # transformed into Doc elements (don't short-circuit the visitor).
+            return super().enter(el)
+
+        package = self.crnt_package
+        label = el.title or el.subtitle or "(untitled)"
+
+        if not package:
+            _log.warning(
+                f"Section '{label}' has no contents and no package is configured."
+                " Cannot auto-populate contents."
+            )
+            return el
+
+        _log.warning(
+            f"Section '{label}' has no contents. Auto-populating from package '{package}'."
+        )
+
+        contents = _auto_contents_from_package(package)
+        if not contents:
+            _log.warning(f"No Python files found in package '{package}'.")
+            return el
+
+        new = el.copy()
+        new.contents = contents
+        return super().enter(new)
 
     @dispatch
     def exit(self, el: Section):

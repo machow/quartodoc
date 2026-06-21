@@ -7,7 +7,7 @@ from enum import Enum
 from typing_extensions import Annotated
 from typing import Literal, Union, Optional
 
-from ._pydantic_compat import BaseModel, Field, Extra, PrivateAttr
+from ._pydantic_compat import BaseModel, Field, Extra, PrivateAttr, validator
 
 
 _log = logging.getLogger(__name__)
@@ -123,6 +123,12 @@ class Page(_Structural):
     flatten: bool = False
 
     contents: ContentList
+
+    @validator("contents")
+    def _contents_not_empty(cls, v):
+        if not v:
+            raise ValueError("Page contents must not be empty.")
+        return v
 
     @property
     def obj(self):

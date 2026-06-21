@@ -161,6 +161,8 @@ quartodoc:
 
 The functions listed in `contents` are assumed to be imported from the package.
 
+If no contents are provided, quartodoc will attempt to pull in all modules (i.e. `.py` files) from the package.
+
 
 ## Learning more
 
