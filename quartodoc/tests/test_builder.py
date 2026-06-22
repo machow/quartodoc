@@ -225,3 +225,50 @@ def test_builder_index_topmatter_fallback(tmp_path):
 
     index = (Path(tmp_path) / "index.qmd").read_text()
     assert "title: Function Reference" in index
+
+
+# single-page builder (issue #1) ----------------------------------------------
+
+
+def _single_page_config(tmp_path, **quartodoc):
+    return {
+        "quartodoc": {
+            "style": "single-page",
+            "package": "quartodoc.tests.example",
+            "dir": str(tmp_path),
+            "sections": [{"title": "API", "contents": ["a_func"]}],
+            **quartodoc,
+        }
+    }
+
+
+def test_builder_single_page_default_index(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    builder = Builder.from_quarto_config(_single_page_config(tmp_path))
+    builder.build()
+
+    assert (tmp_path / "index.qmd").exists()
+    # regression (#1): the page suffix must not be doubled
+    assert not (tmp_path / "index.qmd.qmd").exists()
+    assert any("index.html#" in item.uri for item in builder.items)
+    assert not any(".qmd.html" in item.uri for item in builder.items)
+
+
+def test_builder_single_page_honors_out_index(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    builder = Builder.from_quarto_config(
+        _single_page_config(tmp_path, out_index="reference")
+    )
+    builder.build()
+
+    assert (tmp_path / "reference.qmd").exists()
+    assert not (tmp_path / "reference.qmd.qmd").exists()
+    assert any("reference.html#" in item.uri for item in builder.items)
+    assert not any(".qmd.html" in item.uri for item in builder.items)
+
+
+def test_builder_single_page_rejects_sidebar(tmp_path):
+    with pytest.raises(ValueError, match="does not support a sidebar"):
+        Builder.from_quarto_config(
+            _single_page_config(tmp_path, sidebar="_sidebar.yml")
+        )

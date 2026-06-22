@@ -538,6 +538,11 @@ class Builder:
         index_topmatter: "dict[str, Any] | None" = None,
         _fast_inventory=False,
     ):
+        # out_index must be assigned before load_layout: the single-page builder
+        # reads it to name its one page (see BuilderSinglePage.load_layout).
+        if out_index is not None:
+            self.out_index = out_index
+
         self.layout = self.load_layout(
             sections=sections, package=package, options=options
         )
@@ -561,9 +566,6 @@ class Builder:
             # this is a top-level option, but lives on the renderer
             # so we just manually set it there for now.
             self.renderer.render_interlinks = render_interlinks
-
-        if out_index is not None:
-            self.out_index = out_index
 
         self.index_topmatter = index_topmatter
 
@@ -844,10 +846,29 @@ class BuilderSinglePage(Builder):
 
     style = "single-page"
 
+    def __init__(self, *args, sidebar=None, **kwargs):
+        if sidebar is not None:
+            raise ValueError(
+                "The single-page builder does not support a sidebar, but a "
+                "`sidebar:` field was set in your quartodoc config. Remove it: "
+                "single-page renders the entire API onto one page, so there is "
+                "nothing for a sidebar to navigate between."
+            )
+
+        super().__init__(*args, sidebar=sidebar, **kwargs)
+
     def load_layout(self, *args, **kwargs):
         el = super().load_layout(*args, **kwargs)
 
-        el.sections = [layout.Page(path=self.out_index, contents=el.sections)]
+        # out_index may be a complete filename (e.g. the default "index.qmd"),
+        # but a Page path must be extension-less: write_doc_pages appends
+        # out_page_suffix. Strip a trailing suffix so out_index="reference"
+        # yields reference.qmd, and the default yields index.qmd (not .qmd.qmd).
+        path = self.out_index
+        if path.endswith(self.out_page_suffix):
+            path = path[: -len(self.out_page_suffix)]
+
+        el.sections = [layout.Page(path=path, contents=el.sections)]
 
         return el
 
