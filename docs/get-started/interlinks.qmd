@@ -110,6 +110,23 @@ Finally you should see the filter run when previewing your docs:
 quarto preview
 ```
 
+### Version control
+
+`quartodoc build` generates `objects.json` for your own site. `quartodoc
+interlinks` downloads inventories from other sites into `_inv/` by default.
+If your documentation build runs both commands before rendering, you can
+ignore both paths in Git:
+
+```gitignore
+objects.json
+_inv/
+```
+
+If you render without regenerating or downloading the inventories, make the
+files available to that build. For example, you can commit a snapshot of the
+external inventories for an offline build. If other sites link to your
+inventory, publish the generated `objects.json` with your rendered site even
+when it is ignored in the source repository.
 
 ## Link formats
 
